@@ -1,849 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ontario Compliance Operating System™</title>
-  <meta name="description" content="Ontario Compliance Operating System™ — Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
-  <style>
-    :root{
-      /* Elite alternative greyscale */
-      --bg:#3c3c3c;
-      --surface: rgba(255,255,255,.04);
-      --surface2: rgba(255,255,255,.03);
-      --border: rgba(255,255,255,.12);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ontario Compliance Operating System™</title>
 
-      --text:#f5f5f5;
-      --muted:#d2d2d2;
-      --muted2:#bfbfbf;
+<style>
+:root{
+  --bg:#3c3c3c;
+  --surface:rgba(255,255,255,.04);
+  --border:rgba(255,255,255,.12);
+  --text:#f5f5f5;
+  --muted:#d2d2d2;
+  --muted2:#bfbfbf;
 
-      /* Brand green */
-      --green:#7ac143;
+  --green:#7ac143;
+  --orange:#f59e0b;
 
-      /* Orange for "no" indicators (replacing red X) */
-      --orange:#f59e0b; /* amber/orange */
+  --radius:16px;
+  --shadow:0 10px 30px rgba(0,0,0,.25);
+  --max:1120px;
+}
 
-      --radius:16px;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
-      --max:1120px;
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+}
+a{color:inherit;text-decoration:none}
 
-      /* Header sizes (for compress-on-scroll) */
-      --hdr-pad:18px;
-      --hdr-pad-compact:10px;
-      --hdr-radius:16px;
-    }
+.wrap{max-width:var(--max);margin:auto;padding:20px 28px 70px}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      line-height:1.55;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+/* ================= HEADER ================= */
+header{
+  position:sticky;
+  top:14px;
+  z-index:999;
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 22px;
+  background:rgba(25,25,25,.35);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  backdrop-filter:blur(10px);
+  box-shadow:var(--shadow);
+  transition:.2s ease;
+}
+header.compact{padding:10px 18px}
 
-    a{color:inherit;text-decoration:none}
-    a:focus-visible{outline:2px solid rgba(122,193,67,.55); outline-offset:3px; border-radius:10px;}
+.brand strong{font-size:14px;letter-spacing:.4px}
+.brand span{font-size:12px;color:var(--muted2)}
 
-    .wrap{max-width:var(--max); margin:auto; padding:20px 28px 70px;}
+nav a{
+  font-size:14px;
+  color:var(--muted);
+  padding:8px 10px;
+  border-radius:10px;
+}
+nav a:hover{
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+}
 
-    /* Sticky header */
-    header.topbar{
-      position: sticky;
-      top: 14px;
-      z-index: 999;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      padding: var(--hdr-pad) 22px;
-      border:1px solid rgba(255,255,255,.14);
-      border-radius: var(--hdr-radius);
-      background: rgba(30,30,30,.30);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      transition: padding .18s ease, transform .18s ease, background .18s ease;
-    }
+.pill{
+  display:flex;gap:8px;align-items:center;
+  border:1px solid var(--border);
+  padding:6px 10px;border-radius:999px;
+  font-size:13px;color:var(--muted2)
+}
+.pip{width:8px;height:8px;border-radius:50%;background:var(--green)}
 
-    /* Compressed state */
-    header.topbar.compact{
-      padding: var(--hdr-pad-compact) 18px;
-      background: rgba(25,25,25,.35);
-    }
+/* ================= HERO ================= */
+.hero{padding:70px 0 24px}
+h1{font-size:clamp(34px,5vw,56px);margin:0}
+.sub{max-width:900px;color:var(--muted);font-size:18px}
+.accent{width:160px;height:8px;background:var(--green);border-radius:999px;margin:12px 0}
 
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width: 260px;
-    }
-    .brand strong{
-      font-size:14px;
-      letter-spacing:.4px;
-      transition: transform .18s ease, opacity .18s ease;
-    }
-    .brand span{
-      font-size:12px;
-      color:var(--muted2);
-      transition: opacity .18s ease, transform .18s ease;
-    }
-    header.topbar.compact .brand span{
-      opacity: .85;
-      transform: translateY(-1px);
-    }
+.btn{
+  display:inline-block;
+  padding:14px 18px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.08);
+  font-weight:900;
+}
+.btn:hover{background:rgba(255,255,255,.12)}
 
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid var(--border);
-      padding:6px 10px;
-      border-radius:999px;
-      color:var(--muted2);
-      font-size:13px;
-      white-space:nowrap;
-      background: rgba(0,0,0,.14);
-    }
-    .pip{
-      width:8px; height:8px; border-radius:999px;
-      background: rgba(255,255,255,.24);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
-    }
-    .pip.green{ background: var(--green); box-shadow:none; }
+/* ================= SECTIONS ================= */
+section{padding:46px 0;border-top:1px solid var(--border)}
+.section-head{display:flex;gap:12px;align-items:center}
+.marker{width:10px;height:10px;border-radius:50%;background:var(--green)}
+.rule{flex:1;height:1px;background:var(--border)}
 
-    nav{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    nav a{
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px solid transparent;
-      color:var(--muted);
-      font-size:14px;
-    }
-    nav a:hover{
-      border-color: rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-    }
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow);
+}
 
-    /* Tier selector bar (mini) */
-    .tierbar{
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .tierbar .label{
-      font-size:12px;
-      letter-spacing:.45px;
-      text-transform: uppercase;
-      color: var(--muted2);
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .tierbar .label::before{
-      content:"";
-      width:10px;height:10px;border-radius:999px;
-      background: rgba(255,255,255,.20);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
-    }
+/* ===== WHAT'S INCLUDED – MORE GREEN ===== */
+.card.green{
+  box-shadow:var(--shadow), inset 4px 0 0 var(--green);
+}
+.card.green h3{
+  padding-bottom:8px;
+  position:relative;
+}
+.card.green h3::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:64px;height:4px;
+  background:var(--green);
+  border-radius:999px;
+}
+.card.green ul{list-style:none;padding-left:0}
+.card.green li{
+  padding-left:18px;
+  position:relative;
+}
+.card.green li::before{
+  content:"";
+  position:absolute;
+  left:0;top:.7em;
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--green);
+}
 
-    .tier-pill{
-      position: relative;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      user-select: none;
-    }
-    .tier-pill:hover{
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-    }
-    /* Selected gets a subtle green underline (still grayscale overall) */
-    .tier-pill.active::after{
-      content:"";
-      position:absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 6px;
-      height: 3px;
-      background: var(--green);
-      border-radius: 999px;
-      opacity: .95;
-    }
+/* ================= TABLE ================= */
+.compare{
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px;border:1px solid var(--border)}
+th{
+  background:rgba(255,255,255,.04);
+  position:relative;
+}
+th::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:3px;background:var(--green);
+}
+.yes{color:var(--green);font-weight:900}
+.no{color:var(--orange);font-weight:900}
+td:nth-child(3),th:nth-child(3){background:rgba(122,193,67,.06)}
 
-    /* Left rail */
-    main.rail{
-      margin-top: 18px;
-      position: relative;
-      padding-left: 28px;
-    }
-    main.rail::before{
-      content:"";
-      position:absolute;
-      left: 6px;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: rgba(255,255,255,.22);
-      border-radius: 999px;
-    }
+/* ================= FAQ ================= */
+details{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:14px 16px;
+  margin:10px 0;
+}
+summary{
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  justify-content:space-between;
+}
+.chev{
+  width:10px;height:10px;
+  border-right:2px solid #ccc;
+  border-bottom:2px solid #ccc;
+  transform:rotate(45deg);
+}
+details[open] .chev{
+  transform:rotate(225deg);
+  border-color:var(--green);
+}
 
-    /* Hero */
-    .hero{
-      padding: 68px 0 22px;
-      display:grid;
-      gap:14px;
-    }
-    h1{
-      margin:0;
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.08;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      max-width: 940px;
-      font-size: 18px;
-    }
+/* ================= SUPPORT ================= */
+.support-email{
+  font-weight:900;
+  border-bottom:1px solid var(--border);
+}
+.support-email:hover{color:var(--green);border-color:var(--green)}
 
-    /* Green accents */
-    .accent-underline{
-      width: 170px;
-      height: 8px;
-      background: var(--green);
-      border-radius: 999px;
-      margin-top: 8px;
-    }
+/* ================= FOOTER ================= */
+footer{
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  font-size:13px;
+  color:var(--muted2);
+}
 
-    .cta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .btn{
-      display:inline-block;
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-weight: 900;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-    }
-    .btn:hover{ background: rgba(255,255,255,.12); }
-    .btn.alt{ background: transparent; }
-    .btn.buy{
-      width: 100%;
-      text-align:center;
-      margin-top: 12px;
-    }
-    /* Subtle green micro accent on primary CTA only */
-    .btn.primary{
-      box-shadow: 0 0 0 1px rgba(122,193,67,.35) inset;
-    }
-
-    .small{
-      font-size:13px;
-      color:var(--muted2);
-      line-height:1.55;
-      margin: 8px 0 0;
-    }
-
-    /* Sections */
-    section{
-      padding: 46px 0;
-      border-top: 1px solid var(--border);
-    }
-    .section-head{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 14px;
-    }
-    .section-head h2{
-      margin:0;
-      font-size: 26px;
-      letter-spacing:.2px;
-    }
-    .section-head .rule{
-      height:1px;
-      flex:1;
-      background: rgba(255,255,255,.12);
-    }
-
-    /* Subtle green markers (more green through sections, but refined) */
-    .marker{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(255,255,255,.22);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
-    }
-    .marker.green{ background: var(--green); box-shadow:none; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .card{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    h3{ margin:0 0 10px 0; }
-    ul{ padding-left: 18px; margin: 10px 0 0 0; color: var(--muted); }
-    li{ margin: 6px 0; }
-
-    /* Comparison table */
-    table{
-      width:100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      overflow:hidden;
-      border-radius: 12px;
-    }
-    th, td{
-      border: 1px solid var(--border);
-      padding: 12px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th{
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      font-size: 13px;
-      letter-spacing:.4px;
-      text-transform: uppercase;
-    }
-    td{ color: var(--muted); }
-
-    /* Orange "X" (replacing red) */
-    .no{
-      color: var(--orange);
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
-
-    .yes{
-      color: rgba(255,255,255,.85);
-      font-weight: 900;
-    }
-
-    /* Pricing */
-    .pricing{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-    .price{
-      font-size: 38px;
-      font-weight: 900;
-      margin: 10px 0 4px;
-      letter-spacing: .2px;
-    }
-    .subprice{
-      color: var(--muted2);
-      font-size: 13px;
-      margin: 0 0 8px;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px 10px;
-      border-radius:999px;
-      font-size: 12px;
-      color: var(--muted2);
-      background: rgba(0,0,0,.10);
-    }
-    .tag .dot{ width:8px; height:8px; border-radius:999px; background: rgba(255,255,255,.22); }
-    .tag .dot.green{ background: var(--green); }
-
-    /* "What you get" flow */
-    .steps{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-    .step{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-    .step .n{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width: 34px; height: 34px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.03);
-      font-weight: 900;
-      margin-bottom: 10px;
-      color: var(--text);
-      box-shadow: 0 0 0 1px rgba(122,193,67,.18) inset; /* subtle green */
-    }
-
-    /* FAQ dropdowns with green cue */
-    details{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin: 10px 0;
-      box-shadow: var(--shadow);
-    }
-    summary{
-      cursor:pointer;
-      font-weight: 900;
-      color: var(--text);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      list-style:none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    .chev{
-      width: 10px;
-      height: 10px;
-      border-right: 2px solid rgba(255,255,255,.70);
-      border-bottom: 2px solid rgba(255,255,255,.70);
-      transform: rotate(45deg);
-      transition: transform .18s ease, border-color .18s ease;
-      flex: 0 0 auto;
-    }
-    details[open] summary .chev{
-      transform: rotate(225deg);
-      border-right-color: var(--green);
-      border-bottom-color: var(--green);
-    }
-
-    /* Support email hover -> green */
-    .support-email{
-      font-weight: 900;
-      color: var(--text);
-      border-bottom: 1px solid rgba(255,255,255,.20);
-      padding-bottom: 1px;
-      transition: color .18s ease, border-color .18s ease;
-    }
-    .support-email:hover{
-      color: var(--green);
-      border-color: rgba(122,193,67,.70);
-    }
-
-    footer{
-      border-top: 1px solid var(--border);
-      padding: 22px 0;
-      color: var(--muted2);
-      margin-top: 34px;
-      display:flex;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      font-size: 13px;
-    }
-
-    .anchor{ scroll-margin-top: 140px; }
-
-    @media (max-width: 720px){
-      .wrap{ padding: 18px 18px 60px; }
-      main.rail{ padding-left: 22px; }
-      main.rail::before{ left: 4px; }
-      header.topbar{ top: 10px; }
-    }
-  </style>
+/* ================= TIER BAR ================= */
+.tierbar{display:flex;gap:10px;margin:20px 0}
+.tier{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  cursor:pointer;
+  font-weight:900;
+}
+.tier.active::after{
+  content:"";
+  display:block;
+  margin-top:6px;
+  height:3px;
+  background:var(--green);
+  border-radius:999px;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
+<div class="wrap">
 
-    <header class="topbar" id="topbar">
-      <div class="brand">
-        <strong>Ontario Compliance Operating System™</strong>
-        <span>Ontario-Aligned • Inspection-Ready Structure • Prompt-Driven</span>
-      </div>
-
-      <div class="pill" aria-label="Product signals">
-        <span class="pip green" aria-hidden="true"></span>
-        Draft Documentation Only • Employer Responsible
-      </div>
-
-      <nav aria-label="Primary navigation">
-        <a href="#pricing">Pricing</a>
-        <a href="#how">How It Works</a>
-        <a href="#compare">Compare</a>
-        <a href="#deliver">After Purchase</a>
-        <a href="#faq">FAQ</a>
-        <a href="#support">Support</a>
-      </nav>
-    </header>
-
-    <!-- Mini tier selector -->
-    <div class="tierbar" aria-label="Tier selector">
-      <div class="label">Quick Tier View</div>
-      <div class="tier-pill active" data-tier="1">Tier 1</div>
-      <div class="tier-pill" data-tier="2">Tier 2</div>
-      <div class="tier-pill" data-tier="3">Tier 3</div>
-    </div>
-
-    <main class="rail">
-      <!-- HERO -->
-      <div class="hero">
-        <h1>Generate, Track, and Maintain<br/>Ontario Compliance Without Rewriting</h1>
-        <p class="sub">
-          This is not a template pack. It’s a structured compliance operating system built for Ontario employers.
-          Generate draft SOPs, programs, training documents, and verification records using guided prompts — then track implementation and updates over time.
-        </p>
-
-        <div class="accent-underline" aria-hidden="true"></div>
-
-        <div class="cta">
-          <a class="btn primary" href="#pricing">View Pricing</a>
-          <a class="btn alt" href="#how">How It Works</a>
-          <a class="btn alt" href="#compare">Compare Tiers</a>
-        </div>
-
-        <p class="small">
-          <strong>Important:</strong> Draft documentation only. Employer review, approval, and implementation are required. No legal advice.
-        </p>
-      </div>
-
-      <!-- PROBLEM -->
-      <section id="problem" class="anchor">
-        <div class="section-head">
-          <span class="marker green" aria-hidden="true"></span>
-          <h2>The Real Problem</h2><div class="rule"></div>
-        </div>
-        <p class="sub">Compliance fails because documents go stale. Static templates don’t adapt when equipment, tasks, crews, or operations change.</p>
-        <div class="grid" style="margin-top:14px;">
-          <div class="card">SOPs don’t match real work</div>
-          <div class="card">Logs and records aren’t tracked</div>
-          <div class="card">Training proof is inconsistent</div>
-          <div class="card">Inspections create panic</div>
-        </div>
-      </section>
-
-      <!-- HOW -->
-      <section id="how" class="anchor">
-        <div class="section-head">
-          <span class="marker" aria-hidden="true"></span>
-          <h2>How the System Works</h2><div class="rule"></div>
-        </div>
-        <p class="sub">
-          You use the generators to create draft compliance documents. The system is delivered in Notion as a view-only workspace.
-          You copy what you need into your own workspace, run prompts in an AI tool, and implement internally.
-        </p>
-        <div class="grid" style="margin-top:14px;">
-          <div class="card"><strong>1.</strong> Choose the generator (B1–B6)</div>
-          <div class="card"><strong>2.</strong> Copy the prompt into ChatGPT (or similar)</div>
-          <div class="card"><strong>3.</strong> Answer questions about your operation</div>
-          <div class="card"><strong>4.</strong> Review, approve, implement, and track</div>
-        </div>
-        <p class="small">AI drafts the documentation. You remain responsible for accuracy, approval, training, and implementation.</p>
-      </section>
-
-      <!-- INCLUDED -->
-      <section id="included" class="anchor">
-        <div class="section-head">
-          <span class="marker" aria-hidden="true"></span>
-          <h2>What’s Included</h2><div class="rule"></div>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Core Ontario Compliance Guide</h3>
-            <ul>
-              <li>OHSA employer/supervisor/worker duties</li>
-              <li>WSIB basics and reporting concepts</li>
-              <li>WHMIS responsibilities</li>
-              <li>Record retention and inspection readiness</li>
-              <li>Legislative reference appendix</li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Compliance Generator Library (B1–B6)</h3>
-            <ul>
-              <li>B1 – SOPs (equipment & tasks)</li>
-              <li>B2 – Programs & policies</li>
-              <li>B3 – Training & onboarding</li>
-              <li>B4 – Incidents, investigations & WSIB docs</li>
-              <li>B5 – Logs & checklists</li>
-              <li><strong>B6 – Verification & tracking tools</strong></li>
-            </ul>
-          </div>
-
-          <div class="card">
-            <h3>Governance & System Management</h3>
-            <ul>
-              <li>Compliance readiness self-assessment</li>
-              <li>Master compliance map</li>
-              <li>Version control & update framework</li>
-              <li>Worker communication & change management</li>
-              <li>Audit + corrective action oversight</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- COMPARISON -->
-      <section id="compare" class="anchor">
-        <div class="section-head">
-          <span class="marker" aria-hidden="true"></span>
-          <h2>Tier Comparison</h2><div class="rule"></div>
-        </div>
-        <p class="sub">Choose the tier that matches your operational size and governance needs.</p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Tier 1</th>
-              <th>Tier 2</th>
-              <th>Tier 3</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Compliance education (Ontario)</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
-            <tr><td>AI prompt generators</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
-            <tr><td>Verification & tracking (B6)</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
-            <tr><td>Governance module & audits</td><td class="no">✖</td><td>Limited</td><td class="yes">✔</td></tr>
-            <tr><td>Single operation license</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
-            <tr><td>Multi-crew / multi-site use</td><td class="no">✖</td><td class="no">✖</td><td class="yes">✔</td></tr>
-            <tr><td>Priority updates</td><td class="no">✖</td><td>Standard</td><td>Priority</td></tr>
-          </tbody>
-        </table>
-
-        <p class="small">
-          Tier 2 is designed for a single operation. Tier 3 is designed for organizations that need consistent governance across crews or locations.
-        </p>
-      </section>
-
-      <!-- PRICING -->
-      <section id="pricing" class="anchor">
-        <div class="section-head">
-          <span class="marker green" aria-hidden="true"></span>
-          <h2>Pricing</h2><div class="rule"></div>
-        </div>
-
-        <p class="small">
-          <strong>Important:</strong> Draft compliance documentation only. The employer must review, approve, and implement all materials.
-          No legal advice. No inspector communication. No customization included.
-        </p>
-
-        <div class="pricing" id="pricingGrid">
-          <div class="card" data-card-tier="1">
-            <div class="tag"><span class="dot green"></span> Tier 1 — Foundation</div>
-            <h3 style="margin-top:12px;">Tier 1 — Compliance Foundation Guide</h3>
-            <div class="price">$99</div>
-            <div class="subprice">Static Ontario compliance reference (no generators)</div>
-            <ul>
-              <li>Inspection-aligned overview</li>
-              <li>Legislative reference appendix</li>
-              <li>Simple employer duty map (Ontario)</li>
-              <li>No B1–B6 generators</li>
-            </ul>
-            <a class="btn buy" href="https://buy.stripe.com/test_3cI3cu52fgTHc5z6k1fIs04">Buy Tier 1</a>
-          </div>
-
-          <div class="card" data-card-tier="2">
-            <div class="tag"><span class="dot"></span> Tier 2 — Operating System</div>
-            <h3 style="margin-top:12px;">Tier 2 — Compliance Operating System™</h3>
-            <div class="price">$697</div>
-            <div class="subprice">B1–B6 generators + verification tools</div>
-            <ul>
-              <li>B1–B6 generator libraries</li>
-              <li>Verification & tracking records (B6)</li>
-              <li>Governance foundations</li>
-              <li>Single operation license</li>
-            </ul>
-            <a class="btn buy" href="https://buy.stripe.com/test_00wdR8fGTeLzglP37PfIs03">Buy Tier 2</a>
-          </div>
-
-          <div class="card" data-card-tier="3">
-            <div class="tag"><span class="dot"></span> Tier 3 — Governance</div>
-            <h3 style="margin-top:12px;">Tier 3 — Professional License & Governance</h3>
-            <div class="price">$1,997</div>
-            <div class="subprice">Multi-crew / multi-site governance</div>
-            <ul>
-              <li>Multi-crew / multi-site use</li>
-              <li>Full governance module</li>
-              <li>Audit + corrective action oversight</li>
-              <li>Priority updates</li>
-            </ul>
-            <a class="btn buy" href="https://buy.stripe.com/test_3cI28q52feLz6Lf7o5fIs02">Buy Tier 3</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHAT YOU GET AFTER PURCHASE -->
-      <section id="deliver" class="anchor">
-        <div class="section-head">
-          <span class="marker green" aria-hidden="true"></span>
-          <h2>What You Get After Purchase</h2><div class="rule"></div>
-        </div>
-
-        <p class="sub">
-          Clear delivery flow, no confusion: access, download, and implementation steps are designed to be simple and audit-friendly.
-        </p>
-
-        <div class="steps">
-          <div class="step">
-            <div class="n">1</div>
-            <h3>Receipt + Access Instructions</h3>
-            <p class="small">You receive confirmation plus a short access guide outlining what to do next.</p>
-          </div>
-
-          <div class="step">
-            <div class="n">2</div>
-            <h3>Download Package</h3>
-            <p class="small">Tier deliverables include structured documents/templates and a “Start Here” implementation guide.</p>
-          </div>
-
-          <div class="step">
-            <div class="n">3</div>
-            <h3>Notion Workspace (View-Only)</h3>
-            <p class="small">You get a protected reference workspace. Copy what you need into your own private workspace.</p>
-          </div>
-
-          <div class="step">
-            <div class="n">4</div>
-            <h3>Implement + Track</h3>
-            <p class="small">Assign responsibility, train workers, maintain logs, and document corrective actions over time.</p>
-          </div>
-        </div>
-
-        <p class="small" style="margin-top:12px;">
-          <strong>Note:</strong> This product provides draft documentation only. You remain responsible for review, approval, training, and implementation.
-        </p>
-      </section>
-
-      <!-- FAQ -->
-      <section id="faq" class="anchor">
-        <div class="section-head">
-          <span class="marker" aria-hidden="true"></span>
-          <h2>FAQ</h2><div class="rule"></div>
-        </div>
-        <p class="sub">Clear answers to reduce confusion and prevent mismatched expectations.</p>
-
-        <details>
-          <summary>Is this software or an automated tool? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">No. This is a prompt-driven compliance operating system. You manually run prompts in an AI tool to generate draft documents.</p>
-        </details>
-
-        <details>
-          <summary>Does this generate documents automatically? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">No. You copy a prompt, run it in ChatGPT (or similar), answer questions, then review and approve the draft output.</p>
-        </details>
-
-        <details>
-          <summary>Why is the system view-only? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">It’s view-only to protect the framework. You copy the pages you need into your own workspace and manage your operational documents privately.</p>
-        </details>
-
-        <details>
-          <summary>What is B6 verification and tracking? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">B6 helps you generate inspection logs, training records, maintenance logs, corrective action trackers, and other proof-of-implementation records.</p>
-        </details>
-
-        <details>
-          <summary>Is this legal advice or a compliance guarantee? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">No. This system provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
-        </details>
-      </section>
-
-      <!-- SUPPORT -->
-      <section id="support" class="anchor">
-        <div class="section-head">
-          <span class="marker green" aria-hidden="true"></span>
-          <h2>Support</h2><div class="rule"></div>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <h3>Access + System-Use Support</h3>
-            <p class="small">
-              Support is limited to access issues and system-use clarification only.
-              No compliance consulting, document review, or inspector communication is included.
-            </p>
-            <p class="small">Email: <a class="support-email" href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
-          </div>
-
-          <div class="card">
-            <h3>Future Pages (Reserved)</h3>
-            <p class="small">This site is structured to expand into a full portal later without redesign.</p>
-            <ul>
-              <li>/tier-1 (coming soon)</li>
-              <li>/tier-2 (coming soon)</li>
-              <li>/tier-3 (coming soon)</li>
-              <li>/docs (coming soon)</li>
-              <li>/updates (coming soon)</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <div>© <span id="y"></span> Ontario Compliance Operating System™</div>
-        <div>Draft Reference — Employer Responsible for Implementation</div>
-      </footer>
-    </main>
+<header id="hdr">
+  <div class="brand">
+    <strong>Ontario Compliance Operating System™</strong><br>
+    <span>Ontario-Aligned • Inspection-Ready • Prompt-Driven</span>
   </div>
+  <div class="pill"><span class="pip"></span> Draft Documentation Only</div>
+  <nav>
+    <a href="#pricing">Pricing</a>
+    <a href="#included">Included</a>
+    <a href="#compare">Compare</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
 
-  <script>
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
+<div class="hero">
+  <h1>Generate, Track, and Maintain<br>Ontario Compliance Without Rewriting</h1>
+  <p class="sub">A structured compliance operating system for Ontario employers.</p>
+  <div class="accent"></div>
+  <a class="btn" href="#pricing">View Pricing</a>
+</div>
 
-    // Sticky header compress on scroll
-    const topbar = document.getElementById('topbar');
-    const onScroll = () => {
-      if (window.scrollY > 30) topbar.classList.add('compact');
-      else topbar.classList.remove('compact');
-    };
-    window.addEventListener('scroll', onScroll, { passive:true });
-    onScroll();
+<div class="tierbar">
+  <div class="tier active">Tier 1</div>
+  <div class="tier">Tier 2</div>
+  <div class="tier">Tier 3</div>
+</div>
 
-    // Mini tier selector: highlight selected + scroll to pricing + lightly emphasize that card
-    const pills = document.querySelectorAll('.tier-pill');
-    const cards = document.querySelectorAll('[data-card-tier]');
-    function setTier(tier){
-      pills.forEach(p => p.classList.toggle('active', p.dataset.tier === tier));
-      // subtle emphasis on selected card
-      cards.forEach(c => {
-        const is = c.dataset.cardTier === tier;
-        c.style.boxShadow = is ? "0 10px 30px rgba(0,0,0,.25), 0 0 0 1px rgba(122,193,67,.35) inset" : "0 10px 30px rgba(0,0,0,.25)";
-      });
-      // jump to pricing
-      document.getElementById('pricing').scrollIntoView({ behavior:"smooth", block:"start" });
-    }
-    pills.forEach(p => p.addEventListener('click', () => setTier(p.dataset.tier)));
-  </script>
+<section id="included">
+  <div class="section-head"><span class="marker"></span><h2>What’s Included</h2><div class="rule"></div></div>
+  <div class="grid">
+    <div class="card green">
+      <h3>Core Compliance Guide</h3>
+      <ul>
+        <li>OHSA duties</li><li>WSIB basics</li><li>WHMIS</li><li>Inspection readiness</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>B1–B6 Generator Library</h3>
+      <ul>
+        <li>SOPs</li><li>Programs</li><li>Training</li><li>Verification</li>
+      </ul>
+    </div>
+    <div class="card green">
+      <h3>Governance Tools</h3>
+      <ul>
+        <li>Audits</li><li>Version control</li><li>Corrective actions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="section-head"><span class="marker"></span><h2>Tier Comparison</h2><div class="rule"></div></div>
+  <div class="compare">
+    <table>
+      <tr><th>Feature</th><th>T1</th><th>T2</th><th>T3</th></tr>
+      <tr><td>Education</td><td class="yes">✔</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+      <tr><td>Generators</td><td class="no">✖</td><td class="yes">✔</td><td class="yes">✔</td></tr>
+      <tr><td>Governance</td><td class="no">✖</td><td>Limited</td><td class="yes">✔</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="section-head"><span class="marker"></span><h2>FAQ</h2><div class="rule"></div></div>
+  <details><summary>Is this legal advice?<span class="chev"></span></summary><p>No.</p></details>
+  <details><summary>Is it automated?<span class="chev"></span></summary><p>No.</p></details>
+</section>
+
+<section id="support">
+  <div class="section-head"><span class="marker"></span><h2>Support</h2><div class="rule"></div></div>
+  <p>Email: <a class="support-email" href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
+</section>
+
+<footer>
+© <span id="y"></span> Ontario Compliance Operating System™
+</footer>
+
+</div>
+
+<script>
+document.getElementById('y').textContent=new Date().getFullYear();
+const h=document.getElementById('hdr');
+window.addEventListener('scroll',()=>h.classList.toggle('compact',scrollY>30));
+</script>
 </body>
 </html>
