@@ -1,279 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ontario Compliance Operating System™</title>
-  <meta name="description" content="Ontario Compliance Operating System™ — Generate, track, and maintain Ontario compliance documentation without rewriting." />
-  <style>
-    :root{
-      --bg:#0b0b0c;
-      --panel:#121214;
-      --panel2:#151518;
-      --text:#f2f2f5;
-      --muted:#b9b9c6;
-      --border:#24242a;
-      --accent:#e6e6ea;
-      --btn:#f2f2f5;
-      --btnText:#0b0b0c;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
-    a{text-decoration:none;color:inherit}
-    .container{max-width:1120px;margin:0 auto;padding:28px}
-    header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .brand{font-weight:900;letter-spacing:.2px}
-    .pill{border:1px solid var(--border);padding:7px 12px;border-radius:999px;color:var(--muted);font-size:13px;background:transparent}
-    .hero{padding:56px 0 38px;border-bottom:1px solid var(--border)}
-    h1{font-size:clamp(34px,5vw,56px);line-height:1.04;margin:14px 0 12px}
-    .lead{color:var(--muted);max-width:860px;font-size:18px;line-height:1.55;margin:0 0 18px}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 0}
-    .btn{display:inline-block;padding:14px 18px;border-radius:12px;font-weight:900;border:1px solid var(--border)}
-    .btn.primary{background:var(--btn);color:var(--btnText);border-color:transparent}
-    .btn.ghost{background:transparent}
-    .note{margin-top:14px;color:var(--muted);font-size:13px;line-height:1.5}
-    section{padding:44px 0;border-bottom:1px solid var(--border)}
-    h2{font-size:28px;margin:0 0 10px}
-    .sub{color:var(--muted);font-size:16px;line-height:1.55;margin:0 0 14px;max-width:920px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px}
-    .card h3{margin:0 0 10px;font-size:18px}
-    ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
-    li{margin:7px 0}
-    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:10px}
-    .price{font-size:40px;font-weight:1000;margin:10px 0 4px}
-    .tag{display:inline-block;margin-top:10px;border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:12px;color:var(--muted)}
-    table{width:100%;border-collapse:collapse;margin-top:14px;background:var(--panel)}
-    th,td{border:1px solid var(--border);padding:12px;text-align:left}
-    th{background:var(--panel2)}
-    td{color:var(--muted)}
-    details{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin:10px 0}
-    summary{cursor:pointer;font-weight:900}
-    footer{padding:24px 0;color:var(--muted);font-size:13px}
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ontario Compliance Foundation Guide — Tier 1</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">Ontario Compliance Operating System™</div>
-      <div class="pill">Ontario-Aligned • Inspection-Ready Structure • Prompt-Driven</div>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="NA-ICON-LeafOutline-Green.png" alt="Natural Alternatives mark"/>
+        </div>
+        <div class="brand-title">
+          <strong>Natural Alternatives</strong>
+          <span>Ontario Compliance Foundation — Tier 1</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="index.html" aria-current="page">Overview</a>
+        <a href="guide.html">Foundation</a>
+        <a href="checklist.html">Checklists</a>
+      </nav>
     </header>
 
-    <div class="hero">
-      <div class="pill">Draft Documentation System • Employer-Controlled Implementation</div>
-      <h1>Generate, Track, and Maintain<br>Ontario Compliance Without Rewriting</h1>
-      <p class="lead">
-        A structured compliance operating system for Ontario employers.
-        Generate draft SOPs, programs, training documentation, and verification records using guided prompts — then manage updates, audits, and corrective actions over time.
-      </p>
-      <div class="row">
-        <a class="btn primary" href="#pricing">View Pricing</a>
-        <a class="btn ghost" href="#how">How It Works</a>
-        <a class="btn ghost" href="#compare">Compare Tiers</a>
-      </div>
-      <div class="note">
-        <strong>Important:</strong> Draft documentation only. Employer review, approval, training, and implementation required. No legal advice.
-      </div>
-    </div>
+    <main class="cover-rail">
+      <section class="hero">
+        <h1>Ontario Compliance<br/>Foundation Guide</h1>
+        <p class="subtitle">A Practical Reference for Ontario Employers</p>
 
-    <section id="how">
-      <h2>How It Works</h2>
-      <p class="sub">Simple workflow. No automation. No integrations. You stay in control.</p>
-      <div class="grid">
-        <div class="card"><h3>1) Choose a Generator</h3><p class="sub">Pick B1–B6 based on what you need: SOPs, programs, training, incidents, logs, or verification.</p></div>
-        <div class="card"><h3>2) Run the Prompt</h3><p class="sub">Copy the prompt into ChatGPT (or similar). Answer the questions about your operation.</p></div>
-        <div class="card"><h3>3) Review & Implement</h3><p class="sub">AI drafts the document. You review, customize, approve, and implement internally.</p></div>
-        <div class="card"><h3>4) Track & Maintain</h3><p class="sub">Use verification logs and governance tools to track inspections, training, audits, and updates.</p></div>
-      </div>
-    </section>
+        <!-- THE ONE GREEN ELEMENT ON THIS PAGE -->
+        <div class="accent-underline" aria-hidden="true"></div>
+      </section>
 
-    <section id="included">
-      <h2>What’s Included</h2>
-      <p class="sub">A complete compliance lifecycle: Generate → Implement → Track → Audit → Improve.</p>
-      <div class="grid">
-        <div class="card">
-          <h3>Core Ontario Compliance Guide</h3>
+      <section class="grid">
+        <article class="panel">
+          <h2>What this Tier 1 Guide is</h2>
+          <p>
+            A clean, practical foundation layer that helps Ontario employers structure compliance
+            duties, documentation habits, and supervisor-ready controls.
+          </p>
           <ul>
-            <li>OHSA employer/supervisor/worker duties</li>
-            <li>WSIB basics and reporting concepts</li>
-            <li>WHMIS responsibilities</li>
-            <li>Record retention and inspection readiness</li>
-            <li>Legislative reference appendix</li>
+            <li>Built for business owners and supervisors</li>
+            <li>Grayscale, inspection-ready layout</li>
+            <li>Templates and checklists designed for real operational use</li>
           </ul>
-        </div>
-        <div class="card">
-          <h3>Generator Libraries (B1–B6)</h3>
-          <ul>
-            <li>B1 – SOPs (equipment & tasks)</li>
-            <li>B2 – Programs & policies</li>
-            <li>B3 – Training & onboarding</li>
-            <li>B4 – Incidents, investigations & WSIB</li>
-            <li>B5 – Logs & checklists</li>
-            <li><strong>B6 – Verification & compliance tracking</strong></li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Governance & System Management</h3>
-          <ul>
-            <li>Compliance readiness self-assessment</li>
-            <li>Master compliance map</li>
-            <li>Version control & update framework</li>
-            <li>Worker communication & change management</li>
-            <li>Audit + corrective action oversight</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        </article>
 
-    <section id="delivery">
-      <h2>What Happens After Purchase</h2>
-      <p class="sub">You get immediate access and a clear workflow to follow.</p>
-      <div class="grid">
-        <div class="card"><h3>Checkout</h3><p class="sub">Purchase securely through Stripe.</p></div>
-        <div class="card"><h3>Access Email</h3><p class="sub">You receive an email with your access link.</p></div>
-        <div class="card"><h3>View-Only System</h3><p class="sub">Tier 2/3 are delivered as view-only Notion workspaces.</p></div>
-        <div class="card"><h3>Copy + Generate</h3><p class="sub">Copy pages into your workspace and run prompts in ChatGPT to generate drafts.</p></div>
-      </div>
-      <div class="note">Support (access issues only): <strong>info@naturalalternatives.ca</strong></div>
-    </section>
+        <aside class="panel">
+          <h2>Quick Start</h2>
+          <p><span class="badge">Step 1</span> Read the Foundation page.</p>
+          <p><span class="badge">Step 2</span> Implement the weekly checklist cadence.</p>
+          <p><span class="badge">Step 3</span> Assign responsibility and document actions.</p>
+        </aside>
+      </section>
 
-    <section id="license">
-      <h2>License Summary</h2>
-      <p class="sub">Choose the license scope that matches your operation.</p>
-      <div class="grid">
-        <div class="card">
-          <h3>Tier 2 — Single Operation</h3>
-          <ul>
-            <li>One employer / one operation</li>
-            <li>Internal use only</li>
-            <li>No resale or external sharing</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Tier 3 — Professional License</h3>
-          <ul>
-            <li>Multi-crew / multi-site internal use</li>
-            <li>Governance tools for oversight</li>
-            <li>No resale or external sharing</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="compare">
-      <h2>Tier Comparison</h2>
-      <p class="sub">Tier 2 is operational. Tier 3 adds governance and multi-site oversight.</p>
-      <table>
-        <thead>
-          <tr><th>Feature</th><th>Tier 1</th><th>Tier 2</th><th>Tier 3</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Compliance education (Ontario)</td><td>✔</td><td>✔</td><td>✔</td></tr>
-          <tr><td>AI prompt generators</td><td>❌</td><td>✔</td><td>✔</td></tr>
-          <tr><td>Verification & tracking (B6)</td><td>❌</td><td>✔</td><td>✔</td></tr>
-          <tr><td>Governance & audits</td><td>❌</td><td>Limited</td><td>✔</td></tr>
-          <tr><td>Multi-crew / multi-site</td><td>❌</td><td>❌</td><td>✔</td></tr>
-          <tr><td>Priority updates</td><td>❌</td><td>Standard</td><td>Priority</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section id="pricing">
-      <h2>Pricing</h2>
-      <p class="sub">One-time purchase. Digital delivery. Draft documentation only.</p>
-
-      <div class="pricing">
-        <div class="card">
-          <div class="tag">Tier 1</div>
-          <h3>Compliance Foundation Guide</h3>
-          <div class="price">$99</div>
-          <ul>
-            <li>Static Ontario reference guide</li>
-            <li>Inspection-aligned overview</li>
-            <li>Legislative reference appendix</li>
-            <li>No generators</li>
-          </ul>
-          <div class="row">
-            <a class="btn primary" href="https://buy.stripe.com/test_3cI3cu52fgTHc5z6k1fIs04">Buy Tier 1</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="tag">Tier 2</div>
-          <h3>Compliance Operating System™</h3>
-          <div class="price">$697</div>
-          <ul>
-            <li>B1–B6 generator libraries</li>
-            <li>Verification & tracking records</li>
-            <li>Governance foundations</li>
-            <li>Single operation license</li>
-          </ul>
-          <div class="row">
-            <a class="btn primary" href="https://buy.stripe.com/test_00wdR8fGTeLzglP37PfIs03">Buy Tier 2</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="tag">Tier 3</div>
-          <h3>Professional License & Governance</h3>
-          <div class="price">$1,997</div>
-          <ul>
-            <li>Multi-crew / multi-site use</li>
-            <li>Full governance module</li>
-            <li>Audit + corrective action oversight</li>
-            <li>Priority updates</li>
-          </ul>
-          <div class="row">
-            <a class="btn primary" href="https://buy.stripe.com/test_3cI28q52feLz6Lf7o5fIs02">Buy Tier 3</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="note">
-        <strong>Digital Policy:</strong> Access is delivered immediately. Refunds not provided after access is delivered except if access cannot be provided or corrected.
-        Support: <strong>info@naturalalternatives.ca</strong>
-      </div>
-    </section>
-
-    <section id="faq">
-      <h2>FAQ</h2>
-      <details>
-        <summary>Is this software or an automated tool?</summary>
-        <p class="sub">No. This is a prompt-driven compliance operating system. You manually run prompts in an AI tool to generate draft documents.</p>
-      </details>
-      <details>
-        <summary>Does this generate documents automatically?</summary>
-        <p class="sub">No. You copy a prompt, run it in ChatGPT (or similar), answer questions, then review and approve the draft output.</p>
-      </details>
-      <details>
-        <summary>Why is the system view-only?</summary>
-        <p class="sub">It’s view-only to protect the framework. You copy the pages you need into your own workspace and manage your operational documents privately.</p>
-      </details>
-      <details>
-        <summary>What is B6 verification and tracking?</summary>
-        <p class="sub">B6 generates inspection logs, training records, maintenance logs, corrective action trackers, and other proof-of-implementation records.</p>
-      </details>
-      <details>
-        <summary>What’s the difference between Tier 2 and Tier 3?</summary>
-        <p class="sub">Tier 2 is for one operation. Tier 3 adds multi-site licensing plus governance tools like readiness assessment, audit tracking, and version control.</p>
-      </details>
-      <details>
-        <summary>Is this legal advice or a compliance guarantee?</summary>
-        <p class="sub">No. Draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
-      </details>
-      <details>
-        <summary>What support is included?</summary>
-        <p class="sub">Support is limited to access and system-use clarification only. No consulting, document review, or inspector communication.</p>
-      </details>
-    </section>
-
-    <footer>
-      © <span id="y"></span> Ontario Compliance Operating System™ • Support: info@naturalalternatives.ca
-    </footer>
+      <footer class="site-footer">
+        <div>Draft Reference Guide — Employer Responsible for Implementation</div>
+        <div class="page-num">Tier 1 — Page 1</div>
+      </footer>
+    </main>
   </div>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
