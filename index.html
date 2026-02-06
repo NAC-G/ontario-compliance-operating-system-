@@ -7,366 +7,503 @@
   <meta name="description" content="Ontario Compliance Operating System™ — Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
   <style>
     :root{
-      /* Alternative greyscale (matches the cover vibe) */
+      /* Middle ground: alternative greyscale (cover-like, not pure black) */
       --bg:#3c3c3c;
-      --card:#424242;
+      --surface: rgba(255,255,255,.04);
+      --surface2: rgba(255,255,255,.03);
+      --border: rgba(255,255,255,.12);
+
       --text:#f5f5f5;
       --muted:#d2d2d2;
+      --muted2:#bfbfbf;
 
-      /* Brand neutrals */
-      --border:rgba(255,255,255,.12);
-
-      /* Natural Alternatives green (match cover line + leaf outline) */
+      /* Natural Alternatives green (match your cover accent) */
       --na-green:#7ac143;
 
-      /* Tier 1 rule: keep green controlled; buttons are grayscale */
-      --btn-bg:rgba(255,255,255,.08);
-      --btn-bg-hover:rgba(255,255,255,.12);
-      --btn-border:rgba(255,255,255,.16);
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 16px;
+      --max: 1120px;
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
     }
     a{color:inherit;text-decoration:none}
-    .wrap{max-width:1080px;margin:auto;padding:32px}
+    .wrap{max-width:var(--max); margin:auto; padding:40px 28px 70px;}
 
-    header{
-      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap
+    /* Header (cover-inspired) */
+    header.topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+      padding:18px 22px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      background: var(--surface2);
+      box-shadow: var(--shadow);
     }
 
     .brand{
-      display:flex;align-items:center;gap:12px;
-      font-weight:800;
-      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 260px;
+    }
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand-title strong{
+      font-size:14px;
+      letter-spacing:.4px;
+    }
+    .brand-title span{
+      font-size:12px;
+      color: var(--muted2);
     }
 
-    /* Badge stays grayscale */
+    /* Grey badge (not green) */
     .badge{
       border:1px solid var(--border);
-      padding:6px 10px;border-radius:999px;color:var(--muted);font-size:13px
+      padding:6px 10px;
+      border-radius:999px;
+      color: var(--muted2);
+      font-size:13px;
+      white-space:nowrap;
     }
 
-    .hero{padding:64px 0;display:grid;gap:18px}
-    h1{font-size:clamp(30px,5vw,52px);line-height:1.05;margin:0}
-    .sub{color:var(--muted);max-width:850px;font-size:18px;line-height:1.5}
+    /* Cover-style rail down the left */
+    main.rail{
+      margin-top: 26px;
+      position: relative;
+      padding-left: 28px;
+    }
+    main.rail::before{
+      content:"";
+      position:absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: rgba(255,255,255,.22);
+      border-radius: 999px;
+    }
 
-    /* Calls-to-action: grayscale buttons, not neon */
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+    /* Hero */
+    .hero{
+      padding: 76px 0 22px;
+      display:grid;
+      gap:14px;
+    }
+    h1{
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.08;
+      margin: 0;
+      letter-spacing:.2px;
+    }
+    .sub{
+      color: var(--muted);
+      max-width: 900px;
+      font-size: 18px;
+      margin:0;
+    }
+
+    /* One main green cue (like cover line) */
+    .accent-underline{
+      width: 160px;
+      height: 8px;
+      background: var(--na-green);
+      border-radius: 999px;
+      margin-top: 8px;
+    }
+
+    /* CTA: grayscale enterprise buttons */
+    .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top: 10px;}
     .btn{
-      background:var(--btn-bg);
-      color:var(--text);
-      padding:14px 18px;
-      border-radius:12px;
-      font-weight:800;
       display:inline-block;
-      border:1px solid var(--btn-border);
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
     }
-    .btn:hover{background:var(--btn-bg-hover)}
+    .btn:hover{ background: rgba(255,255,255,.12); }
     .btn.alt{
-      background:transparent;
-      color:var(--text);
-      border:1px solid var(--btn-border);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.16);
     }
 
-    /* Single controlled green connector (like your cover) */
-    .accent-line{
-      width:140px;height:8px;border-radius:999px;
-      background:var(--na-green);
-      margin-top:6px;
+    .small{
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.55;
+      margin: 8px 0 0;
     }
 
-    section{padding:56px 0;border-top:1px solid var(--border)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    /* Sections */
+    section{ padding: 46px 0; border-top: 1px solid var(--border); }
+
+    .section-head{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 26px;
+      letter-spacing:.2px;
+    }
+    .section-head .rule{
+      height:1px;
+      flex:1;
+      background: rgba(255,255,255,.12);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
 
     .card{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:20px
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
     }
 
-    h2{margin:0 0 8px 0;font-size:28px}
-    h3{margin:0 0 10px 0}
-    ul{padding-left:18px;margin:10px 0 0 0}
-    li{margin:6px 0}
+    h3{ margin: 0 0 10px 0; }
+    ul{ padding-left: 18px; margin: 10px 0 0 0; color: var(--muted); }
+    li{ margin: 6px 0; }
 
-    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:12px}
-    .price{font-size:38px;font-weight:900;margin:10px 0}
-    .small{font-size:13px;color:var(--muted);line-height:1.5}
+    /* Comparison table */
+    table{ width:100%; border-collapse: collapse; margin-top: 14px; overflow:hidden; border-radius: 12px; }
+    th, td{ border:1px solid var(--border); padding: 12px; text-align: left; }
+    th{ background: rgba(255,255,255,.03); color: var(--text); font-size: 13px; letter-spacing:.4px; text-transform: uppercase; }
+    td{ color: var(--muted); }
 
-    table{width:100%;border-collapse:collapse;margin-top:14px}
-    th,td{border:1px solid var(--border);padding:12px;text-align:left}
-    th{background:rgba(255,255,255,.03);color:var(--text)}
-    td{color:var(--muted)}
+    /* Pricing grid */
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .price{ font-size: 38px; font-weight: 900; margin: 10px 0; }
 
+    /* Buy buttons can be slightly stronger but stay grayscale */
+    .buy{
+      margin-top: 12px;
+      width: 100%;
+      text-align:center;
+      background: rgba(255,255,255,.10);
+    }
+
+    /* FAQ */
     details{
-      background:rgba(255,255,255,.04);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:14px 16px;
-      margin:10px 0
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      box-shadow: var(--shadow);
     }
-    summary{cursor:pointer;font-weight:800;color:var(--text)}
+    summary{ cursor:pointer; font-weight: 800; color: var(--text); }
 
-    footer{border-top:1px solid var(--border);padding:24px 0;color:var(--muted)}
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 22px 0;
+      color: var(--muted2);
+      margin-top: 34px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      font-size: 13px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 720px){
+      .wrap{ padding: 30px 18px 60px; }
+      main.rail{ padding-left: 22px; }
+      main.rail::before{ left: 4px; }
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <header>
-      <!-- Brand mark + title -->
+    <header class="topbar">
       <div class="brand">
-        <!-- Inline SVG so Git can’t “miss the file” -->
-        <!-- Leaf is OUTLINED in NA green; box + 'na' stay white -->
-        <svg width="54" height="40" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-label="Natural Alternatives mark" role="img">
+        <!-- Inline mark: leaf outlined green; rest white (no missing file risk) -->
+        <svg width="56" height="44" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg" aria-label="Natural Alternatives mark" role="img">
           <rect x="3" y="3" width="38" height="38" rx="10" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="2"/>
           <text x="16" y="29" font-family="Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif"
                 font-size="16" font-weight="800" fill="rgba(255,255,255,0.90)">na</text>
 
-          <!-- Leaf OUTLINE ONLY -->
+          <!-- Leaf OUTLINE ONLY (green) -->
           <path d="M18 12
                    C14 12, 11.5 14.5, 11.5 18
                    C11.5 22, 15 25, 18.5 26
                    C22 25, 25.5 22, 25.5 18
                    C25.5 14.5, 23 12, 18 12 Z"
-                fill="none" stroke="#7ac143" stroke-width="2.6" stroke-linejoin="round"/>
-
+                fill="none" stroke="#7ac143" stroke-width="2.8" stroke-linejoin="round"/>
           <path d="M18.5 13.5 C18 18, 17 22, 14.2 24.6"
-                fill="none" stroke="#7ac143" stroke-width="1.9" stroke-linecap="round" opacity="0.9"/>
+                fill="none" stroke="#7ac143" stroke-width="2.0" stroke-linecap="round" opacity="0.95"/>
         </svg>
 
-        <strong>Ontario Compliance Operating System™</strong>
+        <div class="brand-title">
+          <strong>Ontario Compliance Operating System™</strong>
+          <span>Ontario-Aligned • Inspection-Ready Structure • Prompt-Driven</span>
+        </div>
       </div>
 
-      <span class="badge">Ontario-Aligned • Inspection-Ready Structure • Prompt-Driven</span>
+      <span class="badge">Draft Documentation Only • Employer Responsible</span>
     </header>
 
-    <!-- HERO -->
-    <div class="hero">
-      <h1>Generate, Track, and Maintain<br/>Ontario Compliance Without Rewriting</h1>
-      <p class="sub">
-        This is not a template pack. It’s a structured compliance operating system built for Ontario employers.
-        Generate draft SOPs, programs, training documents, and verification records using guided prompts — then track implementation and updates over time.
-      </p>
+    <main class="rail">
+      <!-- HERO -->
+      <div class="hero">
+        <h1>Generate, Track, and Maintain<br/>Ontario Compliance Without Rewriting</h1>
+        <p class="sub">
+          This is not a template pack. It’s a structured compliance operating system built for Ontario employers.
+          Generate draft SOPs, programs, training documents, and verification records using guided prompts — then track implementation and updates over time.
+        </p>
 
-      <!-- single green connector (matches cover line logic) -->
-      <div class="accent-line" aria-hidden="true"></div>
+        <!-- Cover-style green connector -->
+        <div class="accent-underline" aria-hidden="true"></div>
 
-      <div class="cta">
-        <a class="btn" href="#pricing">View Pricing</a>
-        <a class="btn alt" href="#how">How It Works</a>
-        <a class="btn alt" href="#compare">Compare Tiers</a>
+        <div class="cta">
+          <a class="btn" href="#pricing">View Pricing</a>
+          <a class="btn alt" href="#how">How It Works</a>
+          <a class="btn alt" href="#compare">Compare Tiers</a>
+        </div>
+
+        <p class="small">
+          <strong>Important:</strong> Draft documentation only. Employer review, approval, and implementation are required. No legal advice.
+        </p>
       </div>
 
-      <p class="small">
-        <strong>Important:</strong> Draft documentation only. Employer review, approval, and implementation are required. No legal advice.
-      </p>
-    </div>
+      <!-- PROBLEM -->
+      <section id="problem">
+        <div class="section-head">
+          <h2>The Real Problem</h2><div class="rule"></div>
+        </div>
+        <p class="sub">Compliance fails because documents go stale. Static templates don’t adapt when equipment, tasks, crews, or operations change.</p>
+        <div class="grid" style="margin-top:14px;">
+          <div class="card">SOPs don’t match real work</div>
+          <div class="card">Logs and records aren’t tracked</div>
+          <div class="card">Training proof is inconsistent</div>
+          <div class="card">Inspections create panic</div>
+        </div>
+      </section>
 
-    <!-- PROBLEM -->
-    <section id="problem">
-      <h2>The Real Problem</h2>
-      <p class="sub">Compliance fails because documents go stale. Static templates don’t adapt when equipment, tasks, crews, or operations change.</p>
-      <div class="grid">
-        <div class="card">SOPs don’t match real work</div>
-        <div class="card">Logs and records aren’t tracked</div>
-        <div class="card">Training proof is inconsistent</div>
-        <div class="card">Inspections create panic</div>
-      </div>
-    </section>
+      <!-- HOW -->
+      <section id="how">
+        <div class="section-head">
+          <h2>How the System Works</h2><div class="rule"></div>
+        </div>
+        <p class="sub">
+          You use the generators to create draft compliance documents. The system is delivered in Notion as a view-only workspace.
+          You copy what you need into your own workspace, run prompts in an AI tool, and implement internally.
+        </p>
+        <div class="grid" style="margin-top:14px;">
+          <div class="card"><strong>1.</strong> Choose the generator (B1–B6)</div>
+          <div class="card"><strong>2.</strong> Copy the prompt into ChatGPT (or similar)</div>
+          <div class="card"><strong>3.</strong> Answer questions about your operation</div>
+          <div class="card"><strong>4.</strong> Review, approve, implement, and track</div>
+        </div>
+        <p class="small">AI drafts the documentation. You remain responsible for accuracy, approval, training, and implementation.</p>
+      </section>
 
-    <!-- HOW -->
-    <section id="how">
-      <h2>How the System Works</h2>
-      <p class="sub">
-        You use the generators to create draft compliance documents. The system is delivered in Notion as a view-only workspace.
-        You copy what you need into your own workspace, run prompts in an AI tool, and implement internally.
-      </p>
-      <div class="grid">
-        <div class="card"><strong>1.</strong> Choose the generator (B1–B6)</div>
-        <div class="card"><strong>2.</strong> Copy the prompt into ChatGPT (or similar)</div>
-        <div class="card"><strong>3.</strong> Answer questions about your operation</div>
-        <div class="card"><strong>4.</strong> Review, approve, implement, and track</div>
-      </div>
-      <p class="small">
-        AI drafts the documentation. You remain responsible for accuracy, approval, training, and implementation.
-      </p>
-    </section>
-
-    <!-- INCLUDED -->
-    <section id="included">
-      <h2>What’s Included</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Core Ontario Compliance Guide</h3>
-          <ul>
-            <li>OHSA employer/supervisor/worker duties</li>
-            <li>WSIB basics and reporting concepts</li>
-            <li>WHMIS responsibilities</li>
-            <li>Record retention and inspection readiness</li>
-            <li>Legislative reference appendix</li>
-          </ul>
+      <!-- INCLUDED -->
+      <section id="included">
+        <div class="section-head">
+          <h2>What’s Included</h2><div class="rule"></div>
         </div>
 
-        <div class="card">
-          <h3>Compliance Generator Library (B1–B6)</h3>
-          <ul>
-            <li>B1 – SOPs (equipment & tasks)</li>
-            <li>B2 – Programs & policies</li>
-            <li>B3 – Training & onboarding</li>
-            <li>B4 – Incidents, investigations & WSIB docs</li>
-            <li>B5 – Logs & checklists</li>
-            <li><strong>B6 – Verification & tracking tools</strong></li>
-          </ul>
+        <div class="grid">
+          <div class="card">
+            <h3>Core Ontario Compliance Guide</h3>
+            <ul>
+              <li>OHSA employer/supervisor/worker duties</li>
+              <li>WSIB basics and reporting concepts</li>
+              <li>WHMIS responsibilities</li>
+              <li>Record retention and inspection readiness</li>
+              <li>Legislative reference appendix</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Compliance Generator Library (B1–B6)</h3>
+            <ul>
+              <li>B1 – SOPs (equipment & tasks)</li>
+              <li>B2 – Programs & policies</li>
+              <li>B3 – Training & onboarding</li>
+              <li>B4 – Incidents, investigations & WSIB docs</li>
+              <li>B5 – Logs & checklists</li>
+              <li><strong>B6 – Verification & tracking tools</strong></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Governance & System Management</h3>
+            <ul>
+              <li>Compliance readiness self-assessment</li>
+              <li>Master compliance map</li>
+              <li>Version control & update framework</li>
+              <li>Worker communication & change management</li>
+              <li>Audit + corrective action oversight</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPARISON -->
+      <section id="compare">
+        <div class="section-head">
+          <h2>Tier Comparison</h2><div class="rule"></div>
+        </div>
+        <p class="sub">Choose the tier that matches your operational size and governance needs.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Tier 1</th>
+              <th>Tier 2</th>
+              <th>Tier 3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Compliance education (Ontario)</td><td>✔</td><td>✔</td><td>✔</td></tr>
+            <tr><td>AI prompt generators</td><td>❌</td><td>✔</td><td>✔</td></tr>
+            <tr><td>Verification & tracking (B6)</td><td>❌</td><td>✔</td><td>✔</td></tr>
+            <tr><td>Governance module & audits</td><td>❌</td><td>Limited</td><td>✔</td></tr>
+            <tr><td>Single operation license</td><td>✔</td><td>✔</td><td>✔</td></tr>
+            <tr><td>Multi-crew / multi-site use</td><td>❌</td><td>❌</td><td>✔</td></tr>
+            <tr><td>Priority updates</td><td>❌</td><td>Standard</td><td>Priority</td></tr>
+          </tbody>
+        </table>
+
+        <p class="small">
+          Tier 2 is designed for a single operation. Tier 3 is designed for organizations that need consistent governance across crews or locations.
+        </p>
+      </section>
+
+      <!-- PRICING -->
+      <section id="pricing">
+        <div class="section-head">
+          <h2>Pricing</h2><div class="rule"></div>
         </div>
 
-        <div class="card">
-          <h3>Governance & System Management</h3>
-          <ul>
-            <li>Compliance readiness self-assessment</li>
-            <li>Master compliance map</li>
-            <li>Version control & update framework</li>
-            <li>Worker communication & change management</li>
-            <li>Audit + corrective action oversight</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+        <p class="small">
+          <strong>Important:</strong> Draft compliance documentation only. The employer must review, approve, and implement all materials.
+          No legal advice. No inspector communication. No customization included.
+        </p>
 
-    <!-- COMPARISON -->
-    <section id="compare">
-      <h2>Tier Comparison</h2>
-      <p class="sub">Choose the tier that matches your operational size and governance needs.</p>
+        <div class="pricing">
+          <div class="card">
+            <h3>Tier 1 — Compliance Foundation Guide</h3>
+            <div class="price">$99</div>
+            <ul>
+              <li>Static Ontario compliance reference</li>
+              <li>Inspection-aligned overview</li>
+              <li>Legislative reference appendix</li>
+              <li>No generators</li>
+            </ul>
+            <a class="btn buy" href="https://buy.stripe.com/test_3cI3cu52fgTHc5z6k1fIs04">Buy Tier 1</a>
+          </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Tier 1</th>
-            <th>Tier 2</th>
-            <th>Tier 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Compliance education (Ontario)</td><td>✔</td><td>✔</td><td>✔</td></tr>
-          <tr><td>AI prompt generators</td><td>❌</td><td>✔</td><td>✔</td></tr>
-          <tr><td>Verification & tracking (B6)</td><td>❌</td><td>✔</td><td>✔</td></tr>
-          <tr><td>Governance module & audits</td><td>❌</td><td>Limited</td><td>✔</td></tr>
-          <tr><td>Single operation license</td><td>✔</td><td>✔</td><td>✔</td></tr>
-          <tr><td>Multi-crew / multi-site use</td><td>❌</td><td>❌</td><td>✔</td></tr>
-          <tr><td>Priority updates</td><td>❌</td><td>Standard</td><td>Priority</td></tr>
-        </tbody>
-      </table>
+          <div class="card">
+            <h3>Tier 2 — Compliance Operating System™</h3>
+            <div class="price">$697</div>
+            <ul>
+              <li>B1–B6 generator libraries</li>
+              <li>Verification & tracking records</li>
+              <li>Governance foundations</li>
+              <li>Single operation license</li>
+            </ul>
+            <a class="btn buy" href="https://buy.stripe.com/test_00wdR8fGTeLzglP37PfIs03">Buy Tier 2</a>
+          </div>
 
-      <p class="small">
-        Tier 2 is designed for a single operation. Tier 3 is designed for organizations that need consistent governance across crews or locations.
-      </p>
-    </section>
-
-    <!-- PRICING -->
-    <section id="pricing">
-      <h2>Pricing</h2>
-      <p class="small">
-        <strong>Important:</strong> Draft compliance documentation only. The employer must review, approve, and implement all materials.
-        No legal advice. No inspector communication. No customization included.
-      </p>
-
-      <div class="pricing">
-        <div class="card">
-          <h3>Tier 1 — Compliance Foundation Guide</h3>
-          <div class="price">$99</div>
-          <ul>
-            <li>Static Ontario compliance reference</li>
-            <li>Inspection-aligned overview</li>
-            <li>Legislative reference appendix</li>
-            <li>No generators</li>
-          </ul>
-          <a class="btn" href="https://buy.stripe.com/test_3cI3cu52fgTHc5z6k1fIs04">Buy Tier 1</a>
+          <div class="card">
+            <h3>Tier 3 — Professional License & Governance</h3>
+            <div class="price">$1,997</div>
+            <ul>
+              <li>Multi-crew / multi-site use</li>
+              <li>Full governance module</li>
+              <li>Audit + corrective action oversight</li>
+              <li>Priority updates</li>
+            </ul>
+            <a class="btn buy" href="https://buy.stripe.com/test_3cI28q52feLz6Lf7o5fIs02">Buy Tier 3</a>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Tier 2 — Compliance Operating System™</h3>
-          <div class="price">$697</div>
-          <ul>
-            <li>B1–B6 generator libraries</li>
-            <li>Verification & tracking records</li>
-            <li>Governance foundations</li>
-            <li>Single operation license</li>
-          </ul>
-          <a class="btn" href="https://buy.stripe.com/test_00wdR8fGTeLzglP37PfIs03">Buy Tier 2</a>
+        <p class="small">Need multi-site consistency or leadership oversight? Tier 3 adds governance and expanded internal licensing.</p>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <div class="section-head">
+          <h2>FAQ</h2><div class="rule"></div>
         </div>
+        <p class="sub">Clear answers to reduce confusion and prevent mismatched expectations.</p>
 
-        <div class="card">
-          <h3>Tier 3 — Professional License & Governance</h3>
-          <div class="price">$1,997</div>
-          <ul>
-            <li>Multi-crew / multi-site use</li>
-            <li>Full governance module</li>
-            <li>Audit + corrective action oversight</li>
-            <li>Priority updates</li>
-          </ul>
-          <a class="btn" href="https://buy.stripe.com/test_3cI28q52feLz6Lf7o5fIs02">Buy Tier 3</a>
-        </div>
-      </div>
+        <details>
+          <summary>Is this software or an automated tool?</summary>
+          <p class="small">No. This is a prompt-driven compliance operating system. You manually run prompts in an AI tool to generate draft documents.</p>
+        </details>
 
-      <p class="small">
-        Need multi-site consistency or leadership oversight? Tier 3 adds governance and expanded internal licensing.
-      </p>
-    </section>
+        <details>
+          <summary>Does this generate documents automatically?</summary>
+          <p class="small">No. You copy a prompt, run it in ChatGPT (or similar), answer questions, then review and approve the draft output.</p>
+        </details>
 
-    <!-- FAQ -->
-    <section id="faq">
-      <h2>FAQ</h2>
-      <p class="sub">Clear answers to reduce confusion and prevent mismatched expectations.</p>
+        <details>
+          <summary>Why is the system view-only?</summary>
+          <p class="small">It’s view-only to protect the framework. You copy the pages you need into your own workspace and manage your operational documents privately.</p>
+        </details>
 
-      <details>
-        <summary>Is this software or an automated tool?</summary>
-        <p class="small">No. This is a prompt-driven compliance operating system. You manually run prompts in an AI tool to generate draft documents.</p>
-      </details>
+        <details>
+          <summary>What is B6 verification and tracking?</summary>
+          <p class="small">B6 helps you generate inspection logs, training records, maintenance logs, corrective action trackers, and other proof-of-implementation records.</p>
+        </details>
 
-      <details>
-        <summary>Does this generate documents automatically?</summary>
-        <p class="small">No. You copy a prompt, run it in ChatGPT (or similar), answer questions, then review and approve the draft output.</p>
-      </details>
+        <details>
+          <summary>What’s the difference between Tier 2 and Tier 3?</summary>
+          <p class="small">Tier 2 is for one operation. Tier 3 adds multi-crew/multi-site licensing plus governance tools like readiness assessment, audit tracking, and version control.</p>
+        </details>
 
-      <details>
-        <summary>Why is the system view-only?</summary>
-        <p class="small">It’s view-only to protect the framework. You copy the pages you need into your own workspace and manage your operational documents privately.</p>
-      </details>
+        <details>
+          <summary>Is this legal advice or a compliance guarantee?</summary>
+          <p class="small">No. This system provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
+        </details>
 
-      <details>
-        <summary>What is B6 verification and tracking?</summary>
-        <p class="small">B6 helps you generate inspection logs, training records, maintenance logs, corrective action trackers, and other proof-of-implementation records.</p>
-      </details>
+        <details>
+          <summary>What support is included?</summary>
+          <p class="small">Support is limited to access and system-use clarification only. No compliance consulting, document review, or inspector communication is included.</p>
+        </details>
 
-      <details>
-        <summary>What’s the difference between Tier 2 and Tier 3?</summary>
-        <p class="small">Tier 2 is for one operation. Tier 3 adds multi-crew/multi-site licensing plus governance tools like readiness assessment, audit tracking, and version control.</p>
-      </details>
+        <p class="small">Support (access issues only): <strong>info@naturalalternatives.ca</strong></p>
+      </section>
 
-      <details>
-        <summary>Is this legal advice or a compliance guarantee?</summary>
-        <p class="small">No. This system provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
-      </details>
-
-      <details>
-        <summary>What support is included?</summary>
-        <p class="small">Support is limited to access and system-use clarification only. No compliance consulting, document review, or inspector communication is included.</p>
-      </details>
-
-      <p class="small">
-        Support (access issues only): <strong>info@naturalalternatives.ca</strong>
-      </p>
-    </section>
-
-    <footer>
-      <p>© <span id="y"></span> Ontario Compliance Operating System™</p>
-    </footer>
+      <footer>
+        <div>© <span id="y"></span> Ontario Compliance Operating System™</div>
+        <div>Draft Reference — Employer Responsible for Implementation</div>
+      </footer>
+    </main>
   </div>
 
   <script>
