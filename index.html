@@ -4,15 +4,293 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Ontario Compliance Foundation Guide — Tier 1</title>
-  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    :root{
+      --bg: #3c3c3c;           /* alternative light-charcoal */
+      --panel: #424242;
+      --text: #f5f5f5;
+      --muted: #d2d2d2;
+      --muted2:#bfbfbf;
+      --line: #6f6f6f;
+      --lineSoft: rgba(255,255,255,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 14px;
+
+      /* Natural Alternatives green */
+      --na-green: #7ac143;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.55;
+    }
+
+    .wrap{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 40px 28px 70px;
+    }
+
+    /* Header mirrors cover: mark left + strong nav */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding: 18px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 260px;
+    }
+
+    .brand-mark{
+      width: 56px;
+      height: 44px;
+      display:grid;
+      place-items:center;
+    }
+
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .brand-title strong{
+      font-size:14px;
+      letter-spacing:.4px;
+      color: var(--text);
+    }
+    .brand-title span{
+      font-size:12px;
+      color: var(--muted2);
+    }
+
+    /* Nav stays GREY — we don’t use green here */
+    nav{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      text-decoration:none;
+      color: var(--muted);
+      font-size:14px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      position:relative;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    nav a[aria-current="true"]{
+      color: var(--text);
+      border-color: rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    nav a[aria-current="true"]::after{
+      content:"";
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:4px;
+      height:2px;
+      background: rgba(255,255,255,.30); /* GREY underline */
+      border-radius: 999px;
+    }
+
+    /* Cover-mirror vertical rail */
+    .rail{
+      margin-top: 26px;
+      position:relative;
+      padding-left: 28px;
+    }
+    .rail::before{
+      content:"";
+      position:absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: rgba(255,255,255,.22);
+      border-radius: 999px;
+    }
+
+    .hero{
+      padding: 82px 0 26px;
+    }
+    h1{
+      margin: 0 0 14px;
+      font-size: clamp(38px, 5vw, 58px);
+      letter-spacing:.2px;
+      line-height:1.08;
+    }
+    .subtitle{
+      margin: 0;
+      font-size: 20px;
+      color: var(--muted);
+      max-width: 860px;
+    }
+
+    /* SINGLE GREEN CONNECTOR ON COVER AREA (like your cover) */
+    .accent-underline{
+      margin-top: 18px;
+      width: 160px;
+      height: 8px;
+      background: var(--na-green);
+      border-radius: 999px;
+    }
+
+    .panel{
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .grid{
+      display:grid;
+      gap: 18px;
+      grid-template-columns: 1.35fr .65fr;
+      margin-top: 14px;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    h2{
+      margin:0 0 10px;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    p{ margin:0 0 12px; color: var(--muted); }
+    ul{ margin:10px 0 0 18px; color: var(--muted); }
+    li{ margin: 6px 0; }
+
+    .badge{
+      display:inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      color: var(--muted2);
+      font-size: 12px;
+    }
+
+    /* Section blocks */
+    .section{
+      margin-top: 22px;
+    }
+    .section-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin: 34px 0 12px;
+    }
+    .section-head .kicker{
+      color: var(--muted2);
+      font-size: 12px;
+      letter-spacing:.45px;
+      text-transform: uppercase;
+    }
+    .section-head .rule{
+      height:1px;
+      flex:1;
+      background: rgba(255,255,255,.12);
+    }
+
+    /* Interior green cue removed intentionally to avoid extra green.
+       If you want it, we can switch it back on — but right now you asked for
+       the leaf to be the green brand connector plus the cover underline. */
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 12px;
+    }
+    th, td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      vertical-align: top;
+    }
+    th{
+      text-align:left;
+      font-size: 13px;
+      color: var(--muted2);
+      letter-spacing:.4px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.03);
+    }
+    td{
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Footer mirrors cover footer */
+    footer{
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      color: var(--muted2);
+      font-size: 13px;
+      display:flex;
+      justify-content:space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Anchor offset for sticky header feel */
+    .anchor{ scroll-margin-top: 120px; }
+  </style>
 </head>
+
 <body>
   <div class="wrap">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark">
-          <img src="NA-ICON-LeafOutline-Green.png" alt="Natural Alternatives mark"/>
+        <div class="brand-mark" aria-label="Natural Alternatives mark">
+          <!-- INLINE SVG: ONLY the leaf is outlined in NA green -->
+          <svg width="56" height="44" viewBox="0 0 56 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Natural Alternatives">
+            <!-- Rounded square (white) -->
+            <rect x="3" y="3" width="38" height="38" rx="10" stroke="rgba(255,255,255,0.85)" stroke-width="2"/>
+            <!-- "na" (white) -->
+            <text x="10" y="29" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+                  font-size="16" font-weight="700" fill="rgba(255,255,255,0.90)">na</text>
+
+            <!-- Leaf OUTLINE ONLY (green stroke, no fill) -->
+            <!-- Simple leaf outline in top-left of the mark -->
+            <path d="M18 12
+                     C14 12, 11.5 14.5, 11.5 18
+                     C11.5 22, 15 25, 18.5 26
+                     C22 25, 25.5 22, 25.5 18
+                     C25.5 14.5, 23 12, 18 12 Z"
+                  stroke="#7ac143" stroke-width="2.2" fill="none" opacity="0.95"/>
+            <!-- Leaf vein line (also green outline; still part of leaf) -->
+            <path d="M18.5 13.5 C18 18, 17 22, 14.2 24.6"
+                  stroke="#7ac143" stroke-width="1.6" fill="none" opacity="0.85" stroke-linecap="round"/>
+          </svg>
         </div>
+
         <div class="brand-title">
           <strong>Natural Alternatives</strong>
           <span>Ontario Compliance Foundation — Tier 1</span>
@@ -20,18 +298,19 @@
       </div>
 
       <nav aria-label="Primary">
-        <a href="index.html" aria-current="page">Overview</a>
-        <a href="guide.html">Foundation</a>
-        <a href="checklist.html">Checklists</a>
+        <a href="#overview" aria-current="true">Overview</a>
+        <a href="#foundation" aria-current="false">Foundation</a>
+        <a href="#checklists" aria-current="false">Checklists</a>
       </nav>
     </header>
 
-    <main class="cover-rail">
-      <section class="hero">
+    <main class="rail">
+      <!-- COVER / OVERVIEW -->
+      <section class="hero anchor" id="overview">
         <h1>Ontario Compliance<br/>Foundation Guide</h1>
         <p class="subtitle">A Practical Reference for Ontario Employers</p>
 
-        <!-- THE ONE GREEN ELEMENT ON THIS PAGE -->
+        <!-- Green connector (matches your cover) -->
         <div class="accent-underline" aria-hidden="true"></div>
       </section>
 
@@ -39,29 +318,133 @@
         <article class="panel">
           <h2>What this Tier 1 Guide is</h2>
           <p>
-            A clean, practical foundation layer that helps Ontario employers structure compliance
-            duties, documentation habits, and supervisor-ready controls.
+            A clean, practical foundation layer that helps Ontario employers structure compliance duties,
+            documentation habits, and supervisor-ready controls in an inspection-friendly format.
           </p>
           <ul>
             <li>Built for business owners and supervisors</li>
-            <li>Grayscale, inspection-ready layout</li>
-            <li>Templates and checklists designed for real operational use</li>
+            <li>Grayscale, enterprise-grade, audit-ready presentation</li>
+            <li>Simple cadence: daily notes, weekly checks, monthly review</li>
           </ul>
         </article>
 
         <aside class="panel">
           <h2>Quick Start</h2>
-          <p><span class="badge">Step 1</span> Read the Foundation page.</p>
+          <p><span class="badge">Step 1</span> Read the Foundation section.</p>
           <p><span class="badge">Step 2</span> Implement the weekly checklist cadence.</p>
           <p><span class="badge">Step 3</span> Assign responsibility and document actions.</p>
         </aside>
       </section>
 
-      <footer class="site-footer">
+      <!-- FOUNDATION -->
+      <div class="section anchor" id="foundation">
+        <div class="section-head">
+          <div class="kicker">Foundation</div>
+          <div class="rule"></div>
+        </div>
+
+        <section class="panel">
+          <h2>Core Principle</h2>
+          <p>
+            Compliance success is created by repeatable habits: assign responsibility, document actions,
+            verify controls, and correct gaps quickly.
+          </p>
+
+          <h2>Minimum System (Tier 1)</h2>
+          <ul>
+            <li><strong>Owner / Officer:</strong> accountability, resources, review cadence</li>
+            <li><strong>Supervisor:</strong> daily checks, worker orientation, corrective actions</li>
+            <li><strong>Workers:</strong> follow procedures, report hazards, use PPE</li>
+          </ul>
+        </section>
+
+        <section class="panel" style="margin-top:18px;">
+          <h2>Documentation Cadence</h2>
+          <ul>
+            <li><strong>Daily:</strong> pre-job hazard review + basic inspection notes</li>
+            <li><strong>Weekly:</strong> checklist sign-off + corrective action log</li>
+            <li><strong>Monthly:</strong> supervisor review + training refresh summary</li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- CHECKLISTS -->
+      <div class="section anchor" id="checklists">
+        <div class="section-head">
+          <div class="kicker">Checklists</div>
+          <div class="rule"></div>
+        </div>
+
+        <section class="panel">
+          <h2>Weekly Supervisor Checklist</h2>
+          <p>Use this once per week. Sign and retain with corrective actions.</p>
+
+          <table aria-label="Weekly checklist">
+            <thead>
+              <tr>
+                <th style="width:22%;">Category</th>
+                <th>Check</th>
+                <th style="width:18%;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Orientation</td>
+                <td>New workers oriented; roles and hazards reviewed</td>
+                <td><span class="badge">OK / Fix</span></td>
+              </tr>
+              <tr>
+                <td>PPE</td>
+                <td>PPE available, used, and replaced as needed</td>
+                <td><span class="badge">OK / Fix</span></td>
+              </tr>
+              <tr>
+                <td>Housekeeping</td>
+                <td>Work areas clear; slip/trip hazards controlled</td>
+                <td><span class="badge">OK / Fix</span></td>
+              </tr>
+              <tr>
+                <td>Equipment</td>
+                <td>Inspections documented; defects removed from service</td>
+                <td><span class="badge">OK / Fix</span></td>
+              </tr>
+              <tr>
+                <td>Incidents</td>
+                <td>Near-misses logged; corrective actions assigned</td>
+                <td><span class="badge">OK / Fix</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="panel" style="margin-top:18px;">
+          <h2>Corrective Action Log (Minimum Fields)</h2>
+          <ul>
+            <li>Issue / Hazard</li>
+            <li>Immediate control</li>
+            <li>Permanent corrective action</li>
+            <li>Owner + due date</li>
+            <li>Verification signature</li>
+          </ul>
+        </section>
+      </div>
+
+      <footer>
         <div>Draft Reference Guide — Employer Responsible for Implementation</div>
-        <div class="page-num">Tier 1 — Page 1</div>
+        <div>Tier 1 — Single Page</div>
       </footer>
     </main>
   </div>
+
+  <script>
+    // Tiny script to update nav active state on click (keeps nav grey-only)
+    const links = document.querySelectorAll('nav a');
+    links.forEach(a => {
+      a.addEventListener('click', () => {
+        links.forEach(x => x.setAttribute('aria-current','false'));
+        a.setAttribute('aria-current','true');
+      });
+    });
+  </script>
 </body>
 </html>
