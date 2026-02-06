@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Foundation — Ontario Compliance Foundation Guide</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="NA-ICON-LeafOutline-Green.png" alt="Natural Alternatives mark"/>
+        </div>
+        <div class="brand-title">
+          <strong>Natural Alternatives</strong>
+          <span>Ontario Compliance Foundation — Tier 1</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="index.html">Overview</a>
+        <a href="guide.html" aria-current="page">Foundation</a>
+        <a href="checklist.html">Checklists</a>
+      </nav>
+    </header>
+
+    <main class="cover-rail">
+      <!-- THE ONE GREEN ELEMENT ON THIS PAGE -->
+      <div class="section-cue" role="note" aria-label="Section cue">
+        <div class="tick" aria-hidden="true"></div>
+        <div class="label">Foundation Controls</div>
+      </div>
+
+      <section class="panel">
+        <h2>Core Principle</h2>
+        <p>
+          Compliance success is created by repeatable habits: assign responsibility, document actions,
+          verify controls, and correct gaps fast.
+        </p>
+
+        <h2>Minimum System (Tier 1)</h2>
+        <ul>
+          <li><strong>Owner / Officer:</strong> accountability, resources, review cadence</li>
+          <li><strong>Supervisor:</strong> daily checks, worker orientation, corrective actions</li>
+          <li><strong>Workers:</strong> follow procedures, report hazards, use PPE</li>
+        </ul>
+      </section>
+
+      <section class="panel" style="margin-top:18px;">
+        <h2>Documentation Cadence</h2>
+        <ul>
+          <li>Daily: pre-job hazard review + basic inspection notes</li>
+          <li>Weekly: checklist sign-off + corrective action log</li>
+          <li>Monthly: supervisor review + training refresh summary</li>
+        </ul>
+      </section>
+
+      <footer class="site-footer">
+        <div>Draft Reference Guide — Employer Responsible for Implementation</div>
+        <div class="page-num">Tier 1 — Page 2</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

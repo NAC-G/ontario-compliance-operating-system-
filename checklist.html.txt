@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Checklists — Ontario Compliance Foundation Guide</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">
+          <img src="NA-ICON-LeafOutline-Green.png" alt="Natural Alternatives mark"/>
+        </div>
+        <div class="brand-title">
+          <strong>Natural Alternatives</strong>
+          <span>Ontario Compliance Foundation — Tier 1</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="index.html">Overview</a>
+        <a href="guide.html">Foundation</a>
+        <a href="checklist.html" aria-current="page">Checklists</a>
+      </nav>
+    </header>
+
+    <main class="cover-rail">
+      <!-- THE ONE GREEN ELEMENT ON THIS PAGE -->
+      <div class="section-cue" role="note" aria-label="Section cue">
+        <div class="tick" aria-hidden="true"></div>
+        <div class="label">Weekly Compliance Checklist</div>
+      </div>
+
+      <section class="panel">
+        <h2>Weekly Supervisor Checklist</h2>
+        <p>Use this once per week. Sign and retain with corrective actions.</p>
+
+        <table class="table" aria-label="Weekly checklist">
+          <thead>
+            <tr>
+              <th style="width:22%;">Category</th>
+              <th>Check</th>
+              <th style="width:18%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Orientation</td>
+              <td>New workers oriented; roles and hazards reviewed</td>
+              <td><span class="badge">OK / Fix</span></td>
+            </tr>
+            <tr>
+              <td>PPE</td>
+              <td>PPE available, used, and replaced as needed</td>
+              <td><span class="badge">OK / Fix</span></td>
+            </tr>
+            <tr>
+              <td>Housekeeping</td>
+              <td>Work areas clear; slip/trip hazards controlled</td>
+              <td><span class="badge">OK / Fix</span></td>
+            </tr>
+            <tr>
+              <td>Equipment</td>
+              <td>Inspections documented; defects removed from service</td>
+              <td><span class="badge">OK / Fix</span></td>
+            </tr>
+            <tr>
+              <td>Incidents</td>
+              <td>Near-misses logged; corrective actions assigned</td>
+              <td><span class="badge">OK / Fix</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel" style="margin-top:18px;">
+        <h2>Corrective Action Log (Minimum Fields)</h2>
+        <ul>
+          <li>Issue / Hazard</li>
+          <li>Immediate control</li>
+          <li>Permanent corrective action</li>
+          <li>Owner + due date</li>
+          <li>Verification signature</li>
+        </ul>
+      </section>
+
+      <footer class="site-footer">
+        <div>Draft Reference Guide — Employer Responsible for Implementation</div>
+        <div class="page-num">Tier 1 — Page 3</div>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

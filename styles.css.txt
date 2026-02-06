@@ -1,0 +1,280 @@
+/* =========================================================
+   Natural Alternatives — Tier 1 (Grayscale + Single Green)
+   BRAND RULE (Tier 1): Use NA green exactly ONCE per viewport.
+   Implementation:
+   - Nav active indicator is GREY (never green).
+   - Each page uses ONE green element:
+     * index.html: subtitle underline
+     * guide.html + checklist.html: a single section cue tick
+   - Brand mark: leaf-outline green inside the icon (asset), not CSS.
+   ========================================================= */
+
+:root{
+  --bg: #3c3c3c;           /* light charcoal */
+  --panel: #424242;        /* slightly lighter charcoal */
+  --text: #f5f5f5;         /* main text */
+  --muted: #d2d2d2;        /* secondary text */
+  --muted2: #bfbfbf;       /* tertiary text */
+  --line: #8c8c8c;         /* line accents */
+  --line2: #6f6f6f;        /* softer lines */
+  --na-green: #7ac143;     /* Natural Alternatives green */
+  --radius: 14px;
+  --max: 1120px;
+  --shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.wrap{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 40px 28px 70px;
+}
+
+/* Header mirrors cover: mark at left + clean nav */
+.topbar{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+  border: 1px solid var(--line2);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.03);
+  box-shadow: var(--shadow);
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 240px;
+}
+
+.brand-mark{
+  width: 56px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+.brand-mark img{
+  width: 56px;
+  height: auto;
+  display: block;
+}
+
+.brand-title{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.brand-title strong{
+  font-size: 14px;
+  letter-spacing: .4px;
+  color: var(--text);
+}
+.brand-title span{
+  font-size: 12px;
+  color: var(--muted2);
+}
+
+/* Nav = GREY ONLY (keeps the "one green use" rule clean) */
+nav{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+nav a{
+  position: relative;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+nav a:hover{
+  color: var(--text);
+  border-color: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.03);
+}
+
+/* Active state remains GREY (not green) */
+nav a[aria-current="page"]{
+  color: var(--text);
+  border-color: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+}
+nav a[aria-current="page"]::after{
+  content:"";
+  position:absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 4px;
+  height: 2px;
+  background: rgba(255,255,255,.30); /* grey underline */
+  border-radius: 999px;
+}
+
+/* Cover-mirror vertical rail (like your cover’s left line) */
+.cover-rail{
+  margin-top: 26px;
+  position: relative;
+  padding-left: 28px;
+}
+.cover-rail::before{
+  content:"";
+  position:absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(255,255,255,.22);
+  border-radius: 999px;
+}
+
+/* Hero */
+.hero{
+  padding: 90px 0 38px;
+}
+h1{
+  margin: 0 0 14px;
+  font-size: clamp(38px, 5vw, 58px);
+  letter-spacing: .2px;
+  line-height: 1.1;
+}
+.subtitle{
+  margin: 0;
+  font-size: 20px;
+  color: var(--muted);
+  max-width: 840px;
+}
+
+/* THE ONE GREEN ELEMENT ON COVER PAGE ONLY */
+.accent-underline{
+  margin-top: 18px;
+  width: 140px;
+  height: 8px;
+  background: var(--na-green);
+  border-radius: 999px;
+}
+
+/* Interior pages: ONE green cue tick only */
+.section-cue{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  margin: 38px 0 18px;
+}
+.section-cue .tick{
+  width: 54px;
+  height: 8px;
+  background: var(--na-green); /* THE ONE GREEN ELEMENT ON INTERIOR PAGES */
+  border-radius: 999px;
+}
+.section-cue .label{
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+}
+
+/* Panels */
+.panel{
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.04);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.grid{
+  display:grid;
+  gap: 18px;
+  grid-template-columns: 1.35fr .65fr;
+}
+@media (max-width: 980px){
+  .grid{ grid-template-columns: 1fr; }
+}
+
+h2{
+  margin: 0 0 10px;
+  font-size: 20px;
+  letter-spacing: .2px;
+}
+p{ margin: 0 0 12px; color: var(--muted); }
+
+ul{
+  margin: 10px 0 0 18px;
+  color: var(--muted);
+}
+li{ margin: 6px 0; }
+
+/* Checklist table */
+.table{
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow:hidden;
+  border-radius: 12px;
+}
+.table th, .table td{
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.10);
+  vertical-align: top;
+}
+.table th{
+  text-align:left;
+  font-size: 13px;
+  color: var(--muted2);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.03);
+}
+.table td{
+  color: var(--muted);
+  font-size: 14px;
+}
+.badge{
+  display:inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  color: var(--muted2);
+  font-size: 12px;
+}
+
+/* Footer mirrors cover footer text + page label */
+.site-footer{
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  color: var(--muted2);
+  font-size: 13px;
+  display:flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.page-num{
+  opacity: .9;
+}
+
+@media print{
+  body{ background: #fff; color:#111; }
+  .topbar, nav { box-shadow:none; }
+  .panel{ box-shadow:none; }
+}
