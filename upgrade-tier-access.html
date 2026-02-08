@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Upgrade Access — Ontario Compliance Operating System™</title>
+  <meta name="description" content="Upgrade Access — Ontario Compliance Operating System™. Choose Tier 2 or Tier 3 upgrades. Draft documentation only; employer responsible for implementation." />
+
+  <style>
+    :root{
+      --bg:#0f0f10;
+      --card:#151517;
+      --text:#eaeaf0;
+      --muted:#b8b8c5;
+      --border:#242427;
+
+      /* NA green accent (single green use per viewport, applied sparingly) */
+      --naGreen:#6ee7b7;
+      --naGreen2:#34d399;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.55;
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:980px;margin:0 auto;padding:28px 20px 56px}
+    header{
+      position:sticky; top:0; z-index:50;
+      background:rgba(15,15,16,.88);
+      backdrop-filter:saturate(140%) blur(10px);
+      border-bottom:1px solid var(--border);
+    }
+    .headInner{
+      max-width:980px;margin:0 auto;
+      padding:14px 20px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;min-width:0;
+      font-weight:900;letter-spacing:.2px;
+    }
+    .brand small{display:block;font-weight:700;color:var(--muted);letter-spacing:0}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      border:1px solid var(--border);
+      padding:6px 10px;border-radius:999px;
+      color:var(--muted);font-size:12.5px;
+      white-space:nowrap;
+    }
+    /* small green pip in the pill */
+    .pip{
+      width:8px;height:8px;border-radius:999px;
+      background:var(--naGreen);
+      box-shadow:0 0 0 3px rgba(110,231,183,.10);
+      flex:0 0 auto;
+    }
+
+    .hero{padding:34px 0 16px}
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,4.2vw,44px);
+      line-height:1.08;
+      letter-spacing:-.4px;
+    }
+    /* hero underline (big but clean) */
+    .heroUnderline{
+      height:3px; width:86px;
+      background:linear-gradient(90deg,var(--naGreen),transparent);
+      border-radius:999px;
+      margin:10px 0 16px;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:17px;
+      max-width:820px;
+    }
+
+    section{padding:26px 0;border-top:1px solid var(--border)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:18px;
+    }
+    h2{margin:0 0 8px;font-size:24px;letter-spacing:-.2px}
+    h3{margin:0 0 10px;font-size:16.5px}
+    p{margin:10px 0}
+    ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+    li{margin:6px 0}
+    .small{font-size:13px;color:var(--muted)}
+    .muted{color:var(--muted)}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+
+    .ctaRow{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:12px
+    }
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 14px;border-radius:12px;
+      border:1px solid var(--border);
+      background:#111113;
+      color:var(--text);
+      font-weight:900;
+    }
+    .btn:hover{border-color:#33333a}
+    /* subtle green marker for pricing section + tier tag dot */
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:12.5px;color:var(--muted);
+      border:1px solid var(--border);
+      padding:6px 10px;border-radius:999px;
+      margin-bottom:10px;
+    }
+    .tagDot{
+      width:8px;height:8px;border-radius:999px;background:var(--naGreen);
+      box-shadow:0 0 0 3px rgba(110,231,183,.10);
+    }
+
+    details{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px 14px;
+      margin:10px 0;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      list-style:none;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    /* Chevron */
+    summary::after{
+      content:"▾";
+      font-size:14px;
+      color:var(--muted);
+      transform:translateY(-1px);
+    }
+    /* Chevron turns green when opened */
+    details[open] summary::after{ color:var(--naGreen); }
+
+    /* Orange X in tier chart, used sparingly */
+    .x{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:22px;height:22px;border-radius:999px;
+      border:1px solid var(--border);
+      color:#f59e0b; /* orange */
+      font-weight:900;
+      background:#111113;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding-top:18px;margin-top:26px;
+      color:var(--muted);font-size:13px
+    }
+
+    /* Support email hover to green */
+    .support a{
+      color:var(--muted);
+      text-decoration:underline;
+      text-decoration-color:rgba(184,184,197,.35);
+      text-underline-offset:3px;
+    }
+    .support a:hover{
+      color:var(--naGreen);
+      text-decoration-color:rgba(110,231,183,.55);
+    }
+
+    /* Sticky header compress on scroll */
+    .compressed .headInner{padding:10px 20px}
+    .compressed .pill{font-size:12px;padding:5px 9px}
+  </style>
+</head>
+
+<body>
+  <header id="siteHeader">
+    <div class="headInner">
+      <div class="brand">
+        <div>
+          Ontario Compliance Operating System™
+          <small>Upgrade Access</small>
+        </div>
+      </div>
+
+      <div class="pill" title="Draft Documentation Only">
+        <span class="pip" aria-hidden="true"></span>
+        Draft Documentation Only
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" style="border-top:none;padding-top:22px">
+      <h1>Upgrade Your Access</h1>
+      <div class="heroUnderline" aria-hidden="true"></div>
+      <p class="sub">
+        Choose the access level that matches your current compliance stage. Tier upgrades replace prior access to keep version control,
+        boundaries, and system integrity clear.
+      </p>
+      <p class="small" style="margin-top:12px">
+        <strong>Important:</strong> Draft documentation only. Employer review, approval, training, implementation, and record retention are required.
+        No legal advice. No compliance guarantees.
+      </p>
+    </section>
+
+    <section id="overview">
+      <h2>Tier Overview</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Tier 1 — Compliance Foundation</h3>
+          <p class="muted">Best for employers who need Ontario-aligned education and reference.</p>
+          <ul>
+            <li>Compliance orientation and duty awareness</li>
+            <li>High-level Ontario foundation</li>
+            <li>Legislative reference appendix</li>
+          </ul>
+          <div class="divider"></div>
+          <p class="small"><span class="x" aria-hidden="true">×</span> No generators, verification tools, or governance system.</p>
+        </div>
+
+        <div class="card">
+          <h3>Tier 2 — Compliance Generator Library</h3>
+          <p class="muted">Best for employers who need structured prompts to generate draft documents.</p>
+          <ul>
+            <li>Prompt-driven document drafting (B1–B5)</li>
+            <li>Repeatable regeneration when operations change</li>
+            <li>Examples (structure only)</li>
+          </ul>
+          <div class="divider"></div>
+          <p class="small"><span class="x" aria-hidden="true">×</span> No governance, verification tracking (B6), or inspection evidence mapping.</p>
+        </div>
+
+        <div class="card">
+          <h3>Tier 3 — Complete System</h3>
+          <p class="muted">Best for employers who require governance, verification, and lifecycle control.</p>
+          <ul>
+            <li>Governance & oversight layer</li>
+            <li>Verification & tracking (B6)</li>
+            <li>Inspection evidence frameworks</li>
+            <li>Records retention & maintenance controls</li>
+          </ul>
+          <div class="divider"></div>
+          <p class="small">Tier 3 provides access to the <strong>complete</strong> Ontario Compliance Operating System™.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <h2>How Upgrades Work</h2>
+      <div class="card">
+        <ul>
+          <li>Upgrades replace prior access rather than adding additional workspaces.</li>
+          <li>You will have access to <strong>one tier at a time</strong> using the email provided at checkout.</li>
+          <li>This ensures clarity, version control, and system integrity.</li>
+        </ul>
+        <p class="small" style="margin-top:12px">
+          If you purchased with the wrong email, contact support below and include the email used at checkout.
+        </p>
+      </div>
+    </section>
+
+    <section id="upgrade">
+      <div class="tag"><span class="tagDot" aria-hidden="true"></span> Select an Upgrade</div>
+      <h2>Select an Upgrade</h2>
+      <p class="sub">Choose the tier you want to upgrade to. Access is granted using the email provided at checkout.</p>
+
+      <div class="grid" style="margin-top:14px">
+        <div class="card">
+          <h3>Upgrade to Tier 2 — Compliance Generator Library</h3>
+          <p class="small">Structured prompts to generate draft compliance documents (B1–B5).</p>
+          <div class="ctaRow">
+            <!-- TODO: Replace the href with your real Tier 2 upgrade Stripe link -->
+            <a class="btn" href="https://buy.stripe.com/REPLACE_WITH_TIER2_UPGRADE_LINK" target="_blank" rel="noopener">
+              Upgrade to Tier 2
+            </a>
+            <a class="btn" href="#support">Need help?</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Upgrade to Tier 3 — Complete System</h3>
+          <p class="small">Governance, verification tracking (B6), inspection evidence frameworks, and lifecycle oversight.</p>
+          <div class="ctaRow">
+            <!-- TODO: Replace the href with your real Tier 3 upgrade Stripe link -->
+            <a class="btn" href="https://buy.stripe.com/REPLACE_WITH_TIER3_UPGRADE_LINK" target="_blank" rel="noopener">
+              Upgrade to Tier 3
+            </a>
+            <a class="btn" href="#support">Need help?</a>
+          </div>
+        </div>
+      </div>
+
+      <p class="small" style="margin-top:14px">
+        <strong>Access notice:</strong> Upgrades replace prior tier access rather than stacking tiers.
+      </p>
+    </section>
+
+    <section id="notice">
+      <h2>Important Notice</h2>
+      <div class="card">
+        <p class="muted" style="margin-top:0">
+          This system provides <strong>draft documentation only</strong>. Final responsibility remains with the employer.
+        </p>
+        <ul>
+          <li>Review and approve documents before use</li>
+          <li>Implement procedures and train workers/supervisors</li>
+          <li>Maintain and update documents when operations change</li>
+          <li>Retain records and demonstrate due diligence during inspections or audits</li>
+        </ul>
+        <p class="small" style="margin-top:12px">
+          No legal advice. No compliance guarantee. No regulator communication.
+        </p>
+      </div>
+    </section>
+
+    <section id="faq">
+      <h2>Support FAQ</h2>
+      <p class="sub">Fast answers to reduce access friction and mismatched expectations.</p>
+
+      <details>
+        <summary>Will I have access to more than one tier at a time?</summary>
+        <p class="small">No. Upgrades replace prior access to maintain version control and clarity.</p>
+      </details>
+
+      <details>
+        <summary>How is access granted?</summary>
+        <p class="small">Access is granted using the email provided at checkout. Ensure you enter the correct email when purchasing.</p>
+      </details>
+
+      <details>
+        <summary>Is this legal advice or a guarantee of compliance?</summary>
+        <p class="small">No. This system provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and record retention.</p>
+      </details>
+
+      <details>
+        <summary>Can you customize or approve my documents?</summary>
+        <p class="small">No. Support is limited to access issues and system-use clarification only.</p>
+      </details>
+    </section>
+
+    <section id="support" class="support">
+      <h2>Need Help?</h2>
+      <div class="card">
+        <p class="muted" style="margin-top:0">
+          Support is limited to <strong>access issues only</strong>.
+        </p>
+        <p class="small">
+          Email: <a href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a><br />
+          Include the email used at checkout and the tier you are upgrading to.
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> Ontario Compliance Operating System™</div>
+      <div class="small" style="margin-top:6px">
+        Draft reference materials only. Employer responsible for implementation.
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
+    // Sticky header compress on scroll
+    const header = document.getElementById("siteHeader");
+    const onScroll = () => {
+      if (window.scrollY > 18) header.classList.add("compressed");
+      else header.classList.remove("compressed");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  </script>
+</body>
+</html>
