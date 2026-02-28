@@ -610,9 +610,7 @@
       border-radius: 12px;
       font-weight: 900;
     }
-    .floating-cta .btn.secondary{
-      background: transparent;
-    }
+    .floating-cta .btn.secondary{ background: transparent; }
     @media (max-width: 820px){
       .floating-cta .left{ display:none; }
     }
@@ -624,6 +622,26 @@
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       *{transition:none !important}
+    }
+
+    /* Small "upgrade note" block */
+    .upgrade-note{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.12);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .upgrade-note strong{ color: var(--text); }
+    .upgrade-note a{ border-bottom: 1px solid rgba(255,255,255,.20); }
+    .upgrade-note a:hover{ border-bottom-color: rgba(122,193,67,.70); color: var(--green); }
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
     }
   </style>
 </head>
@@ -879,9 +897,9 @@
               <li>Single operation license</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="buy-tier2">Buy Tier 2</a>
-            <p class="small" style="margin-top:10px;">
-              Need to upgrade later? Use <a class="support-email" href="#upgrade-buy">Upgrade Purchase</a>.
-            </p>
+            <div class="upgrade-note">
+              <strong>Already purchased Tier 1?</strong> Use the <a href="#upgrade-buy">Upgrade Purchase</a> section below for an upgrade checkout.
+            </div>
           </div>
 
           <div class="card" data-card-tier="3">
@@ -896,14 +914,14 @@
               <li>Priority updates</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="buy-tier3">Buy Tier 3</a>
-            <p class="small" style="margin-top:10px;">
-              Prefer upgrading? Use <a class="support-email" href="#upgrade-buy">Upgrade Purchase</a>.
-            </p>
+            <div class="upgrade-note">
+              <strong>Already purchased Tier 1 or Tier 2?</strong> Use the <a href="#upgrade-buy">Upgrade Purchase</a> section below for an upgrade checkout.
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- UPGRADE PURCHASE (THIS IS WHERE NAV "UPGRADE" GOES) -->
+      <!-- UPGRADE PURCHASE (ALL UPGRADE BUTTONS GO HERE) -->
       <section id="upgrade-buy" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -911,39 +929,51 @@
         </div>
 
         <p class="sub">
-          Choose your target tier and purchase instantly. This upgrade flow is path-safe (no /upgrade/ folder), and stays inside
-          <strong>/ontario-compliance-operating-system-/</strong>.
+          If you already purchased a lower tier, use the upgrade checkouts below.
+          These links are designed for <strong>existing customers upgrading</strong>.
         </p>
 
         <div class="pricing">
           <div class="card">
-            <div class="tag"><span class="dot"></span> Upgrade to Tier 2</div>
-            <h3 style="margin-top:12px;">Tier 2 — Compliance Operating System™</h3>
-            <div class="subprice">B1–B6 generators + verification tools (single operation)</div>
+            <div class="tag"><span class="dot"></span> Upgrade Checkout</div>
+            <h3 style="margin-top:12px;">Upgrade to Tier 2 (Existing Purchase)</h3>
+            <div class="subprice">
+              Use this checkout if you previously purchased Tier 1 and want to upgrade to Tier 2.
+            </div>
             <ul>
-              <li>B1–B6 generator libraries</li>
+              <li>Unlock B1–B6 generator libraries</li>
               <li>Verification & tracking records (B6)</li>
               <li>Governance foundations</li>
               <li>Single operation license</li>
             </ul>
-            <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="upgrade-buy-tier2">
-              Buy / Upgrade to Tier 2
+            <a class="btn buy primary" href="https://buy.stripe.com/4gM5kC2U79Lt8qleXCawo08" data-cta="upgrade-tier2-existing">
+              Upgrade to Tier 2 (Existing Purchase)
             </a>
+            <div class="upgrade-note">
+              <strong>Note:</strong> This upgrade link is intended for customers who already have a prior purchase.
+              If you have not purchased any tier yet, use the <a href="#pricing">Pricing</a> section instead.
+            </div>
           </div>
 
           <div class="card">
-            <div class="tag"><span class="dot"></span> Upgrade to Tier 3</div>
-            <h3 style="margin-top:12px;">Tier 3 — Professional License & Governance</h3>
-            <div class="subprice">Multi-crew / multi-site governance + audit oversight</div>
+            <div class="tag"><span class="dot"></span> Upgrade Checkout</div>
+            <h3 style="margin-top:12px;">Upgrade to Tier 3 (Pay the Difference)</h3>
+            <div class="subprice">
+              Use this checkout if you previously purchased Tier 1 or Tier 2 and want to upgrade to Tier 3 by paying the difference.
+            </div>
             <ul>
               <li>Multi-crew / multi-site use</li>
               <li>Full governance module</li>
               <li>Audit + corrective action oversight</li>
               <li>Priority updates</li>
             </ul>
-            <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="upgrade-buy-tier3">
-              Buy / Upgrade to Tier 3
+            <a class="btn buy primary" href="https://buy.stripe.com/aFa28qdyL8Hp5e97vaawo09" data-cta="upgrade-tier3-difference">
+              Upgrade to Tier 3 (Pay the Difference)
             </a>
+            <div class="upgrade-note">
+              <strong>Important:</strong> This is an <em>upgrade</em> checkout meant for customers with a previous purchase.
+              If you are new, use the <a href="#pricing">standard Tier 3 purchase</a> above.
+            </div>
           </div>
         </div>
 
@@ -957,7 +987,7 @@
           <summary>Why did upgrade paths break before? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
             Links like <code>/upgrade/</code> jump to the domain root and ignore your subfolder. This site uses anchors only,
-            so deployment inside <code>/ontario-compliance-operating-system-/</code> stays stable forever.
+            so deployment inside <code>/ontario-compliance-operating-system-/</code> stays stable.
           </p>
         </details>
       </section>
