@@ -43,7 +43,9 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
-
+/* Hide Future Pages card (keep in code for later) */
+#future-pages { display: none; }
+   #future-pages { display: block; } 
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -801,21 +803,18 @@
             <p class="small">Email: <a class="support-email" href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
           </div>
 
-          <div class="card">
-            <h3>Future Pages (Reserved)</h3>
-            <p class="small">This site is structured to expand into a full portal later without redesign.</p>
-            <ul>
-              <li>/tier-1 (coming soon)</li>
-              <li>/tier-2 (coming soon)</li>
-              <li>/tier-3 (coming soon)</li>
-              <li>/upgrade (upgrade existing tier)</li>
-              <li>/docs (coming soon)</li>
-              <li>/updates (coming soon)</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
+         <div class="card" id="future-pages"> 
+  <h3>Future Pages (Reserved)</h3>
+  <p class="small">This site is structured to expand into a full portal later without redesign.</p>
+  <ul>
+    <li>/tier-1 (coming soon)</li>
+    <li>/tier-2 (coming soon)</li>
+    <li>/tier-3 (coming soon)</li>
+    <li>/upgrade (upgrade existing tier)</li>
+    <li>/docs (coming soon)</li>
+    <li>/updates (coming soon)</li>
+  </ul>
+</div>
       <footer>
         <div>© <span id="y"></span> Ontario Compliance Operating System™</div>
         <div>Draft Reference — Employer Responsible for Implementation</div>
@@ -853,3 +852,4 @@
   </script>
 </body>
 </html>
+
