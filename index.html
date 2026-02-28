@@ -5,60 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ontario Compliance Operating System™</title>
   <meta name="description" content="Ontario Compliance Operating System™ — Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
+
   <style>
-  <style>
-:root {
-  --bg: #0b0b0c;
-  --bg2: #0f0f12;
+    :root {
+      --bg: #0b0b0c;
+      --bg2: #0f0f12;
 
-  --panel: #121217;
-  --panel2: #15151b;
+      --panel: #121217;
+      --panel2: #15151b;
 
-  --border: #2a2a33;
+      --border: #2a2a33;
 
-  --text: #f2f2f2;
-  --muted: #b9b9c2;
-  --muted2: #9a9aa3;
+      --text: #f2f2f2;
+      --muted: #b9b9c2;
+      --muted2: #9a9aa3;
 
-  --accent: #e6e6ea;
+      --accent: #e6e6ea;
 
-  --btn: rgba(255,255,255,0.08);
-  --btnHover: rgba(255,255,255,0.14);
-  --btnText: #ffffff;
+      /* FIX: missing vars used throughout site */
+      --green: #7ac143;
+      --orange: #ff8a1f;
+      --surface: rgba(255,255,255,.03);
+      --radius: 18px;
 
-  --shadow: 0 18px 40px rgba(0,0,0,.55);
-  --r: 18px;
-  --max: 1120px;
+      --btn: rgba(255,255,255,0.08);
+      --btnHover: rgba(255,255,255,0.14);
+      --btnText: #ffffff;
 
-  --hdr-pad:18px;
-  --hdr-pad-compact:10px;
-  --hdr-radius:16px;
-}
+      --shadow: 0 18px 40px rgba(0,0,0,.55);
+      --r: 18px;
+      --max: 1120px;
 
-* { box-sizing: border-box; }
+      --hdr-pad:18px;
+      --hdr-pad-compact:10px;
+      --hdr-radius:16px;
+    }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-}
-
-/* DARK BUTTON */
-.btn {
-  display:inline-block;
-  padding:14px 22px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  color: var(--btnText);
-  background: var(--btn);
-  font-weight:bold;
-  text-decoration:none;
-}
-
-.btn:hover {
-  background: var(--btnHover);
-}
-</style>
+    *{box-sizing:border-box}
     html,body{height:100%}
+
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -199,7 +184,6 @@ body {
       background: rgba(255,255,255,.06);
       color: var(--text);
     }
-    /* Selected gets a subtle green underline (still grayscale overall) */
     .tier-pill.active::after{
       content:"";
       position:absolute;
@@ -248,7 +232,6 @@ body {
       font-size: 18px;
     }
 
-    /* Green accents */
     .accent-underline{
       width: 170px;
       height: 8px;
@@ -263,6 +246,8 @@ body {
       flex-wrap:wrap;
       margin-top: 10px;
     }
+
+    /* Buttons (single source of truth) */
     .btn{
       display:inline-block;
       padding: 14px 18px;
@@ -279,7 +264,6 @@ body {
       text-align:center;
       margin-top: 12px;
     }
-    /* Subtle green micro accent on primary CTA only */
     .btn.primary{
       box-shadow: 0 0 0 1px rgba(122,193,67,.35) inset;
     }
@@ -313,7 +297,6 @@ body {
       background: rgba(255,255,255,.12);
     }
 
-    /* Subtle green markers (more green through sections, but refined) */
     .marker{
       width:10px; height:10px; border-radius:999px;
       background: rgba(255,255,255,.22);
@@ -361,13 +344,11 @@ body {
     }
     td{ color: var(--muted); }
 
-    /* Orange "X" (replacing red) */
     .no{
       color: var(--orange);
       font-weight: 900;
       letter-spacing: .2px;
     }
-
     .yes{
       color: rgba(255,255,255,.85);
       font-weight: 900;
@@ -431,10 +412,9 @@ body {
       font-weight: 900;
       margin-bottom: 10px;
       color: var(--text);
-      box-shadow: 0 0 0 1px rgba(122,193,67,.18) inset; /* subtle green */
+      box-shadow: 0 0 0 1px rgba(122,193,67,.18) inset;
     }
 
-    /* FAQ dropdowns with green cue */
     details{
       background: var(--surface);
       border: 1px solid var(--border);
@@ -469,7 +449,6 @@ body {
       border-bottom-color: var(--green);
     }
 
-    /* Support email hover -> green */
     .support-email{
       font-weight: 900;
       color: var(--text);
@@ -859,19 +838,15 @@ body {
     const cards = document.querySelectorAll('[data-card-tier]');
     function setTier(tier){
       pills.forEach(p => p.classList.toggle('active', p.dataset.tier === tier));
-      // subtle emphasis on selected card
       cards.forEach(c => {
         const is = c.dataset.cardTier === tier;
-        c.style.boxShadow = is ? "0 10px 30px rgba(0,0,0,.25), 0 0 0 1px rgba(122,193,67,.35) inset" : "0 10px 30px rgba(0,0,0,.25)";
+        c.style.boxShadow = is
+          ? "0 10px 30px rgba(0,0,0,.25), 0 0 0 1px rgba(122,193,67,.35) inset"
+          : "0 10px 30px rgba(0,0,0,.25)";
       });
-      // jump to pricing
       document.getElementById('pricing').scrollIntoView({ behavior:"smooth", block:"start" });
     }
     pills.forEach(p => p.addEventListener('click', () => setTier(p.dataset.tier)));
   </script>
 </body>
 </html>
-
-
-
-
