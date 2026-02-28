@@ -6,7 +6,6 @@
   <title>Upgrade — Ontario Compliance Operating System™</title>
   <meta name="description" content="Upgrade your Ontario Compliance Operating System™ tier. Compare Tier 1, Tier 2, and Tier 3 and purchase instantly." />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Upgrade — Ontario Compliance Operating System™" />
   <meta property="og:description" content="Compare tiers and upgrade instantly." />
   <meta property="og:type" content="website" />
@@ -66,7 +65,6 @@
 
     .wrap{max-width:var(--max); margin:auto; padding:20px 28px 110px;}
 
-    /* Sticky header */
     header.topbar{
       position: sticky;
       top: 14px;
@@ -151,7 +149,6 @@
       font-weight: 900;
     }
 
-    /* Left rail */
     main.rail{
       margin-top: 18px;
       position: relative;
@@ -168,7 +165,6 @@
       border-radius: 999px;
     }
 
-    /* Hero */
     .hero{
       padding: 58px 0 18px;
       display:grid;
@@ -229,7 +225,6 @@
       margin: 8px 0 0;
     }
 
-    /* Sections */
     section{
       padding: 38px 0;
       border-top: 1px solid var(--border);
@@ -274,7 +269,6 @@
     ul{ padding-left: 18px; margin: 10px 0 0 0; color: var(--muted); }
     li{ margin: 6px 0; }
 
-    /* Tier ribbon */
     .ribbon{
       display:inline-flex;
       align-items:center;
@@ -303,7 +297,6 @@
       margin: 0 0 8px;
     }
 
-    /* Comparison table */
     table{
       width:100%;
       border-collapse: collapse;
@@ -328,7 +321,6 @@
     .no{ color: var(--orange); font-weight: 900; }
     .yes{ color: rgba(255,255,255,.85); font-weight: 900; }
 
-    /* Highlight recommended */
     .card.recommended{
       box-shadow: var(--shadow), 0 0 0 1px rgba(122,193,67,.35) inset;
       border-color: rgba(122,193,67,.22);
@@ -348,7 +340,6 @@
 
     .anchor{ scroll-margin-top: 140px; }
 
-    /* Floating CTA */
     .floating-cta{
       position: fixed;
       left: 50%;
@@ -416,12 +407,13 @@
         Draft Documentation Only • Employer Responsible
       </div>
 
+      <!-- ALL PATHS FIXED FOR: /ontario-compliance-operating-system-/upgrade/ -->
       <nav aria-label="Primary navigation">
-        <a href="/" data-cta="nav-home">Home</a>
-        <a href="/#pricing" data-cta="nav-pricing">Pricing</a>
-        <a href="/#compare" data-cta="nav-compare">Compare</a>
-        <a href="/#support" data-cta="nav-support">Support</a>
-        <a class="active" href="/upgrade/" data-cta="nav-upgrade">Upgrade</a>
+        <a href="../" data-cta="nav-home">Home</a>
+        <a href="../#pricing" data-cta="nav-pricing">Pricing</a>
+        <a href="../#compare" data-cta="nav-compare">Compare</a>
+        <a href="../#support" data-cta="nav-support">Support</a>
+        <a class="active" href="./" data-cta="nav-upgrade">Upgrade</a>
       </nav>
     </header>
 
@@ -436,8 +428,8 @@
 
         <div class="cta">
           <a class="btn primary" href="#tiers" data-cta="upgrade-view-tiers">View Tiers</a>
-          <a class="btn alt" href="/#pricing" data-cta="upgrade-back-pricing">Back to Pricing</a>
-          <a class="btn alt" href="/" data-cta="upgrade-home">Home</a>
+          <a class="btn alt" href="../#pricing" data-cta="upgrade-back-pricing">Back to Pricing</a>
+          <a class="btn alt" href="../" data-cta="upgrade-home">Home</a>
         </div>
 
         <p class="small">
@@ -567,10 +559,8 @@
   </div>
 
   <script>
-    // Year
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Sticky header compress on scroll
     const topbar = document.getElementById('topbar');
     const onScroll = () => {
       if (window.scrollY > 30) topbar.classList.add('compact');
@@ -579,7 +569,6 @@
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
 
-    // Minimal click tracking (console only)
     document.addEventListener('click', (e) => {
       const a = e.target.closest('[data-cta]');
       if(!a) return;
