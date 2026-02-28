@@ -6,8 +6,7 @@
   <title>Ontario Compliance Operating System™</title>
   <meta name="description" content="Ontario Compliance Operating System™ — Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
   <style>
-    :root{
-      /* Elite alternative greyscale */
+  <style>
 :root {
   --bg: #0b0b0c;
   --bg2: #0f0f12;
@@ -23,35 +22,42 @@
 
   --accent: #e6e6ea;
 
-  /* Buttons (dark style) */
-  .btn{
-  display:inline-block;
-  padding:14px 22px;
-  border-radius:10px;
-  border:1px solid #2a2a33;
-  color:#f2f2f2;
-  background:rgba(255,255,255,0.08);
-  font-weight:bold;
-  text-decoration:none;
-}
-
-.btn:hover{
-  background:rgba(255,255,255,0.14);
-}
+  --btn: rgba(255,255,255,0.08);
+  --btnHover: rgba(255,255,255,0.14);
   --btnText: #ffffff;
 
   --shadow: 0 18px 40px rgba(0,0,0,.55);
   --r: 18px;
   --max: 1120px;
+
+  --hdr-pad:18px;
+  --hdr-pad-compact:10px;
+  --hdr-radius:16px;
 }
 
-      /* Header sizes (for compress-on-scroll) */
-      --hdr-pad:18px;
-      --hdr-pad-compact:10px;
-      --hdr-radius:16px;
-    }
+* { box-sizing: border-box; }
 
-    *{box-sizing:border-box}
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* DARK BUTTON */
+.btn {
+  display:inline-block;
+  padding:14px 22px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  color: var(--btnText);
+  background: var(--btn);
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.btn:hover {
+  background: var(--btnHover);
+}
+</style>
     html,body{height:100%}
     body{
       margin:0;
@@ -865,6 +871,7 @@
   </script>
 </body>
 </html>
+
 
 
 
