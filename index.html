@@ -642,12 +642,12 @@
         Draft Documentation Only • Employer Responsible
       </div>
 
-      <!-- ONE-FILE NAV (NO /upgrade/ ROOT LINKS) -->
+      <!-- SINGLE-PAGE NAV (NO BROKEN PATHS) -->
       <nav aria-label="Primary navigation">
         <a href="#pricing">Pricing</a>
         <a href="#how">How It Works</a>
         <a href="#compare">Compare</a>
-        <a href="#upgrade" class="upgrade">Upgrade</a>
+        <a class="upgrade" href="#upgrade-buy">Upgrade</a>
         <a href="#deliver">After Purchase</a>
         <a href="#faq">FAQ</a>
         <a href="#support">Support</a>
@@ -677,7 +677,7 @@
               <a class="btn primary" href="#pricing" data-cta="hero-pricing">View Pricing</a>
               <a class="btn alt" href="#how" data-cta="hero-how">How It Works</a>
               <a class="btn alt" href="#compare" data-cta="hero-compare">Compare Tiers</a>
-              <a class="btn alt" href="#upgrade" data-cta="hero-upgrade">Upgrade</a>
+              <a class="btn alt" href="#upgrade-buy" data-cta="hero-upgrade">Upgrade</a>
             </div>
 
             <p class="small">
@@ -729,7 +729,7 @@
             </div>
 
             <a class="btn primary" href="#pricing" style="width:100%; margin-top:14px;" data-cta="trust-pricing">See tiers & pricing</a>
-            <a class="btn alt" href="#upgrade" style="width:100%; margin-top:10px;" data-cta="trust-upgrade">Upgrade options</a>
+            <a class="btn alt" href="#upgrade-buy" style="width:100%; margin-top:10px;" data-cta="trust-upgrade">Upgrade purchase</a>
           </aside>
         </div>
       </div>
@@ -880,7 +880,7 @@
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="buy-tier2">Buy Tier 2</a>
             <p class="small" style="margin-top:10px;">
-              Need to upgrade later? Use the <a class="support-email" href="#upgrade">Upgrade section</a>.
+              Need to upgrade later? Use <a class="support-email" href="#upgrade-buy">Upgrade Purchase</a>.
             </p>
           </div>
 
@@ -897,67 +897,67 @@
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="buy-tier3">Buy Tier 3</a>
             <p class="small" style="margin-top:10px;">
-              Prefer a structured upgrade path? Use the <a class="support-email" href="#upgrade">Upgrade section</a>.
+              Prefer upgrading? Use <a class="support-email" href="#upgrade-buy">Upgrade Purchase</a>.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- UPGRADE (COMBINED ON SAME PAGE) -->
-      <section id="upgrade" class="anchor">
+      <!-- UPGRADE PURCHASE (THIS IS WHERE NAV "UPGRADE" GOES) -->
+      <section id="upgrade-buy" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
-          <h2>Upgrade Your Tier</h2><div class="rule"></div>
+          <h2>Upgrade Purchase</h2><div class="rule"></div>
         </div>
 
         <p class="sub">
-          This section replaces the separate /upgrade/ page so you never break paths. Everything stays inside
+          Choose your target tier and purchase instantly. This upgrade flow is path-safe (no /upgrade/ folder), and stays inside
           <strong>/ontario-compliance-operating-system-/</strong>.
         </p>
 
-        <div class="grid" style="margin-top:14px;">
+        <div class="pricing">
           <div class="card">
-            <h3>Upgrade Logic (Simple)</h3>
+            <div class="tag"><span class="dot"></span> Upgrade to Tier 2</div>
+            <h3 style="margin-top:12px;">Tier 2 — Compliance Operating System™</h3>
+            <div class="subprice">B1–B6 generators + verification tools (single operation)</div>
             <ul>
-              <li><strong>Tier 1 → Tier 2:</strong> When you need generators (B1–B6) + tracking.</li>
-              <li><strong>Tier 2 → Tier 3:</strong> When you need governance across crews/sites + audit oversight.</li>
-              <li><strong>Tier 3:</strong> Designed for multi-crew or organizations standardizing compliance.</li>
+              <li>B1–B6 generator libraries</li>
+              <li>Verification & tracking records (B6)</li>
+              <li>Governance foundations</li>
+              <li>Single operation license</li>
             </ul>
-            <a class="btn primary" href="#pricing" style="width:100%; margin-top:12px;">Back to Pricing</a>
+            <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="upgrade-buy-tier2">
+              Buy / Upgrade to Tier 2
+            </a>
           </div>
 
           <div class="card">
-            <h3>Enterprise Conversion Notes</h3>
+            <div class="tag"><span class="dot"></span> Upgrade to Tier 3</div>
+            <h3 style="margin-top:12px;">Tier 3 — Professional License & Governance</h3>
+            <div class="subprice">Multi-crew / multi-site governance + audit oversight</div>
             <ul>
-              <li>Buyer wants clarity: “Draft docs only — employer implements.”</li>
-              <li>They want proof: training logs, inspections, corrective actions.</li>
-              <li>They want governance: roles, responsibilities, change control.</li>
-              <li>They want updates: versioning + controlled release.</li>
+              <li>Multi-crew / multi-site use</li>
+              <li>Full governance module</li>
+              <li>Audit + corrective action oversight</li>
+              <li>Priority updates</li>
             </ul>
-            <a class="btn alt" href="#support" style="width:100%; margin-top:12px;">Ask Support</a>
-          </div>
-
-          <div class="card">
-            <h3>Upgrade Request (Manual)</h3>
-            <p class="small">
-              If you want “pay the difference” upgrade logic, you can run it manually with Stripe links or invoice.
-            </p>
-            <ul>
-              <li><strong>Option A:</strong> Issue upgrade invoice (Tier difference).</li>
-              <li><strong>Option B:</strong> Provide “Upgrade purchase link” product.</li>
-              <li><strong>Option C:</strong> Coupon discount tied to proof of Tier 1/2 purchase.</li>
-            </ul>
-            <a class="btn primary" href="mailto:info@naturalalternatives.ca?subject=Upgrade%20Request%20-%20Ontario%20Compliance%20Operating%20System&body=Hi%20Natural%20Alternatives,%0A%0AI%20want%20to%20upgrade%20my%20tier.%20My%20current%20tier%20is:%20%0AI%20want%20to%20upgrade%20to:%20%0A%0AOrder%20email%20used%20for%20purchase:%20%0A%0AThanks!" style="width:100%; margin-top:12px;">
-              Request Upgrade
+            <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="upgrade-buy-tier3">
+              Buy / Upgrade to Tier 3
             </a>
           </div>
         </div>
 
+        <div class="cta" style="margin-top:14px;">
+          <a class="btn alt" href="#pricing" data-cta="upgrade-back-pricing">Back to Pricing</a>
+          <a class="btn alt" href="#compare" data-cta="upgrade-back-compare">Compare Tiers</a>
+          <a class="btn primary" href="#support" data-cta="upgrade-support">Support</a>
+        </div>
+
         <details style="margin-top:14px;">
-          <summary>Why did upgrade links break before? <span class="chev" aria-hidden="true"></span></summary>
+          <summary>Why did upgrade paths break before? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
-            Because links like <code>/upgrade/</code> go to the domain root (naturalalternatives.ca/upgrade/) and ignore your subfolder.
-            Anchors like <code>#upgrade</code> keep everything inside this single page.
+            Links like <code>/upgrade/</code> jump to the domain root and ignore your subfolder. This site uses anchors only,
+            so deployment inside <code>/ontario-compliance-operating-system-/</code> stays stable forever.
           </p>
         </details>
       </section>
@@ -1053,13 +1053,11 @@
           </div>
 
           <div class="card">
-            <h3>Navigation Safety</h3>
-            <p class="small">
-              This site is one file. Upgrade links are anchors only. No /upgrade/ paths exist in this build.
-            </p>
+            <h3>Quick Links</h3>
+            <p class="small">Everything is inside one index file. No external upgrade paths.</p>
             <div class="cta" style="margin-top:10px;">
               <a class="btn alt" href="#pricing">Pricing</a>
-              <a class="btn alt" href="#upgrade">Upgrade</a>
+              <a class="btn alt" href="#upgrade-buy">Upgrade Purchase</a>
               <a class="btn primary" href="#how">How It Works</a>
             </div>
           </div>
@@ -1079,7 +1077,7 @@
       <span>Select a tier and purchase instantly.</span>
     </div>
     <div class="right">
-      <a class="btn secondary" href="#upgrade" data-cta="float-upgrade">Upgrade</a>
+      <a class="btn secondary" href="#upgrade-buy" data-cta="float-upgrade">Upgrade</a>
       <a class="btn secondary" href="#compare" data-cta="float-compare">Compare</a>
       <a class="btn primary" href="#pricing" data-cta="float-pricing">View Pricing</a>
     </div>
@@ -1110,6 +1108,13 @@
       document.getElementById('pricing').scrollIntoView({ behavior:"smooth", block:"start" });
     }
     pills.forEach(p => p.addEventListener('click', () => setTier(p.dataset.tier)));
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-cta]');
+      if(!a) return;
+      const label = a.getAttribute('data-cta');
+      try { console.log("CTA:", label); } catch(_){}
+    });
   </script>
 </body>
 </html>
