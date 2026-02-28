@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Upgrade — Ontario Compliance Operating System™</title>
-  <meta name="description" content="Upgrade your Ontario Compliance Operating System™ tier. Compare Tier 1, Tier 2, and Tier 3 and purchase instantly." />
+  <title>Ontario Compliance Operating System™</title>
+  <meta name="description" content="Ontario Compliance Operating System™ — Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
 
-  <meta property="og:title" content="Upgrade — Ontario Compliance Operating System™" />
-  <meta property="og:description" content="Compare tiers and upgrade instantly." />
+  <meta property="og:title" content="Ontario Compliance Operating System™" />
+  <meta property="og:description" content="Generate, implement, track, and maintain audit-ready compliance documentation without rewriting." />
   <meta property="og:type" content="website" />
 
   <style>
@@ -82,6 +82,7 @@
       box-shadow: var(--shadowSoft);
       transition: padding .18s ease, background .18s ease, box-shadow .18s ease;
     }
+
     header.topbar.compact{
       padding: var(--hdrPadCompact) 18px;
       background: rgba(18,18,23,.72);
@@ -142,11 +143,62 @@
       background: rgba(255,255,255,.04);
       color: var(--text);
     }
-    nav a.active{
+    nav a.upgrade{
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.04);
       color: var(--text);
       font-weight: 900;
+    }
+
+    .tierbar{
+      margin-top: 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tierbar .label{
+      font-size:12px;
+      letter-spacing:.45px;
+      text-transform: uppercase;
+      color: var(--muted2);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .tierbar .label::before{
+      content:"";
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(255,255,255,.20);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
+    }
+
+    .tier-pill{
+      position: relative;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .tier-pill:hover{
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+    .tier-pill.active::after{
+      content:"";
+      position:absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 6px;
+      height: 3px;
+      background: var(--green);
+      border-radius: 999px;
+      opacity: .95;
     }
 
     main.rail{
@@ -166,23 +218,22 @@
     }
 
     .hero{
-      padding: 58px 0 18px;
+      padding: 64px 0 22px;
       display:grid;
       gap:14px;
     }
     h1{
       margin:0;
-      font-size: clamp(32px, 4.7vw, 54px);
+      font-size: clamp(34px, 5vw, 58px);
       line-height: 1.08;
       letter-spacing:.2px;
     }
     .sub{
       margin:0;
       color:var(--muted);
-      max-width: 920px;
+      max-width: 940px;
       font-size: 18px;
     }
-
     .accent-underline{
       width: 170px;
       height: 8px;
@@ -217,6 +268,7 @@
     .btn:active{ transform: translateY(1px); }
     .btn.alt{ background: transparent; }
     .btn.primary{ box-shadow: 0 0 0 1px rgba(122,193,67,.35) inset; }
+    .btn.buy{ width:100%; margin-top: 12px; }
 
     .small{
       font-size:13px;
@@ -226,7 +278,7 @@
     }
 
     section{
-      padding: 38px 0;
+      padding: 46px 0;
       border-top: 1px solid var(--border);
     }
     .section-head{
@@ -237,7 +289,7 @@
     }
     .section-head h2{
       margin:0;
-      font-size: 24px;
+      font-size: 26px;
       letter-spacing:.2px;
     }
     .section-head .rule{
@@ -265,37 +317,9 @@
       padding: 20px;
       box-shadow: var(--shadowSoft);
     }
-    .card h3{ margin:0 0 10px 0; }
+
     ul{ padding-left: 18px; margin: 10px 0 0 0; color: var(--muted); }
     li{ margin: 6px 0; }
-
-    .ribbon{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px 10px;
-      border-radius:999px;
-      font-size: 12px;
-      color: var(--muted2);
-      background: rgba(0,0,0,.10);
-      margin-bottom: 10px;
-    }
-    .ribbon .dot{ width:8px; height:8px; border-radius:999px; background: rgba(255,255,255,.22); }
-    .ribbon .dot.green{ background: var(--green); }
-    .ribbon .dot.orange{ background: var(--orange); }
-
-    .price{
-      font-size: 38px;
-      font-weight: 900;
-      margin: 10px 0 4px;
-      letter-spacing: .2px;
-    }
-    .subprice{
-      color: var(--muted2);
-      font-size: 13px;
-      margin: 0 0 8px;
-    }
 
     table{
       width:100%;
@@ -318,12 +342,113 @@
       text-transform: uppercase;
     }
     td{ color: var(--muted); }
+
     .no{ color: var(--orange); font-weight: 900; }
     .yes{ color: rgba(255,255,255,.85); font-weight: 900; }
 
-    .card.recommended{
-      box-shadow: var(--shadow), 0 0 0 1px rgba(122,193,67,.35) inset;
-      border-color: rgba(122,193,67,.22);
+    .pricing{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .price{
+      font-size: 38px;
+      font-weight: 900;
+      margin: 10px 0 4px;
+      letter-spacing: .2px;
+    }
+    .subprice{
+      color: var(--muted2);
+      font-size: 13px;
+      margin: 0 0 8px;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size: 12px;
+      color: var(--muted2);
+      background: rgba(0,0,0,.10);
+    }
+    .tag .dot{ width:8px; height:8px; border-radius:999px; background: rgba(255,255,255,.22); }
+    .tag .dot.green{ background: var(--green); }
+
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .step{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadowSoft);
+      position: relative;
+    }
+    .step .n{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 34px; height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.03);
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: var(--text);
+      box-shadow: 0 0 0 1px rgba(122,193,67,.18) inset;
+    }
+
+    details{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      box-shadow: var(--shadowSoft);
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 900;
+      color: var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .chev{
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid rgba(255,255,255,.70);
+      border-bottom: 2px solid rgba(255,255,255,.70);
+      transform: rotate(45deg);
+      transition: transform .18s ease, border-color .18s ease;
+      flex: 0 0 auto;
+    }
+    details[open] summary .chev{
+      transform: rotate(225deg);
+      border-right-color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    .support-email{
+      font-weight: 900;
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,.20);
+      padding-bottom: 1px;
+      transition: color .18s ease, border-color .18s ease;
+    }
+    .support-email:hover{
+      color: var(--green);
+      border-color: rgba(122,193,67,.70);
     }
 
     footer{
@@ -372,20 +497,14 @@
       border-radius: 12px;
       font-weight: 900;
     }
-    .floating-cta .btn.secondary{
-      background: transparent;
-    }
+    .floating-cta .btn.secondary{ background: transparent; }
+
     @media (max-width: 820px){
       .floating-cta .left{ display:none; }
     }
-
     @media (max-width: 720px){
       .wrap{ padding: 18px 18px 130px; }
-      main.rail{ padding-left: 22px; }
-      main.rail::before{ left: 4px; }
-      header.topbar{ top: 10px; }
     }
-
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
       *{transition:none !important}
@@ -399,7 +518,7 @@
     <header class="topbar" id="topbar">
       <div class="brand">
         <strong>Ontario Compliance Operating System™</strong>
-        <span>Upgrade • Compare Tiers • Purchase Instantly</span>
+        <span>Ontario-Aligned • Inspection-Ready Structure • Prompt-Driven</span>
       </div>
 
       <div class="pill" aria-label="Product signals">
@@ -407,91 +526,126 @@
         Draft Documentation Only • Employer Responsible
       </div>
 
-      <!-- ALL PATHS FIXED FOR: /ontario-compliance-operating-system-/upgrade/ -->
+      <!-- PATH-PROOF LINKS for /ontario-compliance-operating-system-/ -->
       <nav aria-label="Primary navigation">
-        <a href="../" data-cta="nav-home">Home</a>
-        <a href="../#pricing" data-cta="nav-pricing">Pricing</a>
-        <a href="../#compare" data-cta="nav-compare">Compare</a>
-        <a href="../#support" data-cta="nav-support">Support</a>
-        <a class="active" href="./" data-cta="nav-upgrade">Upgrade</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#how">How It Works</a>
+        <a href="#compare">Compare</a>
+        <a href="#deliver">After Purchase</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+        <a class="upgrade" href="./upgrade/" data-cta="nav-upgrade">Upgrade</a>
       </nav>
     </header>
 
+    <div class="tierbar" aria-label="Tier selector">
+      <div class="label">Quick Tier View</div>
+      <div class="tier-pill active" data-tier="1">Tier 1</div>
+      <div class="tier-pill" data-tier="2">Tier 2</div>
+      <div class="tier-pill" data-tier="3">Tier 3</div>
+    </div>
+
     <main class="rail">
       <div class="hero">
-        <h1>Upgrade Your Tier</h1>
+        <h1>Generate, Track, and Maintain<br/>Ontario Compliance Without Rewriting</h1>
         <p class="sub">
-          Use this page to compare Tier 1, Tier 2, and Tier 3 and purchase instantly.
-          If you already bought a lower tier, choose the tier you want to move to.
+          This is not a template pack. It’s a structured compliance operating system built for Ontario employers.
+          Generate draft SOPs, programs, training documents, and verification records using guided prompts — then track implementation and updates over time.
         </p>
+
         <div class="accent-underline" aria-hidden="true"></div>
 
         <div class="cta">
-          <a class="btn primary" href="#tiers" data-cta="upgrade-view-tiers">View Tiers</a>
-          <a class="btn alt" href="../#pricing" data-cta="upgrade-back-pricing">Back to Pricing</a>
-          <a class="btn alt" href="../" data-cta="upgrade-home">Home</a>
+          <a class="btn primary" href="#pricing" data-cta="hero-pricing">View Pricing</a>
+          <a class="btn alt" href="#how" data-cta="hero-how">How It Works</a>
+          <a class="btn alt" href="#compare" data-cta="hero-compare">Compare Tiers</a>
+          <a class="btn alt" href="./upgrade/" data-cta="hero-upgrade">Upgrade</a>
         </div>
 
         <p class="small">
-          <strong>Important:</strong> Draft documentation only. Employer review, approval, training, and implementation are required. No legal advice.
+          <strong>Important:</strong> Draft documentation only. Employer review, approval, and implementation are required. No legal advice.
         </p>
       </div>
 
-      <section id="tiers" class="anchor">
+      <section id="problem" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
-          <h2>Choose Your Tier</h2><div class="rule"></div>
+          <h2>The Real Problem</h2><div class="rule"></div>
+        </div>
+        <p class="sub">Compliance fails because documents go stale. Static templates don’t adapt when equipment, tasks, crews, or operations change.</p>
+        <div class="grid" style="margin-top:14px;">
+          <div class="card">SOPs don’t match real work</div>
+          <div class="card">Logs and records aren’t tracked</div>
+          <div class="card">Training proof is inconsistent</div>
+          <div class="card">Inspections create panic</div>
+        </div>
+      </section>
+
+      <section id="how" class="anchor">
+        <div class="section-head">
+          <span class="marker" aria-hidden="true"></span>
+          <h2>How the System Works</h2><div class="rule"></div>
+        </div>
+        <p class="sub">
+          You use the generators to create draft compliance documents. The system is delivered in Notion as a view-only workspace.
+          You copy what you need into your own workspace, run prompts in an AI tool, and implement internally.
+        </p>
+        <div class="grid" style="margin-top:14px;">
+          <div class="card"><strong>1.</strong> Choose the generator (B1–B6)</div>
+          <div class="card"><strong>2.</strong> Copy the prompt into ChatGPT (or similar)</div>
+          <div class="card"><strong>3.</strong> Answer questions about your operation</div>
+          <div class="card"><strong>4.</strong> Review, approve, implement, and track</div>
+        </div>
+        <p class="small">AI drafts the documentation. You remain responsible for accuracy, approval, training, and implementation.</p>
+      </section>
+
+      <section id="included" class="anchor">
+        <div class="section-head">
+          <span class="marker" aria-hidden="true"></span>
+          <h2>What’s Included</h2><div class="rule"></div>
         </div>
 
         <div class="grid">
           <div class="card">
-            <div class="ribbon"><span class="dot green"></span> Tier 1 — Foundation</div>
-            <h3>Tier 1 — Compliance Foundation Guide</h3>
-            <div class="price">$99</div>
-            <div class="subprice">Static Ontario compliance reference (no generators)</div>
+            <h3>Core Ontario Compliance Guide</h3>
             <ul>
-              <li>Inspection-aligned overview</li>
+              <li>OHSA employer/supervisor/worker duties</li>
+              <li>WSIB basics and reporting concepts</li>
+              <li>WHMIS responsibilities</li>
+              <li>Record retention and inspection readiness</li>
               <li>Legislative reference appendix</li>
-              <li>Simple employer duty map (Ontario)</li>
-              <li>No B1–B6 generators</li>
             </ul>
-            <a class="btn primary" style="width:100%; margin-top:12px;" href="https://buy.stripe.com/5kQbJ0cuH3n5eOJbLqawo07" data-cta="upgrade-buy-tier1">Buy Tier 1</a>
-          </div>
-
-          <div class="card recommended">
-            <div class="ribbon"><span class="dot orange"></span> Recommended — Tier 2</div>
-            <h3>Tier 2 — Compliance Operating System™</h3>
-            <div class="price">$697</div>
-            <div class="subprice">B1–B6 generators + verification tools</div>
-            <ul>
-              <li>B1–B6 generator libraries</li>
-              <li>Verification & tracking records (B6)</li>
-              <li>Governance foundations</li>
-              <li>Single operation license</li>
-            </ul>
-            <a class="btn primary" style="width:100%; margin-top:12px;" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="upgrade-buy-tier2">Upgrade to Tier 2</a>
           </div>
 
           <div class="card">
-            <div class="ribbon"><span class="dot"></span> Tier 3 — Governance</div>
-            <h3>Tier 3 — Professional License & Governance</h3>
-            <div class="price">$1,997</div>
-            <div class="subprice">Multi-crew / multi-site governance</div>
+            <h3>Compliance Generator Library (B1–B6)</h3>
             <ul>
-              <li>Multi-crew / multi-site use</li>
-              <li>Full governance module</li>
-              <li>Audit + corrective action oversight</li>
-              <li>Priority updates</li>
+              <li>B1 – SOPs (equipment & tasks)</li>
+              <li>B2 – Programs & policies</li>
+              <li>B3 – Training & onboarding</li>
+              <li>B4 – Incidents, investigations & WSIB docs</li>
+              <li>B5 – Logs & checklists</li>
+              <li><strong>B6 – Verification & tracking tools</strong></li>
             </ul>
-            <a class="btn primary" style="width:100%; margin-top:12px;" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="upgrade-buy-tier3">Upgrade to Tier 3</a>
+          </div>
+
+          <div class="card">
+            <h3>Governance & System Management</h3>
+            <ul>
+              <li>Compliance readiness self-assessment</li>
+              <li>Master compliance map</li>
+              <li>Version control & update framework</li>
+              <li>Worker communication & change management</li>
+              <li>Audit + corrective action oversight</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="quickcompare" class="anchor">
+      <section id="compare" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
-          <h2>Quick Compare</h2><div class="rule"></div>
+          <h2>Tier Comparison</h2><div class="rule"></div>
         </div>
 
         <table>
@@ -513,29 +667,137 @@
             <tr><td>Priority updates</td><td class="no">✖</td><td>Standard</td><td>Priority</td></tr>
           </tbody>
         </table>
-
-        <p class="small" style="margin-top:12px;">
-          Tier 2 is designed for a single operation. Tier 3 is designed for organizations that need consistent governance across crews or locations.
-        </p>
       </section>
 
-      <section id="notes" class="anchor">
+      <section id="pricing" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
-          <h2>Important Notes</h2><div class="rule"></div>
+          <h2>Pricing</h2><div class="rule"></div>
         </div>
+
+        <div class="pricing" id="pricingGrid">
+          <div class="card" data-card-tier="1">
+            <div class="tag"><span class="dot green"></span> Tier 1 — Foundation</div>
+            <h3 style="margin-top:12px;">Tier 1 — Compliance Foundation Guide</h3>
+            <div class="price">$99</div>
+            <div class="subprice">Static Ontario compliance reference (no generators)</div>
+            <ul>
+              <li>Inspection-aligned overview</li>
+              <li>Legislative reference appendix</li>
+              <li>Simple employer duty map (Ontario)</li>
+              <li>No B1–B6 generators</li>
+            </ul>
+            <a class="btn buy primary" href="https://buy.stripe.com/5kQbJ0cuH3n5eOJbLqawo07" data-cta="buy-tier1">Buy Tier 1</a>
+          </div>
+
+          <div class="card" data-card-tier="2">
+            <div class="tag"><span class="dot"></span> Tier 2 — Operating System</div>
+            <h3 style="margin-top:12px;">Tier 2 — Compliance Operating System™</h3>
+            <div class="price">$697</div>
+            <div class="subprice">B1–B6 generators + verification tools</div>
+            <ul>
+              <li>B1–B6 generator libraries</li>
+              <li>Verification & tracking records (B6)</li>
+              <li>Governance foundations</li>
+              <li>Single operation license</li>
+            </ul>
+            <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="buy-tier2">Buy Tier 2</a>
+            <p class="small" style="margin-top:10px;">
+              Want an upgrade flow? Use the <a class="support-email" href="./upgrade/">Upgrade Page</a>.
+            </p>
+          </div>
+
+          <div class="card" data-card-tier="3">
+            <div class="tag"><span class="dot"></span> Tier 3 — Governance</div>
+            <h3 style="margin-top:12px;">Tier 3 — Professional License & Governance</h3>
+            <div class="price">$1,997</div>
+            <div class="subprice">Multi-crew / multi-site governance</div>
+            <ul>
+              <li>Multi-crew / multi-site use</li>
+              <li>Full governance module</li>
+              <li>Audit + corrective action oversight</li>
+              <li>Priority updates</li>
+            </ul>
+            <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06" data-cta="buy-tier3">Buy Tier 3</a>
+            <p class="small" style="margin-top:10px;">
+              Prefer upgrading? Use the <a class="support-email" href="./upgrade/">Upgrade Page</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="deliver" class="anchor">
+        <div class="section-head">
+          <span class="marker green" aria-hidden="true"></span>
+          <h2>What You Get After Purchase</h2><div class="rule"></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="n">1</div>
+            <h3>Receipt + Access Instructions</h3>
+            <p class="small">You receive confirmation plus a short access guide outlining what to do next.</p>
+          </div>
+          <div class="step">
+            <div class="n">2</div>
+            <h3>Download Package</h3>
+            <p class="small">Tier deliverables include structured documents/templates and a “Start Here” implementation guide.</p>
+          </div>
+          <div class="step">
+            <div class="n">3</div>
+            <h3>Notion Workspace (View-Only)</h3>
+            <p class="small">You get a protected reference workspace. Copy what you need into your own private workspace.</p>
+          </div>
+          <div class="step">
+            <div class="n">4</div>
+            <h3>Implement + Track</h3>
+            <p class="small">Assign responsibility, train workers, maintain logs, and document corrective actions over time.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="anchor">
+        <div class="section-head">
+          <span class="marker" aria-hidden="true"></span>
+          <h2>FAQ</h2><div class="rule"></div>
+        </div>
+
+        <details>
+          <summary>Is this software or an automated tool? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">No. This is a prompt-driven compliance operating system. You manually run prompts in an AI tool to generate draft documents.</p>
+        </details>
+
+        <details>
+          <summary>Does this generate documents automatically? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">No. You copy a prompt, run it in ChatGPT (or similar), answer questions, then review and approve the draft output.</p>
+        </details>
+
+        <details>
+          <summary>Is this legal advice or a compliance guarantee? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">No. This system provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
+        </details>
+      </section>
+
+      <section id="support" class="anchor">
+        <div class="section-head">
+          <span class="marker green" aria-hidden="true"></span>
+          <h2>Support</h2><div class="rule"></div>
+        </div>
+
         <div class="grid">
           <div class="card">
-            <h3>Draft Documentation Only</h3>
-            <p class="small">Employers must review, approve, train, and implement all documentation. This is not legal advice.</p>
+            <h3>Access + System-Use Support</h3>
+            <p class="small">
+              Support is limited to access issues and system-use clarification only.
+              No compliance consulting, document review, or inspector communication is included.
+            </p>
+            <p class="small">Email: <a class="support-email" href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
           </div>
+
           <div class="card">
-            <h3>Access + Support</h3>
-            <p class="small">Support is limited to access and system-use clarification only. No customization included.</p>
-          </div>
-          <div class="card">
-            <h3>Need Governance?</h3>
-            <p class="small">If you run multiple crews or locations, Tier 3 is designed to keep governance consistent.</p>
+            <h3>Upgrade Path</h3>
+            <p class="small">Use the upgrade page for a clean path that never breaks inside this subfolder deployment.</p>
+            <a class="btn primary" href="./upgrade/" data-cta="support-upgrade" style="margin-top:10px;">Go to Upgrade</a>
           </div>
         </div>
       </section>
@@ -549,12 +811,13 @@
 
   <div class="floating-cta" role="region" aria-label="Quick purchase bar">
     <div class="left">
-      <strong>Upgrade now</strong>
-      <span>Choose Tier 2 or Tier 3 for generators + governance.</span>
+      <strong>Ready to deploy your compliance system?</strong>
+      <span>Select a tier and purchase instantly.</span>
     </div>
     <div class="right">
-      <a class="btn secondary" href="#tiers" data-cta="float-view-tiers">View tiers</a>
-      <a class="btn primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05" data-cta="float-buy-tier2">Upgrade Tier 2</a>
+      <a class="btn alt" href="./upgrade/" data-cta="float-upgrade">Upgrade</a>
+      <a class="btn alt" href="#compare" data-cta="float-compare">Compare</a>
+      <a class="btn primary" href="#pricing" data-cta="float-pricing">View Pricing</a>
     </div>
   </div>
 
@@ -569,12 +832,20 @@
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
 
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('[data-cta]');
-      if(!a) return;
-      const label = a.getAttribute('data-cta');
-      try { console.log("CTA:", label); } catch(_){}
-    });
+    const pills = document.querySelectorAll('.tier-pill');
+    const cards = document.querySelectorAll('[data-card-tier]');
+
+    function setTier(tier){
+      pills.forEach(p => p.classList.toggle('active', p.dataset.tier === tier));
+      cards.forEach(c => {
+        const is = c.dataset.cardTier === tier;
+        c.style.boxShadow = is
+          ? "0 18px 40px rgba(0,0,0,.55), 0 0 0 1px rgba(122,193,67,.35) inset"
+          : "0 12px 26px rgba(0,0,0,.40)";
+      });
+      document.getElementById('pricing').scrollIntoView({ behavior:"smooth", block:"start" });
+    }
+    pills.forEach(p => p.addEventListener('click', () => setTier(p.dataset.tier)));
   </script>
 </body>
 </html>
