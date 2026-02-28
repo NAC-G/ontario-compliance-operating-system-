@@ -22,7 +22,7 @@
 
       --accent: #e6e6ea;
 
-      /* Vars used throughout site */
+      /* FIX: missing vars used throughout site */
       --green: #7ac143;
       --orange: #ff8a1f;
       --surface: rgba(255,255,255,.03);
@@ -33,6 +33,7 @@
       --btnText: #ffffff;
 
       --shadow: 0 18px 40px rgba(0,0,0,.55);
+      --r: 18px;
       --max: 1120px;
 
       --hdr-pad:18px;
@@ -58,10 +59,6 @@
 
     .wrap{max-width:var(--max); margin:auto; padding:20px 28px 70px;}
 
-    /* Hide Future Pages (kept in code; easy to re-enable later)
-       To show it again, change display:none -> display:block */
-    #future-pages{ display:none; }
-
     /* Sticky header */
     header.topbar{
       position: sticky;
@@ -81,6 +78,7 @@
       transition: padding .18s ease, transform .18s ease, background .18s ease;
     }
 
+    /* Compressed state */
     header.topbar.compact{
       padding: var(--hdr-pad-compact) 18px;
       background: rgba(25,25,25,.35);
@@ -146,6 +144,7 @@
       color: var(--text);
     }
 
+    /* Tier selector bar (mini) */
     .tierbar{
       margin-top: 14px;
       display:flex;
@@ -197,6 +196,7 @@
       opacity: .95;
     }
 
+    /* Left rail */
     main.rail{
       margin-top: 18px;
       position: relative;
@@ -213,6 +213,7 @@
       border-radius: 999px;
     }
 
+    /* Hero */
     .hero{
       padding: 68px 0 22px;
       display:grid;
@@ -246,6 +247,7 @@
       margin-top: 10px;
     }
 
+    /* Buttons (single source of truth) */
     .btn{
       display:inline-block;
       padding: 14px 18px;
@@ -273,6 +275,7 @@
       margin: 8px 0 0;
     }
 
+    /* Sections */
     section{
       padding: 46px 0;
       border-top: 1px solid var(--border);
@@ -318,6 +321,7 @@
     ul{ padding-left: 18px; margin: 10px 0 0 0; color: var(--muted); }
     li{ margin: 6px 0; }
 
+    /* Comparison table */
     table{
       width:100%;
       border-collapse: collapse;
@@ -350,6 +354,7 @@
       font-weight: 900;
     }
 
+    /* Pricing */
     .pricing{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -381,6 +386,7 @@
     .tag .dot{ width:8px; height:8px; border-radius:999px; background: rgba(255,255,255,.22); }
     .tag .dot.green{ background: var(--green); }
 
+    /* "What you get" flow */
     .steps{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -499,10 +505,10 @@
         <a href="#deliver">After Purchase</a>
         <a href="#faq">FAQ</a>
         <a href="#support">Support</a>
-        <a href="./upgrade/">Upgrade</a>
       </nav>
     </header>
 
+    <!-- Mini tier selector -->
     <div class="tierbar" aria-label="Tier selector">
       <div class="label">Quick Tier View</div>
       <div class="tier-pill active" data-tier="1">Tier 1</div>
@@ -511,6 +517,7 @@
     </div>
 
     <main class="rail">
+      <!-- HERO -->
       <div class="hero">
         <h1>Generate, Track, and Maintain<br/>Ontario Compliance Without Rewriting</h1>
         <p class="sub">
@@ -524,7 +531,6 @@
           <a class="btn primary" href="#pricing">View Pricing</a>
           <a class="btn alt" href="#how">How It Works</a>
           <a class="btn alt" href="#compare">Compare Tiers</a>
-          <a class="btn alt" href="./upgrade/">Upgrade</a>
         </div>
 
         <p class="small">
@@ -532,6 +538,7 @@
         </p>
       </div>
 
+      <!-- PROBLEM -->
       <section id="problem" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -546,6 +553,7 @@
         </div>
       </section>
 
+      <!-- HOW -->
       <section id="how" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
@@ -564,6 +572,7 @@
         <p class="small">AI drafts the documentation. You remain responsible for accuracy, approval, training, and implementation.</p>
       </section>
 
+      <!-- INCLUDED -->
       <section id="included" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
@@ -607,6 +616,7 @@
         </div>
       </section>
 
+      <!-- COMPARISON -->
       <section id="compare" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
@@ -639,6 +649,7 @@
         </p>
       </section>
 
+      <!-- PRICING -->
       <section id="pricing" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -695,6 +706,7 @@
         </div>
       </section>
 
+      <!-- WHAT YOU GET AFTER PURCHASE -->
       <section id="deliver" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -736,6 +748,7 @@
         </p>
       </section>
 
+      <!-- FAQ -->
       <section id="faq" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
@@ -769,6 +782,7 @@
         </details>
       </section>
 
+      <!-- SUPPORT -->
       <section id="support" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -785,14 +799,13 @@
             <p class="small">Email: <a class="support-email" href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
           </div>
 
-          <div class="card" id="future-pages">
+          <div class="card">
             <h3>Future Pages (Reserved)</h3>
             <p class="small">This site is structured to expand into a full portal later without redesign.</p>
             <ul>
               <li>/tier-1 (coming soon)</li>
               <li>/tier-2 (coming soon)</li>
               <li>/tier-3 (coming soon)</li>
-              <li>/upgrade (upgrade existing tier)</li>
               <li>/docs (coming soon)</li>
               <li>/updates (coming soon)</li>
             </ul>
@@ -808,8 +821,10 @@
   </div>
 
   <script>
+    // Year
     document.getElementById('y').textContent = new Date().getFullYear();
 
+    // Sticky header compress on scroll
     const topbar = document.getElementById('topbar');
     const onScroll = () => {
       if (window.scrollY > 30) topbar.classList.add('compact');
@@ -818,6 +833,7 @@
     window.addEventListener('scroll', onScroll, { passive:true });
     onScroll();
 
+    // Mini tier selector: highlight selected + scroll to pricing + lightly emphasize that card
     const pills = document.querySelectorAll('.tier-pill');
     const cards = document.querySelectorAll('[data-card-tier]');
     function setTier(tier){
