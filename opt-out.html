@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opt Out | Ontario Compliance Operating System™</title>
+  <meta name="description" content="Opt-out options for marketing and third-party advertising tools." />
+  <style>
+    :root{--bg:#0b0b0c;--bg2:#0f0f12;--text:#f2f2f2;--muted:#b9b9c2;--border:#2a2a33;--green:#7ac143;}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);
+      background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);line-height:1.65;}
+    a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.18)} a:hover{color:var(--green);border-bottom-color:rgba(122,193,67,.65)}
+    .wrap{max-width:960px;margin:auto;padding:22px 18px 60px;}
+    .muted{color:var(--muted);font-size:13px}
+    .card{border:1px solid rgba(255,255,255,.14);border-radius:16px;background:rgba(255,255,255,.03);padding:16px;margin:14px 0}
+    h1{margin:0 0 8px;font-size:28px} h2{margin:0 0 8px;font-size:18px}
+    p,li{color:var(--muted)} ul{padding-left:18px}
+    footer{border-top:1px solid var(--border);margin-top:24px;padding-top:14px;color:var(--muted);font-size:13px;display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="muted"><a href="index.html">← Back to site</a></div>
+    <h1>Opt Out</h1>
+    <div class="muted">This page explains how you can opt out of marketing communications and certain tracking/advertising practices.</div>
+
+    <div class="card">
+      <h2>1) Marketing email opt-out</h2>
+      <p>
+        If you receive marketing emails from us, you can opt out at any time by using the unsubscribe link in the email
+        or by emailing <a href="mailto:info@naturalalternatives.ca?subject=Marketing%20Opt%20Out">info@naturalalternatives.ca</a>
+        with the subject line “Marketing Opt Out”.
+      </p>
+      <p class="muted">
+        Transactional messages (such as purchase confirmations or access instructions) may still be sent because they are necessary to deliver the product or respond to support requests.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>2) Cookies and analytics controls</h2>
+      <p>
+        You can control cookies through your browser settings. If you block or delete cookies, some site features may not work as expected.
+      </p>
+      <ul>
+        <li>Block or limit third-party cookies in your browser.</li>
+        <li>Clear stored data/cookies for this site.</li>
+        <li>If a cookie banner is enabled, set preferences there.</li>
+      </ul>
+      <p>See also: <a href="cookie-policy.html">Cookie Policy</a></p>
+    </div>
+
+    <div class="card">
+      <h2>3) Interest-based advertising opt-out</h2>
+      <p>
+        If third-party advertising or remarketing tools are used, you may be able to opt out of interest-based ads through:
+      </p>
+      <ul>
+        <li>Your device or browser ad settings (where available).</li>
+        <li>Industry opt-out tools provided by ad networks (availability varies by region and provider).</li>
+      </ul>
+      <p>
+        We do not control third-party opt-out mechanisms. For more detail, see:
+        <a href="third-party-online-advertising.html">Third Party Online Advertising</a>.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>4) Contact</h2>
+      <p>
+        If you have questions about opt-out choices or privacy, contact us at
+        <a href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a>.
+      </p>
+      <p class="muted">Privacy overview: <a href="privacy-policy.html">Privacy Policy</a></p>
+    </div>
+
+    <footer>
+      <div>© <span id="y"></span> Ontario Compliance Operating System™</div>
+      <div>
+        <a href="privacy-policy.html">Privacy Policy</a> ·
+        <a href="cookie-policy.html">Cookie Policy</a> ·
+        <a href="terms-of-use.html">Terms of Use</a> ·
+        <a href="third-party-online-advertising.html">Third Party Online Advertising</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
