@@ -63,7 +63,7 @@
     a{color:inherit;text-decoration:none}
     a:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:12px}
 
-    .wrap{max-width:var(--max); margin:auto; padding:20px 28px 160px;}
+    .wrap{max-width:var(--max); margin:auto; padding:20px 28px 170px;}
 
     header.topbar{
       position: sticky;
@@ -295,6 +295,50 @@
     .floating-cta .btn{padding:10px 12px;border-radius:12px;font-weight:900}
     .floating-cta .btn.secondary{background: transparent}
 
+    /* How it works + Delivery (elite) */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .step{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadowSoft);
+      padding: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      position: relative;
+      overflow:hidden;
+    }
+    .step strong{ color: var(--text); display:block; margin-bottom:6px; letter-spacing:.2px;}
+    .step .n{
+      position:absolute;
+      top:12px; right:12px;
+      width:28px; height:28px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      display:flex; align-items:center; justify-content:center;
+      background: rgba(0,0,0,.16);
+      color: rgba(255,255,255,.85);
+      font-weight: 900;
+      font-size: 12px;
+    }
+    .delivery{
+      margin-top:14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.14);
+      padding: 14px;
+      box-shadow: var(--shadowSoft);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+    .delivery b{ color: var(--text); }
+
     /* ===== Samples: small hover preview + Quick View modal with REAL TEXT ===== */
     .gallery{
       display:grid;
@@ -411,7 +455,7 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
-      max-height: 60vh;
+      max-height: 70vh;
       overflow:auto;
       white-space: pre-wrap;
     }
@@ -428,10 +472,7 @@
     @media (max-width: 980px){ .roi-wrap{ grid-template-columns: 1fr; } }
 
     .roi-card{ padding:16px; }
-    .roi-small{
-      max-height: 260px;
-      overflow:auto;
-    }
+    .roi-small{ max-height: 260px; overflow:auto; }
     .formgrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -450,7 +491,6 @@
       outline:none;
     }
     input:focus, select:focus{ border-color: rgba(122,193,67,.55); box-shadow: 0 0 0 3px rgba(122,193,67,.12); }
-
     .roi-result{
       border-radius:16px;
       border:1px solid rgba(255,255,255,.12);
@@ -497,25 +537,6 @@
       border-bottom-color: var(--green);
     }
 
-    /* "Listening" mini-copy blocks */
-    .listen{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-    .listen .note{
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadowSoft);
-      padding: 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .listen .note strong{ color: var(--text); }
-
     /* Footer */
     footer{
       border-top: 1px solid var(--border);
@@ -546,7 +567,7 @@
       .floating-cta .left{ display:none; }
     }
     @media (max-width: 720px){
-      .wrap{ padding: 18px 18px 170px; }
+      .wrap{ padding: 18px 18px 180px; }
       main.rail{ padding-left: 22px; }
       main.rail::before{ left: 4px; }
     }
@@ -573,6 +594,7 @@
 
       <nav aria-label="Primary navigation">
         <a href="#pricing">Pricing</a>
+        <a href="#how">How It Works</a>
         <a href="#samples">Samples</a>
         <a href="#compare">Compare</a>
         <a class="upgrade" href="#upgrade-buy">Upgrade</a>
@@ -603,6 +625,7 @@
           <div>
             <div class="cta">
               <a class="btn primary" href="#pricing">View Pricing</a>
+              <a class="btn alt" href="#how">How It Works</a>
               <a class="btn alt" href="#samples">See Samples</a>
               <a class="btn alt" href="#upgrade-buy">Upgrade</a>
               <a class="btn alt" href="#roi">ROI</a>
@@ -661,23 +684,68 @@
             <a class="btn alt" href="#upgrade-buy" style="width:100%; margin-top:10px;">Upgrade purchase</a>
           </aside>
         </div>
+      </div>
 
-        <!-- LISTENING WORDING (direct-response reassurance) -->
-        <div class="listen" aria-label="Buyer reassurance notes">
-          <div class="note">
-            <strong>“I don’t want to rebuild everything from scratch.”</strong><br/>
-            You won’t. The system is designed so you generate drafts, tailor them once, and then update them quickly when work changes.
+      <!-- ✅ HOW IT WORKS + DELIVERY (ELITE) -->
+      <section id="how" class="anchor">
+        <div class="section-head">
+          <span class="marker green" aria-hidden="true"></span>
+          <h2>How It Works + Delivery After Purchase</h2><div class="rule"></div>
+        </div>
+
+        <p class="sub">
+          Buyers do not need to “figure out” what to do next. The system is delivered with a clear onboarding flow so they can generate, tailor,
+          and deploy documents quickly while maintaining version control and proof-of-implementation.
+        </p>
+
+        <div class="steps" aria-label="How it works steps">
+          <div class="step"><div class="n">1</div>
+            <strong>Purchase + Instant Confirmation</strong>
+            After checkout, Stripe issues an automatic receipt and confirmation email to the address used during payment. This message confirms the tier purchased and acts as the starting point for delivery and access.
           </div>
-          <div class="note">
-            <strong>“I need proof, not promises.”</strong><br/>
-            That’s why the B6 layer focuses on records: training sign-offs, inspection logs, corrective actions, and closure verification.
+
+          <div class="step"><div class="n">2</div>
+            <strong>Delivery Link + Access Instructions</strong>
+            The confirmation email includes the delivery method for your tier: either a secure download link (for packaged files) or secure access instructions (for hosted folders/portal access). If your organization requires internal distribution, you can forward the instructions to authorized stakeholders.
           </div>
-          <div class="note">
-            <strong>“I’m worried about buying the wrong tier.”</strong><br/>
-            You can start at a lower tier and upgrade later using the existing-purchase checkouts to pay the difference.
+
+          <div class="step"><div class="n">3</div>
+            <strong>Onboarding: “Start Here” Roadmap</strong>
+            The product includes a “Start Here” roadmap that tells you exactly what to generate first, what to review internally, and what to implement with crews. This prevents the common failure of buying a pack and never deploying it.
+          </div>
+
+          <div class="step"><div class="n">4</div>
+            <strong>Generate Drafts Using the Prompts</strong>
+            You select a module (e.g., SOP, policy, training record, inspection log), paste the prompt into your AI tool, answer the guided questions about your tasks and hazards, and generate a draft document in minutes.
+          </div>
+
+          <div class="step"><div class="n">5</div>
+            <strong>Employer Review + Approval</strong>
+            You review the draft for accuracy, add site-specific controls, confirm responsibilities, then approve it internally. This step is mandatory because real compliance requires operational accuracy, not generic language.
+          </div>
+
+          <div class="step"><div class="n">6</div>
+            <strong>Implement + Train + Collect Proof</strong>
+            You deliver training/toolbox talks, collect sign-offs, complete inspections, and log corrective actions using the included B6 verification tools. The result is a system you can show during audits and inspections.
+          </div>
+
+          <div class="step"><div class="n">7</div>
+            <strong>Maintain: Version Control + Updates</strong>
+            When work changes, you regenerate drafts quickly, document revisions in a change log, re-train where needed, and keep everything current. This turns compliance into a repeatable operational process instead of a one-time scramble.
           </div>
         </div>
-      </div>
+
+        <div class="delivery" aria-label="Delivery details">
+          <b>Delivery timing:</b> Delivery is automatic and begins immediately after checkout via the purchaser’s email address.<br/><br/>
+          <b>Where to find it:</b> Look for the Stripe confirmation email and follow the included delivery instructions. If you do not see it within a few minutes, check spam/junk and search your inbox for “Stripe”.<br/><br/>
+          <b>If the email is missing:</b> Contact <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a> with the purchase email address and receipt details. Access will be re-sent only to the verified purchaser email for security.<br/><br/>
+          <b>Upgrades:</b> If you purchased Tier 1 or Tier 2 and later upgrade, your confirmation email after the upgrade includes your updated Tier access instructions. Use the upgrade checkouts in the Upgrade section to pay the difference.
+        </div>
+
+        <p class="small" style="margin-top:10px;">
+          <strong>Note:</strong> This product provides draft documentation and operating structure only. The employer is responsible for review, approval, implementation, training, and ongoing compliance.
+        </p>
+      </section>
 
       <!-- SAMPLES -->
       <section id="samples" class="anchor">
@@ -694,7 +762,7 @@
         <div class="gallery" aria-label="Sample preview gallery">
           <div class="thumb"
                data-title="Sample SOP — Chainsaw Operations (Draft)"
-               data-desc="This is a sample Safe Operating Procedure written in full sentences. It is provided as a draft for employer review, approval, and implementation."
+               data-desc="A sample SOP written in full sentences. This is a draft for employer review, approval, and implementation."
                data-doc="DOCUMENT TITLE: Safe Operating Procedure (SOP) — Chainsaw Operations (Draft)
 
 PURPOSE
@@ -748,7 +816,7 @@ Change Log: Document all revisions with dates and approval signatures."
 
           <div class="thumb"
                data-title="Sample Policy — Document Control & Versioning (Draft)"
-               data-desc="This sample policy shows how the system maintains audit-ready control over documents as operations change."
+               data-desc="A policy that defines ownership, approvals, review triggers, and archiving so workers always use current documents."
                data-doc="DOCUMENT TITLE: Policy — Document Control & Versioning (Draft)
 
 POLICY STATEMENT
@@ -796,7 +864,7 @@ Failure to follow controlled documents may result in corrective actions consiste
 
           <div class="thumb"
                data-title="Sample Training Record — Competency Sign-Off (Draft)"
-               data-desc="This sample record shows how training is documented so it can be demonstrated later as proof-of-implementation."
+               data-desc="A competency record that documents training completion and supervisor verification for due diligence."
                data-doc="DOCUMENT TITLE: Training Record — Competency Sign-Off (Draft)
 
 TRAINING CONTEXT
@@ -843,7 +911,7 @@ This record must be retained with other training records and produced when reque
 
           <div class="thumb"
                data-title="Sample Inspection Log — Hazards & Corrective Actions (Draft)"
-               data-desc="This sample log shows how hazards are recorded, assigned, and closed with dates so nothing is left unresolved."
+               data-desc="A log that records findings, assigns owners and due dates, and verifies closure to prevent unresolved issues."
                data-doc="DOCUMENT TITLE: Workplace / Field Inspection Log — Hazards & Corrective Actions (Draft)
 
 PURPOSE
@@ -947,7 +1015,7 @@ This log is retained with related photos, maintenance records, and training acti
               <li>No B1–B6 generators</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/5kQbJ0cuH3n5eOJbLqawo07">Buy Tier 1</a>
-            <p class="small">Delivery: automatic confirmation email + download instructions after checkout.</p>
+            <p class="small">Delivery is automatic after checkout (see <a href="#how" style="border-bottom:1px solid rgba(255,255,255,.20);">How It Works</a>).</p>
           </div>
 
           <div class="card" data-card-tier="2">
@@ -962,7 +1030,7 @@ This log is retained with related photos, maintenance records, and training acti
               <li>Single operation license</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/dRm5kCbqD1eXdKF5n2awo05">Buy Tier 2</a>
-            <p class="small">Delivery: automatic confirmation email + secure access instructions after checkout.</p>
+            <p class="small">Delivery is automatic after checkout (see <a href="#how" style="border-bottom:1px solid rgba(255,255,255,.20);">How It Works</a>).</p>
           </div>
 
           <div class="card" data-card-tier="3">
@@ -977,7 +1045,7 @@ This log is retained with related photos, maintenance records, and training acti
               <li>Priority updates</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/14A8wOgKXf5NeOJ4iYawo06">Buy Tier 3</a>
-            <p class="small">Delivery: automatic confirmation email + onboarding steps to deploy across crews.</p>
+            <p class="small">Delivery is automatic after checkout (see <a href="#how" style="border-bottom:1px solid rgba(255,255,255,.20);">How It Works</a>).</p>
           </div>
         </div>
       </section>
@@ -1006,7 +1074,7 @@ This log is retained with related photos, maintenance records, and training acti
               <li>Single operation license</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/4gM5kC2U79Lt8qleXCawo08">Upgrade to Tier 2 (Existing Purchase)</a>
-            <p class="small">After payment, your confirmation email will include your updated access instructions.</p>
+            <p class="small">Your upgrade confirmation email includes updated access instructions.</p>
           </div>
 
           <div class="card">
@@ -1020,7 +1088,7 @@ This log is retained with related photos, maintenance records, and training acti
               <li>Priority updates</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/aFa28qdyL8Hp5e97vaawo09">Upgrade to Tier 3 (Pay the Difference)</a>
-            <p class="small">After payment, your confirmation email will include Tier 3 onboarding and deployment steps.</p>
+            <p class="small">Your upgrade confirmation email includes Tier 3 onboarding and deployment steps.</p>
           </div>
         </div>
       </section>
@@ -1089,62 +1157,41 @@ This log is retained with related photos, maintenance records, and training acti
         </div>
       </section>
 
-      <!-- FAQ (expanded + NEW delivery + what happens after purchase) -->
+      <!-- FAQ -->
       <section id="faq" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
           <h2>FAQ</h2><div class="rule"></div>
         </div>
 
-        <details>
-          <summary>What happens after I purchase, and how is it delivered? <span class="chev" aria-hidden="true"></span></summary>
+        <!-- ✅ explicit delivery FAQ (again, short + elite) -->
+        <details open>
+          <summary>After I purchase, what exactly do I receive and how do I access it? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
-            After checkout, you will receive an automatic confirmation email from Stripe at the address you used during payment.
-            That email contains your receipt and the next-step delivery instructions for your tier. If delivery is provided by a download link,
-            you will receive a secure link; if delivery is provided by access onboarding, you will receive the access steps and the exact path to your files.
-            If you do not see the email within a few minutes, check spam/junk and search your inbox for “Stripe” or “Ontario Compliance Operating System”.
-            If it still does not arrive, contact <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a> and include your payment email address and the time of purchase.
+            Immediately after checkout, Stripe sends a confirmation email to the address used during payment. That email contains your receipt and your tier-specific delivery instructions.
+            Depending on your tier, delivery is provided as either (a) a secure download link to your packaged files, or (b) secure access instructions to your tier materials.
+            Your “Start Here” roadmap is included so you can deploy the system in a structured order instead of guessing.
           </p>
           <p class="small">
-            For privacy and security, access instructions are delivered only to the purchase email. If you used the wrong email at checkout,
-            support can assist after confirming purchase details.
+            If you do not see the email within a few minutes, check spam/junk and search your inbox for “Stripe”. If it still does not arrive, email
+            <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a>
+            with the purchase email address and receipt details. For security, access is re-sent only to the verified purchaser email.
           </p>
         </details>
 
         <details>
-          <summary>I paid, but I cannot find my access link. What should I do? <span class="chev" aria-hidden="true"></span></summary>
+          <summary>How does this system work in real operations (not theory)? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
-            First, search your inbox for “Stripe” and check spam/junk folders. Next, confirm you are checking the same email address you used at checkout.
-            If you used Apple Private Relay or an autofill email, search for that address in your payment receipt. If you still cannot locate it,
-            email <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a>
-            with your receipt number (or a screenshot of the receipt) so access can be re-sent to the verified purchaser email.
+            You generate a draft for one task at a time (SOPs, policies, training records, inspection logs). Then you tailor it to your equipment and hazards, approve it internally,
+            train the crew, and record proof using sign-offs and logs. When work changes, you update the draft using the same prompt flow and record the revision in version control.
+            This is how you avoid “stale binders” and last-minute inspection scrambles.
           </p>
         </details>
 
         <details>
           <summary>Is this legal advice or a compliance guarantee? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
-            No. This product provides draft documentation and an operating structure only. The employer remains responsible for reviewing accuracy,
-            approving content, delivering training, implementing controls, and maintaining the system over time. Different operations require different controls,
-            and no template or prompt pack can replace competent internal review.
-          </p>
-        </details>
-
-        <details>
-          <summary>Is this software that automatically generates documents? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">
-            No. The system is “prompt-driven.” You select a generator, paste the prompt into an AI tool, answer questions about your operation,
-            and then you review and approve the draft output. The system is designed so you can repeatedly generate updated drafts when equipment,
-            tasks, hazards, or crews change.
-          </p>
-        </details>
-
-        <details>
-          <summary>What makes this different from a typical template pack? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">
-            Template packs typically give you static files that start drifting away from real work immediately. This system is structured as an operating model:
-            it tells you what to create, how to keep it controlled, how to track proof-of-implementation, and how to update it without starting from zero.
-            The emphasis is on keeping documents alive and consistent rather than creating documents once and forgetting them.
+            No. This product provides draft documentation and operating structure only. The employer remains responsible for review, approval, implementation, training, and ongoing compliance.
           </p>
         </details>
 
@@ -1152,39 +1199,12 @@ This log is retained with related photos, maintenance records, and training acti
           <summary>How do upgrades work for existing customers? <span class="chev" aria-hidden="true"></span></summary>
           <p class="small">
             If you previously purchased a lower tier, you can use the Upgrade Purchase section to pay the difference for the higher tier.
-            This keeps checkout simple for returning customers. New customers should purchase normally from the Pricing section to avoid mismatches.
-          </p>
-        </details>
-
-        <details>
-          <summary>What is “verification and tracking (B6)” in practical terms? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">
-            Verification means you can show proof that training happened, inspections were completed, corrective actions were assigned,
-            and issues were actually closed. B6 tools support logs, sign-offs, audit summaries, and simple evidence trails.
-            In practice, this reduces “we did it but can’t prove it” failures during inspections.
-          </p>
-        </details>
-
-        <details>
-          <summary>Can I edit the documents and brand them for my business? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">
-            Yes. The intended workflow is that you generate drafts, copy them into your own internal documentation system, and then edit them
-            so they match your equipment, hazards, and procedures. You are expected to brand, approve, and control your versions internally so workers
-            are using the current version in the field.
-          </p>
-        </details>
-
-        <details>
-          <summary>Who is Tier 3 designed for? <span class="chev" aria-hidden="true"></span></summary>
-          <p class="small">
-            Tier 3 is designed for organizations that need consistency across multiple crews, multiple sites, or a more formal governance model.
-            In practice, this means you need documentation that stays aligned across supervisors and locations, and you want a stronger audit and corrective-action
-            oversight structure to reduce variation and reduce operational drift.
+            After your upgrade payment, your confirmation email includes your updated access instructions for the higher tier.
           </p>
         </details>
       </section>
 
-      <!-- SUPPORT (legal card removed; legal links stay in footer) -->
+      <!-- SUPPORT -->
       <section id="support" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -1196,8 +1216,7 @@ This log is retained with related photos, maintenance records, and training acti
             <h3>Access + System-Use Support</h3>
             <p class="small">
               Support is limited to access issues and system-use clarification only. No compliance consulting, document review,
-              or inspector communication is included. If you need professional review, you should engage a qualified professional who can assess your
-              operation and verify that controls and training match your real work.
+              or inspector communication is included.
             </p>
             <p class="small">Email: <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a></p>
           </div>
@@ -1205,14 +1224,13 @@ This log is retained with related photos, maintenance records, and training acti
           <div class="card">
             <h3>Implementation Reminder</h3>
             <p class="small">
-              The fastest way to get value is to start with one high-frequency task, generate the SOP draft, train the crew,
-              and then run the inspection and corrective action logs for two weeks. This gives you immediate proof-of-implementation,
-              and it highlights what needs to be adjusted before you scale the system across the rest of the operation.
+              Start with one high-frequency task, generate the SOP draft, train the crew, and run inspections and corrective action closure for two weeks.
+              This gives immediate proof-of-implementation and identifies what needs refinement before you scale.
             </p>
             <div class="cta" style="margin-top:10px;">
+              <a class="btn alt" href="#how">How It Works</a>
               <a class="btn alt" href="#samples">See Samples</a>
-              <a class="btn alt" href="#pricing">Pricing</a>
-              <a class="btn primary" href="#upgrade-buy">Upgrade</a>
+              <a class="btn primary" href="#pricing">Pricing</a>
             </div>
           </div>
         </div>
