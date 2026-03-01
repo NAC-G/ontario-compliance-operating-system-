@@ -63,7 +63,7 @@
     a{color:inherit;text-decoration:none}
     a:focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:12px}
 
-    .wrap{max-width:var(--max); margin:auto; padding:20px 28px 120px;}
+    .wrap{max-width:var(--max); margin:auto; padding:20px 28px 140px;}
 
     header.topbar{
       position: sticky;
@@ -82,67 +82,33 @@
       box-shadow: var(--shadowSoft);
       transition: padding .18s ease, background .18s ease, box-shadow .18s ease;
     }
-
     header.topbar.compact{
       padding: var(--hdrPadCompact) 18px;
       background: rgba(18,18,23,.72);
       box-shadow: var(--shadow);
     }
 
-    .brand{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width: 260px;
-    }
-    .brand strong{
-      font-size:14px;
-      letter-spacing:.4px;
-    }
-    .brand span{
-      font-size:12px;
-      color:var(--muted2);
-    }
+    .brand{display:flex;flex-direction:column;gap:2px;min-width:260px}
+    .brand strong{font-size:14px;letter-spacing:.4px}
+    .brand span{font-size:12px;color:var(--muted2)}
 
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
+      display:inline-flex;align-items:center;gap:10px;
       border:1px solid var(--border);
-      padding:6px 10px;
-      border-radius:999px;
-      color:var(--muted2);
-      font-size:13px;
-      white-space:nowrap;
+      padding:6px 10px;border-radius:999px;
+      color:var(--muted2);font-size:13px;white-space:nowrap;
       background: rgba(0,0,0,.14);
     }
-    .pip{
-      width:8px; height:8px; border-radius:999px;
-      background: rgba(255,255,255,.24);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
-    }
-    .pip.green{ background: var(--green); box-shadow:none; }
+    .pip{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.24);box-shadow:0 0 0 1px rgba(255,255,255,.10) inset}
+    .pip.green{background: var(--green); box-shadow:none;}
 
-    nav{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     nav a{
-      padding:8px 10px;
-      border-radius:12px;
-      border:1px solid transparent;
-      color:var(--muted);
-      font-size:14px;
+      padding:8px 10px;border-radius:12px;border:1px solid transparent;
+      color:var(--muted);font-size:14px;
       transition: background .14s ease, border-color .14s ease, color .14s ease;
     }
-    nav a:hover{
-      border-color: rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-    }
+    nav a:hover{border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.04); color: var(--text);}
     nav a.upgrade{
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.04);
@@ -152,142 +118,72 @@
     nav a.upgrade:hover{ background: rgba(255,255,255,.08); }
 
     .tierbar{
-      margin-top: 14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+      margin-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
     }
     .tierbar .label{
-      font-size:12px;
-      letter-spacing:.45px;
-      text-transform: uppercase;
-      color: var(--muted2);
-      display:flex;
-      align-items:center;
-      gap:10px;
+      font-size:12px;letter-spacing:.45px;text-transform:uppercase;
+      color: var(--muted2);display:flex;align-items:center;gap:10px;
     }
     .tierbar .label::before{
-      content:"";
-      width:10px;height:10px;border-radius:999px;
+      content:"";width:10px;height:10px;border-radius:999px;
       background: rgba(255,255,255,.20);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
+      box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
     }
-
     .tier-pill{
-      position: relative;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
+      position:relative;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.03);
       color: var(--muted);
-      font-weight: 800;
-      font-size: 13px;
-      cursor: pointer;
-      user-select: none;
+      font-weight:800;font-size:13px;
+      cursor:pointer;user-select:none;
     }
-    .tier-pill:hover{
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-    }
+    .tier-pill:hover{background: rgba(255,255,255,.06); color: var(--text);}
     .tier-pill.active::after{
-      content:"";
-      position:absolute;
-      left: 14px;
-      right: 14px;
-      bottom: 6px;
-      height: 3px;
-      background: var(--green);
-      border-radius: 999px;
-      opacity: .95;
+      content:"";position:absolute;left:14px;right:14px;bottom:6px;height:3px;
+      background: var(--green); border-radius:999px; opacity:.95;
     }
 
-    main.rail{
-      margin-top: 18px;
-      position: relative;
-      padding-left: 28px;
-    }
+    main.rail{margin-top:18px;position:relative;padding-left:28px}
     main.rail::before{
-      content:"";
-      position:absolute;
-      left: 6px;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: rgba(255,255,255,.22);
-      border-radius: 999px;
+      content:"";position:absolute;left:6px;top:0;bottom:0;width:3px;
+      background: rgba(255,255,255,.22); border-radius:999px;
     }
 
-    .hero{
-      padding: 64px 0 22px;
-      display:grid;
-      gap:14px;
-    }
-    h1{
-      margin:0;
-      font-size: clamp(34px, 5vw, 58px);
-      line-height: 1.08;
-      letter-spacing:.2px;
-    }
-    .sub{
-      margin:0;
-      color:var(--muted);
-      max-width: 940px;
-      font-size: 18px;
-    }
-
-    .accent-underline{
-      width: 170px;
-      height: 8px;
-      background: var(--green);
-      border-radius: 999px;
-      margin-top: 8px;
-    }
+    .hero{padding:64px 0 22px;display:grid;gap:14px}
+    h1{margin:0;font-size: clamp(34px, 5vw, 58px);line-height:1.08;letter-spacing:.2px}
+    .sub{margin:0;color:var(--muted);max-width:940px;font-size:18px}
+    .accent-underline{width:170px;height:8px;background: var(--green);border-radius:999px;margin-top:8px}
 
     .hero-grid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
       gap:16px;
       align-items:start;
-      margin-top: 18px;
+      margin-top:18px;
     }
     @media (max-width: 980px){ .hero-grid{ grid-template-columns: 1fr; } }
 
-    .cta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top: 10px;
-    }
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding: 14px 18px;
-      border-radius: 14px;
-      font-weight: 900;
-      border: 1px solid rgba(255,255,255,.16);
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 18px;border-radius:14px;font-weight:900;
+      border:1px solid rgba(255,255,255,.16);
       background: var(--btnBg);
       color: var(--btnText);
       transition: background .14s ease, transform .06s ease, box-shadow .14s ease;
-      text-decoration:none;
-      cursor:pointer;
-      user-select:none;
+      cursor:pointer; user-select:none;
     }
     .btn:hover{ background: var(--btnBgHover); }
     .btn:active{ transform: translateY(1px); }
     .btn.alt{ background: transparent; }
     .btn.primary{ box-shadow: 0 0 0 1px rgba(122,193,67,.35) inset; }
-    .btn.buy{ width: 100%; margin-top: 12px; }
+    .btn.buy{ width:100%; margin-top:12px; }
 
-    .small{
-      font-size:13px;
-      color:var(--muted2);
-      line-height:1.55;
-      margin: 8px 0 0;
-    }
+    .small{font-size:13px;color:var(--muted2);line-height:1.55;margin:8px 0 0}
 
+    /* Enterprise trust card (keep intact) */
     .trust{
       background: rgba(255,255,255,.03);
       border: 1px solid rgba(255,255,255,.14);
@@ -297,16 +193,15 @@
     }
     .trust .kicker{
       display:flex; align-items:center; gap:10px;
-      font-size: 12px; letter-spacing:.45px; text-transform:uppercase;
+      font-size:12px; letter-spacing:.45px; text-transform:uppercase;
       color: var(--muted2);
     }
     .trust .kicker .dot{ width:10px;height:10px;border-radius:999px;background: var(--green); }
-    .trust h3{ margin:10px 0 6px; font-size: 18px; letter-spacing:.2px; }
-    .trust ul{ padding-left: 18px; margin: 8px 0 0; color: var(--muted); font-size: 14px; }
-    .trust li{ margin: 6px 0; }
-    .trust .divider{ height:1px; background: rgba(255,255,255,.12); margin: 14px 0; }
-
-    .inline-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px; }
+    .trust h3{ margin:10px 0 6px; font-size:18px; letter-spacing:.2px; }
+    .trust ul{ padding-left:18px; margin:8px 0 0; color: var(--muted); font-size:14px; }
+    .trust li{ margin:6px 0; }
+    .trust .divider{ height:1px; background: rgba(255,255,255,.12); margin:14px 0; }
+    .inline-badges{ display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
     .badge{
       display:inline-flex; align-items:center; gap:10px;
       border:1px solid rgba(255,255,255,.14);
@@ -324,122 +219,54 @@
     .bullets{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-      margin-top: 14px;
+      gap:12px;
+      margin-top:14px;
     }
     .bullet{
       background: rgba(255,255,255,.03);
       border: 1px solid rgba(255,255,255,.14);
       border-radius: 14px;
-      padding: 14px 14px;
+      padding: 14px;
       display:flex;
       gap:12px;
       align-items:flex-start;
       box-shadow: var(--shadowSoft);
     }
     .bullet .icon{
-      width: 30px; height: 30px; border-radius: 999px;
-      display:flex; align-items:center; justify-content:center;
-      border: 1px solid rgba(255,255,255,.16);
+      width:30px;height:30px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.03);
-      flex: 0 0 auto;
-      box-shadow: 0 0 0 1px rgba(122,193,67,.18) inset;
+      flex:0 0 auto;
+      box-shadow:0 0 0 1px rgba(122,193,67,.18) inset;
     }
-    .bullet .icon::before{
-      content:"";
-      width: 10px; height: 10px; border-radius: 999px;
-      background: var(--green);
-    }
-    .bullet strong{ display:block; margin-bottom:4px; }
-    .bullet p{ margin:0; color: var(--muted); font-size: 14px; }
+    .bullet .icon::before{content:"";width:10px;height:10px;border-radius:999px;background: var(--green);}
+    .bullet strong{display:block;margin-bottom:4px}
+    .bullet p{margin:0;color: var(--muted);font-size:14px}
 
-    section{
-      padding: 46px 0;
-      border-top: 1px solid var(--border);
-    }
-    .section-head{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 14px;
-    }
-    .section-head h2{ margin:0; font-size: 26px; letter-spacing:.2px; }
-    .section-head .rule{ height:1px; flex:1; background: rgba(255,255,255,.12); }
+    section{padding:46px 0;border-top:1px solid var(--border)}
+    .section-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .section-head h2{margin:0;font-size:26px;letter-spacing:.2px}
+    .section-head .rule{height:1px;flex:1;background: rgba(255,255,255,.12)}
+    .marker{width:10px;height:10px;border-radius:999px;background: rgba(255,255,255,.22);box-shadow:0 0 0 1px rgba(255,255,255,.10) inset}
+    .marker.green{background: var(--green); box-shadow:none;}
 
-    .marker{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(255,255,255,.22);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
-    }
-    .marker.green{ background: var(--green); box-shadow:none; }
+    .grid{display:grid;grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));gap:16px}
+    .card{background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding:20px; box-shadow: var(--shadowSoft);}
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .card{
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadowSoft);
-    }
+    table{width:100%;border-collapse: collapse;margin-top:14px;overflow:hidden;border-radius:12px}
+    th, td{border:1px solid var(--border); padding:12px; text-align:left; vertical-align:top}
+    th{background: rgba(255,255,255,.03); color: var(--text); font-size:13px; letter-spacing:.4px; text-transform:uppercase}
+    td{color: var(--muted)}
+    .no{color: var(--orange); font-weight:900; letter-spacing:.2px}
+    .yes{color: rgba(255,255,255,.85); font-weight:900}
 
-    table{
-      width:100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      overflow:hidden;
-      border-radius: 12px;
-    }
-    th, td{
-      border: 1px solid var(--border);
-      padding: 12px;
-      text-align: left;
-      vertical-align: top;
-    }
-    th{
-      background: rgba(255,255,255,.03);
-      color: var(--text);
-      font-size: 13px;
-      letter-spacing:.4px;
-      text-transform: uppercase;
-    }
-    td{ color: var(--muted); }
-    .no{ color: var(--orange); font-weight: 900; letter-spacing: .2px; }
-    .yes{ color: rgba(255,255,255,.85); font-weight: 900; }
-
-    .pricing{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-    .price{
-      font-size: 38px;
-      font-weight: 900;
-      margin: 10px 0 4px;
-      letter-spacing: .2px;
-    }
-    .subprice{
-      color: var(--muted2);
-      font-size: 13px;
-      margin: 0 0 8px;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px 10px;
-      border-radius:999px;
-      font-size: 12px;
-      color: var(--muted2);
-      background: rgba(0,0,0,.10);
-    }
-    .tag .dot{ width:8px; height:8px; border-radius:999px; background: rgba(255,255,255,.22); }
-    .tag .dot.green{ background: var(--green); }
+    .pricing{display:grid;grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:12px}
+    .price{font-size:38px;font-weight:900;margin:10px 0 4px;letter-spacing:.2px}
+    .subprice{color: var(--muted2); font-size:13px; margin:0 0 8px}
+    .tag{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.14);padding:6px 10px;border-radius:999px;font-size:12px;color: var(--muted2);background: rgba(0,0,0,.10)}
+    .tag .dot{width:8px;height:8px;border-radius:999px;background: rgba(255,255,255,.22)}
+    .tag .dot.green{background: var(--green)}
 
     .anchor{ scroll-margin-top: 140px; }
 
@@ -461,28 +288,19 @@
       backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
     }
-    .floating-cta .left{
-      display:flex; flex-direction:column; gap:2px;
-      min-width: 180px;
-    }
-    .floating-cta .left strong{ font-size: 13px; letter-spacing:.2px; }
-    .floating-cta .left span{ font-size: 12px; color: var(--muted2); }
-    .floating-cta .right{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-    }
-    .floating-cta .btn{
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-weight: 900;
-    }
-    .floating-cta .btn.secondary{ background: transparent; }
+    .floating-cta .left{display:flex;flex-direction:column;gap:2px;min-width:180px}
+    .floating-cta .left strong{font-size:13px;letter-spacing:.2px}
+    .floating-cta .left span{font-size:12px;color: var(--muted2)}
+    .floating-cta .right{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+    .floating-cta .btn{padding:10px 12px;border-radius:12px;font-weight:900}
+    .floating-cta .btn.secondary{background: transparent}
 
-    /* ===== SMALL HOVER PREVIEW + QUICK VIEW MODAL ===== */
+    /* ===== Samples: small hover preview + Quick View modal with REAL TEXT ===== */
     .gallery{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 14px;
+      gap:14px;
+      margin-top:14px;
     }
     .thumb{
       position: relative;
@@ -492,85 +310,49 @@
       overflow:hidden;
       box-shadow: var(--shadowSoft);
       padding: 12px;
-      min-height: 168px;
+      min-height: 190px;
     }
-    .thumb-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .thumb-top strong{
-      font-size: 13px;
-      letter-spacing:.2px;
-    }
-    .thumb-top span{
-      font-size: 12px;
-      color: var(--muted2);
-      white-space: nowrap;
-    }
+    .thumb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .thumb-top strong{font-size:13px;letter-spacing:.2px}
+    .thumb-top span{font-size:12px;color: var(--muted2); white-space:nowrap}
 
-    /* The "image" area (use real images later if you want) */
     .thumb-art{
       height: 112px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
       background:
-        radial-gradient(220px 120px at 20% 20%, rgba(122,193,67,.28) 0%, transparent 55%),
-        radial-gradient(200px 120px at 85% 0%, rgba(255,138,31,.20) 0%, transparent 55%),
+        radial-gradient(220px 120px at 20% 20%, rgba(122,193,67,.18) 0%, transparent 55%),
+        radial-gradient(200px 120px at 85% 0%, rgba(255,138,31,.10) 0%, transparent 55%),
         linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.02) 100%);
       display:flex;
       align-items:center;
       justify-content:center;
-      color: rgba(242,242,242,.90);
+      color: rgba(242,242,242,.92);
       font-weight: 900;
       letter-spacing:.35px;
       font-size: 12px;
       user-select:none;
     }
-    .thumb-actions{
-      display:flex;
-      gap:10px;
-      margin-top: 10px;
-      flex-wrap:wrap;
-    }
-    .thumb-actions .btn{
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-weight: 900;
-    }
+    .thumb-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+    .thumb-actions .btn{padding:10px 12px;border-radius:12px;font-weight:900}
 
-    /* Small hover preview window */
     .hover-preview{
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
+      position:absolute;
+      left:12px; right:12px; bottom:12px;
       transform: translateY(10px);
-      opacity: 0;
-      pointer-events: none;
+      opacity:0;
+      pointer-events:none;
       transition: opacity .14s ease, transform .14s ease;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
       background: rgba(18,18,23,.82);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow);
-      padding: 10px 10px;
+      padding:10px;
     }
-    .thumb:hover .hover-preview{
-      opacity: 1;
-      transform: translateY(0px);
-    }
-    .hover-preview .line{
-      font-size: 12px;
-      color: var(--muted);
-      margin: 0;
-    }
-    .hover-preview .line strong{
-      color: var(--text);
-      font-size: 12px;
-    }
+    .thumb:hover .hover-preview{opacity:1;transform: translateY(0)}
+    .hover-preview .line{font-size:12px;color: var(--muted); margin:0}
+    .hover-preview .line strong{color: var(--text)}
 
     /* Modal (Quick View) */
     .modal{
@@ -621,32 +403,101 @@
       display:grid;
       gap:14px;
     }
-    .modal-art{
-      height: 380px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(600px 260px at 20% 20%, rgba(122,193,67,.26) 0%, transparent 55%),
-        radial-gradient(520px 280px at 85% 0%, rgba(255,138,31,.18) 0%, transparent 55%),
-        linear-gradient(180deg, rgba(255,255,255,.05) 0%, rgba(255,255,255,.02) 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight: 900;
-      letter-spacing:.4px;
-    }
     .modal-desc{
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,.12);
       background: rgba(0,0,0,.10);
-      padding: 12px 12px;
+      padding: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-height: 56vh;
+      overflow:auto;
+      white-space: pre-wrap;
+    }
+    .modal-desc strong{ color: var(--text); }
+
+    /* ROI calculator (smaller viewing window) */
+    .roi-wrap{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      margin-top:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .roi-wrap{ grid-template-columns: 1fr; } }
+
+    .roi-card{ padding:16px; }
+    .roi-small{
+      max-height: 260px;     /* smaller window */
+      overflow:auto;         /* scroll if needed */
+    }
+    .formgrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width: 720px){ .formgrid{ grid-template-columns: 1fr; } }
+    label{ display:block; font-size:12px; color: var(--muted2); margin-bottom:6px; letter-spacing:.2px; }
+    input, select{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+    }
+    input:focus, select:focus{ border-color: rgba(122,193,67,.55); box-shadow: 0 0 0 3px rgba(122,193,67,.12); }
+
+    .roi-result{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.10);
+      padding:12px;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.6;
     }
-    .modal-desc strong{ color: var(--text); }
+    .roi-result b{ color: var(--text); }
 
-    /* Footer legal links */
+    /* FAQ (expanded) */
+    details{
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      box-shadow: var(--shadowSoft);
+    }
+    summary{
+      cursor:pointer;
+      font-weight: 900;
+      color: var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .chev{
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid rgba(255,255,255,.70);
+      border-bottom: 2px solid rgba(255,255,255,.70);
+      transform: rotate(45deg);
+      transition: transform .18s ease, border-color .18s ease;
+      flex: 0 0 auto;
+    }
+    details[open] summary .chev{
+      transform: rotate(225deg);
+      border-right-color: var(--green);
+      border-bottom-color: var(--green);
+    }
+
+    /* Footer */
     footer{
       border-top: 1px solid var(--border);
       padding: 22px 0;
@@ -663,27 +514,22 @@
       flex-wrap:wrap;
       align-items:center;
     }
-    .footer-links{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-    }
+    .footer-links{display:flex;gap:12px;flex-wrap:wrap}
     .footer-links a{
       color: var(--muted2);
       border-bottom: 1px solid rgba(255,255,255,.14);
       padding-bottom: 1px;
       transition: color .14s ease, border-color .14s ease;
     }
-    .footer-links a:hover{
-      color: var(--green);
-      border-color: rgba(122,193,67,.65);
-    }
+    .footer-links a:hover{ color: var(--green); border-color: rgba(122,193,67,.65); }
 
     @media (max-width: 820px){
       .floating-cta .left{ display:none; }
     }
     @media (max-width: 720px){
-      .wrap{ padding: 18px 18px 140px; }
+      .wrap{ padding: 18px 18px 160px; }
+      main.rail{ padding-left: 22px; }
+      main.rail::before{ left: 4px; }
     }
     @media (prefers-reduced-motion: reduce){
       html{scroll-behavior:auto}
@@ -711,6 +557,7 @@
         <a href="#samples">Samples</a>
         <a href="#compare">Compare</a>
         <a class="upgrade" href="#upgrade-buy">Upgrade</a>
+        <a href="#roi">ROI</a>
         <a href="#faq">FAQ</a>
         <a href="#support">Support</a>
       </nav>
@@ -739,6 +586,7 @@
               <a class="btn primary" href="#pricing">View Pricing</a>
               <a class="btn alt" href="#samples">See Samples</a>
               <a class="btn alt" href="#upgrade-buy">Upgrade</a>
+              <a class="btn alt" href="#roi">ROI</a>
             </div>
 
             <p class="small">
@@ -750,34 +598,35 @@
                 <div class="icon" aria-hidden="true"></div>
                 <div>
                   <strong>Audit-ready structure</strong>
-                  <p>Designed to keep SOPs, logs, and proof-of-implementation organized over time.</p>
+                  <p>Designed to keep SOPs, logs, and proof-of-implementation organized over time, even when work changes.</p>
                 </div>
               </div>
               <div class="bullet">
                 <div class="icon" aria-hidden="true"></div>
                 <div>
                   <strong>Prompt-driven generation</strong>
-                  <p>Generate draft documents fast, then tailor to your equipment, tasks, and crews.</p>
+                  <p>Generate draft documents quickly, then tailor them to your tasks, hazards, equipment, and crew realities.</p>
                 </div>
               </div>
               <div class="bullet">
                 <div class="icon" aria-hidden="true"></div>
                 <div>
                   <strong>Verification & tracking (B6)</strong>
-                  <p>Track training, inspections, corrective actions, and updates in one system.</p>
+                  <p>Track training, inspections, corrective actions, and updates in a repeatable system that supports due diligence.</p>
                 </div>
               </div>
             </div>
           </div>
 
+          <!-- ENTERPRISE LAYER (kept intact) -->
           <aside class="trust" aria-label="Purchase confidence">
-            <div class="kicker"><span class="dot" aria-hidden="true"></span> Purchase clarity</div>
+            <div class="kicker"><span class="dot" aria-hidden="true"></span> Enterprise conversion kit</div>
             <h3>What buyers want to know (fast)</h3>
             <ul>
-              <li><strong>Clear scope:</strong> Draft documentation framework — employer implements.</li>
-              <li><strong>Operational fit:</strong> Tailor outputs to your tasks, hazards, equipment, and crews.</li>
-              <li><strong>Proof mindset:</strong> Logs + tracking support due diligence over time.</li>
-              <li><strong>Upgrade path:</strong> Existing purchase upgrade checkouts available.</li>
+              <li><strong>Clear scope:</strong> Draft documentation framework — the employer implements and maintains it.</li>
+              <li><strong>Operational fit:</strong> Outputs are tailored to your tasks, hazards, equipment, crews, and work sites.</li>
+              <li><strong>Proof mindset:</strong> Logs and verification tools support training proof and corrective action closure.</li>
+              <li><strong>Upgrade path:</strong> Existing-purchase upgrade checkouts are available for pay-the-difference upgrades.</li>
             </ul>
 
             <div class="divider"></div>
@@ -795,7 +644,7 @@
         </div>
       </div>
 
-      <!-- SAMPLES (with hover preview + quick view modal) -->
+      <!-- SAMPLES -->
       <section id="samples" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -803,12 +652,51 @@
         </div>
 
         <p class="sub">
-          Hover a card to see a small preview window. Use <strong>Quick View</strong> for a larger on-screen preview.
-          Replace these placeholders with real images later if you want.
+          Hover for a small preview window. Click <strong>Quick View</strong> to open a full on-screen sample document.
+          Each sample is written in expanded sentences to show the real style buyers receive.
         </p>
 
         <div class="gallery" aria-label="Sample preview gallery">
-          <div class="thumb" data-title="Sample SOP (Draft)" data-desc="A structured SOP format with hazards, PPE, pre-use checks, and competency sign-off sections.">
+          <div class="thumb"
+               data-title="Sample SOP — Chainsaw Operations (Draft)"
+               data-desc="This is a sample Safe Operating Procedure written in full sentences. It is provided as a draft for employer review, approval, and implementation."
+               data-doc="DOCUMENT TITLE: Safe Operating Procedure (SOP) — Chainsaw Operations (Draft)
+
+PURPOSE
+This procedure establishes a consistent, inspection-ready method for operating a chainsaw in a manner that reduces predictable injury risks and supports due diligence documentation.
+
+SCOPE
+This SOP applies to workers, supervisors, and any person assigned to cut, buck, limb, or process wood using a gasoline or battery-powered chainsaw as part of the employer’s operations.
+
+RESPONSIBILITIES
+• The Employer ensures this SOP is reviewed for site-specific hazards, approved, and implemented with training.
+• The Supervisor verifies workers are competent, equipped, and following stop-work rules when conditions change.
+• The Worker follows this SOP, uses required PPE, reports defects, and stops work when hazards cannot be controlled.
+
+REQUIRED PPE (MINIMUM)
+Workers must wear CSA-approved protective footwear, eye protection, hearing protection, and chainsaw protective legwear where applicable. Workers must also wear gloves suitable for grip and vibration reduction, and they must tie back long hair and secure loose clothing before starting work.
+
+PRE-USE INSPECTION (BEFORE STARTING)
+The worker must inspect the chainsaw body for damage, confirm the chain brake functions, verify the chain tension is correct, and check that all fasteners are secure. The worker must confirm fuel and bar oil levels are adequate, inspect the bar and chain for sharpness and damage, and confirm the throttle trigger returns freely.
+
+SAFE WORK STEPS (SUMMARY)
+1) The worker selects a stable stance and clears the immediate work area of trip hazards.
+2) The worker starts the saw using a method that prevents kickback or uncontrolled movement.
+3) The worker maintains two-handed control, keeps the bar tip away from unknown contact points, and avoids cutting above shoulder height.
+4) The worker plans each cut, identifies escape routes for felling or shifting wood, and maintains safe spacing from others.
+5) The worker stops work immediately if the chain becomes dull, the saw behaves abnormally, weather reduces visibility, or site conditions change.
+
+STOP-WORK RULES
+Work must stop when the worker cannot maintain stable footing, when bystanders enter the hazard zone, when wind or weather affects control, or when the saw fails inspection criteria. The supervisor must be notified before work resumes.
+
+TRAINING & VERIFICATION
+The supervisor must document training completion and confirm competency. Training records must include the SOP identifier, date, worker name, supervisor name, and any corrective actions required.
+
+VERSION CONTROL
+Document Owner: Employer / Safety Lead
+Review Cycle: Every 12 months or when equipment, tasks, or site conditions change
+Change Log: Document all revisions with dates and approval signatures."
+          >
             <div class="thumb-top">
               <strong>Sample SOP (Draft)</strong>
               <span>Hover • Quick View</span>
@@ -818,12 +706,45 @@
               <button class="btn alt js-quick" type="button">Quick View</button>
             </div>
             <div class="hover-preview" aria-hidden="true">
-              <p class="line"><strong>Includes:</strong> PPE, hazards, pre-use checks, steps, stop-work rules</p>
-              <p class="line"><strong>Use:</strong> Standardize how tasks are done across crews</p>
+              <p class="line"><strong>Includes:</strong> purpose, scope, PPE, pre-use checks, stop-work rules, training verification</p>
+              <p class="line"><strong>Designed for:</strong> consistent implementation across crews</p>
             </div>
           </div>
 
-          <div class="thumb" data-title="Policy (Draft)" data-desc="A policy template that defines document control, responsibilities, review cycles, and change logs.">
+          <div class="thumb"
+               data-title="Sample Policy — Document Control & Versioning (Draft)"
+               data-desc="This sample policy shows how the system maintains audit-ready control over documents as operations change."
+               data-doc="DOCUMENT TITLE: Policy — Document Control & Versioning (Draft)
+
+POLICY STATEMENT
+The employer maintains controlled documentation to reduce confusion, prevent stale procedures, and demonstrate a reasonable system of due diligence during inspections or internal audits.
+
+PURPOSE
+This policy defines how compliance documents are created, approved, issued, reviewed, revised, archived, and removed from use so that workers consistently rely on current information.
+
+APPLICABILITY
+This policy applies to SOPs, training records, inspection logs, hazard assessments, equipment checklists, and any compliance-related form or record used within the employer’s operations.
+
+ROLES AND ACCOUNTABILITY
+• The Document Owner is responsible for accuracy, review scheduling, and approvals.
+• Supervisors are responsible for removing obsolete versions from active use and communicating changes to workers.
+• Workers are responsible for using the most current version and reporting when information does not match real work.
+
+DOCUMENT IDENTIFICATION
+Each controlled document must display a title, unique identifier, version number, effective date, review date, and approval signature. Documents must be stored in a designated location that prevents uncontrolled editing of issued copies.
+
+REVIEW AND REVISION
+Documents must be reviewed at least annually and immediately when equipment changes, work methods change, a significant incident occurs, or inspections identify gaps. Revisions must be recorded in a change log that lists what changed, why it changed, and who approved it.
+
+RETENTION AND ARCHIVING
+The employer retains prior versions and supporting records for a period that is reasonable for operational needs and regulatory expectations. Archived versions must be clearly marked as superseded and must not remain in active work areas.
+
+COMMUNICATION AND TRAINING
+When a document is updated, supervisors must communicate the update and verify worker understanding when the change affects how work is performed or how safety controls are applied.
+
+ENFORCEMENT
+Failure to follow controlled documents may result in corrective actions consistent with the employer’s disciplinary and training policies."
+          >
             <div class="thumb-top">
               <strong>Policy (Draft)</strong>
               <span>Hover • Quick View</span>
@@ -833,12 +754,44 @@
               <button class="btn alt js-quick" type="button">Quick View</button>
             </div>
             <div class="hover-preview" aria-hidden="true">
-              <p class="line"><strong>Includes:</strong> ownership, versioning, approvals, review schedule</p>
-              <p class="line"><strong>Use:</strong> Keep documents controlled and inspection-ready</p>
+              <p class="line"><strong>Includes:</strong> ownership, approval rules, review triggers, retention and archiving</p>
+              <p class="line"><strong>Outcome:</strong> reduces stale docs and inspection panic</p>
             </div>
           </div>
 
-          <div class="thumb" data-title="Training Record" data-desc="A competency sign-off record to document training completion and supervisor verification.">
+          <div class="thumb"
+               data-title="Sample Training Record — Competency Sign-Off (Draft)"
+               data-desc="This sample record shows how training is documented so it can be demonstrated later as proof-of-implementation."
+               data-doc="DOCUMENT TITLE: Training Record — Competency Sign-Off (Draft)
+
+TRAINING CONTEXT
+This record documents that a worker received training and demonstrated competency for the listed task or equipment. The employer uses this record to support due diligence and consistent implementation.
+
+WORKER INFORMATION
+Worker Name: ______________________
+Role/Position: ______________________
+Work Location / Crew: _______________
+Supervisor / Trainer: ________________
+
+TRAINING DETAILS
+Training Topic / Module: ___________________________________________
+Associated SOP/Policy ID(s): _______________________________________
+Training Date: ______________________
+Training Method: ☐ Classroom ☐ Field Demonstration ☐ Toolbox Talk ☐ Other: ________
+
+COMPETENCY VERIFICATION
+The worker demonstrated competency by explaining hazards in their own words, selecting correct PPE, completing a pre-use check, and performing the task according to the SOP steps while maintaining control of the work area.
+
+OBSERVATIONS AND CORRECTIVE ACTIONS
+If issues were observed, the trainer documented the issue, provided coaching, and assigned follow-up actions. Follow-up must be completed before the worker performs the task without direct supervision.
+
+SIGN-OFF
+Worker Signature: _____________________  Date: ________________
+Trainer/Supervisor Signature: ___________  Date: ________________
+
+RETENTION NOTE
+This record must be retained with other training records and produced when requested during audits or inspections."
+          >
             <div class="thumb-top">
               <strong>Training Record</strong>
               <span>Hover • Quick View</span>
@@ -848,12 +801,43 @@
               <button class="btn alt js-quick" type="button">Quick View</button>
             </div>
             <div class="hover-preview" aria-hidden="true">
-              <p class="line"><strong>Includes:</strong> modules, SOP IDs, signatures, follow-up actions</p>
-              <p class="line"><strong>Use:</strong> Build proof-of-training for due diligence</p>
+              <p class="line"><strong>Includes:</strong> SOP IDs, trainer verification, competency criteria, follow-up actions</p>
+              <p class="line"><strong>Use:</strong> creates proof-of-training, not “memory-based” claims</p>
             </div>
           </div>
 
-          <div class="thumb" data-title="Inspection Log" data-desc="A walkthrough log to record hazards found, corrective actions, owners, and closure dates.">
+          <div class="thumb"
+               data-title="Sample Inspection Log — Hazards & Corrective Actions (Draft)"
+               data-desc="This sample log shows how hazards are recorded, assigned, and closed with dates so nothing is left unresolved."
+               data-doc="DOCUMENT TITLE: Workplace / Field Inspection Log — Hazards & Corrective Actions (Draft)
+
+PURPOSE
+This log records inspection findings and corrective actions so that hazards are addressed, assigned, and closed. It supports consistent follow-through and provides proof that issues were identified and corrected.
+
+INSPECTION DETAILS
+Inspection Type: ☐ Daily ☐ Weekly ☐ Monthly ☐ Site-Specific
+Inspection Date: ___________________
+Location / Site: ____________________
+Inspector Name: _____________________
+Supervisor Notified: ☐ Yes ☐ No
+
+FINDINGS AND ACTIONS (REPEAT AS NEEDED)
+1) Hazard/Issue Observed:
+____________________________________________________________________
+Risk Level (practical): ☐ Low ☐ Medium ☐ High
+Immediate Controls Applied:
+____________________________________________________________________
+Corrective Action Required:
+____________________________________________________________________
+Assigned To: ______________________  Due Date: _____________________
+Closed Date: _______________________  Verified By: _________________
+
+CLOSURE STATEMENT
+The employer closes findings only when the corrective action is completed and verified. If corrective action cannot be completed immediately, interim controls must be documented and communicated to workers.
+
+RETENTION NOTE
+This log is retained with related photos, maintenance records, and training actions if those are required to close the issue."
+          >
             <div class="thumb-top">
               <strong>Inspection Log</strong>
               <span>Hover • Quick View</span>
@@ -863,8 +847,8 @@
               <button class="btn alt js-quick" type="button">Quick View</button>
             </div>
             <div class="hover-preview" aria-hidden="true">
-              <p class="line"><strong>Includes:</strong> checks, issues, corrective actions, due dates</p>
-              <p class="line"><strong>Use:</strong> Track closure and reduce inspection panic</p>
+              <p class="line"><strong>Includes:</strong> assignments, due dates, closure verification, interim controls</p>
+              <p class="line"><strong>Use:</strong> prevents “found but never fixed” inspection failures</p>
             </div>
           </div>
         </div>
@@ -921,7 +905,7 @@
             <h3 style="margin-top:12px;">Tier 1 — Compliance Foundation Guide</h3>
             <div class="price">$99</div>
             <div class="subprice">Static Ontario compliance reference (no generators)</div>
-            <ul>
+            <ul style="padding-left:18px; margin: 10px 0 0; color: var(--muted);">
               <li>Inspection-aligned overview</li>
               <li>Legislative reference appendix</li>
               <li>Simple employer duty map (Ontario)</li>
@@ -935,7 +919,7 @@
             <h3 style="margin-top:12px;">Tier 2 — Compliance Operating System™</h3>
             <div class="price">$697</div>
             <div class="subprice">B1–B6 generators + verification tools</div>
-            <ul>
+            <ul style="padding-left:18px; margin: 10px 0 0; color: var(--muted);">
               <li>B1–B6 generator libraries</li>
               <li>Verification & tracking records (B6)</li>
               <li>Governance foundations</li>
@@ -949,7 +933,7 @@
             <h3 style="margin-top:12px;">Tier 3 — Professional License & Governance</h3>
             <div class="price">$1,997</div>
             <div class="subprice">Multi-crew / multi-site governance</div>
-            <ul>
+            <ul style="padding-left:18px; margin: 10px 0 0; color: var(--muted);">
               <li>Multi-crew / multi-site use</li>
               <li>Full governance module</li>
               <li>Audit + corrective action oversight</li>
@@ -960,7 +944,7 @@
         </div>
       </section>
 
-      <!-- UPGRADE PURCHASE (existing customers) -->
+      <!-- UPGRADE PURCHASE -->
       <section id="upgrade-buy" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -969,7 +953,7 @@
 
         <p class="sub">
           If you already purchased a lower tier, use the upgrade checkouts below.
-          These are intended for <strong>existing customers upgrading</strong>.
+          These are intended for <strong>existing customers upgrading</strong>. New customers should use standard purchases in Pricing.
         </p>
 
         <div class="pricing">
@@ -977,57 +961,167 @@
             <div class="tag"><span class="dot"></span> Upgrade Checkout</div>
             <h3 style="margin-top:12px;">Upgrade to Tier 2 (Existing Purchase)</h3>
             <div class="subprice">Use this checkout if you previously purchased Tier 1 and want to upgrade to Tier 2.</div>
-            <ul>
+            <ul style="padding-left:18px; margin: 10px 0 0; color: var(--muted);">
               <li>Unlock B1–B6 generator libraries</li>
               <li>Verification & tracking records (B6)</li>
               <li>Governance foundations</li>
               <li>Single operation license</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/4gM5kC2U79Lt8qleXCawo08">Upgrade to Tier 2 (Existing Purchase)</a>
-            <p class="small">New customers should use the standard Tier 2 purchase above.</p>
+            <p class="small">If you are new, use the standard Tier 2 purchase in the Pricing section.</p>
           </div>
 
           <div class="card">
             <div class="tag"><span class="dot"></span> Upgrade Checkout</div>
             <h3 style="margin-top:12px;">Upgrade to Tier 3 (Pay the Difference)</h3>
             <div class="subprice">Use this checkout if you previously purchased Tier 1 or Tier 2 and want to upgrade to Tier 3 by paying the difference.</div>
-            <ul>
+            <ul style="padding-left:18px; margin: 10px 0 0; color: var(--muted);">
               <li>Multi-crew / multi-site use</li>
               <li>Full governance module</li>
               <li>Audit + corrective action oversight</li>
               <li>Priority updates</li>
             </ul>
             <a class="btn buy primary" href="https://buy.stripe.com/aFa28qdyL8Hp5e97vaawo09">Upgrade to Tier 3 (Pay the Difference)</a>
-            <p class="small">New customers should use the standard Tier 3 purchase above.</p>
+            <p class="small">If you are new, use the standard Tier 3 purchase in the Pricing section.</p>
           </div>
         </div>
       </section>
 
-      <!-- FAQ -->
+      <!-- ROI (smaller viewing window) -->
+      <section id="roi" class="anchor">
+        <div class="section-head">
+          <span class="marker" aria-hidden="true"></span>
+          <h2>ROI Calculator (Quick Estimate)</h2><div class="rule"></div>
+        </div>
+
+        <p class="sub">
+          This calculator gives a conservative estimate for time savings and avoided rework. It is not financial advice and it does not guarantee outcomes.
+          It helps buyers translate “less admin chaos” into a practical annual estimate.
+        </p>
+
+        <div class="roi-wrap">
+          <div class="card roi-card roi-small" aria-label="ROI inputs">
+            <strong style="display:block; letter-spacing:.2px;">Inputs</strong>
+            <div class="formgrid">
+              <div>
+                <label for="hourly">Loaded hourly cost (CAD)</label>
+                <input id="hourly" type="number" min="0" step="1" value="45" />
+              </div>
+              <div>
+                <label for="hoursSaved">Hours saved per week</label>
+                <input id="hoursSaved" type="number" min="0" step="0.5" value="2" />
+              </div>
+              <div>
+                <label for="incidents">Incidents avoided per year</label>
+                <input id="incidents" type="number" min="0" step="1" value="1" />
+              </div>
+              <div>
+                <label for="incidentCost">Avg. admin/rework cost per incident (CAD)</label>
+                <input id="incidentCost" type="number" min="0" step="50" value="1200" />
+              </div>
+              <div>
+                <label for="tierCost">Compare against tier price</label>
+                <select id="tierCost">
+                  <option value="99">Tier 1 ($99)</option>
+                  <option value="697" selected>Tier 2 ($697)</option>
+                  <option value="1997">Tier 3 ($1,997)</option>
+                </select>
+              </div>
+              <div>
+                <label>&nbsp;</label>
+                <button class="btn primary" type="button" id="calcBtn">Calculate</button>
+              </div>
+            </div>
+            <p class="small">Tip: Keep assumptions conservative. Buyers trust conservative math more than aggressive claims.</p>
+          </div>
+
+          <div class="card roi-card" aria-label="ROI results">
+            <strong style="display:block; letter-spacing:.2px;">Results</strong>
+            <div class="roi-result" id="roiOut" style="margin-top:10px;">
+              <b>Annual time savings:</b> —<br/>
+              <b>Annual incident/rework savings:</b> —<br/>
+              <b>Estimated annual benefit:</b> —<br/>
+              <b>Estimated ROI vs tier cost:</b> —
+            </div>
+            <p class="small" style="margin-top:10px;">
+              This estimate assumes time savings come from faster document creation, fewer duplicated forms, less “scramble” during inspections,
+              and fewer gaps caused by stale SOPs and inconsistent training records.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ (expanded) -->
       <section id="faq" class="anchor">
         <div class="section-head">
           <span class="marker" aria-hidden="true"></span>
           <h2>FAQ</h2><div class="rule"></div>
         </div>
 
-        <details class="card" style="padding:14px 16px;">
-          <summary style="cursor:pointer;font-weight:900;display:flex;justify-content:space-between;gap:12px;list-style:none;">
-            Is this legal advice or a compliance guarantee?
-            <span aria-hidden="true">▾</span>
-          </summary>
-          <p class="small">No. This product provides draft documentation only. Employers remain responsible for review, approval, implementation, training, and ongoing compliance.</p>
+        <details>
+          <summary>Is this legal advice or a compliance guarantee? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            No. This product provides draft documentation and an operating structure only. The employer remains responsible for reviewing accuracy,
+            approving content, delivering training, implementing controls, and maintaining the system over time. Different operations require different controls,
+            and no template or prompt pack can replace competent internal review.
+          </p>
         </details>
 
-        <details class="card" style="padding:14px 16px;">
-          <summary style="cursor:pointer;font-weight:900;display:flex;justify-content:space-between;gap:12px;list-style:none;">
-            How do upgrades work?
-            <span aria-hidden="true">▾</span>
-          </summary>
-          <p class="small">If you already purchased a lower tier, use the upgrade checkouts in the Upgrade section. New buyers should use the standard tier purchases in Pricing.</p>
+        <details>
+          <summary>Is this software that automatically generates documents? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            No. The system is “prompt-driven.” You select a generator, paste the prompt into an AI tool, answer questions about your operation,
+            and then you review and approve the draft output. The system is designed so you can repeatedly generate updated drafts when equipment,
+            tasks, hazards, or crews change.
+          </p>
+        </details>
+
+        <details>
+          <summary>What makes this different from a typical template pack? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            Template packs typically give you static files that start drifting away from real work immediately. This system is structured as an operating model:
+            it tells you what to create, how to keep it controlled, how to track proof-of-implementation, and how to update it without starting from zero.
+            The emphasis is on keeping documents alive and consistent rather than creating documents once and forgetting them.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do upgrades work for existing customers? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            If you previously purchased a lower tier, you can use the Upgrade Purchase section to pay the difference for the higher tier.
+            This keeps checkout simple for returning customers. New customers should purchase normally from the Pricing section to avoid mismatches.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is “verification and tracking (B6)” in practical terms? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            Verification means you can show proof that training happened, inspections were completed, corrective actions were assigned,
+            and issues were actually closed. B6 tools support logs, sign-offs, audit summaries, and simple evidence trails.
+            In practice, this reduces “we did it but can’t prove it” failures during inspections.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can I edit the documents and brand them for my business? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            Yes. The intended workflow is that you generate drafts, copy them into your own internal documentation system, and then edit them
+            so they match your equipment, hazards, and procedures. You are expected to brand, approve, and control your versions internally so workers
+            are using the current version in the field.
+          </p>
+        </details>
+
+        <details>
+          <summary>Who is Tier 3 designed for? <span class="chev" aria-hidden="true"></span></summary>
+          <p class="small">
+            Tier 3 is designed for organizations that need consistency across multiple crews, multiple sites, or a more formal governance model.
+            In practice, this means you need documentation that stays aligned across supervisors and locations, and you want a stronger audit and corrective-action
+            oversight structure to reduce variation and reduce operational drift.
+          </p>
         </details>
       </section>
 
-      <!-- SUPPORT -->
+      <!-- SUPPORT (remove legal card here; keep legal pages in footer only) -->
       <section id="support" class="anchor">
         <div class="section-head">
           <span class="marker green" aria-hidden="true"></span>
@@ -1038,21 +1132,24 @@
           <div class="card">
             <h3>Access + System-Use Support</h3>
             <p class="small">
-              Support is limited to access issues and system-use clarification only.
-              No compliance consulting, document review, or inspector communication is included.
+              Support is limited to access issues and system-use clarification only. No compliance consulting, document review,
+              or inspector communication is included. If you need professional review, you should engage a qualified professional who can assess your
+              operation and verify that controls and training match your real work.
             </p>
             <p class="small">Email: <a href="mailto:info@naturalalternatives.ca" style="border-bottom:1px solid rgba(255,255,255,.20);">info@naturalalternatives.ca</a></p>
           </div>
 
           <div class="card">
-            <h3>Legal Pages</h3>
-            <p class="small">These pages are provided to support privacy-aligned sales operations in Ontario/Canada.</p>
+            <h3>Implementation Reminder</h3>
+            <p class="small">
+              The fastest way to get value is to start with one high-frequency task, generate the SOP draft, train the crew,
+              and then run the inspection and corrective action logs for two weeks. This gives you immediate proof-of-implementation,
+              and it highlights what needs to be adjusted before you scale the system across the rest of the operation.
+            </p>
             <div class="cta" style="margin-top:10px;">
-              <a class="btn alt" href="privacy-policy.html">Privacy Policy</a>
-              <a class="btn alt" href="cookie-policy.html">Cookie Policy</a>
-              <a class="btn alt" href="terms-of-use.html">Terms of Use</a>
-              <a class="btn alt" href="opt-out.html">Opt Out</a>
-              <a class="btn alt" href="third-party-online-advertising.html">Third Party Ads</a>
+              <a class="btn alt" href="#samples">See Samples</a>
+              <a class="btn alt" href="#pricing">Pricing</a>
+              <a class="btn primary" href="#upgrade-buy">Upgrade</a>
             </div>
           </div>
         </div>
@@ -1093,7 +1190,7 @@
   </div>
 
   <!-- Quick View Modal -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Quick view preview">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Quick view sample document">
     <div class="modal-card">
       <div class="modal-head">
         <div style="display:flex;flex-direction:column;gap:2px;">
@@ -1103,10 +1200,7 @@
         <button class="iconbtn" type="button" id="modalClose" aria-label="Close">✕</button>
       </div>
       <div class="modal-body">
-        <div class="modal-art" id="modalArt" aria-hidden="true">PREVIEW</div>
-        <div class="modal-desc" id="modalDesc">
-          <strong>Description:</strong> —
-        </div>
+        <div class="modal-desc" id="modalDesc"><strong>Description:</strong> —</div>
       </div>
     </div>
   </div>
@@ -1139,19 +1233,20 @@
     }
     pills.forEach(p => p.addEventListener('click', () => setTier(p.dataset.tier)));
 
-    // ===== Quick View Modal logic =====
+    // Quick View modal
     const modal = document.getElementById('modal');
     const modalTitle = document.getElementById('modalTitle');
     const modalSub = document.getElementById('modalSub');
-    const modalArt = document.getElementById('modalArt');
     const modalDesc = document.getElementById('modalDesc');
     const modalClose = document.getElementById('modalClose');
 
-    function openModal({ title, artLabel, desc }){
+    function openModal({ title, desc, doc }){
       modalTitle.textContent = title || "Preview";
-      modalSub.textContent = "Large Preview • Quick View";
-      modalArt.textContent = artLabel || "PREVIEW";
-      modalDesc.innerHTML = "<strong>Description:</strong> " + (desc || "—");
+      modalSub.textContent = "Quick View • Sample Document";
+      // Put description then the full doc content
+      const safeDesc = (desc || "—");
+      const safeDoc = (doc || "");
+      modalDesc.textContent = "Description: " + safeDesc + "\n\n" + safeDoc;
       modal.classList.add('open');
       document.body.style.overflow = "hidden";
       modalClose.focus();
@@ -1167,8 +1262,8 @@
         if(!card) return;
         openModal({
           title: card.getAttribute('data-title'),
-          artLabel: (card.querySelector('.thumb-art')?.textContent || "PREVIEW").trim(),
-          desc: card.getAttribute('data-desc')
+          desc: card.getAttribute('data-desc'),
+          doc: card.getAttribute('data-doc')
         });
       });
     });
@@ -1176,6 +1271,44 @@
     modalClose.addEventListener('click', closeModal);
     modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
     document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+    // ROI calculator
+    const hourly = document.getElementById('hourly');
+    const hoursSaved = document.getElementById('hoursSaved');
+    const incidents = document.getElementById('incidents');
+    const incidentCost = document.getElementById('incidentCost');
+    const tierCost = document.getElementById('tierCost');
+    const roiOut = document.getElementById('roiOut');
+    const calcBtn = document.getElementById('calcBtn');
+
+    function money(n){
+      const x = Math.max(0, Number(n || 0));
+      return x.toLocaleString(undefined, { style:"currency", currency:"CAD", maximumFractionDigits:0 });
+    }
+
+    function calcROI(){
+      const h = Number(hourly.value || 0);
+      const hs = Number(hoursSaved.value || 0);
+      const inc = Number(incidents.value || 0);
+      const ic = Number(incidentCost.value || 0);
+      const tc = Number(tierCost.value || 0);
+
+      const annualTime = h * hs * 52;
+      const annualInc = inc * ic;
+      const annualBenefit = annualTime + annualInc;
+
+      const roi = tc > 0 ? ((annualBenefit - tc) / tc) : 0;
+
+      roiOut.innerHTML =
+        "<b>Annual time savings:</b> " + money(annualTime) + "<br/>" +
+        "<b>Annual incident/rework savings:</b> " + money(annualInc) + "<br/>" +
+        "<b>Estimated annual benefit:</b> " + money(annualBenefit) + "<br/>" +
+        "<b>Estimated ROI vs tier cost:</b> " + (tc > 0 ? (roi * 100).toFixed(0) + "% (estimate)" : "—");
+    }
+
+    calcBtn.addEventListener('click', calcROI);
+    // run once on load
+    calcROI();
   </script>
 </body>
 </html>
