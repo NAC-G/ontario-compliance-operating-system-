@@ -1,79 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Thank You – Ontario Compliance Operating System™</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Thank you for your purchase of the Ontario Compliance Operating System™." />
-  <style>
-    :root{
-      --bg:#0f0f10; 
-      --card:#151517; 
-      --text:#eaeaf0; 
-      --muted:#b8b8c5; 
-      --border:#242427;
-      --accent:#6ee7b7;
-    }
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      padding:40px;
-    }
-    .box{
-      max-width:760px;
-      margin:auto;
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:32px;
-    }
-    h1{margin-top:0;}
-    p{color:var(--muted); line-height:1.6;}
-    ul{padding-left:20px;}
-    .highlight{
-      background:#1f2933;
-      border-left:4px solid var(--accent);
-      padding:16px;
-      border-radius:8px;
-      margin:24px 0;
-    }
-    .small{font-size:13px;color:var(--muted);}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purchase Confirmed — OCOS™ · Natural Alternatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-accent: #2E7D32;
+    --green-deep:   #1B5E20;
+    --graphite:     #333333;
+    --body-text:    #555555;
+    --grey-line:    #DDDDDD;
+    --grey-bg:      #F5F5F5;
+    --grey-muted:   #888888;
+    --white:        #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--graphite); font-size: 15px; line-height: 1.75; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* NAV */
+  nav {
+    background: rgba(51,51,51,0.98);
+    border-bottom: 2px solid var(--green-accent);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px; flex-shrink: 0;
+  }
+  .nav-brand { font-family: 'DM Mono', monospace; color: var(--green-accent); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(160deg, #1a1a1a 0%, #2a2a2a 60%, #222 100%);
+    padding: 6rem 2rem 5rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px),
+                      repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px);
+    pointer-events: none;
+  }
+
+  .confirm-badge {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: rgba(46,125,50,0.15); border: 1px solid rgba(46,125,50,0.4);
+    padding: 0.5rem 1.25rem; margin-bottom: 2rem;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-accent);
+    position: relative;
+  }
+  .confirm-badge-dot { width: 7px; height: 7px; background: var(--green-accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900; color: var(--white); line-height: 1.1;
+    margin-bottom: 1rem; position: relative;
+  }
+  .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.5); max-width: 480px; margin: 0 auto; position: relative; }
+
+  /* STEPS */
+  .steps-section { padding: 5rem 2rem; background: var(--grey-bg); }
+  .steps-inner { max-width: 760px; margin: 0 auto; }
+  .steps-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+  .steps-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--green-accent); }
+  .steps-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--graphite); margin-bottom: 3rem; }
+
+  .steps-list { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--grey-line); }
+  .step-row { display: flex; align-items: stretch; border-bottom: 1px solid var(--grey-line); background: var(--white); }
+  .step-row:last-child { border-bottom: none; }
+  .step-num-block {
+    background: var(--green-deep); color: var(--white);
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900;
+    width: 65px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .step-content { padding: 1.4rem 1.75rem; }
+  .step-heading { font-weight: 600; font-size: 0.95rem; color: var(--graphite); margin-bottom: 0.25rem; }
+  .step-detail { font-size: 0.84rem; color: var(--body-text); line-height: 1.65; }
+  .step-timing { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-accent); margin-top: 0.35rem; display: block; }
+
+  /* EMAIL PREVIEW */
+  .email-section { padding: 5rem 2rem; background: var(--white); border-top: 1px solid var(--grey-line); }
+  .email-inner { max-width: 620px; margin: 0 auto; }
+  .email-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; }
+  .email-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--green-accent); }
+  .email-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--graphite); margin-bottom: 2rem; }
+
+  .email-mockup { border: 1px solid var(--grey-line); overflow: hidden; }
+  .email-header { background: var(--graphite); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .email-header-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .email-header-dot:nth-child(1) { background: #ff5f57; }
+  .email-header-dot:nth-child(2) { background: #febc2e; }
+  .email-header-dot:nth-child(3) { background: #28c840; }
+  .email-body { padding: 2rem; background: var(--white); }
+  .email-from { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.08em; color: var(--grey-muted); margin-bottom: 0.25rem; }
+  .email-subject { font-weight: 700; font-size: 1rem; color: var(--graphite); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--grey-line); }
+  .email-content { font-size: 0.85rem; color: var(--body-text); line-height: 1.75; }
+  .email-content p { margin-bottom: 1rem; }
+  .email-link-block { background: var(--grey-bg); border-left: 3px solid var(--green-accent); padding: 1rem 1.25rem; margin: 1.25rem 0; }
+  .email-link-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 0.4rem; display: block; }
+  .email-link-url { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--graphite); word-break: break-all; }
+  .email-sig { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--grey-line); font-size: 0.8rem; color: var(--grey-muted); }
+
+  /* DISCLAIMER */
+  .disclaimer { padding: 3rem 2rem; background: var(--grey-bg); border-top: 1px solid var(--grey-line); }
+  .disclaimer-inner { max-width: 620px; margin: 0 auto; font-size: 0.78rem; color: var(--grey-muted); line-height: 1.7; text-align: center; font-family: 'DM Mono', monospace; letter-spacing: 0.03em; }
+
+  /* FOOTER */
+  footer { background: #1a1a1a; padding: 2.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; border-top: 2px solid var(--green-accent); margin-top: auto; }
+  footer .f-brand { font-family: 'Playfair Display', serif; color: rgba(255,255,255,0.35); font-style: italic; font-size: 0.9rem; text-decoration: none; }
+  footer .f-tm { font-size: 0.7rem; color: rgba(255,255,255,0.15); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero > *:nth-child(3) { animation-delay: 0.3s; }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
 </head>
 <body>
-  <div class="box">
-    <h1>Payment Successful ✅</h1>
 
-    <p>
-      Thank you for your purchase of the 
-      <strong>Ontario Compliance Operating System™</strong>.
-    </p>
+<nav>
+  <a href="/" class="nav-brand">OCOS™ · Natural Alternatives</a>
+</nav>
 
-    <div class="highlight">
-      <p><strong>What happens next:</strong></p>
-      <ul>
-        <li>You will receive an email with your access instructions</li>
-        <li>This includes your Notion workspace link and Quick-Start Guide</li>
-        <li>If you don’t see the email within 5 minutes, check your spam folder</li>
-      </ul>
+<section class="hero">
+  <div class="confirm-badge"><span class="confirm-badge-dot"></span> Purchase Confirmed</div>
+  <h1 class="hero-title">You're in the system.</h1>
+  <p class="hero-sub">Your access email is on its way. Here's exactly what happens next.</p>
+</section>
+
+<section class="steps-section">
+  <div class="steps-inner">
+    <div class="steps-eyebrow">What Happens Next</div>
+    <h2 class="steps-title">Your Access in Three Steps</h2>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-num-block">1</div>
+        <div class="step-content">
+          <div class="step-heading">Check your inbox</div>
+          <p class="step-detail">An access email has been sent to the address you used at checkout. It contains your tier document link and your Notion workspace access link. If you don't see it within 5 minutes, check your spam folder.</p>
+          <span class="step-timing">Within 5 minutes of purchase</span>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num-block">2</div>
+        <div class="step-content">
+          <div class="step-heading">Read the foundation guide first</div>
+          <p class="step-detail">Open your Tier 1 document and read it in full before accessing any generation tools. This is the orientation step that ensures every document you generate is used correctly. The system is designed to be read in sequence.</p>
+          <span class="step-timing">Before using any Notion workspace</span>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num-block">3</div>
+        <div class="step-content">
+          <div class="step-heading">Access your Notion workspace</div>
+          <p class="step-detail">Once Tier 1 orientation is complete, use the Notion link in your email to access the generation system. Start with the Company Master Prompt setup — everything else follows from there.</p>
+          <span class="step-timing">After completing Tier 1 orientation</span>
+        </div>
+      </div>
     </div>
-
-    <p>
-      <strong>Important notice:</strong><br>
-      This product provides <em>draft compliance documentation only</em>.
-      Final review, approval, and implementation remain the responsibility of the employer.
-    </p>
-
-    <p class="small">
-      Support is limited to access issues only.<br>
-      Contact: <strong>info@naturalalternatives.ca</strong>
-    </p>
-
-    <p class="small">
-      You may now close this page.
-    </p>
   </div>
-</body>
-</html>
+</section>
+
+<section class="email-section">
+  <div class="email-inner">
+    <div class="email-eyebrow">Your Delivery Email</div>
+    <h2 class="email-title">Here's What to Expect</h2>
+    <div class="email-mockup">
+      <div class="email-header">
+        <div class="email-header-dot"></div>
+        <div class="email-header-dot"></div>
+        <div class="email-header-dot"></div>
+      </div>
+      <div class="email-body">
+        <div class="email-from">From: Natural Alternatives &lt;<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d6beb3babab996b8b7a2a3a4b7bab7baa2b3a4b8b7a2bfa0b3a5f8b5b7">[email&#160;protected]</a>&gt;</div>
+        <div class="email-subject">Your OCOS Access — Ontario Compliance Operating System™</div>
+        <div class="email-content">
+          <p>Thank you for your purchase. Your Ontario Compliance Operating System™ access is ready.</p>
+          <p>Please read your Foundation Guide in full before using any generation tools. The system is sequential by design — orientation before generation.</p>
+
+          <div class="email-link-block">
+            <span class="email-link-label">Tier 1 — Foundation Guide</span>
+            <span class="email-link-url">naturalalternatives.ca/tier-1</span>
+          </div>
+
+          <div class="email-link-block">
+            <span class="email-link-label">Tier 1 — Notion Workspace</span>
+            <span class="email-link-url">notion.so/your-tier-1-workspace-link</span>
+          </div>
+
+          <p style="font-size:0.78rem;color:#888;">If you purchased the complete bundle, your Tier 2 and Tier 3 links are included below this section in your full email.</p>
+
+          <div class="email-sig">
+            Natural Alternatives · Ontario Compliance Division<br>
+            naturalalternatives.ca
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <div class="disclaimer-inner">
+    The Ontario Compliance Operating System™ is an educational and organizational framework. It does not constitute legal advice. The employer retains full responsibility for compliance with all applicable Ontario legislation. All generated documents are drafts until reviewed, approved, and implemented by the employer.
+  </div>
+</div>
+
+<footer>
+  <a href="https://naturalalternatives.ca" target="_blank" class="f-brand">Natural Alternatives</a>
+  <
+<div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
+  <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
+  &nbsp;·&nbsp;
+  <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
+  &nbsp;·&nbsp; © Natural Alternatives
+</div>

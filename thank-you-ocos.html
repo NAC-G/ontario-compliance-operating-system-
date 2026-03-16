@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2E7D32;--green-deep:#1B5E20;--ink:#0A0C0A;--panel:#161A16;
+  --border:rgba(255,255,255,0.07);--text:#F0EDE8;
+  --text-dim:rgba(240,237,232,0.6);--text-muted:rgba(240,237,232,0.3);
+}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(46,125,50,0.03) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(46,125,50,0.03) 40px);}
+.card{position:relative;z-index:1;max-width:620px;width:100%;background:var(--panel);
+  border:1px solid var(--border);padding:3rem 2.5rem;}
+.check{width:52px;height:52px;border-radius:50%;background:rgba(46,125,50,0.15);
+  border:1.5px solid var(--green);display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.75rem;font-size:1.3rem;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.75rem;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:900;
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;}
+.sub{font-size:.9rem;color:var(--text-dim);line-height:1.8;margin-bottom:2rem;}
+.steps{border-top:1px solid var(--border);padding-top:1.75rem;margin-bottom:2rem;}
+.steps-head{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:1.25rem;}
+.step{display:flex;gap:1rem;margin-bottom:1.25rem;align-items:flex-start;}
+.step-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--green);background:rgba(46,125,50,0.1);border:1px solid rgba(46,125,50,0.25);
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-text{font-size:.85rem;color:var(--text-dim);line-height:1.7;padding-top:.2rem;}
+.step-text strong{color:var(--text);font-weight:500;}
+.alert-box{background:rgba(46,125,50,0.07);border:1px solid rgba(46,125,50,0.2);
+  border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:2rem;}
+.alert-box p{font-size:.82rem;color:var(--text-dim);margin:0;line-height:1.7;}
+.alert-box strong{color:var(--text);font-weight:500;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  padding:.85rem 1.75rem;text-decoration:none;transition:background .2s;margin-right:.75rem;margin-bottom:.75rem;}
+.btn:hover{background:var(--green-deep);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
+.btn-ghost:hover{border-color:rgba(46,125,50,0.3);color:var(--green);background:transparent;}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--text-muted);margin-top:1.75rem;border-top:1px solid var(--border);padding-top:1.5rem;line-height:2;}
+.footer-note a{color:var(--green);text-decoration:none;}
+@media(max-width:600px){.card{padding:2rem 1.25rem;}}
+</style>
+<title>Purchase Confirmed — OCOS™ Workspace · Natural Alternatives</title>
+</head>
+<body>
+<div class="card">
+  <div class="check">✓</div>
+  <div class="eyebrow">Purchase Confirmed</div>
+  <h1>Your OCOS™ workspace is being prepared.</h1>
+  <p class="sub">Your payment was received. Your Notion workspace will be ready and sent to your inbox within <strong style="color:#F0EDE8;">one business day</strong>. You don't need to do anything right now — we'll email you a direct access link when it's ready.</p>
+
+  <div class="steps">
+    <div class="steps-head">What happens next</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Workspace preparation (up to 1 business day).</strong> We configure your Notion workspace with your tier's full document architecture — equipment logs, HR records, CRA trackers, or all three depending on your purchase.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Access email arrives.</strong> We'll send a Notion guest invite and a direct link to your workspace. Make sure you're signed into Notion with the same email address you used to purchase.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Start with the 👋 Start Here page.</strong> Your workspace includes a setup guide specific to your tier. It walks you through your first 5 setup steps and takes about 30 minutes to complete.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Your first compliance record.</strong> Following the Start Here guide, you'll log your first pre-shift inspection, employee record, or HST entry — creating your first defensible compliance document.</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <p><strong>Don't have a Notion account?</strong> Notion is free to sign up at <a href="https://notion.so" style="color:#2E7D32;" target="_blank">notion.so</a>. Use the same email address you used to purchase — that's the email we'll send your workspace invite to.</p>
+  </div>
+
+  <div>
+    <a href="index.html" class="btn btn-ghost">Back to Home</a>
+  </div>
+
+  <div class="footer-note">
+    Questions or urgent requests? Email <a href="/cdn-cgi/l/email-protection#335a5d555c735d52474641525f525f4756415d52475a4556401d5052"><span class="__cf_email__" data-cfemail="1c75727a735c727d68696e7d707d7068796e727d68756a796f327f7d">[email&#160;protected]</span></a> — response within one business day.<br>
+ 
+<div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
+  <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
+  &nbsp;·&nbsp;
+  <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
+  &nbsp;·&nbsp; © Natural Alternatives
+</div>
+</body>
+</html>

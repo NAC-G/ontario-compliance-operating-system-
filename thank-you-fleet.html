@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#2E7D32;--green-deep:#1B5E20;--ink:#0A0C0A;--panel:#161A16;
+  --border:rgba(255,255,255,0.07);--text:#F0EDE8;
+  --text-dim:rgba(240,237,232,0.6);--text-muted:rgba(240,237,232,0.3);
+}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(46,125,50,0.03) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(46,125,50,0.03) 40px);}
+.card{position:relative;z-index:1;max-width:620px;width:100%;background:var(--panel);
+  border:1px solid var(--border);padding:3rem 2.5rem;}
+.check{width:52px;height:52px;border-radius:50%;background:rgba(46,125,50,0.15);
+  border:1.5px solid var(--green);display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.75rem;font-size:1.3rem;}
+.eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--green);margin-bottom:.75rem;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(1.7rem,3.5vw,2.3rem);font-weight:900;
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;}
+.sub{font-size:.9rem;color:var(--text-dim);line-height:1.8;margin-bottom:2rem;}
+.steps{border-top:1px solid var(--border);padding-top:1.75rem;margin-bottom:2rem;}
+.steps-head{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:1.25rem;}
+.step{display:flex;gap:1rem;margin-bottom:1.25rem;align-items:flex-start;}
+.step-num{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--green);background:rgba(46,125,50,0.1);border:1px solid rgba(46,125,50,0.25);
+  width:28px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-text{font-size:.85rem;color:var(--text-dim);line-height:1.7;padding-top:.2rem;}
+.step-text strong{color:var(--text);font-weight:500;}
+.alert-box{background:rgba(46,125,50,0.07);border:1px solid rgba(46,125,50,0.2);
+  border-left:3px solid var(--green);padding:1rem 1.25rem;margin-bottom:2rem;}
+.alert-box p{font-size:.82rem;color:var(--text-dim);margin:0;line-height:1.7;}
+.alert-box strong{color:var(--text);font-weight:500;}
+.btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--green);color:#fff;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  padding:.85rem 1.75rem;text-decoration:none;transition:background .2s;margin-right:.75rem;margin-bottom:.75rem;}
+.btn:hover{background:var(--green-deep);}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
+.btn-ghost:hover{border-color:rgba(46,125,50,0.3);color:var(--green);background:transparent;}
+.footer-note{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;
+  color:var(--text-muted);margin-top:1.75rem;border-top:1px solid var(--border);padding-top:1.5rem;line-height:2;}
+.footer-note a{color:var(--green);text-decoration:none;}
+@media(max-width:600px){.card{padding:2rem 1.25rem;}}
+</style>
+<title>Purchase Confirmed — NAC OS Fleet Logbook · Natural Alternatives</title>
+</head>
+<body>
+<div class="card">
+  <div class="check">✓</div>
+  <div class="eyebrow">Purchase Confirmed</div>
+  <h1>Your Fleet Logbook license is active.</h1>
+  <p class="sub">Your license key is on its way to your inbox right now. It arrives within a few minutes — check your spam folder if you don't see it. You can activate the app immediately.</p>
+
+  <div class="steps">
+    <div class="steps-head">Your next 15 minutes</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Open the confirmation email.</strong> Your license key is included — it looks like <code style="font-family:'DM Mono',monospace;font-size:11px;background:rgba(46,125,50,0.1);padding:.15rem .4rem;">SOLO-XXXXXXXX-XXXX</code>. Keep it somewhere safe.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Open the Fleet Logbook app.</strong> Click "Activate License" and paste your key. The app activates instantly — no account creation required.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Add your first equipment entry.</strong> Enter the machine name, current hour reading, and PM schedule. The app will flag the next service due date automatically.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Run your first pre-shift inspection.</strong> Pull up the inspection checklist before the machine leaves the yard. Takes under 3 minutes and creates your first O.Reg 213/91 record.</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <p><strong>Important:</strong> Your license is tied to this device and browser. If you switch devices or clear your browser data, you'll need your license key to reactivate. Save it now.</p>
+  </div>
+
+  <div>
+    <a href="nac-os-app.html" class="btn">Open Fleet Logbook →</a>
+    <a href="index.html" class="btn btn-ghost">Back to Home</a>
+  </div>
+
+  <div class="footer-note">
+    Questions? Email <a href="/cdn-cgi/l/email-protection#9af3f4fcf5daf4fbeeefe8fbf6fbf6eeffe8f4fbeef3ecffe9b4f9fb"><span class="__cf_email__" data-cfemail="620b0c040d220c03161710030e030e1607100c03160b1407114c0103">[email&#160;protected]</span></a> — response within one business day.<br>
+ 
+<div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
+  <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
+  &nbsp;·&nbsp;
+  <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
+  &nbsp;·&nbsp; © Natural Alternatives
+</div>
+</body>
+</html>
