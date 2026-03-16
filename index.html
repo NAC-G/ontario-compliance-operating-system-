@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontario Compliance Operating System™ | Natural Alternatives</title>
+<meta name="description" content="A premium, Ontario-aligned compliance documentation system. Orientation, generation, and operations — built for employers who take due diligence seriously.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:      #2E7D32;
+    --green-deep: #1B5E20;
+    --graphite:   #333333;
+    --body:       #555555;
+    --line:       #DDDDDD;
+    --bg:         #F5F5F5;
+    --muted:      #888888;
+    --white:      #FFFFFF;
+    --black:      #111111;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--graphite); line-height: 1.7; overflow-x: hidden; }
+
+  /* ── UTILITY ── */
+  .eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--green); display: flex; align-items: center; gap: 1rem;
+  }
+  .eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--green); flex-shrink: 0; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(17,17,17,0.97); backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(46,125,50,0.4);
+    height: 64px; display: flex; align-items: center;
+    padding: 0 3rem; justify-content: space-between;
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    display: flex; flex-direction: column; gap: 1px; text-decoration: none;
+  }
+  .nav-logo-top {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--green);
+  }
+  .nav-logo-main {
+    font-family: 'Playfair Display', serif; font-size: 13px;
+    font-weight: 700; color: var(--white); letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.45); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.2s; font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--green); color: var(--white) !important;
+    padding: 0.55rem 1.25rem !important; transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--green-deep) !important; color: var(--white) !important; }
+  .nav-mobile-btn { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+  .nav-mobile-btn span { display: block; width: 22px; height: 1.5px; background: var(--white); margin: 4px 0; transition: all 0.2s; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; padding-top: 64px;
+    background: var(--black);
+    display: grid; grid-template-rows: 1fr auto;
+    position: relative; overflow: hidden;
+  }
+  /* Grid texture */
+  .hero::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.018) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.018) 80px);
+  }
+  /* Green glow */
+  .hero::after {
+    content: ''; position: absolute; pointer-events: none;
+    width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(27,94,32,0.12) 0%, transparent 65%);
+    right: -200px; top: 50%; transform: translateY(-50%);
+  }
+  .hero-inner {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 3rem 4rem 8rem;
+    position: relative; z-index: 1; max-width: 1200px;
+  }
+  .hero-kicker {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem;
+    opacity: 0; animation: fadeUp 0.8s 0.1s ease forwards;
+  }
+  .hero-kicker::before { content: ''; display: block; width: 40px; height: 1px; background: var(--green); }
+  .hero-heading {
+    font-family: 'Playfair Display', serif; font-weight: 900;
+    font-size: clamp(3.2rem, 7.5vw, 7rem); line-height: 0.95;
+    color: var(--white); margin-bottom: 2rem; letter-spacing: -0.01em;
+    opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+  }
+  .hero-heading em { font-style: italic; color: var(--green); }
+  .hero-heading .outline {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+    color: transparent;
+  }
+  .hero-rule { width: 64px; height: 2px; background: var(--green); margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s 0.35s ease forwards; }
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(255,255,255,0.45); font-weight: 300;
+    max-width: 520px; margin-bottom: 3.5rem; line-height: 1.8;
+    opacity: 0; animation: fadeUp 0.8s 0.45s ease forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--green); color: var(--white);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 1rem 2rem; text-decoration: none; transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--green-deep); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.6);
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 1rem 2rem; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--green); color: var(--white); }
+
+  /* Hero scroll indicator */
+  .hero-scroll {
+    padding: 2rem 8rem; display: flex; align-items: center; gap: 1.5rem;
+    position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.05);
+    opacity: 0; animation: fadeUp 0.8s 0.9s ease forwards;
+  }
+  .scroll-line { width: 1px; height: 40px; background: var(--green); opacity: 0.5; animation: scrollPulse 2s ease-in-out infinite; }
+  @keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(1)} 50%{opacity:0.8;transform:scaleY(1.2)} }
+  .scroll-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.2); writing-mode: horizontal-tb; }
+
+  /* Hero stats */
+  .hero-stats {
+    display: flex; gap: 0; position: relative; z-index: 1;
+    margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 2rem; max-width: 600px;
+    opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+  }
+  .hero-stat { flex: 1; padding-right: 2rem; border-right: 1px solid rgba(255,255,255,0.08); margin-right: 2rem; }
+  .hero-stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 0.35rem; }
+  .stat-num span { color: var(--green); }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+
+  /* ── WHAT IS OCOS ── */
+  .what-section {
+    padding: 9rem 8rem; background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+  .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; max-width: 1200px; }
+  .what-left {}
+  .what-right {}
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--green);
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+  }
+  .section-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--green); }
+  .section-heading {
+    font-family: 'Playfair Display', serif; font-size: clamp(2rem,3.5vw,3rem);
+    font-weight: 700; color: var(--graphite); line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .section-heading em { font-style: italic; color: var(--green); }
+  .section-body { font-size: 0.95rem; color: var(--body); line-height: 1.85; margin-bottom: 1.5rem; max-width: 560px; }
+
+  .what-pull {
+    background: var(--graphite); padding: 2.5rem;
+    border-left: 4px solid var(--green); margin-top: 2.5rem;
+  }
+  .what-pull p { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-style: italic; color: rgba(255,255,255,0.85); line-height: 1.6; }
+  .what-pull cite { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-top: 0.75rem; font-style: normal; }
+
+  .what-right-grid { display: flex; flex-direction: column; gap: 1.5px; background: var(--line); border: 1px solid var(--line); }
+  .what-card { background: var(--white); padding: 2rem; border-left: 3px solid transparent; transition: border-color 0.2s, background 0.2s; }
+  .what-card:hover { border-left-color: var(--green); background: var(--bg); }
+  .what-card-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+  .what-card-title { font-weight: 700; font-size: 0.95rem; color: var(--graphite); margin-bottom: 0.35rem; }
+  .what-card-body { font-size: 0.82rem; color: var(--body); line-height: 1.65; }
+
+  /* ── THREE TIERS ── */
+  .tiers-section {
+    padding: 9rem 8rem; background: var(--black);
+    position: relative; overflow: hidden;
+  }
+  .tiers-section::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.015) 80px),
+      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.015) 80px);
+  }
+  .tiers-section::after {
+    content: ''; position: absolute; pointer-events: none;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(27,94,32,0.08) 0%, transparent 70%);
+    left: -100px; bottom: -100px;
+  }
+  .tiers-header { margin-bottom: 5rem; position: relative; z-index: 1; max-width: 1200px; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
+  .tiers-header-left .section-label { color: var(--green); }
+  .tiers-header-left .section-label::before { background: var(--green); }
+  .tiers-header-left .section-heading { color: var(--white); }
+  .tiers-header-right p { font-size: 0.92rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 420px; }
+
+  .tiers-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative; z-index: 1; max-width: 1200px;
+  }
+  .tier-card {
+    background: #161616; padding: 3rem 2.5rem;
+    display: flex; flex-direction: column;
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .tier-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(46,125,50,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .tier-card:hover { border-top-color: var(--green); background: #1a1a1a; }
+  .tier-card.center { border-top-color: var(--green); background: #1c1c1c; }
+
+  .tier-num {
+    font-family: 'Playfair Display', serif; font-size: 5rem;
+    font-weight: 900; color: rgba(255,255,255,0.04);
+    line-height: 1; position: absolute; top: 1.5rem; right: 2rem;
+    pointer-events: none; user-select: none;
+  }
+  .tier-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; }
+  .tier-name { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 1rem; }
+  .tier-divider { width: 32px; height: 2px; background: var(--green); margin-bottom: 1.5rem; }
+  .tier-desc { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 2.5rem; flex: 1; }
+  .tier-features { list-style: none; margin-bottom: 2.5rem; }
+  .tier-features li { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.82rem; color: rgba(255,255,255,0.5); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5; }
+  .tier-features li::before { content: '→'; color: var(--green); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.1rem; }
+  .tier-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tier-link:hover { color: var(--green); border-color: var(--green); }
+  .tier-card.center .tier-link { color: var(--green); border-color: rgba(46,125,50,0.4); }
+
+  /* ── WHO IT'S FOR ── */
+  .who-section {
+    padding: 9rem 8rem;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .who-inner { max-width: 1200px; }
+  .who-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 5rem; }
+  .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: var(--line); border: 1px solid var(--line); }
+  .who-card { background: var(--white); padding: 2.5rem; transition: background 0.2s; }
+  .who-card:hover { background: var(--white); }
+  .who-card-icon {
+    width: 48px; height: 48px; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .who-card-icon svg { width: 20px; height: 20px; stroke: var(--green); fill: none; stroke-width: 1.5; }
+  .who-card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--graphite); margin-bottom: 0.75rem; line-height: 1.25; }
+  .who-card-body { font-size: 0.84rem; color: var(--body); line-height: 1.7; }
+  .who-card-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+  .who-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(46,125,50,0.08); padding: 0.3rem 0.6rem; }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { padding: 9rem 8rem; background: var(--white); border-bottom: 1px solid var(--line); }
+  .how-inner { max-width: 1200px; }
+  .how-header { margin-bottom: 5rem; }
+  .how-steps { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--line); max-width: 860px; }
+  .how-step { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .how-step:last-child { border-bottom: none; }
+  .how-step-n { background: var(--green-deep); color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; width: 80px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .how-step-body { padding: 2rem 2.5rem; background: var(--white); flex: 1; display: flex; align-items: flex-start; gap: 2rem; }
+  .how-step-content { flex: 1; }
+  .how-step-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.4rem; }
+  .how-step-title { font-weight: 700; font-size: 1rem; color: var(--graphite); margin-bottom: 0.4rem; }
+  .how-step-desc { font-size: 0.85rem; color: var(--body); line-height: 1.7; }
+  .how-step-tier { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(46,125,50,0.08); color: var(--green); padding: 0.35rem 0.75rem; flex-shrink: 0; align-self: center; white-space: nowrap; }
+
+  /* ── EVIDENCE / DUE DILIGENCE ── */
+  .evidence-section {
+    padding: 9rem 8rem; background: var(--graphite);
+    position: relative; overflow: hidden;
+  }
+  .evidence-section::after {
+    content: ''; position: absolute; right: -100px; top: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,125,50,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .evidence-inner { max-width: 1200px; display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: center; position: relative; z-index: 1; }
+  .evidence-left .section-label { color: var(--green); }
+  .evidence-left .section-label::before { background: var(--green); }
+  .evidence-left .section-heading { color: var(--white); }
+  .evidence-left .section-body { color: rgba(255,255,255,0.45); }
+  .evidence-chain { display: flex; flex-direction: column; gap: 1.5px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }
+  .ev-row { display: flex; align-items: stretch; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s; }
+  .ev-row:last-child { border-bottom: none; }
+  .ev-row:hover { background: rgba(46,125,50,0.06); }
+  .ev-arrow { background: var(--green-deep); color: var(--white); width: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.9rem; }
+  .ev-content { padding: 1.25rem 1.5rem; }
+  .ev-layer { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 0.25rem; }
+  .ev-title { font-size: 0.88rem; font-weight: 600; color: rgba(255,255,255,0.8); }
+  .ev-desc { font-size: 0.78rem; color: rgba(255,255,255,0.35); margin-top: 0.15rem; }
+
+  /* ── PRICING PREVIEW ── */
+  .pricing-section {
+    padding: 9rem 8rem; background: var(--bg);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .pricing-inner { max-width: 1200px; }
+  .pricing-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; margin-bottom: 5rem; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px; background: var(--line); border: 1px solid var(--line); margin-bottom: 2rem; }
+  .price-card { background: var(--white); padding: 2.5rem; display: flex; flex-direction: column; border-top: 3px solid var(--line); transition: border-color 0.2s, background 0.2s; }
+  .price-card:hover, .price-card.featured { border-top-color: var(--green); }
+  .price-card.featured { background: var(--graphite); }
+  .price-tier-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.6rem; }
+  .price-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--graphite); margin-bottom: 1.5rem; line-height: 1.2; }
+  .price-card.featured .price-name { color: var(--white); }
+  .price-amount { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: var(--graphite); line-height: 1; margin-bottom: 0.25rem; }
+  .price-card.featured .price-amount { color: var(--white); }
+  .price-amount sup { font-size: 1rem; vertical-align: super; font-weight: 400; }
+  .price-note { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 2rem; text-transform: uppercase; }
+  .price-card.featured .price-note { color: rgba(255,255,255,0.3); }
+  .price-features { list-style: none; flex: 1; margin-bottom: 2rem; }
+  .price-features li { font-size: 0.82rem; color: var(--body); padding: 0.4rem 0; border-bottom: 1px solid rgba(0,0,0,0.04); display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.5; }
+  .price-card.featured .price-features li { color: rgba(255,255,255,0.6); border-bottom-color: rgba(255,255,255,0.05); }
+  .price-features li::before { content: '✓'; color: var(--green); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem; font-weight: 700; }
+  .price-cta {
+    display: block; text-align: center; padding: 0.9rem;
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s;
+    border: 1.5px solid var(--green); color: var(--green);
+  }
+  .price-cta:hover, .price-card.featured .price-cta { background: var(--green); color: var(--white); }
+  .price-card.featured .price-cta:hover { background: var(--green-deep); }
+
+  .pricing-bundle {
+    background: var(--green-deep); padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .bundle-left {}
+  .bundle-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 0.35rem; }
+  .bundle-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.35rem; }
+  .bundle-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); }
+  .bundle-right { display: flex; align-items: center; gap: 2rem; flex-shrink: 0; }
+  .bundle-price-wrap { text-align: right; }
+  .bundle-was { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.3); text-decoration: line-through; }
+  .bundle-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--white); line-height: 1; }
+  .bundle-price sup { font-size: 0.9rem; vertical-align: super; }
+  .bundle-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--white); color: var(--green-deep);
+    font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.9rem 1.75rem; text-decoration: none; font-weight: 600;
+    transition: background 0.2s, color 0.2s; white-space: nowrap;
+  }
+  .bundle-cta:hover { background: var(--bg); }
+
+  /* ── DISCLAIMER / LEGAL ── */
+  .legal-section { padding: 4rem 8rem; background: var(--white); border-bottom: 1px solid var(--line); }
+  .legal-inner { max-width: 1200px; display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: start; }
+  .legal-icon { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); padding-top: 0.1rem; white-space: nowrap; }
+  .legal-text { font-size: 0.78rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black); padding: 4rem 8rem 2.5rem;
+    border-top: 2px solid var(--green);
+  }
+  .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+  .footer-brand {}
+  .footer-logo-top { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+  .footer-logo-main { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 1.25rem; }
+  .footer-tagline { font-size: 0.82rem; color: rgba(255,255,255,0.3); line-height: 1.7; max-width: 280px; }
+  .footer-col-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.25rem; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-tm { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+  .footer-doc-code { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; color: var(--green); opacity: 0.6; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+  /* Intersection observer reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .what-grid, .evidence-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .tiers-header, .who-header, .pricing-header { grid-template-columns: 1fr; gap: 2rem; }
+    .tiers-grid, .who-grid, .pricing-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-mobile-btn { display: block; }
+    .hero-inner { padding: 4rem 1.5rem 3rem; }
+    .hero-scroll { padding: 1.5rem; }
+    .what-section, .tiers-section, .who-section, .how-section,
+    .evidence-section, .pricing-section, .legal-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .pricing-bundle { flex-direction: column; align-items: flex-start; }
+    .bundle-right { flex-direction: column; align-items: flex-start; }
+    .bundle-price-wrap { text-align: left; }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+    .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding-right: 0; padding-bottom: 1.5rem; margin-right: 0; margin-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <span class="nav-logo-top">Natural Alternatives</span>
+    <span class="nav-logo-main">Ontario Compliance Operating System™</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#what">What It Is</a></li>
+    <li><a href="#tiers">The Tiers</a></li>
+    <li><a href="#who">Who It's For</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="pricing.html" class="nav-cta">Get Started ↗</a></li>
+  </ul>
+  <button class="nav-mobile-btn" aria-label="Menu" onclick="toggleMobileNav()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Ontario Compliance Operating System™</div>
+    <h1 class="hero-heading">
+      Built for<br>
+      <em>employers</em><br>
+      who build<br>
+      <span class="outline">evidence.</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">A three-tier compliance documentation system built specifically for Ontario employers — from legal orientation through AI-driven generation to full operational infrastructure.</p>
+    <div class="hero-actions">
+      <a href="pricing.html" class="btn-primary">View Pricing &amp; Tiers ↗</a>
+      <a href="#what" class="btn-ghost">Learn How It Works ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-num">3<span>×</span></div>
+        <div class="stat-label">Tiered System</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num"><span>Ontario</span></div>
+        <div class="stat-label">Legislation Aligned</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-num">9<span>+</span></div>
+        <div class="stat-label">Document Generators</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- WHAT IS OCOS -->
+<section class="what-section" id="what">
+  <div class="what-grid">
+    <div class="what-left reveal">
+      <div class="section-label">What Is OCOS</div>
+      <h2 class="section-heading">Compliance infrastructure,<br>not a <em>document bundle.</em></h2>
+      <p class="section-body">The Ontario Compliance Operating System™ is a structured, three-tier compliance architecture that takes an Ontario employer from legal orientation to a fully operational, inspection-ready safety program — without starting from scratch, relying on generic templates, or engaging consultants for every document update.</p>
+      <p class="section-body">It is built on the Occupational Health and Safety Act R.S.O. 1990, c. O.1 and its regulations. Every document, framework, and workflow within the system is designed to produce defensible evidence of due diligence — not paperwork for its own sake.</p>
+      <div class="what-pull">
+        <p>Documents sitting in a binder are not a compliance program. Evidence that a system operated — is.</p>
+        <cite>OCOS Design Principle</cite>
+      </div>
+    </div>
+    <div class="what-right reveal reveal-delay-2">
+      <div class="what-right-grid">
+        <div class="what-card">
+          <div class="what-card-num">Pillar 01</div>
+          <div class="what-card-title">Inspection-Ready Structure</div>
+          <p class="what-card-body">Organized, controlled, and version-tracked documentation that can be produced on demand during an MOL inspection, WSIB audit, or legal proceeding — without scrambling.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-card-num">Pillar 02</div>
+          <div class="what-card-title">Prompt-Driven Generation</div>
+          <p class="what-card-body">AI-powered document generation using the proprietary RCCF framework. Produce tailored policies, procedures, and programs from your actual operational details — in minutes, not months.</p>
+        </div>
+        <div class="what-card">
+          <div class="what-card-num">Pillar 03</div>
+          <div class="what-card-title">Tracking &amp; Verification</div>
+          <p class="what-card-body">Training registers, inspection logs, corrective action records, and a compliance calendar that convert written documents into a live, operating safety program with a traceable evidence chain.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE TIERS -->
+<section class="tiers-section" id="tiers">
+  <div class="tiers-header reveal">
+    <div class="tiers-header-left">
+      <div class="section-label">The System</div>
+      <h2 class="section-heading" style="color:var(--white);">Three tiers.<br><em>One system.</em></h2>
+    </div>
+    <div class="tiers-header-right">
+      <p>Each tier builds on the last. Tier 1 orients. Tier 2 generates. Tier 3 operates. Together they form a complete compliance architecture — sequential by design, cumulative by function.</p>
+    </div>
+  </div>
+  <div class="tiers-grid reveal reveal-delay-1">
+
+    <div class="tier-card">
+      <div class="tier-num">1</div>
+      <div class="tier-tag">Tier 1 · Foundation</div>
+      <div class="tier-name">Enterprise Compliance Foundation Guide</div>
+      <div class="tier-divider"></div>
+      <p class="tier-desc">The orientation layer. Establishes the legal framework, OCOS architecture, document control standards, and employer authorization record. Required before any generation begins.</p>
+      <ul class="tier-features">
+        <li>OHSA duties and obligations reference</li>
+        <li>Internal Responsibility System model</li>
+        <li>Document control and approval workflow</li>
+        <li>Legislative reference appendix</li>
+        <li>Employer sign-off and authorization</li>
+      </ul>
+      <a href="pricing.html" class="tier-link">Get Tier 1 ↗</a>
+    </div>
+
+    <div class="tier-card center">
+      <div class="tier-num">2</div>
+      <div class="tier-tag">Tier 2 · Generation</div>
+      <div class="tier-name">AI-Driven Compliance Generation Framework</div>
+      <div class="tier-divider"></div>
+      <p class="tier-desc">The production engine. Uses the proprietary RCCF prompt framework and Company Master Prompt to generate enterprise-quality compliance documents tailored to your actual operation.</p>
+      <ul class="tier-features">
+        <li>RCCF prompt architecture</li>
+        <li>Company Master Prompt setup</li>
+        <li>9+ generator types in Notion workspace</li>
+        <li>Policies, SWPs, inspections, incidents</li>
+        <li>Generation workflow and QC standards</li>
+      </ul>
+      <a href="pricing.html" class="tier-link">Get Tier 2 ↗</a>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-num">3</div>
+      <div class="tier-tag">Tier 3 · Operations</div>
+      <div class="tier-name">Compliance Operations System</div>
+      <div class="tier-divider"></div>
+      <p class="tier-desc">The operational layer. Turns approved documents into a live, inspection-ready compliance program through eight infrastructure components — file structure through evidence chain.</p>
+      <ul class="tier-features">
+        <li>Eight-component infrastructure</li>
+        <li>Training register and version control</li>
+        <li>Incident tracking and corrective actions</li>
+        <li>Compliance calendar (Notion)</li>
+        <li>Full evidence chain architecture</li>
+      </ul>
+      <a href="pricing.html" class="tier-link">Get Tier 3 ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="who-section" id="who">
+  <div class="who-inner">
+    <div class="who-header reveal">
+      <div>
+        <div class="section-label">Who It's For</div>
+        <h2 class="section-heading">Built for Ontario<br>employers who are <em>serious.</em></h2>
+      </div>
+      <div>
+        <p class="section-body">OCOS is not for employers who want the appearance of compliance. It is for employers who understand that due diligence is an operational discipline — and want the infrastructure to prove it.</p>
+      </div>
+    </div>
+    <div class="who-grid reveal reveal-delay-1">
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        </div>
+        <div class="who-card-title">Small to Mid-Size Employers</div>
+        <p class="who-card-body">Operators who need a professional compliance framework without the consulting overhead. Build documentation that reflects your actual workplace — not a generic template that doesn't fit.</p>
+        <div class="who-card-tags">
+          <span class="who-tag">5–50 workers</span>
+          <span class="who-tag">Owner-operators</span>
+          <span class="who-tag">Growing teams</span>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <div class="who-card-title">Multi-Crew Operations</div>
+        <p class="who-card-body">Organizations managing multiple supervisors, crews, and job sites who need consistent governance, standardized safe work procedures, and repeatable training proof across the operation.</p>
+        <div class="who-card-tags">
+          <span class="who-tag">Field operations</span>
+          <span class="who-tag">Multi-site</span>
+          <span class="who-tag">Supervisory structure</span>
+        </div>
+      </div>
+
+      <div class="who-card">
+        <div class="who-card-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+        </div>
+        <div class="who-card-title">Audit &amp; Due Diligence Mindset</div>
+        <p class="who-card-body">Teams focused on record quality, update cycles, responsibility assignment, and proof of implementation — employers who want to demonstrate that the system operated, not just that documents exist.</p>
+        <div class="who-card-tags">
+          <span class="who-tag">MOL ready</span>
+          <span class="who-tag">WSIB defensible</span>
+          <span class="who-tag">Evidence chain</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="how-header reveal">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-heading">Orientation → Generation<br>→ <em>Operations.</em></h2>
+    </div>
+    <div class="how-steps reveal reveal-delay-1">
+      <div class="how-step">
+        <div class="how-step-n">1</div>
+        <div class="how-step-body">
+          <div class="how-step-content">
+            <div class="how-step-tag">Tier 1</div>
+            <div class="how-step-title">Complete Orientation</div>
+            <p class="how-step-desc">Read the Foundation Guide in full. Understand your legal duties under the OHSA, how the OCOS architecture works, and what the employer's role is before any document is generated. Sign off to confirm orientation is complete.</p>
+          </div>
+          <div class="how-step-tier">Foundation Guide</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-n">2</div>
+        <div class="how-step-body">
+          <div class="how-step-content">
+            <div class="how-step-tag">Tier 2 — Setup</div>
+            <div class="how-step-title">Build Your Company Master Prompt</div>
+            <p class="how-step-desc">Enter your company's operational details into the Company Master Prompt — sector, equipment, crew structure, hazard profile, applicable regulations. This becomes the foundation for every document generated through the system.</p>
+          </div>
+          <div class="how-step-tier">Notion Workspace</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-n">3</div>
+        <div class="how-step-body">
+          <div class="how-step-content">
+            <div class="how-step-tag">Tier 2 — Generate</div>
+            <div class="how-step-title">Generate Your Document Suite</div>
+            <p class="how-step-desc">Select from the Compliance Generator Library. Run your Master Prompt and a generator through the AI session. Review the draft output against your actual workplace — then approve, issue, and communicate.</p>
+          </div>
+          <div class="how-step-tier">Generator Library</div>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-n">4</div>
+        <div class="how-step-body">
+          <div class="how-step-content">
+            <div class="how-step-tag">Tier 3</div>
+            <div class="how-step-title">Activate the Operations System</div>
+            <p class="how-step-desc">File approved documents into the controlled structure. Populate the training register, inspection log, and corrective action register. Set the compliance calendar. Run the system — and let the evidence chain build itself through normal operations.</p>
+          </div>
+          <div class="how-step-tier">Operations System</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVIDENCE -->
+<section class="evidence-section" id="evidence">
+  <div class="evidence-inner">
+    <div class="evidence-left reveal">
+      <div class="section-label">Due Diligence</div>
+      <h2 class="section-heading">Evidence is a byproduct<br>of a <em>system that runs.</em></h2>
+      <p class="section-body">An employer who operates the OCOS system produces compliance evidence automatically — as a natural output of doing the work, not as a response to an investigation.</p>
+      <p class="section-body">When an MOL inspector arrives, a WSIB claim is contested, or an incident triggers scrutiny, the OCOS evidence chain answers every question the employer needs answered.</p>
+      <a href="pricing.html" class="btn-primary" style="margin-top:2rem;">Build Your Evidence Chain ↗</a>
+    </div>
+    <div class="evidence-right reveal reveal-delay-2">
+      <div class="evidence-chain">
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 1</div>
+            <div class="ev-title">Policy &amp; Commitment</div>
+            <div class="ev-desc">What does the organization require?</div>
+          </div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 2</div>
+            <div class="ev-title">Procedures &amp; Controls</div>
+            <div class="ev-desc">How is the requirement carried out?</div>
+          </div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 3</div>
+            <div class="ev-title">Training Records</div>
+            <div class="ev-desc">Were workers informed and trained?</div>
+          </div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 4</div>
+            <div class="ev-title">Inspection Logs</div>
+            <div class="ev-desc">Were controls verified as operational?</div>
+          </div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 5</div>
+            <div class="ev-title">Corrective Actions</div>
+            <div class="ev-desc">Were deficiencies corrected?</div>
+          </div>
+        </div>
+        <div class="ev-row">
+          <div class="ev-arrow">→</div>
+          <div class="ev-content">
+            <div class="ev-layer">Layer 6</div>
+            <div class="ev-title">Review Records</div>
+            <div class="ev-desc">Is the system maintained and improving?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING PREVIEW -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header reveal">
+      <div>
+        <div class="section-label">Pricing</div>
+        <h2 class="section-heading">Start with one tier.<br><em>Or get the system.</em></h2>
+      </div>
+      <div>
+        <p class="section-body">Individual tiers are available for employers who want to progress at their own pace. The complete bundle delivers the full system at once — better value, faster implementation.</p>
+      </div>
+    </div>
+    <div class="pricing-grid reveal reveal-delay-1">
+      <div class="price-card">
+        <div class="price-tier-tag">Tier 1 · Foundation</div>
+        <div class="price-name">Enterprise Compliance Foundation Guide</div>
+        <div class="price-amount"><sup>$</sup>397</div>
+        <div class="price-note">CAD · One-time</div>
+        <ul class="price-features">
+          <li>Complete Foundation Guide</li>
+          <li>OHSA reference framework</li>
+          <li>Document control standards</li>
+          <li>Tier 1 Notion workspace access</li>
+        </ul>
+        <a href="pricing.html" class="price-cta">Get Tier 1</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-tier-tag">Tier 2 · Generation</div>
+        <div class="price-name">AI-Driven Compliance Generation Framework</div>
+        <div class="price-amount"><sup>$</sup>697</div>
+        <div class="price-note">CAD · One-time · Requires Tier 1</div>
+        <ul class="price-features">
+          <li>Full Generation Framework</li>
+          <li>RCCF prompt architecture</li>
+          <li>Company Master Prompt</li>
+          <li>Generator Library — Notion workspace</li>
+        </ul>
+        <a href="pricing.html" class="price-cta">Get Tier 2</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier-tag">Tier 3 · Operations</div>
+        <div class="price-name">Compliance Operations System</div>
+        <div class="price-amount"><sup>$</sup>597</div>
+        <div class="price-note">CAD · One-time · Requires Tiers 1 &amp; 2</div>
+        <ul class="price-features">
+          <li>Full Operations System</li>
+          <li>Eight-component infrastructure</li>
+          <li>Evidence chain architecture</li>
+          <li>Compliance calendar — Notion workspace</li>
+        </ul>
+        <a href="pricing.html" class="price-cta">Get Tier 3</a>
+      </div>
+    </div>
+    <div class="pricing-bundle reveal reveal-delay-2">
+      <div class="bundle-left">
+        <div class="bundle-tag">Best Value · Complete System</div>
+        <div class="bundle-title">All Three Tiers — Complete OCOS Bundle</div>
+        <div class="bundle-desc">Foundation · Generation · Operations — delivered together. Everything from orientation to inspection-ready.</div>
+      </div>
+      <div class="bundle-right">
+        <div class="bundle-price-wrap">
+          <div class="bundle-was">$1,691 CAD</div>
+          <div class="bundle-price"><sup>$</sup>1,297</div>
+        </div>
+        <a href="pricing.html" class="bundle-cta">Get the Bundle ↗</a>
+      </div>
+    </div>
+    <!-- OCOS Partner teaser -->
+    <div style="margin-top:1.5px;background:var(--graphite);padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;border-left:4px solid var(--green);">
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:0.4rem;">Professional Deployment</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.25rem;">OCOS Partner License — Deploy across unlimited clients</div>
+        <div style="font-size:0.82rem;color:rgba(255,255,255,0.35);">For HR consultants, OHS professionals, and multi-site safety officers. Annual license with white-label access. $1,497–$7,997 CAD/yr — 4 tiers.</div>
+      </div>
+      <a href="pricing.html#practitioner" style="display:inline-flex;align-items:center;gap:0.5rem;border:1.5px solid rgba(46,125,50,0.5);color:rgba(255,255,255,0.6);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.9rem 1.75rem;text-decoration:none;transition:all 0.2s;white-space:nowrap;">View OCOS Partner License ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRACTOR OS COMING SOON -->
+
+  <!-- ═══════════════════════════════════════════
+       SOCIAL PROOF — replace placeholder quotes
+       with real testimonials as they come in
+       ═══════════════════════════════════════════ -->
+  <section id="proof" style="position:relative;z-index:1;padding:5rem 2rem;border-top:1px solid rgba(255,255,255,0.07);">
+    <div style="max-width:960px;margin:0 auto;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+        color:rgba(46,125,50,0.8);margin-bottom:3rem;text-align:center;">From Ontario contractors and consultants</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+
+        <div style="background:#161A16;border:1px solid rgba(255,255,255,0.07);padding:1.75rem;
+          border-left:3px solid rgba(46,125,50,0.4);">
+          <p style="font-size:.875rem;color:rgba(240,237,232,0.65);line-height:1.85;margin-bottom:1.25rem;font-style:italic;">
+            "Before OCOS, our pre-shift logs were a mess of paper forms stuffed in a truck. First MOL inspection since we switched — inspector spent 10 minutes on paperwork instead of two hours."
+          </p>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(240,237,232,0.35);">
+            General Contractor · Ontario
+          </div>
+        </div>
+
+        <div style="background:#161A16;border:1px solid rgba(255,255,255,0.07);padding:1.75rem;
+          border-left:3px solid rgba(46,125,50,0.4);">
+          <p style="font-size:.875rem;color:rgba(240,237,232,0.65);line-height:1.85;margin-bottom:1.25rem;font-style:italic;">
+            "I deploy OCOS for three excavation clients as part of my safety consulting practice. The Start Here guide does the onboarding work for me. Saves me two hours per client setup."
+          </p>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(240,237,232,0.35);">
+            OHS Consultant · OCOS Partner License
+          </div>
+        </div>
+
+        <div style="background:#161A16;border:1px solid rgba(255,255,255,0.07);padding:1.75rem;
+          border-left:3px solid rgba(46,125,50,0.4);">
+          <p style="font-size:.875rem;color:rgba(240,237,232,0.65);line-height:1.85;margin-bottom:1.25rem;font-style:italic;">
+            "The WSIB clearance tracker alone was worth it. I used to chase certificates manually across six subs. Now it's a 5-minute task at payroll."
+          </p>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(240,237,232,0.35);">
+            Site Superintendent · Residential Construction
+          </div>
+        </div>
+
+      </div>
+      <!-- ⚠ PLACEHOLDER QUOTES — replace with real testimonials once available.
+           To collect: send a 3-question email to OCOS buyers at Day 30.
+           Questions: (1) What was your compliance situation before?
+           (2) What's the most valuable thing OCOS changed?
+           (3) Who else should be using this?
+           Use exact words. Never edit for tone — authenticity outperforms polish. -->
+    </div>
+  </section>
+
+<section style="padding:7rem 8rem;background:#0d0d0d;border-top:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px);"></div>
+  <div style="position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(27,94,32,0.1) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="max-width:1200px;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;" class="reveal">
+
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:0.75rem;background:rgba(46,125,50,0.1);border:1px solid rgba(46,125,50,0.3);padding:0.5rem 1rem;margin-bottom:2rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#2E7D32;">
+        <span style="width:6px;height:6px;border-radius:50%;background:#2E7D32;display:inline-block;"></span>
+        NAC · Natural Alternatives Contractor · v6.0
+      </div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:900;color:#fff;line-height:1;margin-bottom:0.5rem;">NAC <em style="font-style:italic;color:#2E7D32;">OS</em> Fleet Logbook™</h2>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:2rem;">Natural Alternatives Contractor · Fleet Operating System</div>
+      <p style="font-size:0.92rem;color:rgba(255,255,255,0.4);line-height:1.8;max-width:460px;margin-bottom:2.5rem;">The Natural Alternatives Contractor (NAC) Fleet Logbook — QR scan-start shifts, meter OCR capture, 13-item PM schedule with real CASE part numbers, operator timesheets, approval workflow, and monthly auto-reports. Built and working — early access open now.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2.5rem;">
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:0.4rem 0.75rem;border:1px solid rgba(255,255,255,0.06);">QR Live</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:0.4rem 0.75rem;border:1px solid rgba(255,255,255,0.06);">OCR Active</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:0.4rem 0.75rem;border:1px solid rgba(255,255,255,0.06);">22 Sheets</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:0.4rem 0.75rem;border:1px solid rgba(255,255,255,0.06);">13 PM Items</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.04);padding:0.4rem 0.75rem;border:1px solid rgba(255,255,255,0.06);">From $597</span>
+      </div>
+      <a href="contractor-os.html" style="display:inline-flex;align-items:center;gap:0.6rem;background:#2E7D32;color:#fff;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:1rem 2rem;text-decoration:none;transition:background 0.2s;">Explore NAC OS Fleet Logbook ↗</a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">
+      <div style="background:rgba(255,255,255,0.05);padding:1.25rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.35);">NAC Fleet Dashboard — BH-580SN-01</span>
+        <span style="display:flex;align-items:center;gap:0.4rem;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:#2E7D32;"><span style="width:6px;height:6px;border-radius:50%;background:#2E7D32;display:inline-block;"></span>Live</span>
+      </div>
+      <div style="padding:1.5rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:0.2rem;">Current Hours · CASE 580SN</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.5);">Unit 01 — Active</div></div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:#fff;">12,820<span style="color:#2E7D32;font-size:1rem">.2</span></div>
+      </div>
+      <div style="padding:1.5rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:0.2rem;">Next Oil Service — Part #47535939</div><div style="font-size:0.85rem;color:rgba(255,255,255,0.5);">179.8 hours remaining</div></div>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(46,125,50,0.15);color:#2E7D32;padding:0.25rem 0.6rem;">OK ✓</span>
+      </div>
+      <div style="padding:1.5rem 1.75rem;border-bottom:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);">Shift start — QR scan logged</div>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(46,125,50,0.15);color:#2E7D32;padding:0.25rem 0.6rem;">Active ●</span>
+      </div>
+      <div style="padding:1.5rem 1.75rem;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);">Overdue service items</div>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;background:rgba(46,125,50,0.15);color:#2E7D32;padding:0.25rem 0.6rem;">0 Overdue ✓</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LEGAL DISCLAIMER -->
+<section class="legal-section">
+  <div class="legal-inner">
+    <div class="legal-icon">⚖ Legal Note</div>
+    <p class="legal-text">The Ontario Compliance Operating System™ is an educational and organizational framework developed by Natural Alternatives. It is not legal advice and does not replace consultation with qualified legal, regulatory, or occupational health and safety professionals. The employer retains full responsibility for compliance with all applicable Ontario legislation. All documents generated through the OCOS system are drafts until reviewed, approved, and implemented by the employer. Ontario Compliance Operating System™ is a trademark of Natural Alternatives.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-top">Natural Alternatives</div>
+      <div class="footer-logo-main">Ontario Compliance Operating System™</div>
+      <p class="footer-tagline">A premium compliance documentation system built for Ontario employers who take due diligence seriously.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">System</div>
+      <ul class="footer-links">
+        <li><a href="#what">What Is OCOS</a></li>
+        <li><a href="#tiers">The Three Tiers</a></li>
+        <li><a href="#who">Who It's For</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#evidence">Due Diligence</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Access</div>
+      <ul class="footer-links">
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="OCOS_Elite_Tier1.html">Tier 1 — Foundation</a></li>
+        <li><a href="OCOS_Tier2.html">Tier 2 — Generation</a></li>
+        <li><a href="OCOS_Tier3.html">Tier 3 — Operations</a></li>
+        <li><a href="https://naturalalternatives.ca" target="_blank">naturalalternatives.ca</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-tm">© Natural Alternatives. Ontario Compliance Operating System™ is a trademark of Natural Alternatives. All rights reserved.</span>
+    <span class="footer-doc-code">OCOS · VERSION 1.0</span>
+  </div>
+</footer>
+
+<script>
+  // ── SMOOTH NAV SCROLL ──
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', href);
+      }
+    });
+  });
+
+  // ── NAV BACKGROUND ON SCROLL ──
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    navEl.style.background = window.scrollY > 60
+      ? 'rgba(17,17,17,0.99)'
+      : 'rgba(17,17,17,0.97)';
+  }, { passive: true });
+
+  // ── REVEAL ON SCROLL ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── MOBILE NAV ──
+  function toggleMobileNav() {
+    const links = document.querySelector('.nav-links');
+    const isOpen = links.style.display === 'flex';
+    links.style.cssText = isOpen
+      ? ''
+      : 'display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(17,17,17,0.99);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(46,125,50,0.3);z-index:199;';
+  }
+</script>
+<div style="position:relative;z-index:1;padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28)"><a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>·<a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>·© Natural Alternatives</div></body>
+</html>
