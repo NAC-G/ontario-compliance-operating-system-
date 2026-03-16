@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCOS™ Tier 3 — Compliance Operations System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-accent:  #2E7D32;
+    --green-deep:    #1B5E20;
+    --graphite:      #333333;
+    --body-text:     #555555;
+    --grey-line:     #DDDDDD;
+    --grey-bg:       #F5F5F5;
+    --grey-muted:    #888888;
+    --white:         #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--graphite); font-size: 15px; line-height: 1.75; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(51,51,51,0.98); backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--green-accent);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px;
+  }
+  .nav-brand { font-family: 'DM Mono', monospace; color: var(--green-accent); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active { color: var(--white); border-bottom: 1px solid var(--green-accent); padding-bottom: 2px; }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #141414 0%, #1e1e1e 55%, #1a1a1a 100%);
+    display: grid; grid-template-rows: 1fr auto;
+    padding-top: 60px; position: relative; overflow: hidden;
+  }
+  .cover::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px), repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px);
+    pointer-events: none;
+  }
+  .cover::after {
+    content: ''; position: absolute;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,125,50,0.06) 0%, transparent 65%);
+    top: 50%; right: -200px; transform: translateY(-50%); pointer-events: none;
+  }
+  .cover-inner { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 6rem 8rem 4rem; position: relative; z-index: 1; }
+  .cover-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+  .cover-eyebrow::before { content: ''; display: block; width: 40px; height: 1px; background: var(--green-accent); }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem,5.5vw,5rem); font-weight: 900; color: var(--white); line-height: 1.05; margin-bottom: 1rem; max-width: 800px; }
+  .cover-title .accent { color: var(--green-accent); }
+  .cover-divider { width: 60px; height: 2px; background: var(--green-accent); margin-bottom: 3rem; }
+  .cover-subtitle { font-size: 1.05rem; color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 3rem; max-width: 580px; }
+  .cover-meta { display: flex; gap: 3rem; }
+  .meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+  .meta-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-accent); }
+  .meta-value { color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500; }
+  .cover-cta {
+    display: inline-flex; align-items: center; gap: 0.75rem; margin-top: 2.5rem;
+    background: var(--green-accent); color: var(--white);
+    font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.85rem 1.75rem; text-decoration: none; transition: background 0.2s;
+  }
+  .cover-cta:hover { background: var(--green-deep); }
+  .cover-footer { padding: 2rem 8rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+  .cover-footer-brand { font-family: 'Playfair Display', serif; color: rgba(255,255,255,0.35); font-size: 0.9rem; font-style: italic; text-decoration: none; }
+  .cover-doc-code { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green-accent); letter-spacing: 0.15em; }
+
+  /* SHARED */
+  .toc-section, .doc-control, .notice-block, .content-section, .signoff-section { scroll-margin-top: 60px; }
+
+  .toc-section { background: var(--white); padding: 6rem 8rem; border-bottom: 1px solid var(--grey-line); }
+  .section-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .section-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--green-accent); }
+
+  .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5px; margin-top: 3rem; background: var(--grey-line); border: 1px solid var(--grey-line); }
+  .toc-item { background: var(--white); padding: 1.75rem 2rem; text-decoration: none; color: inherit; transition: background 0.2s; display: flex; align-items: flex-start; gap: 1.25rem; }
+  .toc-item:hover { background: var(--grey-bg); }
+  .toc-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green-accent); margin-top: 0.15rem; flex-shrink: 0; }
+  .toc-text { font-size: 0.88rem; font-weight: 500; color: var(--graphite); line-height: 1.4; }
+
+  .doc-control { background: var(--grey-bg); padding: 5rem 8rem; border-bottom: 1px solid var(--grey-line); }
+  .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--grey-line); border: 1px solid var(--grey-line); margin-top: 3rem; }
+  .control-label { background: var(--green-deep); color: rgba(255,255,255,0.9); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.9rem 1.25rem; display: flex; align-items: center; }
+  .control-value { background: var(--white); color: var(--body-text); padding: 0.9rem 1.25rem; font-size: 0.875rem; display: flex; align-items: center; }
+
+  .notice-block { padding: 5rem 8rem; background: var(--white); border-bottom: 1px solid var(--grey-line); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .notice-card { border-left: 3px solid var(--green-accent); padding: 2rem; background: var(--grey-bg); }
+  .notice-card.secondary { border-left-color: var(--grey-muted); }
+  .notice-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-deep); margin-bottom: 1rem; font-weight: 600; }
+  .notice-text { font-size: 0.83rem; line-height: 1.7; color: var(--body-text); }
+
+  .content-section { padding: 6rem 8rem; border-bottom: 1px solid var(--grey-line); }
+  .content-section:nth-child(even) { background: var(--grey-bg); }
+  .content-section:nth-child(odd) { background: var(--white); }
+
+  .section-header { display: flex; align-items: flex-start; gap: 2rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--grey-line); position: relative; }
+  .section-header::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 60px; height: 2px; background: var(--green-accent); }
+  .section-num-badge { background: var(--green-deep); color: var(--white); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; padding: 0.4rem 0.8rem; flex-shrink: 0; margin-top: 0.35rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--graphite); line-height: 1.2; margin-bottom: 0.5rem; }
+  .section-subtitle { font-size: 0.82rem; font-style: italic; color: var(--grey-muted); }
+
+  .body-text { font-size: 0.93rem; line-height: 1.8; color: var(--body-text); margin-bottom: 1.5rem; max-width: 780px; }
+  .h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--green-deep); margin: 2.5rem 0 1rem; }
+
+  .ocos-list { list-style: none; margin: 1.25rem 0 1.75rem; max-width: 750px; }
+  .ocos-list li { display: flex; align-items: flex-start; gap: 0.9rem; font-size: 0.9rem; color: var(--body-text); line-height: 1.7; padding: 0.35rem 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .ocos-list li::before { content: '→'; color: var(--green-accent); font-size: 0.8rem; margin-top: 0.25rem; flex-shrink: 0; }
+
+  .callout { background: var(--graphite); color: var(--white); padding: 2.5rem 3rem; margin: 2.5rem 0; position: relative; overflow: hidden; max-width: 780px; border-left: 4px solid var(--green-accent); }
+  .callout::before { content: '"'; position: absolute; top: -1rem; left: 1.5rem; font-family: 'Playfair Display', serif; font-size: 8rem; color: rgba(255,255,255,0.04); line-height: 1; }
+  .callout-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; line-height: 1.55; position: relative; }
+  .callout-source { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; color: var(--green-accent); text-transform: uppercase; margin-top: 1rem; display: block; }
+
+  /* OPS MODULES */
+  .ops-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; background: var(--grey-line); border: 1px solid var(--grey-line); margin: 2.5rem 0; }
+  .ops-card { background: var(--white); padding: 2rem; border-left: 4px solid transparent; transition: border-color 0.2s; }
+  .ops-card:hover { border-left-color: var(--green-accent); }
+  .ops-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 0.5rem; }
+  .ops-title { font-weight: 700; font-size: 0.95rem; color: var(--graphite); margin-bottom: 0.5rem; }
+  .ops-desc { font-size: 0.82rem; color: var(--body-text); line-height: 1.65; }
+
+  /* TABLES */
+  .duty-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.875rem; }
+  .duty-table thead tr { background: var(--green-deep); color: var(--white); }
+  .duty-table th { padding: 0.9rem 1.25rem; text-align: left; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  .duty-table tbody tr:nth-child(odd) { background: var(--white); }
+  .duty-table tbody tr:nth-child(even) { background: var(--grey-bg); }
+  .duty-table td { padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--grey-line); vertical-align: top; line-height: 1.65; color: var(--body-text); }
+  .duty-table td:first-child { font-weight: 600; color: var(--graphite); font-size: 0.825rem; }
+
+  /* EVIDENCE CHAIN */
+  .evidence-chain { display: flex; align-items: stretch; gap: 0; margin: 2.5rem 0; max-width: 780px; }
+  .ev-item { flex: 1; background: var(--white); border: 1px solid var(--grey-line); border-right: none; padding: 1.5rem 1.25rem; position: relative; }
+  .ev-item:last-child { border-right: 1px solid var(--grey-line); }
+  .ev-item::after { content: '›'; position: absolute; right: -12px; top: 50%; transform: translateY(-50%); color: var(--green-accent); font-size: 1.2rem; z-index: 1; background: var(--white); padding: 0 2px; }
+  .ev-item:last-child::after { display: none; }
+  .ev-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 0.4rem; }
+  .ev-title { font-weight: 600; font-size: 0.8rem; color: var(--graphite); line-height: 1.3; }
+
+  /* SIGN-OFF */
+  .signoff-section { background: var(--graphite); color: var(--white); padding: 6rem 8rem; }
+  .signoff-title { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+  .signoff-intro { font-size: 0.9rem; color: rgba(255,255,255,0.6); max-width: 640px; line-height: 1.8; margin-bottom: 3rem; }
+  .signoff-list { list-style: none; max-width: 720px; margin-bottom: 3.5rem; }
+  .signoff-list li { display: flex; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+  .signoff-list li::before { content: '✓'; color: var(--green-accent); flex-shrink: 0; margin-top: 0.1rem; }
+  .signoff-cta { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--green-accent); color: var(--white); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 1rem 2rem; text-decoration: none; margin-top: 1rem; transition: background 0.2s; }
+  .signoff-cta:hover { background: var(--green-deep); }
+  .signoff-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 700px; margin-top: 3rem; }
+  .sig-field { border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.75rem; }
+  .sig-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 2rem; display: block; }
+
+  /* LINKS */
+  a.doc-link { color: inherit; text-decoration: none; border-bottom: 1px solid var(--green-accent); padding-bottom: 1px; transition: color 0.15s; }
+  a.doc-link:hover { color: var(--green-accent); }
+  a.doc-link-light { color: rgba(255,255,255,0.85); text-decoration: none; border-bottom: 1px solid rgba(46,125,50,0.6); padding-bottom: 1px; transition: color 0.15s; }
+  a.doc-link-light:hover { color: var(--white); border-bottom-color: var(--green-accent); }
+
+  /* FOOTER */
+  footer { background: #1a1a1a; padding: 2.5rem 8rem; display: flex; align-items: center; justify-content: space-between; border-top: 2px solid var(--green-accent); }
+  footer .f-brand { font-family: 'Playfair Display', serif; color: rgba(255,255,255,0.35); font-style: italic; font-size: 0.9rem; text-decoration: none; }
+  footer .f-code { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--green-accent); letter-spacing: 0.18em; }
+  footer .f-tm { font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .cover-inner > * { animation: fadeUp 0.7s ease both; }
+  .cover-inner > *:nth-child(1) { animation-delay: 0.1s; }
+  .cover-inner > *:nth-child(2) { animation-delay: 0.25s; }
+  .cover-inner > *:nth-child(3) { animation-delay: 0.35s; }
+  .cover-inner > *:nth-child(4) { animation-delay: 0.45s; }
+  .cover-inner > *:nth-child(5) { animation-delay: 0.55s; }
+  .cover-inner > *:nth-child(6) { animation-delay: 0.65s; }
+
+  @media (max-width: 900px) {
+    .cover-inner, .toc-section, .doc-control, .notice-block, .content-section, .signoff-section, footer { padding-left: 2rem; padding-right: 2rem; }
+    .notice-block { grid-template-columns: 1fr; gap: 2rem; }
+    .ops-grid { grid-template-columns: 1fr; }
+    .evidence-chain { flex-direction: column; }
+    .ev-item { border-right: 1px solid var(--grey-line); border-bottom: none; }
+    .ev-item:last-child { border-bottom: 1px solid var(--grey-line); }
+    .ev-item::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -14px; transform: translateX(-50%); }
+    .signoff-fields { grid-template-columns: 1fr; }
+    .cover-meta { flex-wrap: wrap; gap: 1.5rem; }
+    .nav-links { display: none; }
+    .control-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── SECTION ANCHOR LINKS ── */
+  .section-anchor {
+    color: inherit; text-decoration: none; display: flex; align-items: flex-start; gap: 2rem; width: 100%;
+  }
+  .section-anchor:hover .section-title { color: var(--green-accent); }
+  .section-anchor .anchor-icon {
+    opacity: 0; font-family: 'DM Mono', monospace; font-size: 0.9rem;
+    color: var(--green-accent); margin-top: 0.45rem; flex-shrink: 0;
+    transition: opacity 0.15s; user-select: none;
+  }
+  .section-header:hover .anchor-icon { opacity: 1; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">OCOS™ · Tier 3 Operations</span>
+  <ul class="nav-links">
+    <li><a href="#toc">Contents</a></li>
+    <li><a href="#section-1">System</a></li>
+    <li><a href="#section-3">Infrastructure</a></li>
+    <li><a href="#section-6">Evidence</a></li>
+    <li><a href="#section-8">Maintenance</a></li>
+    <li><a href="#section-9">Access</a></li>
+  </ul>
+</nav>
+
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Ontario Compliance Operating System™ · Tier 3</div>
+    <h1 class="cover-title">Compliance<br><span class="accent">Operations</span><br>System</h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">Where generated documents become a functioning workplace safety program — organized, tracked, enforced, and ready for inspection at any time.</p>
+    <div class="cover-meta">
+      <div class="meta-item">
+        <span class="meta-label">Document Code</span>
+        <span class="meta-value">OCOS-T3-OPS-001</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-value">1.0 · Released</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared By</span>
+        <span class="meta-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link-light">Natural Alternatives</a></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prerequisite</span>
+        <span class="meta-value">OCOS Tiers 1 &amp; 2 Complete</span>
+      </div>
+    </div>
+    <div style="display:inline-block;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#2E7D32;background:rgba(46,125,50,0.1);border:1px solid rgba(46,125,50,0.25);padding:6px 14px;margin-bottom:1rem">$597 CAD · One-Time License</div>
+    <a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-3-Access-2fdaf11add6380ce8e90e09db23ea7df" target="_blank" class="cover-cta">Access Tier 3 Operations System ↗</a>
+  </div>
+  <div class="cover-footer">
+    <a href="https://naturalalternatives.ca" target="_blank" class="cover-footer-brand">Natural Alternatives</a>
+    <span class="cover-doc-code">OCOS-T3-OPS-001 · VERSION 1.0 · EMPLOYER RESPONSIBLE FOR IMPLEMENTATION</span>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="toc-section" id="toc">
+  <div class="section-eyebrow">Executive Contents</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--graphite);font-weight:700;">Table of Contents</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#section-1"><span class="toc-num">1.0</span><span class="toc-text">Purpose, Scope, and Operations Architecture</span></a>
+    <a class="toc-item" href="#section-2"><span class="toc-num">2.0</span><span class="toc-text">Prerequisite: Tiers 1 and 2 Completion</span></a>
+    <a class="toc-item" href="#section-3"><span class="toc-num">3.0</span><span class="toc-text">Compliance Infrastructure — The Eight Components</span></a>
+    <a class="toc-item" href="#section-4"><span class="toc-num">4.0</span><span class="toc-text">Document Filing and Version Control</span></a>
+    <a class="toc-item" href="#section-5"><span class="toc-num">5.0</span><span class="toc-text">Training Register and Worker Verification</span></a>
+    <a class="toc-item" href="#section-6"><span class="toc-num">6.0</span><span class="toc-text">Evidence Chain — From Policy to Proof</span></a>
+    <a class="toc-item" href="#section-7"><span class="toc-num">7.0</span><span class="toc-text">Incident Tracking and Corrective Action</span></a>
+    <a class="toc-item" href="#section-8"><span class="toc-num">8.0</span><span class="toc-text">Compliance Calendar and Review Cycle</span></a>
+    <a class="toc-item" href="#section-9"><span class="toc-num">9.0</span><span class="toc-text">Access, Authorization, and Activation Record</span></a>
+  </div>
+</section>
+
+<!-- DOC CONTROL -->
+<section class="doc-control">
+  <div class="section-eyebrow">Document Control</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--graphite);font-weight:700;">Control Record</h2>
+  <div class="control-grid">
+    <div class="control-label">Document</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System (OCOS)</a></div>
+    <div class="control-label">Tier</div><div class="control-value">Tier 3 — Compliance Operations System</div>
+    <div class="control-label">Document Code</div><div class="control-value" style="font-family:'DM Mono',monospace;font-size:0.8rem;">OCOS-T3-OPS-001</div>
+    <div class="control-label">Version</div><div class="control-value">1.0</div>
+    <div class="control-label">Status</div><div class="control-value"><span style="background:rgba(27,94,32,0.1);color:var(--green-deep);padding:0.2rem 0.7rem;font-size:0.78rem;font-weight:600;">Released</span></div>
+    <div class="control-label">Prepared By</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Natural Alternatives</a></div>
+    <div class="control-label">Released Date</div><div class="control-value">[DATE]</div>
+    <div class="control-label">Review Date</div><div class="control-value">[DATE]</div>
+    <div class="control-label">Classification</div><div class="control-value">Proprietary — Natural Alternatives</div>
+    <div class="control-label">Authorized By</div><div class="control-value">[NAME / TITLE]</div>
+    <div class="control-label">Prerequisite Tiers</div><div class="control-value">OCOS Tier 1 &amp; <a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-2-Access-2fdaf11add63808f8104ca347d88949c" target="_blank" class="doc-link">Tier 2</a></div>
+    <div class="control-label">Notion Workspace</div><div class="control-value"><a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-3-Access-2fdaf11add6380ce8e90e09db23ea7df" target="_blank" class="doc-link">Access Tier 3 Operations System ↗</a></div>
+  </div>
+</section>
+
+<!-- NOTICES -->
+<section class="notice-block">
+  <div class="notice-card">
+    <div class="notice-title">Proprietary Notice</div>
+    <p class="notice-text">This document and the <a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System™</a> are proprietary to Natural Alternatives. The Tier 3 operational infrastructure, file structures, register frameworks, calendar systems, and evidence chain architecture are intellectual property of Natural Alternatives. Unauthorized reproduction or distribution is strictly prohibited.</p>
+  </div>
+  <div class="notice-card secondary">
+    <div class="notice-title">Implementation Responsibility</div>
+    <p class="notice-text">Tier 3 provides the operational infrastructure to manage the compliance program. The employer is responsible for populating all registers, maintaining all logs, enforcing all procedures, and ensuring that the system reflects actual workplace operations at all times. Natural Alternatives does not store records or provide ongoing operational support on the employer's behalf.</p>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="content-section" id="section-1">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-1">
+          <div class="section-num-badge">1.0</div>
+          <div>
+      <h2 class="section-title">Purpose, Scope, and Operations Architecture</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">The <a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-3-Access-2fdaf11add6380ce8e90e09db23ea7df" target="_blank" class="doc-link">OCOS Tier 3 Compliance Operations System</a> is the operational layer of the Ontario Compliance Operating System™. It is where generated documents become a functioning workplace safety program — organized into a controlled file structure, tracked against a compliance calendar, verified through ongoing inspection and training records, and maintained through a continuous improvement cycle.</p>
+
+  <p class="body-text">Tier 3 does not generate documents. That function belongs to Tier 2. Tier 3 receives approved documents from the Tier 2 generation workflow, files them within a controlled structure, connects them to their supporting records, and ensures they remain current, enforced, and auditable throughout their operational life.</p>
+
+  <p class="body-text">Without Tier 3, the OCOS system is incomplete. Documents generated in Tier 2 and approved by the employer exist as isolated files — not as a system. Tier 3 is the infrastructure that makes the system operational, defensible, and capable of producing compliance evidence on demand.</p>
+
+  <div class="callout">
+    <p class="callout-text">Evidence is not created by the system. Evidence is the byproduct of when the system operates. An employer who runs the system produces evidence automatically. An employer who possesses the system but does not run it produces nothing.</p>
+    <span class="callout-source">OCOS Operations Principle</span>
+  </div>
+</section>
+
+<!-- SECTION 2 -->
+<section class="content-section" id="section-2">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-2">
+          <div class="section-num-badge">2.0</div>
+          <div>
+      <h2 class="section-title">Prerequisite: Tiers 1 and 2 Completion</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">Tier 3 can only function as designed when the preceding tiers have been completed. The compliance operations infrastructure requires documents to manage — and those documents are produced through Tier 2. Tier 2 requires the legal context and generation logic established in Tier 1. The three tiers are sequential by design and cumulative by function.</p>
+
+  <table class="duty-table">
+    <thead><tr><th>Tier</th><th>Completion Requirement</th><th>What Tier 3 Depends On</th></tr></thead>
+    <tbody>
+      <tr><td>Tier 1 — Foundation</td><td>Foundation guide reviewed in full; employer sign-off completed</td><td>Legal context, document control standards, approval workflow logic</td></tr>
+      <tr><td>Tier 2 — Generation</td><td>Company Master Prompt configured; at least initial document suite generated and approved</td><td>Approved documents to file, manage, and track within Tier 3 infrastructure</td></tr>
+      <tr><td>Tier 3 — Operations</td><td>Operational infrastructure activated; document filing, training registers, and compliance calendar populated</td><td>The live system that produces compliance evidence during normal operations</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 3 -->
+<section class="content-section" id="section-3">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-3">
+          <div class="section-num-badge">3.0</div>
+          <div>
+      <h2 class="section-title">Compliance Infrastructure — The Eight Components</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">The Tier 3 system is organized around eight operational components. Each component serves a distinct function within the compliance program. Together, they create the infrastructure through which an employer can demonstrate that their safety program has been planned, implemented, maintained, and continuously improved.</p>
+
+  <div class="ops-grid">
+    <div class="ops-card">
+      <div class="ops-num">Component 01</div>
+      <div class="ops-title">Organized File Structure</div>
+      <p class="ops-desc">A controlled folder architecture that houses all approved compliance documents — policies, programs, procedures, inspection forms, training records, and corrective action logs — organized by document type, status, and version. Current documents are clearly separated from superseded versions. Every document is findable within 60 seconds.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 02</div>
+      <div class="ops-title">Training Register</div>
+      <p class="ops-desc">A centralized record of all workplace training delivered to workers and supervisors. Captures the worker's name, date of training, topic covered, trainer identity, and acknowledgment of comprehension. The training register is the primary evidence that workers have been informed of hazards and control requirements.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 03</div>
+      <div class="ops-title">Inspection Logs</div>
+      <p class="ops-desc">Completed inspection records demonstrating that equipment, work areas, and compliance controls have been verified through ongoing monitoring. Inspection logs connect approved procedures to field-level verification — transforming written controls into documented evidence of supervisory oversight.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 04</div>
+      <div class="ops-title">Incident Tracking</div>
+      <p class="ops-desc">A centralized log of all workplace incidents, near-misses, and work refusals — including investigation findings, root cause determination, and corrective actions taken. Incident records are retained and linked to any document revisions they trigger.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 05</div>
+      <div class="ops-title">Corrective Action Register</div>
+      <p class="ops-desc">A tracked log of all identified deficiencies — from inspections, incidents, worker feedback, JHSC recommendations, and regulatory findings — with assigned responsible parties, target completion dates, and closure records. Open items are visible at a glance; closed items form part of the continuous improvement record.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 06</div>
+      <div class="ops-title">Compliance Calendar</div>
+      <p class="ops-desc">A scheduled review and action calendar that tracks all recurring compliance obligations — annual policy reviews, training renewal dates, inspection frequencies, JHSC meeting schedules, legislative monitoring checkpoints, and document regeneration cycles. The calendar converts the OCOS system from reactive to proactive.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 07</div>
+      <div class="ops-title">Document Control Register</div>
+      <p class="ops-desc">A master index of all controlled documents within the compliance program — including document code, current version, status, authorized-by, and next review date. The register is the single source of truth for what is current, what is superseded, and what is pending review.</p>
+    </div>
+    <div class="ops-card">
+      <div class="ops-num">Component 08</div>
+      <div class="ops-title">JHSC / H&amp;S Rep Records</div>
+      <p class="ops-desc">Meeting minutes, inspection reports, recommendations, employer responses, and committee member training records. Maintains the documented evidence of the Internal Responsibility System functioning at the joint governance level — critical for demonstrating active JHSC participation during regulatory review.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="content-section" id="section-4">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-4">
+          <div class="section-num-badge">4.0</div>
+          <div>
+      <h2 class="section-title">Document Filing and Version Control</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">Every approved document entering the Tier 3 system is assigned to the appropriate folder, registered in the Document Control Register, and linked to its supporting training records and inspection logs. Version control is applied immediately — the current approved version is the only version in active circulation.</p>
+
+  <h3 class="h3">Version Control Requirements</h3>
+  <table class="duty-table">
+    <thead><tr><th>Event</th><th>Version Action</th><th>Record Required</th></tr></thead>
+    <tbody>
+      <tr><td>Initial document approval</td><td>Version 1.0 filed as Active</td><td>Approval sign-off, issue date, distribution list</td></tr>
+      <tr><td>Minor revision (content update)</td><td>Version incremented (e.g., 1.1)</td><td>Reason for revision, authorized by, change communication record</td></tr>
+      <tr><td>Major revision (scope change)</td><td>New version issued (e.g., 2.0)</td><td>Prior version archived, retraining delivered and recorded</td></tr>
+      <tr><td>Document regenerated via Tier 2</td><td>New version issued as replacement</td><td>Prior version archived, new approval sign-off, retraining if content changed</td></tr>
+      <tr><td>Document superseded / retired</td><td>Marked Superseded in register</td><td>Retained in archive — never deleted</td></tr>
+    </tbody>
+  </table>
+
+  <p class="body-text">Superseded documents are never deleted. They are moved to the archive folder with their superseded status clearly marked. In the event of a regulatory inquiry or legal proceeding, the full version history demonstrates that the system was actively maintained — not reconstructed after the fact.</p>
+</section>
+
+<!-- SECTION 5 -->
+<section class="content-section" id="section-5">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-5">
+          <div class="section-num-badge">5.0</div>
+          <div>
+      <h2 class="section-title">Training Register and Worker Verification</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">The training register is the employer's primary evidence that workers have been informed of workplace hazards, trained on applicable procedures, and confirmed to understand the controls that govern their work. Without a training register, a procedure is an unpublished intention. With one, it is a documented workplace control.</p>
+
+  <h3 class="h3">Training Register — Required Fields</h3>
+  <ul class="ocos-list">
+    <li>Worker name and role</li>
+    <li>Date of training delivery</li>
+    <li>Training topic or document title (linked to document code)</li>
+    <li>Training method (in-person, toolbox talk, orientation session)</li>
+    <li>Trainer name and designation</li>
+    <li>Worker acknowledgment signature or recorded confirmation</li>
+    <li>Renewal date (where applicable — e.g., annual WHMIS, equipment re-certification)</li>
+  </ul>
+
+  <h3 class="h3">Training Records Must Be Maintained For</h3>
+  <table class="duty-table">
+    <thead><tr><th>Training Type</th><th>Minimum Retention</th><th>Legislative Reference</th></tr></thead>
+    <tbody>
+      <tr><td>Basic OHS awareness (workers)</td><td>Duration of employment + 3 years</td><td>O. Reg. 297/13</td></tr>
+      <tr><td>Basic OHS awareness (supervisors)</td><td>Duration of employment + 3 years</td><td>O. Reg. 297/13</td></tr>
+      <tr><td>JHSC member certification training</td><td>Duration of membership + 3 years</td><td>OHSA s. 9</td></tr>
+      <tr><td>WHMIS worker education</td><td>Duration of employment + 3 years</td><td>WHMIS 2015 / OHSA</td></tr>
+      <tr><td>Equipment and task-specific training</td><td>Duration of employment + 3 years</td><td>OHSA s. 25(2)(a)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 6 -->
+<section class="content-section" id="section-6">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-6">
+          <div class="section-num-badge">6.0</div>
+          <div>
+      <h2 class="section-title">Evidence Chain — From Policy to Proof</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">The Tier 3 system is designed so that compliance evidence is a natural output of normal operations — not assembled in response to an incident or inspection. When all eight components are active and maintained, the employer possesses a complete evidence chain linking organizational commitment through to field-level proof.</p>
+
+  <div class="evidence-chain">
+    <div class="ev-item">
+      <div class="ev-label">Layer 1</div>
+      <div class="ev-title">Policy &amp; Commitment</div>
+    </div>
+    <div class="ev-item">
+      <div class="ev-label">Layer 2</div>
+      <div class="ev-title">Procedures &amp; Controls</div>
+    </div>
+    <div class="ev-item">
+      <div class="ev-label">Layer 3</div>
+      <div class="ev-title">Training Records</div>
+    </div>
+    <div class="ev-item">
+      <div class="ev-label">Layer 4</div>
+      <div class="ev-title">Inspection Logs</div>
+    </div>
+    <div class="ev-item">
+      <div class="ev-label">Layer 5</div>
+      <div class="ev-title">Corrective Actions</div>
+    </div>
+    <div class="ev-item">
+      <div class="ev-label">Layer 6</div>
+      <div class="ev-title">Review Records</div>
+    </div>
+  </div>
+
+  <h3 class="h3">What Each Layer Answers</h3>
+  <table class="duty-table">
+    <thead><tr><th>Evidence Layer</th><th>Question It Answers</th><th>OCOS Component</th></tr></thead>
+    <tbody>
+      <tr><td>Policy &amp; Commitment</td><td>What does the organization require?</td><td>Approved policies — Tier 3 file structure</td></tr>
+      <tr><td>Procedures &amp; Controls</td><td>How is the requirement carried out?</td><td>Approved SWPs and programs — Tier 3 file structure</td></tr>
+      <tr><td>Training Records</td><td>Were workers informed and trained?</td><td>Training register — Component 02</td></tr>
+      <tr><td>Inspection Logs</td><td>Were controls verified as operational?</td><td>Inspection logs — Component 03</td></tr>
+      <tr><td>Corrective Actions</td><td>Were deficiencies corrected?</td><td>Corrective action register — Component 05</td></tr>
+      <tr><td>Review Records</td><td>Is the system maintained and improving?</td><td>Compliance calendar — Component 06</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 7 -->
+<section class="content-section" id="section-7">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-7">
+          <div class="section-num-badge">7.0</div>
+          <div>
+      <h2 class="section-title">Incident Tracking and Corrective Action</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">Incident tracking is not a reactive obligation — it is a continuous improvement mechanism. Every incident, near-miss, work refusal, and complaint recorded in the Tier 3 system feeds directly into the corrective action register, which tracks identified deficiencies through to resolution.</p>
+
+  <h3 class="h3">Incident Record Requirements</h3>
+  <ul class="ocos-list">
+    <li>Date, time, and location of the incident or near-miss</li>
+    <li>Names of involved workers, witnesses, and the investigating supervisor</li>
+    <li>Description of what occurred — factual, not interpretive</li>
+    <li>Immediate corrective actions taken at the scene</li>
+    <li>Root cause determination following investigation</li>
+    <li>Systemic corrective action assigned, with responsible party and target date</li>
+    <li>Document revision triggered, if applicable — linked to Tier 2 regeneration</li>
+    <li>WSIB reporting status and Critical Injury notification, where applicable</li>
+  </ul>
+
+  <div class="callout">
+    <p class="callout-text">An incident that results in a corrective action, a document revision, and a training update — all recorded and traceable — is evidence of a functioning compliance system. An incident with no follow-up record is evidence of a compliance failure.</p>
+    <span class="callout-source">OCOS Continuous Improvement Principle</span>
+  </div>
+</section>
+
+<!-- SECTION 8 -->
+<section class="content-section" id="section-8">
+  <div class="section-header">
+        <a class="section-anchor" href="#section-8">
+          <div class="section-num-badge">8.0</div>
+          <div>
+      <h2 class="section-title">Compliance Calendar and Review Cycle</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+          <span class="anchor-icon">#</span>
+        </a>
+      </div>
+
+  <p class="body-text">The compliance calendar is the scheduling infrastructure that converts the OCOS system from a static document repository into a living operational program. It tracks all recurring compliance obligations and triggers proactive action before deadlines are missed — rather than after they have been.</p>
+
+  <h3 class="h3">Standard Annual Calendar Events</h3>
+  <table class="duty-table">
+    <thead><tr><th>Obligation</th><th>Frequency</th><th>OHSA / Regulatory Basis</th></tr></thead>
+    <tbody>
+      <tr><td>OHS Policy review</td><td>Annual minimum</td><td>OHSA s. 25(2)(j)</td></tr>
+      <tr><td>Workplace Violence &amp; Harassment Policy review</td><td>Annual minimum</td><td>OHSA s. 32.0.6</td></tr>
+      <tr><td>JHSC meeting</td><td>Monthly (20+ workers) / as required</td><td>OHSA s. 9(33)</td></tr>
+      <tr><td>JHSC workplace inspection</td><td>Monthly (rotating areas)</td><td>OHSA s. 9(26)</td></tr>
+      <tr><td>Worker OHS awareness reorientation</td><td>Annual or upon role change</td><td>O. Reg. 297/13</td></tr>
+      <tr><td>Document review — all active controlled documents</td><td>Annual minimum or upon trigger</td><td>OCOS document control standard</td></tr>
+      <tr><td>Corrective action register review</td><td>Quarterly minimum</td><td>OCOS continuous improvement standard</td></tr>
+      <tr><td>Seasonal pre-start document regeneration</td><td>Before each operating season</td><td>OCOS best practice</td></tr>
+    </tbody>
+  </table>
+
+  <p class="body-text">The compliance calendar is accessible and maintained within the <a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-3-Access-2fdaf11add6380ce8e90e09db23ea7df" target="_blank" class="doc-link">Tier 3 Notion workspace</a>. Upcoming obligations are visible in advance, allowing the employer to assign responsibility, prepare materials, and complete requirements without scrambling at the last moment.</p>
+</section>
+
+<!-- SECTION 9 -->
+<section class="signoff-section" id="section-9">
+  <div class="section-eyebrow" style="color:var(--green-accent);">
+    <span style="display:inline-block;width:30px;height:1px;background:var(--green-accent);margin-right:1rem;"></span>
+    Section 9.0
+  </div>
+  <h2 class="signoff-title">Access, Authorization, and Activation Record</h2>
+  <p class="signoff-intro">Tier 3 is activated when the employer has completed Tier 1 orientation, generated and approved an initial document suite through Tier 2, and populated the Tier 3 operational infrastructure with those approved documents and their supporting records.</p>
+
+  <ul class="signoff-list">
+    <li>Tier 1 and Tier 2 have been completed before Tier 3 operations are initiated</li>
+    <li>Approved documents from Tier 2 are filed in the controlled Tier 3 file structure upon approval</li>
+    <li>Training records are created and filed for every document communicated to workers</li>
+    <li>The Document Control Register reflects all currently active, superseded, and archived documents</li>
+    <li>The Compliance Calendar is populated with all recurring obligations and review dates</li>
+    <li>The Corrective Action Register is maintained and reviewed on a regular schedule</li>
+    <li>The employer retains all records — Natural Alternatives does not store records on the employer's behalf</li>
+    <li>The system is reviewed, maintained, and updated as a living operational framework — not treated as static paperwork</li>
+  </ul>
+
+  <a href="https://www.notion.so/Ontario-Compliance-Operating-System-Tier-3-Access-2fdaf11add6380ce8e90e09db23ea7df" target="_blank" class="signoff-cta">Access Tier 3 Operations Workspace ↗</a>
+
+  <div class="signoff-fields">
+    <div class="sig-field"><span class="sig-label">Authorized Signatory — Name</span></div>
+    <div class="sig-field"><span class="sig-label">Title / Role</span></div>
+    <div class="sig-field"><span class="sig-label">Signature</span></div>
+    <div class="sig-field"><span class="sig-label">Date of Activation</span></div>
+    <div class="sig-field" style="grid-column:1/-1"><span class="sig-label">Organization Name</span></div>
+  </div>
+</section>
+
+<footer>
+  <a href="https://naturalalternatives.ca" target="_blank" class="f-brand">Natural Alternatives</a>
+  <span class="f-code">OCOS-T3-OPS-001 · VERSION 1.0</span>
+  <span class="f-tm"><a href="https://naturalalternatives.ca" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,0.2);">Ontario Compliance Operating System™</a> is a trademark of Natural Alternatives. All rights reserved.</span>
+</footer>
+
+<script>
+  // ── NAV SCROLL + ACTIVE STATE ──
+  // Intercept all internal anchor clicks and use scrollIntoView for reliability
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update URL hash without jumping
+        history.pushState(null, '', href);
+      }
+    });
+  });
+
+  // Scroll spy — highlight active nav link
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const sectionIds = [...navLinks].map(a => a.getAttribute('href').replace('#', ''));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+  function updateActiveNav() {
+    let current = '';
+    const scrollY = window.scrollY + 80;
+    sections.forEach(el => {
+      if (el.offsetTop <= scrollY) current = el.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  window.addEventListener('load', updateActiveNav);
+  updateActiveNav();
+</script>
+<div style="position:relative;z-index:1;padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28)"><a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>·<a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>·© Natural Alternatives</div></body>
+</html>

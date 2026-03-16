@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCOS Partner License Terms of Use — Ontario Compliance Operating System™</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2E7D32; --green-deep: #1B5E20;
+    --graphite: #333333; --body: #555555;
+    --line: #DDDDDD; --bg: #F5F5F5;
+    --muted: #888888; --white: #FFFFFF; --black: #111111;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--graphite); line-height: 1.75; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(17,17,17,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(46,125,50,0.4); height: 64px; display: flex; align-items: center; padding: 0 3rem; justify-content: space-between; }
+  .nav-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; }
+  .nav-logo-top { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); }
+  .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--white); }
+  .nav-back { color: rgba(255,255,255,0.3); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--green); }
+
+  .doc-header { background: var(--black); padding: 8rem 4rem 5rem; border-bottom: 2px solid var(--green); position: relative; overflow: hidden; }
+  .doc-header::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px), repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px); }
+  .doc-header-inner { max-width: 900px; position: relative; z-index: 1; }
+  .doc-kicker { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .doc-kicker::before { content: ''; display: block; width: 32px; height: 1px; background: var(--green); }
+  .doc-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3.2rem); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 1.5rem; }
+  .doc-title em { font-style: italic; color: var(--green); }
+  .doc-meta { display: flex; gap: 3rem; flex-wrap: wrap; }
+  .doc-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+  .doc-meta-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .doc-meta-value { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.6); }
+
+  .doc-body { max-width: 900px; margin: 0 auto; padding: 5rem 4rem; }
+
+  .toc { background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--green); padding: 2rem 2.5rem; margin-bottom: 4rem; }
+  .toc-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .toc-list a { color: var(--body); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
+  .toc-list a::before { content: ''; display: block; width: 16px; height: 1px; background: var(--line); flex-shrink: 0; }
+  .toc-list a:hover { color: var(--green); }
+
+  .doc-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-num::before { content: ''; display: block; width: 24px; height: 1px; background: var(--green); }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--graphite); margin-bottom: 1.25rem; line-height: 1.2; }
+  h3 { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--graphite); margin: 1.5rem 0 0.6rem; }
+  p { font-size: 0.9rem; color: var(--body); margin-bottom: 1rem; line-height: 1.8; }
+  .doc-section ul, .doc-section ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  .doc-section li { font-size: 0.88rem; color: var(--body); margin-bottom: 0.5rem; line-height: 1.7; }
+  .doc-divider { width: 100%; height: 1px; background: var(--line); margin: 3rem 0; }
+
+  .notice-box { background: var(--bg); border-left: 4px solid var(--green); padding: 1.5rem 2rem; margin: 1.5rem 0; }
+  .notice-box p { margin-bottom: 0; }
+  .notice-box.warning { border-left-color: #B71C1C; }
+  .notice-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+  .notice-box.warning .notice-label { color: #B71C1C; }
+
+  .def-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); margin: 1.5rem 0; }
+  .def-table th { background: var(--graphite); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1rem; text-align: left; }
+  .def-table td { padding: 0.9rem 1rem; font-size: 0.84rem; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--body); }
+  .def-table td:first-child { font-weight: 600; color: var(--graphite); width: 30%; }
+  .def-table tr:last-child td { border-bottom: none; }
+
+  .sig-block { background: var(--graphite); padding: 3rem; border-top: 3px solid var(--green); margin-top: 4rem; }
+  .sig-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
+  .sig-sub { font-size: 0.82rem; color: rgba(255,255,255,0.45); margin-bottom: 2rem; }
+  .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .sig-field label { display: block; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.5rem; }
+  .sig-field .sig-line { height: 1px; background: rgba(255,255,255,0.15); margin-bottom: 0.3rem; }
+  .sig-field .sig-line-label { font-size: 0.72rem; color: rgba(255,255,255,0.2); }
+
+  .doc-code { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--green); background: rgba(46,125,50,0.08); padding: 0.15rem 0.4rem; }
+
+  footer { background: var(--black); padding: 2.5rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+  .footer-tm { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .doc-header, .doc-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .sig-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Natural Alternatives</span>
+    <span class="nav-logo-main">Ontario Compliance Operating System™</span>
+  </a>
+  <a href="pricing.html#practitioner" class="nav-back">← OCOS Partner License</a>
+</nav>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-kicker">Legal Document</div>
+    <h1 class="doc-title">OCOS Partner License<br><em>Terms of Use</em></h1>
+    <div class="doc-meta">
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Document Code</span>
+        <span class="doc-meta-value">OCOS-PRAC-TOU-001</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Version</span>
+        <span class="doc-meta-value">1.0</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Issued By</span>
+        <span class="doc-meta-value">Natural Alternatives</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Jurisdiction</span>
+        <span class="doc-meta-value">Ontario, Canada</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Applies To</span>
+        <span class="doc-meta-value">OCOS Partner License Holders</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <div class="notice-box">
+    <div class="notice-label">Important — Read Before Activating Your License</div>
+    <p>By applying for, purchasing, or activating a OCOS Partner License for the Ontario Compliance Operating System™, the OCOS Partner agrees to be bound by these Terms of Use in their entirety. These terms govern all permitted and prohibited uses of the OCOS system under a OCOS Partner License. If you do not agree to these terms, you may not purchase or activate an OCOS Partner License.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#s1">1. Definitions</a></li>
+      <li><a href="#s2">2. License Grant</a></li>
+      <li><a href="#s3">3. Permitted Uses</a></li>
+      <li><a href="#s4">4. Prohibited Uses</a></li>
+      <li><a href="#s5">5. White-Label Terms</a></li>
+      <li><a href="#s6">6. Intellectual Property</a></li>
+      <li><a href="#s7">7. Client Obligations</a></li>
+      <li><a href="#s8">8. Annual Renewal and Pricing</a></li>
+      <li><a href="#s9">9. Disclaimer of Legal Advice</a></li>
+      <li><a href="#s10">10. Limitation of Liability</a></li>
+      <li><a href="#s11">11. Termination</a></li>
+      <li><a href="#s12">12. Governing Law</a></li>
+      <li><a href="#s13">13. Acceptance</a></li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="s1">
+    <div class="section-num">Section 01</div>
+    <h2>Definitions</h2>
+    <table class="def-table">
+      <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+      <tbody>
+        <tr><td>"Natural Alternatives"</td><td>The owner and licensor of the Ontario Compliance Operating System™, operating as Natural Alternatives.</td></tr>
+        <tr><td>"OCOS" / "The System"</td><td>The Ontario Compliance Operating System™, including all three tiers, the RCCF framework, the Compliance Generator Library, all associated Notion workspaces, templates, and supporting documentation.</td></tr>
+        <tr><td>"Practitioner"</td><td>The individual, firm, or organization that has purchased and activated a OCOS Partner License from Natural Alternatives.</td></tr>
+        <tr><td>"OCOS Partner License"</td><td>The annual license granted by Natural Alternatives to the Practitioner permitting deployment of the OCOS system across multiple client organizations, as described in these Terms.</td></tr>
+        <tr><td>"Client Organization"</td><td>Any employer, business, or organization to which the Practitioner deploys or applies the OCOS system under this license.</td></tr>
+        <tr><td>"White-Label Deployment"</td><td>A deployment of the OCOS system in which the Practitioner's own branding replaces Natural Alternatives' branding, as permitted under Section 5 of these Terms.</td></tr>
+        <tr><td>"License Year"</td><td>The twelve-month period commencing on the date of license activation and ending on the annual renewal date.</td></tr>
+        <tr><td>"Practitioner Tier"</td><td>The tier level of the OCOS Partner License purchased, which determines the maximum number of simultaneously active Client Organization deployments: Starter (3), Growth (7), Pro (15), or Agency (30).</td></tr>
+        <tr><td>"Generator Library"</td><td>The collection of RCCF-structured compliance document generators included within the OCOS Tier 2 system and Notion workspace.</td></tr>
+        <tr><td>"Intellectual Property"</td><td>The RCCF framework, all prompt architecture, generator structures, document frameworks, Notion workspace designs, written content, and other proprietary materials comprising the OCOS system.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s2">
+    <div class="section-num">Section 02</div>
+    <h2>License Grant</h2>
+    <p>Natural Alternatives grants the Practitioner a non-exclusive, non-transferable, annual license to access and deploy the Ontario Compliance Operating System™ across the number of Client Organizations permitted by the Practitioner's licensed tier (Starter: 3 clients; Growth: 7 clients; Pro: 15 clients; Agency: 30 clients), as confirmed in the order documentation, during the License Year, subject to the terms and conditions set out in this document.</p>
+    <p>This license is personal to the Practitioner named at the time of purchase. It may not be assigned, sublicensed, transferred, or shared with any third party, including within a firm or organization unless the OCOS Partner License has been specifically issued to that firm or organization as the named licensee.</p>
+    <div class="notice-box warning">
+      <div class="notice-label">Non-Transferable</div>
+      <p>This license is issued to a specific Practitioner or Practitioner firm. Sharing login credentials, Notion workspace access, or framework documents with individuals outside the named licensee constitutes a material breach of these Terms and may result in immediate license termination without refund.</p>
+    </div>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s3">
+    <div class="section-num">Section 03</div>
+    <h2>Permitted Uses</h2>
+    <p>Under a valid OCOS Partner License, the following uses are expressly permitted:</p>
+    <ul>
+      <li>Accessing all three OCOS tiers and associated Notion workspaces during the License Year.</li>
+      <li>Deploying the OCOS system on behalf of Client Organizations up to the maximum permitted by the Practitioner's licensed tier during the License Year.</li>
+      <li>Using the Generator Library to produce employer-specific compliance documents for Client Organizations.</li>
+      <li>Deploying white-label versions of the OCOS Notion workspaces under the Practitioner's own branding, in accordance with Section 5.</li>
+      <li>Incorporating OCOS-generated documents into broader compliance programs delivered to Client Organizations as part of the Practitioner's professional services.</li>
+      <li>Charging Client Organizations for the Practitioner's professional services in connection with OCOS deployment.</li>
+      <li>Using OCOS materials for educational presentations, client briefings, and professional development purposes, provided that the OCOS materials are not redistributed to third parties as standalone products.</li>
+    </ul>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s4">
+    <div class="section-num">Section 04</div>
+    <h2>Prohibited Uses</h2>
+    <p>The following uses are expressly prohibited under a OCOS Partner License and constitute material breaches of these Terms:</p>
+    <h3>Resale and Redistribution</h3>
+    <ul>
+      <li>Reselling, sublicensing, or redistributing the OCOS framework, Notion workspaces, or Generator Library as a standalone product to any third party.</li>
+      <li>Repackaging OCOS materials — in whole or in part — as the Practitioner's own original product, course, or digital offering for direct sale without deploying the system in a professional services context.</li>
+      <li>Creating derivative products, training programs, or certification systems based on the OCOS framework without prior written approval from Natural Alternatives.</li>
+    </ul>
+    <h3>Intellectual Property Violations</h3>
+    <ul>
+      <li>Reproducing, copying, or distributing the RCCF prompt architecture, generator structures, or proprietary framework documents outside of approved deployment contexts.</li>
+      <li>Reverse-engineering or attempting to replicate the OCOS system for use in a competing product or service.</li>
+      <li>Removing or obscuring Natural Alternatives' trademark notices except in approved White-Label Deployments as described in Section 5.</li>
+    </ul>
+    <h3>Misrepresentation</h3>
+    <ul>
+      <li>Representing to Client Organizations that OCOS-generated documents constitute legal advice or guarantee regulatory compliance.</li>
+      <li>Representing to Client Organizations that documents generated through the OCOS system have been prepared by a lawyer or licensed professional, unless that is independently true.</li>
+      <li>Claiming any affiliation with or endorsement by Natural Alternatives beyond the Practitioner's status as a licensed OCOS Practitioner.</li>
+    </ul>
+    <h3>Access and Security</h3>
+    <ul>
+      <li>Sharing Notion workspace access credentials or framework documents with individuals outside the named licensee's organization.</li>
+      <li>Granting Client Organizations direct access to the OCOS Notion workspaces, Generator Library, or framework documents — Client Organizations receive the outputs of deployment, not access to the system itself.</li>
+    </ul>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s5">
+    <div class="section-num">Section 05</div>
+    <h2>White-Label Terms</h2>
+    <p>The OCOS Partner License includes access to white-label versions of all three OCOS Notion workspaces. White-Label Deployments are subject to the following conditions:</p>
+    <h3>Permitted White-Label Customization</h3>
+    <ul>
+      <li>The Practitioner may replace Natural Alternatives branding with the Practitioner's own firm name, logo, and contact information in white-label workspace deployments.</li>
+      <li>The Practitioner may customize workspace labels, section titles, and client-facing language to reflect the Practitioner's service offering and client context.</li>
+      <li>The Practitioner may add their own supplementary content to white-label workspaces, provided that OCOS core framework content is not removed or substantially altered.</li>
+    </ul>
+    <h3>White-Label Restrictions</h3>
+    <ul>
+      <li>White-label deployments must retain the structural integrity of the OCOS framework — the three-tier architecture, document control standards, and evidence chain components may not be removed.</li>
+      <li>White-label deployments may not represent the OCOS system as the Practitioner's own independently developed intellectual property.</li>
+      <li>The Practitioner may not grant Client Organizations access to white-label workspaces as self-service tools; white-label workspaces are deployed within a professional services engagement, not handed over as standalone products.</li>
+      <li>If a Client Organization asks about the underlying system, the Practitioner may confirm that it is built on a licensed compliance framework without being required to name the specific product.</li>
+    </ul>
+    <div class="notice-box">
+      <div class="notice-label">White-Label Delivery Guidance</div>
+      <p>White-label templates and onboarding documentation for approved deployments are provided separately upon license activation. Contact Natural Alternatives for white-label workspace setup instructions.</p>
+    </div>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s6">
+    <div class="section-num">Section 06</div>
+    <h2>Intellectual Property</h2>
+    <p>All intellectual property in the Ontario Compliance Operating System™ — including but not limited to the RCCF framework, the Compliance Generator Library, all prompt architecture, all Notion workspace designs, all written framework content, and all associated trademarks — remains the exclusive property of Natural Alternatives.</p>
+    <p>The OCOS Partner License does not transfer any ownership interest in any OCOS intellectual property to the Practitioner. The Practitioner acquires only the right to use and deploy the system as described in these Terms during the License Year.</p>
+    <p>Documents generated for Client Organizations through the OCOS system using the Generator Library are the property of the Client Organization. Natural Alternatives makes no claim to ownership of employer-specific compliance documents produced through Practitioner deployments.</p>
+    <p><span class="doc-code">Ontario Compliance Operating System™</span> and <span class="doc-code">OCOS™</span> are trademarks of Natural Alternatives. The Practitioner may reference these marks only to describe their status as a licensed OCOS Practitioner.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s7">
+    <div class="section-num">Section 07</div>
+    <h2>Client Obligations</h2>
+    <p>The Practitioner is responsible for ensuring that Client Organizations understand the following:</p>
+    <ul>
+      <li>Documents generated through the OCOS system are drafts until reviewed, approved, and implemented by the employer. Generated documents require employer review and customization to reflect actual workplace conditions.</li>
+      <li>The OCOS system and all outputs produced through it are not legal advice and do not guarantee regulatory compliance with Ontario legislation.</li>
+      <li>The employer retains full responsibility for compliance with the Occupational Health and Safety Act R.S.O. 1990, c. O.1 and all applicable regulations.</li>
+      <li>The employer is responsible for ensuring that all generated documents are accurate, current, and appropriate for their specific workplace before implementation.</li>
+    </ul>
+    <p>The Practitioner must not represent to Client Organizations that OCOS deployment satisfies any regulatory, legal, or audit requirement without independent professional assessment. The Practitioner's own professional obligations and standards of care apply in full to all client engagements involving OCOS deployment.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s8">
+    <div class="section-num">Section 08</div>
+    <h2>Annual Renewal and Pricing</h2>
+    <p>The OCOS Partner License is an annual subscription. Access to the OCOS system under this license terminates at the end of the License Year unless the license is renewed.</p>
+    <h3>Renewal Pricing</h3>
+    <p>The OCOS Partner License is offered at an introductory rate during initial license periods. Renewal pricing may increase to reflect the expanded value of the OCOS system, including new generators, updated legislative frameworks, and additional deployment tools added since the prior license year. Renewal pricing will be communicated to the Practitioner no less than thirty (30) days before the renewal date.</p>
+    <h3>Non-Renewal</h3>
+    <p>If the Practitioner elects not to renew, the following applies upon license expiry:</p>
+    <ul>
+      <li>The Practitioner may no longer access OCOS Notion workspaces, the Generator Library, or the OCOS framework documents.</li>
+      <li>Compliance programs previously deployed for Client Organizations during the License Year remain in effect for those clients — the license expiry does not affect documents already delivered to Client Organizations.</li>
+      <li>The Practitioner may not make new deployments, generate new documents, or use white-label templates after the license expiry date.</li>
+    </ul>
+    <h3>No Refunds</h3>
+    <p>Annual license fees are non-refundable. Fees are determined by the Practitioner Tier selected at the time of purchase (Starter: $1,497 CAD/yr; Growth: $2,497 CAD/yr; Pro: $4,997 CAD/yr; Agency: $7,997 CAD/yr). In the event of termination by Natural Alternatives for cause under Section 11, no refund of the license fee is due.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s9">
+    <div class="section-num">Section 09</div>
+    <h2>Disclaimer of Legal Advice</h2>
+    <p>The Ontario Compliance Operating System™ is an educational and organizational framework. It is not legal advice. Neither Natural Alternatives nor the OCOS system is a source of legal, regulatory, or professional advice, and nothing in the OCOS system, its outputs, or these Terms should be construed as such.</p>
+    <p>The Practitioner is solely responsible for the professional advice, if any, that they provide to Client Organizations in connection with OCOS deployments. Natural Alternatives makes no warranty that use of the OCOS system satisfies any obligation under Ontario legislation, any regulatory standard, or any professional code of conduct applicable to the Practitioner.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s10">
+    <div class="section-num">Section 10</div>
+    <h2>Limitation of Liability</h2>
+    <p>To the maximum extent permitted by applicable law, Natural Alternatives shall not be liable to the Practitioner or any Client Organization for any indirect, incidental, consequential, special, or punitive damages arising from the use or inability to use the OCOS system, including but not limited to lost profits, lost data, regulatory penalties, or compliance failures.</p>
+    <p>Natural Alternatives' total cumulative liability to the Practitioner under or in connection with this license shall not exceed the license fee paid by the Practitioner for the current License Year.</p>
+    <p>The Practitioner assumes full professional responsibility for all client engagements in which the OCOS system is deployed and acknowledges that Natural Alternatives is not a party to any agreement between the Practitioner and any Client Organization.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s11">
+    <div class="section-num">Section 11</div>
+    <h2>Termination</h2>
+    <p>Natural Alternatives may terminate the OCOS Partner License immediately, without refund, upon written notice to the Practitioner if:</p>
+    <ul>
+      <li>The Practitioner breaches any material term of these Terms of Use.</li>
+      <li>The Practitioner engages in resale, sublicensing, or redistribution of OCOS materials in violation of Section 4.</li>
+      <li>The Practitioner misrepresents the nature of OCOS outputs or their own credentials in connection with OCOS deployments.</li>
+      <li>The Practitioner's actions in connection with OCOS deployments bring discredit upon Natural Alternatives or the OCOS system.</li>
+      <li>The Practitioner shares access credentials or framework materials with unauthorized parties.</li>
+    </ul>
+    <p>Upon termination, the Practitioner must immediately cease all access to and use of the OCOS system, Generator Library, and white-label templates. Natural Alternatives may pursue any available legal remedies for material breach.</p>
+    <p>The Practitioner may terminate this license at any time by notifying Natural Alternatives in writing. No refund of the license fee is due upon voluntary termination.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s12">
+    <div class="section-num">Section 12</div>
+    <h2>Governing Law</h2>
+    <p>These Terms of Use are governed by and construed in accordance with the laws of the Province of Ontario and the federal laws of Canada applicable therein, without regard to conflict of law principles.</p>
+    <p>Any dispute arising from or relating to these Terms shall be resolved in the courts of the Province of Ontario. The Practitioner irrevocably submits to the exclusive jurisdiction of the courts of Ontario for this purpose.</p>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="s13">
+    <div class="section-num">Section 13</div>
+    <h2>Acceptance</h2>
+    <p>By applying for, purchasing, or activating a OCOS Partner License for the Ontario Compliance Operating System™, the Practitioner acknowledges that they have read, understood, and agree to be bound by these Terms of Use in their entirety.</p>
+    <p>These Terms constitute the entire agreement between Natural Alternatives and the Practitioner with respect to the OCOS Partner License and supersede all prior representations, understandings, or agreements relating to the subject matter herein.</p>
+    <p>Natural Alternatives reserves the right to update these Terms at any time. Updated Terms will be communicated to active OCOS Partner License holders and will take effect upon renewal of the license.</p>
+  </div>
+
+  <div class="sig-block">
+    <div class="sig-title">Practitioner Acknowledgement</div>
+    <p class="sig-sub">For Practitioner records. Complete upon license activation.</p>
+    <div class="sig-grid">
+      <div class="sig-field">
+        <label>Practitioner Name</label>
+        <div class="sig-line"></div>
+        <div class="sig-line-label">Print full legal name</div>
+      </div>
+      <div class="sig-field">
+        <label>Firm / Organization</label>
+        <div class="sig-line"></div>
+        <div class="sig-line-label">If applicable</div>
+      </div>
+      <div class="sig-field">
+        <label>Signature</label>
+        <div class="sig-line"></div>
+        <div class="sig-line-label">Authorized signature</div>
+      </div>
+      <div class="sig-field">
+        <label>Date</label>
+        <div class="sig-line"></div>
+        <div class="sig-line-label">License activation date</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);">OCOS-PRAC-TOU-001 · v1.0</span>
+  <ul class="footer-links">
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="pricing.html">Licensing</a></li>
+    <li><a href="ocos-partner-guidelines.html">Deployment Guidelines</a></li>
+  </ul>
+  <span class="footer-tm">© Natural Alternatives. All rights reserved.</span>
+</footer>
+
+<div style="position:relative;z-index:1;padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28)"><a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>·<a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>·© Natural Alternatives</div></body>
+</html>

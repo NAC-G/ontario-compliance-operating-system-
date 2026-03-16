@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCOS Partner License — Deployment Guidelines · Natural Alternatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2E7D32; --green-deep: #1B5E20;
+    --graphite: #333333; --body: #555555;
+    --line: #DDDDDD; --bg: #F5F5F5;
+    --muted: #888888; --white: #FFFFFF; --black: #111111;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--graphite); line-height: 1.75; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: rgba(17,17,17,0.97); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(46,125,50,0.4); height: 64px; display: flex; align-items: center; padding: 0 3rem; justify-content: space-between; }
+  .nav-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; }
+  .nav-logo-top { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--green); }
+  .nav-logo-main { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--white); }
+  .nav-back { color: rgba(255,255,255,0.3); text-decoration: none; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--green); }
+
+  .doc-header { background: var(--black); padding: 8rem 4rem 5rem; border-bottom: 2px solid var(--green); position: relative; overflow: hidden; }
+  .doc-header::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px), repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(255,255,255,0.015) 80px); }
+  .doc-header::after { content: ''; position: absolute; left: -100px; bottom: -100px; pointer-events: none; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(27,94,32,0.09) 0%, transparent 65%); }
+  .doc-header-inner { max-width: 900px; position: relative; z-index: 1; }
+  .doc-kicker { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .doc-kicker::before { content: ''; display: block; width: 32px; height: 1px; background: var(--green); }
+  .doc-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3.2rem); font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 1.5rem; }
+  .doc-title em { font-style: italic; color: var(--green); }
+  .doc-meta { display: flex; gap: 3rem; flex-wrap: wrap; }
+  .doc-meta-item { display: flex; flex-direction: column; gap: 0.25rem; }
+  .doc-meta-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .doc-meta-value { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.6); }
+
+  .doc-body { max-width: 900px; margin: 0 auto; padding: 5rem 4rem; }
+
+  .purpose-block { background: var(--graphite); border-left: 4px solid var(--green); padding: 2.5rem 3rem; margin-bottom: 4rem; }
+  .purpose-block p { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-style: italic; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 0; }
+  .purpose-block cite { display: block; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-top: 0.75rem; font-style: normal; }
+
+  .toc { background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--green); padding: 2rem 2.5rem; margin-bottom: 4rem; }
+  .toc-title { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; }
+  .toc-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .toc-list a { color: var(--body); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; display: flex; align-items: center; gap: 0.75rem; }
+  .toc-list a::before { content: ''; display: block; width: 16px; height: 1px; background: var(--line); flex-shrink: 0; }
+  .toc-list a:hover { color: var(--green); }
+
+  .doc-section { margin-bottom: 4rem; scroll-margin-top: 80px; }
+  .section-num { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-num::before { content: ''; display: block; width: 24px; height: 1px; background: var(--green); }
+  h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--graphite); margin-bottom: 1.25rem; }
+  h3 { font-weight: 700; font-size: 0.95rem; color: var(--graphite); margin: 1.5rem 0 0.6rem; }
+  p { font-size: 0.9rem; color: var(--body); margin-bottom: 1rem; line-height: 1.8; }
+  .doc-section ul, .doc-section ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  .doc-section li { font-size: 0.88rem; color: var(--body); margin-bottom: 0.5rem; line-height: 1.7; }
+  .doc-divider { width: 100%; height: 1px; background: var(--line); margin: 3rem 0; }
+
+  .notice-box { background: var(--bg); border-left: 4px solid var(--green); padding: 1.5rem 2rem; margin: 1.5rem 0; }
+  .notice-box p { margin-bottom: 0; font-size: 0.85rem; }
+  .notice-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+
+  /* Step cards */
+  .step-list { display: flex; flex-direction: column; gap: 1.5px; background: var(--line); border: 1px solid var(--line); margin: 1.5rem 0; }
+  .step-row { display: flex; align-items: stretch; background: var(--white); }
+  .step-num { background: var(--green-deep); color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; width: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-body { padding: 1.5rem 2rem; flex: 1; }
+  .step-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 0.3rem; }
+  .step-title { font-weight: 700; font-size: 0.92rem; color: var(--graphite); margin-bottom: 0.3rem; }
+  .step-desc { font-size: 0.83rem; color: var(--body); line-height: 1.65; }
+
+  /* Conduct matrix */
+  .conduct-table { width: 100%; border-collapse: collapse; border: 1px solid var(--line); margin: 1.5rem 0; }
+  .conduct-table th { background: var(--graphite); color: var(--white); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.75rem 1.25rem; text-align: left; border-right: 1px solid rgba(255,255,255,0.08); }
+  .conduct-table td { padding: 0.85rem 1.25rem; font-size: 0.83rem; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); vertical-align: top; color: var(--body); }
+  .conduct-table tr:last-child td { border-bottom: none; }
+  .conduct-table .ok { color: var(--green); font-weight: 700; }
+  .conduct-table .no { color: #B71C1C; font-weight: 700; }
+  .conduct-table .cond { color: #E65100; font-weight: 600; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-size: 0.86rem; color: var(--body); line-height: 1.6; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before { content: '☐'; color: var(--green); flex-shrink: 0; font-size: 0.9rem; margin-top: 0.1rem; }
+  .checklist li strong { color: var(--graphite); }
+
+  footer { background: var(--black); padding: 2.5rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--green); }
+  .footer-tm { font-size: 0.72rem; color: rgba(255,255,255,0.18); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .doc-header, .doc-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Natural Alternatives</span>
+    <span class="nav-logo-main">Ontario Compliance Operating System™</span>
+  </a>
+  <a href="pricing.html#practitioner" class="nav-back">← OCOS Partner License</a>
+</nav>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-kicker">Operational Document</div>
+    <h1 class="doc-title">OCOS Partner<br><em>Deployment Guidelines</em></h1>
+    <div class="doc-meta">
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Document Code</span>
+        <span class="doc-meta-value">OCOS-PRAC-DPG-001</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Version</span>
+        <span class="doc-meta-value">1.0</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Issued By</span>
+        <span class="doc-meta-value">Natural Alternatives</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Applies To</span>
+        <span class="doc-meta-value">OCOS Partner License Holders</span>
+      </div>
+      <div class="doc-meta-item">
+        <span class="doc-meta-label">Read With</span>
+        <span class="doc-meta-value">OCOS-PRAC-TOU-001</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="doc-body">
+
+  <div class="purpose-block">
+    <p>These guidelines exist because the OCOS Partner License is a professional deployment tool — not a document resale mechanism. The OCOS system produces better outcomes for employers when it is deployed by practitioners who understand how to use it correctly and communicate its purpose accurately to clients.</p>
+    <cite>OCOS OCOS Partner — Program — Natural Alternatives</cite>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#g1">1. Purpose of These Guidelines</a></li>
+      <li><a href="#g2">2. Before You Deploy — Eligibility and Setup</a></li>
+      <li><a href="#g3">3. Standard Deployment Workflow</a></li>
+      <li><a href="#g4">4. Client Communication Standards</a></li>
+      <li><a href="#g5">5. White-Label Deployment Protocol</a></li>
+      <li><a href="#g6">6. Document Review and Quality Standards</a></li>
+      <li><a href="#g7">7. Permitted and Prohibited Conduct — Quick Reference</a></li>
+      <li><a href="#g8">8. Pre-Deployment Client Checklist</a></li>
+      <li><a href="#g9">9. Questions and Support</a></li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="g1">
+    <div class="section-num">Guideline 01</div>
+    <h2>Purpose of These Guidelines</h2>
+    <p>These guidelines provide operational direction for OCOS Partner License holders deploying the Ontario Compliance Operating System™ across client organizations. They sit alongside — and do not replace — the OCOS Partner License Terms of Use (<span style="font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--green)">OCOS-PRAC-TOU-001</span>).</p>
+    <p>The OCOS Partner License is designed for compliance professionals who add value to the OCOS system through their expertise — sector knowledge, employer-specific customization, implementation management, and ongoing compliance support. These guidelines describe how to deploy the system in a way that serves clients well, protects the integrity of the OCOS framework, and maintains compliance with the license terms.</p>
+    <div class="notice-box">
+      <div class="notice-label">Read the Terms of Use First</div>
+      <p>These guidelines are operational in nature. The OCOS Partner License Terms of Use govern the legal relationship between the OCOS Partner and Natural Alternatives. If there is any conflict between these guidelines and the Terms of Use, the Terms of Use govern.</p>
+    </div>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g2">
+    <div class="section-num">Guideline 02</div>
+    <h2>Before You Deploy — Eligibility and Setup</h2>
+    <h3>OCOS Partner Eligibility</h3>
+    <p>The OCOS Partner License is appropriate for individuals and firms who meet one or more of the following profiles:</p>
+    <ul>
+      <li>HR consultants delivering compliance services to Ontario employer clients</li>
+      <li>Occupational health and safety consultants managing workplace safety programs for multiple employers</li>
+      <li>Safety officers deploying compliance infrastructure across multiple locations or entities within a common employer group</li>
+    </ul>
+    <p>If you are uncertain whether your practice qualifies, contact Natural Alternatives before purchasing. Licenses are issued on application and Natural Alternatives reserves the right to decline applications that do not meet eligibility criteria.</p>
+    <h3>Setup Steps Before First Deployment</h3>
+    <ol>
+      <li>Confirm receipt of your OCOS Partner License confirmation and white-label workspace access from Natural Alternatives.</li>
+      <li>Read the OCOS Partner License Terms of Use (OCOS-PRAC-TOU-001) in full and sign the acknowledgement.</li>
+      <li>Complete orientation on all three OCOS tiers before deploying for clients — you should be fully familiar with the Foundation Guide, Generation Framework, and Operations System before guiding a client through any of them.</li>
+      <li>Set up your white-label Notion workspaces if deploying under your own branding — follow the white-label setup instructions provided with your license materials.</li>
+      <li>Prepare your client intake process — before beginning any OCOS deployment, you should have the information needed to complete the Company Master Prompt accurately for that client.</li>
+    </ol>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g3">
+    <div class="section-num">Guideline 03</div>
+    <h2>Standard Deployment Workflow</h2>
+    <p>The recommended OCOS deployment sequence for client engagements is as follows:</p>
+    <div class="step-list">
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-tag">Client Intake</div>
+          <div class="step-title">Collect Operational Information</div>
+          <p class="step-desc">Before opening any generator, gather the client's sector, employee count, supervisory structure, equipment list, applicable regulations, union status, and any existing compliance documents. This information forms the foundation of the Company Master Prompt and directly determines the quality of every generated document.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-tag">Tier 1 — Orientation</div>
+          <div class="step-title">Complete Client Orientation</div>
+          <p class="step-desc">Walk the employer through the Foundation Guide. Ensure the employer understands their obligations under the OHSA, their role in the IRS, and how the OCOS system is structured before any documents are generated. Obtain employer sign-off on the Tier 1 authorization record. Do not skip this step — it establishes the legal knowledge foundation.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-tag">Tier 2 — Generation</div>
+          <div class="step-title">Build the Company Master Prompt and Generate Documents</div>
+          <p class="step-desc">Build the client's Company Master Prompt using their operational information. Select generators from the Generator Library appropriate to the client's sector and risk profile. Run each generator, review the output against the client's actual workplace, and edit before presenting to the employer. Do not deliver AI output to a client without professional review.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-tag">Tier 2 — Review</div>
+          <div class="step-title">Employer Review and Approval</div>
+          <p class="step-desc">Present reviewed drafts to the employer. Walk through each document and confirm it accurately reflects their workplace. Obtain employer approval and signature before any document is filed or communicated to workers. Remind the employer that they are responsible for the accuracy of these documents — your review does not replace theirs.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-tag">Tier 3 — Operations</div>
+          <div class="step-title">Activate the Operations System</div>
+          <p class="step-desc">File approved documents into the controlled structure. Set up the training register, inspection log, and corrective action register. Configure the compliance calendar. Brief the employer on their ongoing obligations to maintain the system — OCOS deployment is not a one-time event, it is the beginning of an ongoing operating discipline.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-tag">Ongoing</div>
+          <div class="step-title">Maintenance and Update Support</div>
+          <p class="step-desc">Advise clients of legislative updates that affect their compliance program. Use legislative update notifications from Natural Alternatives to trigger document reviews. Encourage clients to maintain their inspection logs, training records, and corrective action registers on an ongoing basis — these are what convert a compliance program from paper to evidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g4">
+    <div class="section-num">Guideline 04</div>
+    <h2>Client Communication Standards</h2>
+    <p>How you communicate the OCOS system to clients matters — both for their outcomes and for the integrity of the program. The following standards apply to all client-facing communications about OCOS deployments.</p>
+    <h3>Required Disclosures</h3>
+    <p>You must communicate the following to every client before or at the start of an OCOS deployment:</p>
+    <ul>
+      <li>The OCOS system produces draft compliance documents. All drafts require employer review, customization, and approval before implementation.</li>
+      <li>The OCOS system is not legal advice. Deployment does not guarantee regulatory compliance or satisfy any legal obligation on its own.</li>
+      <li>The employer retains full responsibility for the accuracy and implementation of all compliance documents and programs.</li>
+      <li>If the employer has specific legal questions about their obligations under Ontario legislation, they should consult a lawyer or licensed professional.</li>
+    </ul>
+    <h3>Prohibited Representations</h3>
+    <ul>
+      <li>Do not represent OCOS-generated documents as having been prepared by a lawyer unless you are a lawyer and have independently reviewed them in that capacity.</li>
+      <li>Do not represent that OCOS deployment certifies, guarantees, or satisfies any specific regulatory requirement.</li>
+      <li>Do not represent that an employer is "compliant" or "inspection-ready" solely on the basis of OCOS document generation — compliance is an operational state that requires implementation, not just documentation.</li>
+      <li>Do not claim that OCOS is your own independently developed framework or intellectual property.</li>
+    </ul>
+    <h3>Appropriate Representations</h3>
+    <ul>
+      <li>You may describe yourself as an OCOS-licensed compliance practitioner.</li>
+      <li>You may describe the OCOS system as a structured, Ontario-aligned compliance framework.</li>
+      <li>You may accurately represent the system's alignment with the OHSA and applicable Ontario regulations.</li>
+      <li>You may represent that OCOS-generated documents, when properly reviewed and implemented, are designed to support a defensible due diligence record.</li>
+    </ul>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g5">
+    <div class="section-num">Guideline 05</div>
+    <h2>White-Label Deployment Protocol</h2>
+    <p>White-label deployment means presenting the OCOS system to clients under your own practice branding rather than Natural Alternatives' branding. The following protocol governs white-label deployments.</p>
+    <h3>Setting Up White-Label Workspaces</h3>
+    <ol>
+      <li>Use only the white-label Notion workspace templates provided by Natural Alternatives as part of your OCOS Partner License materials. Do not attempt to create white-label templates independently from the standard workspaces.</li>
+      <li>Replace Natural Alternatives' name and logo with your own firm name and branding in the designated areas of the white-label templates.</li>
+      <li>Update the contact information in the workspace to reflect your practice.</li>
+      <li>Do not alter the structural framework, document control sections, or OCOS architecture components — these form the integrity of the system.</li>
+    </ol>
+    <h3>What Clients See in White-Label Deployments</h3>
+    <p>In a white-label deployment, clients see your branding, not Natural Alternatives'. This is intentional. Clients do not need to know the name of the underlying licensed framework — they need to know that their compliance program is professionally built on a structured, Ontario-aligned system, delivered by you.</p>
+    <p>If a client directly asks what system you are using, you may respond that it is built on a licensed compliance framework developed for Ontario employers, without being required to name the specific product.</p>
+    <h3>White-Label Boundaries</h3>
+    <ul>
+      <li>You may not remove the structural architecture of the OCOS system from white-label deployments.</li>
+      <li>You may not represent the white-labeled system as your own original intellectual property.</li>
+      <li>You may not share white-label workspace access with other practitioners, firms, or individuals outside your own organization.</li>
+    </ul>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g6">
+    <div class="section-num">Guideline 06</div>
+    <h2>Document Review and Quality Standards</h2>
+    <p>Every document generated through the OCOS Generator Library requires practitioner review before delivery to a client. This is not optional — it is the standard of care for professional OCOS deployment.</p>
+    <h3>Minimum Review Standards</h3>
+    <ul>
+      <li>Confirm that the document accurately reflects the client's specific workplace — sector, equipment, crew structure, and applicable hazards.</li>
+      <li>Confirm that all regulatory references in the document are current and applicable to the client's operations.</li>
+      <li>Confirm that names, roles, and organizational details in the document match the client's actual structure.</li>
+      <li>Remove or replace any placeholder language that was not updated during generation.</li>
+      <li>Confirm that the document is consistent with other documents generated for the same client — there should be no contradictions between a client's policy documents and their safe work procedures.</li>
+    </ul>
+    <h3>Employer Review is Not Optional</h3>
+    <p>OCOS Partner review does not replace employer review. Every document must be reviewed and approved by the employer before it is filed or communicated to workers. Your role is to ensure the document is professionally sound before the employer reviews it — not to substitute for that review.</p>
+    <div class="notice-box">
+      <div class="notice-label">Quality Standard</div>
+      <p>A document that is generated and delivered without review does not serve the client — it creates the appearance of compliance without the substance. The OCOS system is designed to produce genuine compliance infrastructure, and that requires professional judgment at the review stage.</p>
+    </div>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g7">
+    <div class="section-num">Guideline 07</div>
+    <h2>Permitted and Prohibited Conduct — Quick Reference</h2>
+    <table class="conduct-table">
+      <thead>
+        <tr>
+          <th style="width:45%">Conduct</th>
+          <th style="width:18%">Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Deploy OCOS for unlimited client organizations</td><td><span class="ok">✓ Permitted</span></td><td>Within the License Year</td></tr>
+        <tr><td>Charge clients for professional deployment services</td><td><span class="ok">✓ Permitted</span></td><td>Your fees are separate from the license</td></tr>
+        <tr><td>Present OCOS under your own branding (white-label)</td><td><span class="ok">✓ Permitted</span></td><td>Using approved white-label templates only</td></tr>
+        <tr><td>Describe yourself as an OCOS-licensed practitioner</td><td><span class="ok">✓ Permitted</span></td><td>Accurate representation of license status</td></tr>
+        <tr><td>Use OCOS materials in client presentations and briefings</td><td><span class="ok">✓ Permitted</span></td><td>Not for redistribution as standalone products</td></tr>
+        <tr><td>Add supplementary content to white-label workspaces</td><td><span class="cond">⚠ Conditional</span></td><td>OCOS core architecture must remain intact</td></tr>
+        <tr><td>Confirm that the system is a licensed compliance framework</td><td><span class="cond">⚠ Conditional</span></td><td>If client asks; not required to name the product</td></tr>
+        <tr><td>Resell or sublicense OCOS as a standalone product</td><td><span class="no">✗ Prohibited</span></td><td>Material breach — license termination</td></tr>
+        <tr><td>Share Notion workspace access with other practitioners</td><td><span class="no">✗ Prohibited</span></td><td>Non-transferable license</td></tr>
+        <tr><td>Give clients direct access to the Generator Library</td><td><span class="no">✗ Prohibited</span></td><td>Clients receive outputs, not system access</td></tr>
+        <tr><td>Represent OCOS as your own original IP</td><td><span class="no">✗ Prohibited</span></td><td>Misrepresentation of intellectual property</td></tr>
+        <tr><td>Represent that OCOS deployment guarantees compliance</td><td><span class="no">✗ Prohibited</span></td><td>Prohibited misrepresentation</td></tr>
+        <tr><td>Deliver generated documents without professional review</td><td><span class="no">✗ Not Recommended</span></td><td>Standard of care — not meeting this is a quality failure</td></tr>
+        <tr><td>Create derivative products or courses based on OCOS</td><td><span class="no">✗ Prohibited</span></td><td>Requires separate written approval from Natural Alternatives</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g8">
+    <div class="section-num">Guideline 08</div>
+    <h2>Pre-Deployment Client Checklist</h2>
+    <p>Complete this checklist before beginning an OCOS deployment for each new client organization.</p>
+    <ul class="checklist">
+      <li><strong>Client intake completed</strong> — sector, employee count, supervisory structure, equipment, applicable regulations, and existing documentation collected.</li>
+      <li><strong>Client briefed on system scope</strong> — employer understands OCOS produces draft documents requiring their review and approval.</li>
+      <li><strong>Disclaimer communicated</strong> — employer understands this is not legal advice and does not guarantee regulatory compliance.</li>
+      <li><strong>Employer responsibilities confirmed</strong> — employer acknowledges their responsibility for document accuracy and implementation.</li>
+      <li><strong>Tier 1 orientation scheduled or completed</strong> — employer has read or will be walked through the Foundation Guide before generation begins.</li>
+      <li><strong>Company Master Prompt drafted</strong> — client-specific operational information entered and reviewed for accuracy.</li>
+      <li><strong>Generator selection confirmed</strong> — documents to be generated identified and appropriate to the client's sector and risk profile.</li>
+      <li><strong>White-label workspace prepared</strong> (if applicable) — client-facing workspace branded, structured, and ready for deployment.</li>
+      <li><strong>Document review workflow confirmed</strong> — practitioner review and employer approval steps are scheduled before any documents are filed or communicated.</li>
+      <li><strong>Ongoing maintenance plan discussed</strong> — employer understands their ongoing obligations to maintain inspection logs, training records, and corrective action registers.</li>
+    </ul>
+  </div>
+
+  <div class="doc-divider"></div>
+
+  <div class="doc-section" id="g9">
+    <div class="section-num">Guideline 09</div>
+    <h2>Questions and Support</h2>
+    <p>For questions about your OCOS Partner License, deployment scope, white-label setup, or these guidelines, contact Natural Alternatives directly.</p>
+    <p>For questions about updates to the OCOS system, new generator releases, or legislative changes affecting client compliance programs, Natural Alternatives will communicate these proactively to active OCOS Partner License holders. Ensure your contact information on file with Natural Alternatives is current.</p>
+    <p>These guidelines will be updated as the OCOS system evolves. Updated guidelines will be communicated to OCOS Partner License holders and are effective upon renewal.</p>
+    <div class="notice-box">
+      <div class="notice-label">Contact</div>
+      <p>Contact Natural Alternatives at <a href="/cdn-cgi/l/email-protection#741c1118181b341a15000106151815180011061a15001d0211075a1715" style="color:var(--green);text-decoration:none;"><span class="__cf_email__" data-cfemail="89e1ece5e5e6c9e7e8fdfcfbe8e5e8e5fdecfbe7e8fde0ffecfaa7eae8">[email&#160;protected]</span></a> for all OCOS Partner License enquiries.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);">OCOS-PRAC-DPG-001 · v1.0</span>
+  <ul class="footer-links">
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="pricing.html">Licensing</a></li>
+    <li><a href="practiti
+<div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
+  <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
+  &nbsp;·&nbsp;
+  <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
+  &nbsp;·&nbsp; © Natural Alternatives
+</div>

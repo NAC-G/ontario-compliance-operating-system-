@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAC OS Fleet Logbook — QR Code Sheet</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2E7D32; --green-deep: #1B5E20;
+    --graphite: #333333; --body: #555555;
+    --line: #DDDDDD; --bg: #F5F5F5;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--graphite); }
+
+  /* ── CONFIGURE PANEL (screen only) ── */
+  .config-panel {
+    background: #111; border-bottom: 2px solid var(--green);
+    padding: 1.5rem 2rem; display: flex; gap: 2rem; align-items: flex-end;
+    flex-wrap: wrap;
+  }
+  .config-panel h1 {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    font-weight: 900; color: #fff; margin-bottom: 0.25rem;
+  }
+  .config-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.25rem;
+  }
+  .config-group { display: flex; flex-direction: column; gap: 0.3rem; }
+  .config-label {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+  }
+  .config-input {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; font-family: 'DM Mono', monospace; font-size: 12px;
+    padding: 0.5rem 0.75rem; outline: none; min-width: 280px;
+  }
+  .config-input:focus { border-color: var(--green); }
+  .config-btn {
+    background: var(--green); color: #fff; border: none;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.6rem 1.5rem; cursor: pointer; white-space: nowrap;
+    align-self: flex-end;
+  }
+  .config-btn:hover { background: var(--green-deep); }
+  .config-note {
+    font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.6;
+    align-self: flex-end; max-width: 300px;
+  }
+
+  /* Machine row adder */
+  .machine-adder { background: #1a1a1a; padding: 1rem 2rem; border-bottom: 1px solid #333; display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
+  .adder-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: 'DM Mono', monospace; font-size: 11px; padding: 0.4rem 0.75rem; outline: none; }
+  .adder-input:focus { border-color: var(--green); }
+  .adder-input::placeholder { color: rgba(255,255,255,0.2); }
+  .adder-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
+  .adder-group { display: flex; flex-direction: column; }
+  .adder-btn { background: #333; color: #fff; border: 1px solid #444; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; align-self: flex-end; }
+  .adder-btn:hover { background: #444; }
+  .adder-btn.remove { background: rgba(198,40,40,0.15); border-color: rgba(198,40,40,0.3); color: #ef5350; }
+  .machine-list { padding: 0.5rem 2rem; background: #1a1a1a; border-bottom: 1px solid #333; }
+  .machine-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(46,125,50,0.1); border: 1px solid rgba(46,125,50,0.25);
+    font-family: 'DM Mono', monospace; font-size: 10px; color: var(--green);
+    padding: 0.2rem 0.6rem; margin: 0.25rem 0.25rem 0.25rem 0;
+  }
+  .machine-tag-remove { cursor: pointer; color: rgba(255,255,255,0.3); font-size: 12px; line-height: 1; }
+  .machine-tag-remove:hover { color: #ef5350; }
+
+  /* ── PRINT SHEET ── */
+  .print-area {
+    background: #fff; max-width: 860px; margin: 2rem auto;
+    padding: 2.5rem; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  }
+
+  .sheet-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding-bottom: 1.5rem; border-bottom: 2px solid var(--green); margin-bottom: 2rem;
+  }
+  .sheet-header-left {}
+  .sheet-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.35rem;
+  }
+  .sheet-company {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    font-weight: 900; color: var(--graphite); line-height: 1.1; margin-bottom: 0.25rem;
+  }
+  .sheet-sub {
+    font-size: 11px; color: var(--body); line-height: 1.6;
+    font-family: 'DM Mono', monospace; letter-spacing: 0.04em;
+  }
+  .sheet-header-right { text-align: right; }
+  .sheet-brand {
+    font-family: 'Playfair Display', serif; font-size: 13px;
+    font-weight: 700; color: var(--graphite);
+  }
+  .sheet-brand-sub {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--green);
+    margin-top: 2px;
+  }
+
+  /* QR grid */
+  .qr-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem; margin-bottom: 2rem;
+  }
+  .qr-card {
+    border: 1px solid var(--line); padding: 1.25rem;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 0.85rem; page-break-inside: avoid;
+  }
+  .qr-card-top { text-align: center; width: 100%; }
+  .qr-card-id {
+    font-family: 'DM Mono', monospace; font-size: 14px;
+    font-weight: 500; color: var(--green); letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+  .qr-card-model { font-size: 10px; color: var(--body); }
+  .qr-code-box {
+    background: #fff; padding: 10px; border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .qr-card-instructions {
+    font-size: 9px; color: var(--body); line-height: 1.6;
+    text-align: center; max-width: 180px; font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .qr-card-step {
+    display: flex; align-items: flex-start; gap: 0.4rem;
+    font-size: 9px; color: var(--body); line-height: 1.5;
+    font-family: 'DM Mono', monospace; width: 100%; text-align: left;
+  }
+  .qr-card-step-num {
+    background: var(--green); color: #fff; width: 14px; height: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7px; flex-shrink: 0; font-weight: 700;
+  }
+
+  /* Instructions box */
+  .instructions-box {
+    border: 1px solid var(--line); padding: 1.25rem 1.5rem;
+    background: #fafafa; margin-bottom: 1.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+  .inst-section-title {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+  .inst-item {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    font-size: 10px; color: var(--body); line-height: 1.55; margin-bottom: 0.4rem;
+  }
+  .inst-dot { color: var(--green); flex-shrink: 0; font-weight: 700; }
+
+  /* Admin URL box */
+  .admin-url-box {
+    border: 1px solid var(--line); padding: 1rem 1.25rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: #f9f9f9;
+  }
+  .admin-url-label {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.25rem;
+  }
+  .admin-url-val {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    color: var(--graphite); word-break: break-all;
+  }
+  .admin-warning {
+    font-size: 9px; color: var(--body); font-style: italic;
+    text-align: right; max-width: 180px;
+  }
+
+  .sheet-footer {
+    margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sheet-footer-text {
+    font-family: 'DM Mono', monospace; font-size: 8px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #bbb;
+  }
+
+  /* Screen toolbar */
+  .screen-toolbar {
+    background: #111; padding: 0.75rem 2rem;
+    display: flex; gap: 1rem; align-items: center;
+  }
+  .toolbar-btn {
+    font-family: 'DM Mono', monospace; font-size: 9px;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    padding: 0.5rem 1.25rem; cursor: pointer; border: none;
+  }
+  .toolbar-btn-primary { background: var(--green); color: #fff; }
+  .toolbar-btn-secondary { background: #333; color: #fff; }
+  .toolbar-btn:hover { opacity: 0.85; }
+  .toolbar-note { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+  /* Print mode */
+  @media print {
+    .config-panel, .machine-adder, .machine-list,
+    .screen-toolbar, .no-print { display: none !important; }
+    body { background: #fff; }
+    .print-area {
+      box-shadow: none; margin: 0;
+      padding: 1.5cm; max-width: 100%;
+    }
+    .qr-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center; padding: 3rem;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    color: var(--body); letter-spacing: 0.08em;
+  }
+</style>
+</head>
+<body>
+
+<!-- CONFIGURATION PANEL -->
+<div class="config-panel">
+  <div>
+    <div class="config-eyebrow">NAC OS Fleet Logbook™ · QR Sheet Generator</div>
+    <h1>Generate client QR codes.</h1>
+  </div>
+  <div class="config-group">
+    <div class="config-label">Client Company Name</div>
+    <input type="text" class="config-input" id="cfg-company" placeholder="e.g. Smith Excavation Ltd." oninput="renderSheet()">
+  </div>
+  <div class="config-group">
+    <div class="config-label">Client Slug (from Notion / GitHub folder name)</div>
+    <input type="text" class="config-input" id="cfg-slug" placeholder="e.g. smith-excavation-ltd" oninput="onSlugChange()">
+  </div>
+  <p class="config-note">Slug auto-generates from company name. Verify it matches the GitHub Pages folder before printing.</p>
+</div>
+
+<!-- MACHINE ADDER -->
+<div class="machine-adder">
+  <div class="adder-group">
+    <div class="adder-label">Machine ID</div>
+    <input type="text" class="adder-input" id="add-id" placeholder="BH-580SN-01" style="width:160px">
+  </div>
+  <div class="adder-group">
+    <div class="adder-label">Make / Model</div>
+    <input type="text" class="adder-input" id="add-model" placeholder="CASE 580SN" style="width:180px">
+  </div>
+  <div class="adder-group">
+    <div class="adder-label">Type</div>
+    <select class="adder-input" id="add-type" style="width:160px">
+      <option>Backhoe Loader</option><option>Excavator</option>
+      <option>Skid Steer</option><option>Bulldozer</option>
+      <option>Loader</option><option>Trailer</option><option>Other</option>
+    </select>
+  </div>
+  <button class="adder-btn" onclick="addMachine()">＋ Add Machine</button>
+</div>
+<div class="machine-list" id="machine-list">
+  <span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.2)">No machines added yet — add at least one above.</span>
+</div>
+
+<!-- TOOLBAR -->
+<div class="screen-toolbar">
+  <button class="toolbar-btn toolbar-btn-primary" onclick="window.print()">⎙ Print QR Sheet</button>
+  <button class="toolbar-btn toolbar-btn-secondary" onclick="copyAdminUrl()">Copy Admin URL</button>
+  <span class="toolbar-note">Print → laminate → mount one card per machine in the cab. The admin URL at the bottom is for the owner only — do not print and post.</span>
+</div>
+
+<!-- PRINT AREA -->
+<div class="print-area" id="print-area">
+
+  <div class="sheet-header">
+    <div class="sheet-header-left">
+      <div class="sheet-eyebrow">NAC OS Fleet Logbook™ · Machine QR Codes</div>
+      <div class="sheet-company" id="sheet-company-name">Your Company Name</div>
+      <div class="sheet-sub" id="sheet-sub">Scan QR code in cab to open daily log entry</div>
+    </div>
+    <div class="sheet-header-right">
+      <div class="sheet-brand">Natural Alternatives</div>
+      <div class="sheet-brand-sub">naturalalternatives.ca</div>
+    </div>
+  </div>
+
+  <!-- QR CARDS -->
+  <div class="qr-grid" id="qr-grid">
+    <div class="empty-state">Add machines above to generate QR codes.</div>
+  </div>
+
+  <!-- INSTRUCTIONS BOX -->
+  <div class="instructions-box">
+    <div>
+      <div class="inst-section-title">Operator — How to log your shift</div>
+      <div class="inst-item"><span class="inst-dot">1</span>Scan the QR code posted in the cab of your machine.</div>
+      <div class="inst-item"><span class="inst-dot">2</span>The log entry form opens on your phone. Machine is pre-selected.</div>
+      <div class="inst-item"><span class="inst-dot">3</span>Enter your name, start / end hour meter readings, and fuel added.</div>
+      <div class="inst-item"><span class="inst-dot">4</span>Complete the pre-use checklist — tap OK, Monitor, or Fix for each item.</div>
+      <div class="inst-item"><span class="inst-dot">5</span>Add any notes on issues or corrective actions. Tap Submit.</div>
+    </div>
+    <div>
+      <div class="inst-section-title">If the QR code doesn't scan</div>
+      <div class="inst-item"><span class="inst-dot">→</span>Clean the QR code surface — dirt or glare can block scanning.</div>
+      <div class="inst-item"><span class="inst-dot">→</span>Move to better lighting or try shade if in direct sun.</div>
+      <div class="inst-item"><span class="inst-dot">→</span>Open your camera app and hold steady 20–30 cm from the code.</div>
+      <div class="inst-item"><span class="inst-dot">→</span>Contact your fleet manager if the problem continues.</div>
+    </div>
+  </div>
+
+  <!-- ADMIN URL (owner copy only — appears at bottom of sheet) -->
+  <div class="admin-url-box" id="admin-url-box">
+    <div>
+      <div class="admin-url-label">Fleet Manager Admin URL — Do Not Post</div>
+      <div class="admin-url-val" id="admin-url-display">—</div>
+    </div>
+    <div class="admin-warning">This URL gives full access to the fleet dashboard, reports, and PM schedules. Share with fleet manager only.</div>
+  </div>
+
+  <div class="sheet-footer">
+    <div class="sheet-footer-text">NAC OS Fleet Logbook™ · Natural Alternatives · naturalalternatives.ca · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="066f686069466867727374676a676a7263746867726f706375286567">[email&#160;protected]</a></div>
+    <div class="sheet-footer-text" id="sheet-date"></div>
+  </div>
+
+</div><!-- /print-area -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── STATE ──
+let machines = [];
+let company  = '';
+let slug     = '';
+
+const BASE_DEPLOY = 'https://naturalalternatives.github.io/fleet/';
+
+function slugify(str) {
+  return str.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+function getAppUrl() {
+  if (!slug) return '';
+  return BASE_DEPLOY + slug + '/nac-os-app.html';
+}
+
+function getMachineUrl(machineId) {
+  return getAppUrl() + '?machine=' + encodeURIComponent(machineId);
+}
+
+function getAdminUrl() {
+  return getAppUrl() + '?admin=true';
+}
+
+// ── CONFIG INPUTS ──
+document.getElementById('cfg-company').addEventListener('input', function() {
+  company = this.value.trim();
+  const autoSlug = slugify(company);
+  if (!document.getElementById('cfg-slug').dataset.manual) {
+    document.getElementById('cfg-slug').value = autoSlug;
+    slug = autoSlug;
+  }
+  renderSheet();
+});
+
+function onSlugChange() {
+  const val = document.getElementById('cfg-slug').value.trim();
+  document.getElementById('cfg-slug').dataset.manual = val ? 'true' : '';
+  slug = val;
+  renderSheet();
+}
+
+// ── MACHINE MANAGEMENT ──
+function addMachine() {
+  const id    = document.getElementById('add-id').value.trim();
+  const model = document.getElementById('add-model').value.trim();
+  const type  = document.getElementById('add-type').value;
+  if (!id || !model) { alert('Machine ID and Model are required.'); return; }
+  if (machines.find(m => m.id === id)) { alert('Machine ID already added.'); return; }
+  machines.push({ id, model, type });
+  document.getElementById('add-id').value    = '';
+  document.getElementById('add-model').value = '';
+  renderMachineTags();
+  renderSheet();
+}
+
+function removeMachine(id) {
+  machines = machines.filter(m => m.id !== id);
+  renderMachineTags();
+  renderSheet();
+}
+
+function renderMachineTags() {
+  const el = document.getElementById('machine-list');
+  if (machines.length === 0) {
+    el.innerHTML = '<span style="font-family:\'DM Mono\',monospace;font-size:9px;color:rgba(255,255,255,0.2)">No machines added yet — add at least one above.</span>';
+    return;
+  }
+  el.innerHTML = machines.map(m => `
+    <span class="machine-tag">
+      ${m.id} · ${m.model}
+      <span class="machine-tag-remove" onclick="removeMachine('${m.id}')">✕</span>
+    </span>
+  `).join('');
+}
+
+// ── QR RENDER ──
+function renderSheet() {
+  // Header
+  document.getElementById('sheet-company-name').textContent = company || 'Your Company Name';
+  document.getElementById('sheet-sub').textContent = slug
+    ? 'naturalalternatives.github.io/fleet/' + slug + '/'
+    : 'Scan QR code in cab to open daily log entry';
+  document.getElementById('sheet-date').textContent =
+    'Generated ' + new Date().toLocaleDateString('en-CA', { year:'numeric', month:'long', day:'numeric' });
+
+  // Admin URL
+  const adminUrl = getAdminUrl();
+  document.getElementById('admin-url-display').textContent = adminUrl || '— Enter slug above to generate —';
+
+  // QR grid
+  const grid = document.getElementById('qr-grid');
+  grid.innerHTML = '';
+
+  if (machines.length === 0) {
+    grid.innerHTML = '<div class="empty-state">Add machines above to generate QR codes.</div>';
+    return;
+  }
+
+  if (!slug) {
+    grid.innerHTML = '<div class="empty-state">Enter company name or slug above to generate QR codes.</div>';
+    return;
+  }
+
+  machines.forEach(machine => {
+    const machineUrl = getMachineUrl(machine.id);
+    const cardId = 'qr-' + machine.id.replace(/[^a-zA-Z0-9]/g, '_');
+
+    const card = document.createElement('div');
+    card.className = 'qr-card';
+    card.innerHTML = `
+      <div class="qr-card-top">
+        <div class="qr-card-id">${machine.id}</div>
+        <div class="qr-card-model">${machine.model} · ${machine.type}</div>
+      </div>
+      <div class="qr-code-box" id="${cardId}"></div>
+      <div style="width:100%;display:flex;flex-direction:column;gap:0.35rem">
+        <div class="qr-card-step">
+          <div class="qr-card-step-num">1</div>
+          <div>Scan with phone camera</div>
+        </div>
+        <div class="qr-card-step">
+          <div class="qr-card-step-num">2</div>
+          <div>Tap the link that appears</div>
+        </div>
+        <div class="qr-card-step">
+          <div class="qr-card-step-num">3</div>
+          <div>Complete the daily log form</div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+
+    // Generate QR code
+    try {
+      new QRCode(document.getElementById(cardId), {
+        text: machineUrl,
+        width: 160,
+        height: 160,
+        colorDark: '#000000',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e) {
+      document.getElementById(cardId).textContent = 'QR generation failed — reload page.';
+    }
+  });
+}
+
+function copyAdminUrl() {
+  const url = getAdminUrl();
+  if (!url) { alert('Enter com
