@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>NAC OS Fleet Logbook™</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -731,7 +731,7 @@ body {
 .image-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .image-thumb-remove {
   position: absolute; top: 3px; right: 3px;
-  background: rgba(0,0,0,0.7); color: #fff; border: none;
+  background: rgba(0,0,0,0.7); color: #ffffff; border: none;
   width: 18px; height: 18px; font-size: 10px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; line-height: 1;
 }
@@ -772,7 +772,7 @@ body {
 .lightbox img { max-width: 90vw; max-height: 80vh; object-fit: contain; }
 .lightbox-close {
   position: absolute; top: 1rem; right: 1rem;
-  background: rgba(255,255,255,0.1); color: #fff; border: none;
+  background: rgba(255,255,255,0.1); color: #ffffff; border: none;
   font-size: 1.2rem; width: 36px; height: 36px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1003,7 +1003,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: #fff;
+  background: #ffffff;
   margin: 1rem;
 }
 .qr-canvas-wrap canvas,
@@ -1039,10 +1039,10 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   .view { display: block !important; }
   .view:not(#view-qr-manager) { display: none !important; }
   #qr-cards-container { grid-template-columns: repeat(2, 1fr); }
-  .qr-card { break-inside: avoid; border: 1px solid #ccc; border-top: 3px solid #2E7D32; }
-  .qr-card-id, .qr-card-model { color: #111; }
-  .qr-card-header { border-bottom: 1px solid #ddd; }
-  .qr-url { color: #555; }
+  .qr-card { break-inside: avoid; border: 1px solid #cccccc; border-top: 3px solid #2E7D32; }
+  .qr-card-id, .qr-card-model { color: #111111; }
+  .qr-card-header { border-bottom: 1px solid #dddddd; }
+  .qr-url { color: #555555; }
 }
 
 
@@ -1113,7 +1113,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   font-family: 'DM Sans', sans-serif;
   text-align: center;
   background: white;
-  color: #111;
+  color: #111111;
 }
 .print-label-top {
   font-family: 'DM Mono', monospace;
@@ -1127,18 +1127,18 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   font-family: 'Playfair Display', serif;
   font-size: 18px;
   font-weight: 900;
-  color: #111;
+  color: #111111;
   margin-bottom: 4px;
 }
 .print-label-model {
   font-size: 11px;
-  color: #555;
+  color: #555555;
   margin-bottom: 0.15in;
 }
 .print-label-qr { margin: 0 auto 0.1in; display: flex; justify-content: center; }
 .print-label-instruction {
   font-size: 10px;
-  color: #555;
+  color: #555555;
   line-height: 1.5;
   margin-top: 0.1in;
 }
@@ -1150,7 +1150,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   color: #2E7D32;
   margin-top: 0.15in;
   padding-top: 0.1in;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #dddddd;
 }
 
 
@@ -1181,7 +1181,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
 .image-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .image-thumb-remove {
   position: absolute; top: 3px; right: 3px;
-  background: rgba(0,0,0,0.7); color: #fff; border: none;
+  background: rgba(0,0,0,0.7); color: #ffffff; border: none;
   width: 18px; height: 18px; font-size: 10px; cursor: pointer;
   display: flex; align-items: center; justify-content: center; line-height: 1;
 }
@@ -1222,7 +1222,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
 .lightbox img { max-width: 90vw; max-height: 80vh; object-fit: contain; }
 .lightbox-close {
   position: absolute; top: 1rem; right: 1rem;
-  background: rgba(255,255,255,0.1); color: #fff; border: none;
+  background: rgba(255,255,255,0.1); color: #ffffff; border: none;
   font-size: 1.2rem; width: 36px; height: 36px; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
 }
@@ -1454,7 +1454,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   margin-top: 2px;
 }
 .qr-code-wrap {
-  background: #fff;
+  background: #ffffff;
   padding: 12px;
   display: flex;
   align-items: center;
@@ -1488,9 +1488,9 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
 @media print {
   .sidebar, .topbar, .panel:not(.print-panel) { display: none !important; }
   .qr-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-  .qr-card { background: white; border: 1px solid #ccc; color: #000; page-break-inside: avoid; }
-  .qr-card-id, .qr-card-model { color: #000; }
-  .qr-card-url { color: #666; }
+  .qr-card { background: white; border: 1px solid #cccccc; color: #000000; page-break-inside: avoid; }
+  .qr-card-id, .qr-card-model { color: #000000; }
+  .qr-card-url { color: #666666; }
   .qr-card-footer { display: none; }
   .main { overflow: visible !important; }
   .content { overflow: visible !important; }
@@ -1672,7 +1672,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
     .gauge-btn:hover { background: var(--border); }
     .gauge-btn-active {
       background: #1B5E20 !important;
-      color: #fff !important;
+      color: #ffffff !important;
       border-color: #1B5E20 !important;
     }
     .gauge-btn-active .gauge-l { color: rgba(255,255,255,0.8) !important; }
@@ -1689,17 +1689,94 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
     }
     .toggle-knob:before {
       position:absolute; content:""; height:16px; width:16px; left:3px; bottom:3px;
-      background:#fff; border-radius:50%; transition:.25s;
+      background:#ffffff; border-radius:50%; transition:.25s;
     }
     .toggle-switch input:checked + .toggle-knob { background:#2E7D32; }
     .toggle-switch input:checked + .toggle-knob:before { transform:translateX(18px); }
 
-    </style>
+    
+/* ══════ SMART LOADER ══════ */
+#nac-loader-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#nac-loader-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+#nac-loader-leaf {
+  width: 80px;
+  height: 80px;
+  animation: leafPulse 1.8s ease-in-out infinite, leafSpin 3s linear infinite;
+}
+@keyframes leafPulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(74,222,128,0.3)); transform: scale(1) rotate(0deg); }
+  50% { filter: drop-shadow(0 0 24px rgba(74,222,128,0.7)); transform: scale(1.08) rotate(0deg); }
+}
+@keyframes leafSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#nac-loader-text {
+  margin-top: 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#nac-loader-bar-wrap {
+  margin-top: 20px;
+  width: 200px;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+#nac-loader-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #2E7D32, #4ade80);
+  border-radius: 3px;
+  animation: loaderBar 2s ease-in-out forwards;
+}
+@keyframes loaderBar {
+  0% { width: 0%; }
+  60% { width: 70%; }
+  100% { width: 100%; }
+}
+
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
+
+<!-- ══════ SMART LOADER OVERLAY ══════ -->
+<div id="nac-loader-overlay">
+  <svg id="nac-loader-leaf" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#4ade80"/>
+        <stop offset="50%" style="stop-color:#2E7D32"/>
+        <stop offset="100%" style="stop-color:#1B5E20"/>
+      </linearGradient>
+    </defs>
+    <path d="M50 5 C25 5 5 30 5 55 C5 75 20 95 50 95 C55 95 60 90 58 82 C56 74 48 68 40 65 C32 62 25 58 25 50 C25 38 35 28 50 25 C65 22 75 30 80 42 C85 54 82 68 72 78 C68 82 65 88 68 92 C72 96 78 95 82 90 C92 78 95 62 95 50 C95 25 75 5 50 5Z" fill="url(#leafGrad)" opacity="0.95"/>
+    <path d="M50 20 C50 20 48 45 35 60 M50 20 C50 20 55 50 70 62" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div id="nac-loader-text">Loading NAC OS…</div>
+  <div id="nac-loader-bar-wrap"><div id="nac-loader-bar"></div></div>
+</div>
 
 <div class="app">
 
@@ -3228,7 +3305,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
   <div class="print-label" id="print-label-content"></div>
   <div style="position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:1rem;z-index:10000">
     <button onclick="window.print()" style="background:#2E7D32;color:white;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Print Label</button>
-    <button onclick="document.getElementById('print-label-frame').style.display='none'" style="background:#333;color:white;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Close</button>
+    <button onclick="document.getElementById('print-label-frame').style.display='none'" style="background:#333333;color:white;border:none;padding:0.75rem 1.5rem;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer">Close</button>
   </div>
 </div>
 
@@ -3664,7 +3741,7 @@ function renderLicensePanel() {
   // --- Key display (masked) ---
   const keyDisplay = storedKey
     ? `<div style="margin-top:0.75rem">
-        <div style="font-size:11px;color:var(--text-dim);margin-bottom:5px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase">Active Key</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-bottom:5px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase">Active Key</div>
         <div class="license-key-display">${storedKey}</div>
        </div>`
     : '';
@@ -3688,11 +3765,11 @@ function renderLicensePanel() {
     </div>
     ${keyDisplay}
     <div style="margin-top:1rem">
-      <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase">Enter / Update License Key</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase">Enter / Update License Key</div>
       <div class="license-key-input-row">
         <input type="text" class="form-input license-key-input-row" id="license-key-input"
           placeholder="FLEET-1775001600-C2B9"
-          style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;min-width:280px;flex:1">
+          style="font-family:\'DM Mono\',monospace;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;min-width:280px;flex:1">
         <button class="btn btn-primary" onclick="applyLicenseKeyFromInput()">Activate →</button>
       </div>
       <div style="font-size:11px;color:var(--text-dim);margin-top:5px">License key is emailed at purchase from info@naturalalternatives.ca. ADDON keys can be entered alongside a SOLO key to extend machine count.</div>
@@ -4019,7 +4096,7 @@ function renderDashboard() {
       </div>
       <div class="alert-right">
         <span class="badge badge-${s.color}">${s.status}</span>
-        ${s.remaining !== null ? `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim)">${s.remaining > 0 ? '+' : ''}${Math.round(s.remaining)} hrs</div>` : ''}
+        ${s.remaining !== null ? `<div style="font-family:\'DM Mono\',monospace;font-size:10px;color:var(--text-dim)">${s.remaining > 0 ? '+' : ''}${Math.round(s.remaining)} hrs</div>` : ''}
       </div>
     </div>
   `).join('');
@@ -4038,7 +4115,7 @@ function renderDashboard() {
         </div>
         <div class="alert-right">
           <span class="badge badge-neutral">${l.condition || 'N/A'}</span>
-          ${l.endHours ? `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim)">${fmtHours(l.endHours)} hrs</div>` : ''}
+          ${l.endHours ? `<div style="font-family:\'DM Mono\',monospace;font-size:10px;color:var(--text-dim)">${fmtHours(l.endHours)} hrs</div>` : ''}
         </div>
       </div>
     `).join('');
@@ -4718,7 +4795,7 @@ function renderQRManager() {
         });
       } else if (canvasWrap) {
         // Fallback if QRCode lib not loaded
-        canvasWrap.innerHTML = '<div style="width:180px;height:180px;display:flex;align-items:center;justify-content:center;background:#f5f5f5;color:#333;font-size:10px;text-align:center;padding:1rem;font-family:monospace">QR library loading...<br>Refresh to generate</div>';
+        canvasWrap.innerHTML = '<div style="width:180px;height:180px;display:flex;align-items:center;justify-content:center;background:#f5f5f5;color:#333333;font-size:10px;text-align:center;padding:1rem;font-family:monospace">QR library loading...<br>Refresh to generate</div>';
       }
     }, 50);
   });
@@ -4823,11 +4900,11 @@ function renderQRManager() {
       </div>
       <div class="qr-url">${url}</div>
       <div style="display:flex;flex-direction:column;gap:3px;width:100%;margin-top:0.25rem">
-        <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px">
+        <div style="display:flex;justify-content:space-between;font-family:\'DM Mono\',monospace;font-size:9px">
           <span style="color:var(--text-dim)">Current Hours</span>
           <span style="color:var(--green)">${hrs ? fmtHours(hrs) + ' hrs' : 'Not set'}</span>
         </div>
-        <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px">
+        <div style="display:flex;justify-content:space-between;font-family:\'DM Mono\',monospace;font-size:9px">
           <span style="color:var(--text-dim)">Status</span>
           <span style="color:var(--text-muted)">${machine.status}</span>
         </div>
@@ -5122,7 +5199,7 @@ function opRemovePhoto(i) {
 function renderDriveBanner(containerId) {
   const el = document.getElementById(containerId);
   if (!el) return;
-  el.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);padding:0.5rem 0 0.75rem">Photos save on this device · Admin exports via Reports</div>`;
+  el.innerHTML = `<div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);padding:0.5rem 0 0.75rem">Photos save on this device · Admin exports via Reports</div>`;
 }
 
 // ── DOCUMENTS VIEW ──
@@ -5142,16 +5219,16 @@ function renderDocsConfig() {
   el.innerHTML = `
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)">
       <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Documents</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${docs.length}</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Documents</div>
+        <div style="font-family:\'Playfair Display\',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${docs.length}</div>
       </div>
       <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Log Photos</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${photoCount}</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Log Photos</div>
+        <div style="font-family:\'Playfair Display\',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${photoCount}</div>
       </div>
       <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Storage</div>
-        <div style="font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--green)">${storageUsed()}</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Storage</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:1rem;font-weight:500;color:var(--green)">${storageUsed()}</div>
       </div>
     </div>
     <div style="font-size:11px;color:var(--text-dim);margin-top:0.75rem;line-height:1.65">
@@ -5179,7 +5256,7 @@ function renderDocList() {
   const docs = load('nac-docs', []);
 
   if (docs.length === 0) {
-    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:2rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No documents added yet — click Add Document above.</div>`;
+    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:2rem;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No documents added yet — click Add Document above.</div>`;
     return;
   }
 
@@ -5188,7 +5265,7 @@ function renderDocList() {
     const catDocs = docs.filter(d => d.category === cat);
     return `
       <div style="margin-bottom:1.25rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);padding:0 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem">${cat}</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);padding:0 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem">${cat}</div>
         <div class="doc-list">
           ${catDocs.map((d, i) => `
             <div class="doc-row">
@@ -5305,7 +5382,7 @@ function renderFlaggedEntries() {
   ).sort((a,b) => b.date.localeCompare(a.date)).slice(0, 20);
 
   if (flagged.length === 0) {
-    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:1.5rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No flagged entries — all clear.</div>`;
+    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:1.5rem;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No flagged entries — all clear.</div>`;
     return;
   }
 
@@ -5317,13 +5394,13 @@ function renderFlaggedEntries() {
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.5rem">
           <div style="display:flex;align-items:center;gap:0.6rem">
             <div class="flag-dot flag-dot-${severity}"></div>
-            <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--white)">${l.date} · ${l.operator}</span>
+            <span style="font-family:\'DM Mono\',monospace;font-size:10px;font-weight:500;color:var(--white)">${l.date} · ${l.operator}</span>
           </div>
-          <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim)">${l.machineId}</span>
+          <span style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-dim)">${l.machineId}</span>
         </div>
-        ${l.condition !== 'Good' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Condition: </span><span style="color:${severity === 'danger' ? '#ef5350' : 'var(--warn)'};font-weight:600">${l.condition}</span></div>` : ''}
+        ${l.condition !== 'Good' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:\'DM Mono\',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Condition: </span><span style="color:${severity === 'danger' ? '#ef5350' : 'var(--warn)'};font-weight:600">${l.condition}</span></div>` : ''}
         ${issueChecks.length > 0 ? `<div style="font-size:11px;margin-bottom:0.3rem;color:var(--text-muted)">Checks: ${issueChecks.map(([k,v]) => k + ' (' + v + ')').join(', ')}</div>` : ''}
-        ${l.issueCat && l.issueCat !== 'None' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Category: </span>${l.issueCat}</div>` : ''}
+        ${l.issueCat && l.issueCat !== 'None' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:\'DM Mono\',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Category: </span>${l.issueCat}</div>` : ''}
         ${l.notes ? `<div style="font-size:11px;color:var(--text-muted);font-style:italic;margin-top:0.3rem">"${l.notes}"</div>` : ''}
         ${l.photos?.length ? `<div class="image-preview-grid" style="margin-top:0.5rem">${l.photos.map(p => `<div class="image-thumb" onclick="openLightbox('${p.dataUrl}','${p.name}')"><img src="${p.dataUrl}" alt="${p.name}"></div>`).join('')}</div>` : ''}
       </div>
@@ -5373,7 +5450,6 @@ function notifyAdminIfFlagged(entry) {
 let opMachineId = null;
 let opChecks = {};
 let opMaintDone = {};
-let opPhotos = [];
 
 const WALKAROUND_SECTIONS = [
   { label: 'Engine & Fluid Systems', ohsa: true, items: [
@@ -5456,21 +5532,21 @@ function showStartShiftMode() {
     sectionsHtml += '<div class="op-section" style="margin-top:0.75rem">' + section.label + '</div>';
     section.items.forEach(item => {
       const naBtn = item.hasNA
-        ? '<button class="op-check-btn" data-item="' + item.id + '" data-val="na" onclick="opWalkCheck('' + item.id + '','na',this)">N/A</button>'
+        ? '<button class="op-check-btn" data-item="' + item.id + '" data-val="na" onclick="opWalkCheck(\'' + item.id + '\',\'na\',this)">N/A</button>'
         : '';
       sectionsHtml += '<div class="op-check-row" id="wcr-' + item.id + '">' +
         '<div class="op-check-name">' + item.name + '<br><small style="font-size:9px;color:var(--text-dim);font-weight:400">' + item.note + '</small></div>' +
         '<div class="op-check-btns">' +
-          '<button class="op-check-btn" data-item="' + item.id + '" data-val="ok" onclick="opWalkCheck('' + item.id + '','ok',this)">OK</button>' +
-          '<button class="op-check-btn" data-item="' + item.id + '" data-val="mon" onclick="opWalkCheck('' + item.id + '','mon',this)">Mon</button>' +
-          '<button class="op-check-btn" data-item="' + item.id + '" data-val="fix" onclick="opWalkCheck('' + item.id + '','fix',this)">Fix</button>' +
+          '<button class="op-check-btn" data-item="' + item.id + '" data-val="ok" onclick="opWalkCheck(\'' + item.id + '\',\'ok\',this)">OK</button>' +
+          '<button class="op-check-btn" data-item="' + item.id + '" data-val="mon" onclick="opWalkCheck(\'' + item.id + '\',\'mon\',this)">Mon</button>' +
+          '<button class="op-check-btn" data-item="' + item.id + '" data-val="fix" onclick="opWalkCheck(\'' + item.id + '\',\'fix\',this)">Fix</button>' +
           naBtn +
         '</div></div>';
     });
   });
 
   let maintHtml = DAILY_MAINT.map(m =>
-    '<div class="op-maint-row" id="maint-' + m.id + '" onclick="opToggleMaint('' + m.id + '')">' +
+    '<div class="op-maint-row" id="maint-' + m.id + '" onclick="opToggleMaint(\'' + m.id + '\')">' +
       '<div class="op-maint-checkbox" id="mc-' + m.id + '"></div>' +
       '<div class="op-maint-info">' +
         '<div class="op-maint-name">' + m.name + '</div>' +
@@ -5498,14 +5574,14 @@ function showStartShiftMode() {
 
     sectionsHtml +
 
-    '<div class="op-section" style="margin-top:0.75rem">Daily maintenance <span style="color:var(--text-dim);font-size:8px;letter-spacing:0;text-transform:none;font-family:'DM Sans',sans-serif">— tap to confirm completed</span></div>' +
+    '<div class="op-section" style="margin-top:0.75rem">Daily maintenance <span style="color:var(--text-dim);font-size:8px;letter-spacing:0;text-transform:none;font-family:\'DM Sans\',sans-serif">— tap to confirm completed</span></div>' +
     maintHtml +
 
     '<div class="op-flag-banner" id="op-walk-flag">Issues noted — admin has been notified. <span id="op-walk-flag-detail"></span></div>' +
 
     '<div style="background:var(--surface);border:1px solid var(--border);padding:0.85rem 1rem;margin:0.75rem 0">' +
       '<div class="op-meter-label">Pre-existing damage / notes</div>' +
-      '<textarea id="op-preexisting" placeholder="Note any existing damage or concerns..." style="background:transparent;border:none;padding:0.4rem 0;outline:none;min-height:56px;font-size:13px;width:100%;resize:none;color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.5"></textarea>' +
+      '<textarea id="op-preexisting" placeholder="Note any existing damage or concerns..." style="background:transparent;border:none;padding:0.4rem 0;outline:none;min-height:56px;font-size:13px;width:100%;resize:none;color:var(--text);font-family:\'DM Sans\',sans-serif;line-height:1.5"></textarea>' +
     '</div>' +
 
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin:0.75rem 0">' +
@@ -5526,7 +5602,7 @@ function showStartShiftMode() {
     '<div class="op-submit-wrap">' +
       '<button class="op-submit-btn" id="op-start-btn" onclick="confirmStartShift()">Confirm Inspection & Start Shift →</button>' +
     '</div>' +
-    '<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;padding:1rem 0">Scan QR at end of shift to log hours</div>';
+    '<div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;padding:1rem 0">Scan QR at end of shift to log hours</div>';
 }
 
 function opWalkCheck(item, val, btn) {
@@ -5620,11 +5696,11 @@ function confirmStartShift() {
   document.getElementById('op-dynamic').innerHTML =
     '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1rem;padding:1rem">' +
       '<div style="width:64px;height:64px;border-radius:50%;border:2px solid var(--green);background:var(--ok-bg);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--green)">✓</div>' +
-      '<div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--white)">Shift started.</div>' +
+      '<div style="font-family:\'Playfair Display\',serif;font-size:1.5rem;font-weight:900;color:var(--white)">Shift started.</div>' +
       '<div style="font-size:12px;color:var(--text-muted);line-height:1.8">' + operator + '<br>' + opMachineId + ' · ' + startTime +
         (flaggedItems.length ? '<br><span style="color:var(--warn)">' + flaggedItems.length + ' item' + (flaggedItems.length > 1 ? 's' : '') + ' flagged — admin notified</span>' : '<br><span style="color:var(--green)">All checks passed</span>') +
       '</div>' +
-      '<div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:0.85rem 1.5rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-top:0.5rem">' +
+      '<div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:0.85rem 1.5rem;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-top:0.5rem">' +
         'Scan QR at end of shift to log hours' +
       '</div>' +
     '</div>';
@@ -5780,570 +5856,6 @@ function resetOperatorForm() {
 }
 
 // ══════════════════════════════════════════
-// IMAGE UPLOADS & DOCUMENTS
-// ══════════════════════════════════════════
-
-// ── OPERATOR PHOTO CAPTURE ──
-let opPhotos = []; // [{dataUrl, name}]
-
-function opAddPhotos(input) {
-  Array.from(input.files).forEach(file => {
-    if (opPhotos.length >= 5) { showToast('Max 5 photos per entry.', 'error'); return; }
-    const reader = new FileReader();
-    reader.onload = e => {
-      // Compress: resize to max 800px, quality 0.7
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX = 800;
-        let w = img.width, h = img.height;
-        if (w > MAX) { h = h * MAX / w; w = MAX; }
-        if (h > MAX) { w = w * MAX / h; h = MAX; }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-        opPhotos.push({ dataUrl, name: file.name });
-        renderOpPhotoPreview();
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-  input.value = ''; // reset so same file can be re-added
-}
-
-function renderOpPhotoPreview() {
-  const el = document.getElementById('op-photo-preview');
-  if (!el) return;
-  el.innerHTML = opPhotos.map((p, i) => `
-    <div class="image-thumb">
-      <img src="${p.dataUrl}" alt="${p.name}" onclick="openLightbox('${p.dataUrl}','${p.name}')">
-      <button class="image-thumb-remove" onclick="opRemovePhoto(${i})">✕</button>
-    </div>
-  `).join('');
-}
-
-function opRemovePhoto(i) {
-  opPhotos.splice(i, 1);
-  renderOpPhotoPreview();
-}
-
-function renderDriveBanner(containerId) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  el.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);padding:0.5rem 0 0.75rem">Photos save on this device · Admin exports via Reports</div>`;
-}
-
-// ── DOCUMENTS VIEW ──
-function renderDocuments() {
-  renderDocsConfig();
-  renderDocList();
-  renderFlaggedEntries();
-}
-
-function renderDocsConfig() {
-  const el = document.getElementById('docs-drive-config');
-  if (!el) return;
-  const docs = load('nac-docs', []);
-  const logs = state.logs;
-  const photoCount = logs.reduce((n, l) => n + (l.photos?.length || 0), 0);
-  const docSize = Math.round(JSON.stringify(load('nac-docs',[])).length / 1024);
-  el.innerHTML = `
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border)">
-      <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Documents</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${docs.length}</div>
-      </div>
-      <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Log Photos</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--white)">${photoCount}</div>
-      </div>
-      <div style="background:var(--surface2);padding:0.85rem 1rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.3rem">Storage</div>
-        <div style="font-family:'DM Mono',monospace;font-size:1rem;font-weight:500;color:var(--green)">${storageUsed()}</div>
-      </div>
-    </div>
-    <div style="font-size:11px;color:var(--text-dim);margin-top:0.75rem;line-height:1.65">
-      All data stored on this device. Photos compressed automatically. Use <strong style="color:var(--text-muted)">Export with Photos</strong> in Reports to download a full backup — CSV log plus all photos as a ZIP file.
-    </div>
-  `;
-}
-
-function storageUsed() {
-  try {
-    let total = 0;
-    for (let k in localStorage) {
-      if (localStorage.hasOwnProperty(k)) total += localStorage[k].length * 2;
-    }
-    const kb = Math.round(total / 1024);
-    return kb > 1024 ? (kb/1024).toFixed(1) + ' MB' : kb + ' KB';
-  } catch { return '—'; }
-}
-
-// saveDriveUrl removed — on-device storage only
-
-function renderDocList() {
-  const el = document.getElementById('docs-body');
-  if (!el) return;
-  const docs = load('nac-docs', []);
-
-  if (docs.length === 0) {
-    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:2rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No documents added yet — click Add Document above.</div>`;
-    return;
-  }
-
-  const categories = [...new Set(docs.map(d => d.category))];
-  el.innerHTML = categories.map(cat => {
-    const catDocs = docs.filter(d => d.category === cat);
-    return `
-      <div style="margin-bottom:1.25rem">
-        <div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);padding:0 0 0.5rem;border-bottom:1px solid var(--border);margin-bottom:0.5rem">${cat}</div>
-        <div class="doc-list">
-          ${catDocs.map((d, i) => `
-            <div class="doc-row">
-              <div class="doc-row-left">
-                <div class="doc-icon">${docIcon(d.category)}</div>
-                <div>
-                  <div class="doc-name">${d.name}</div>
-                  <div class="doc-meta">${d.machine || 'All Machines'} · Added ${d.date}</div>
-                  ${d.notes ? `<div style="font-size:10px;color:var(--text-dim);margin-top:1px">${d.notes}</div>` : ''}
-                </div>
-              </div>
-              <div style="display:flex;align-items:center;gap:0.5rem">
-                ${d.url ? `<a class="doc-open" href="${d.url}" target="_blank">Open ↗</a>` : ''}
-                ${d.dataUrl ? `<button class="doc-open" onclick="openLightbox('${d.dataUrl}','${d.name}')">View</button>` : ''}
-                <button class="btn btn-secondary btn-sm" onclick="removeDoc(${docs.indexOf(d)})" style="padding:0.25rem 0.5rem;font-size:9px">✕</button>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function docIcon(cat) {
-  const icons = { 'Manual':'📖', 'Maintenance Record':'🔧', 'Parts Reference':'🔩',
-    'Inspection Report':'📋', 'Warranty':'📄', 'Insurance':'🛡', 'Photo / Image':'🖼', 'Other':'📎' };
-  return icons[cat] || '📎';
-}
-
-function removeDoc(i) {
-  const docs = load('nac-docs', []);
-  docs.splice(i, 1);
-  save('nac-docs', docs);
-  renderDocList();
-}
-
-let docFileData = null;
-
-function docFileSelected(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    if (file.type.startsWith('image/')) {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const MAX = 1200;
-        let w = img.width, h = img.height;
-        if (w > MAX) { h = h * MAX / w; w = MAX; }
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        docFileData = { dataUrl: canvas.toDataURL('image/jpeg', 0.8), name: file.name, type: 'image' };
-        document.getElementById('doc-file-preview').innerHTML =
-          `<div class="image-thumb" style="max-width:120px"><img src="${docFileData.dataUrl}" alt="${file.name}"></div>
-           <div class="image-caption">${file.name}</div>`;
-      };
-      img.src = e.target.result;
-    } else {
-      // PDF or other — store as base64
-      docFileData = { dataUrl: e.target.result, name: file.name, type: 'pdf' };
-      document.getElementById('doc-file-preview').innerHTML =
-        `<div style="font-size:12px;color:var(--green);padding:0.5rem 0">📄 ${file.name} ready to save</div>`;
-    }
-  };
-  reader.readAsDataURL(file);
-}
-
-function openAddDocModal() {
-  docFileData = null;
-  document.getElementById('doc-name').value = '';
-  document.getElementById('doc-url').value = '';
-  document.getElementById('doc-notes').value = '';
-  document.getElementById('doc-file-preview').innerHTML = '';
-
-  // Populate machine selector
-  const sel = document.getElementById('doc-machine');
-  sel.innerHTML = '<option value="">All Machines</option>' +
-    state.machines.map(m => `<option value="${m.id}">${m.id} — ${m.model}</option>`).join('');
-
-  openModal('modal-add-doc');
-}
-
-function saveDoc() {
-  const name = document.getElementById('doc-name').value.trim();
-  if (!name) { showToast('Document name is required.', 'error'); return; }
-  const docs = load('nac-docs', []);
-  docs.push({
-    name,
-    category: document.getElementById('doc-category').value,
-    machine: document.getElementById('doc-machine').value,
-    url: document.getElementById('doc-url').value.trim(),
-    notes: document.getElementById('doc-notes').value.trim(),
-    date: today(),
-    dataUrl: docFileData?.dataUrl || null,
-  });
-  save('nac-docs', docs);
-  closeModal('modal-add-doc');
-  renderDocList();
-  showToast('Document saved.');
-}
-
-// ── FLAGGED ENTRIES ──
-function renderFlaggedEntries() {
-  const el = document.getElementById('flagged-entries-body');
-  if (!el) return;
-  const machine = activeMachine();
-  const flagged = state.logs.filter(l =>
-    l.machineId === machine.id &&
-    (l.condition === 'Repair Needed' || l.condition === 'Monitor' ||
-     (l.issueCat && l.issueCat !== 'None' && l.issueCat !== '') ||
-     (l.checks && Object.values(l.checks).some(v => v !== 'OK')))
-  ).sort((a,b) => b.date.localeCompare(a.date)).slice(0, 20);
-
-  if (flagged.length === 0) {
-    el.innerHTML = `<div style="font-size:12px;color:var(--text-dim);text-align:center;padding:1.5rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase">No flagged entries — all clear.</div>`;
-    return;
-  }
-
-  el.innerHTML = flagged.map(l => {
-    const issueChecks = l.checks ? Object.entries(l.checks).filter(([,v]) => v !== 'OK') : [];
-    const severity = l.condition === 'Repair Needed' || issueChecks.some(([,v]) => v === 'Repair') ? 'danger' : 'warn';
-    return `
-      <div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--${severity === 'danger' ? 'danger' : 'warn'});padding:1rem 1.25rem;margin-bottom:0.5rem">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.5rem">
-          <div style="display:flex;align-items:center;gap:0.6rem">
-            <div class="flag-dot flag-dot-${severity}"></div>
-            <span style="font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--white)">${l.date} · ${l.operator}</span>
-          </div>
-          <span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim)">${l.machineId}</span>
-        </div>
-        ${l.condition !== 'Good' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Condition: </span><span style="color:${severity === 'danger' ? '#ef5350' : 'var(--warn)'};font-weight:600">${l.condition}</span></div>` : ''}
-        ${issueChecks.length > 0 ? `<div style="font-size:11px;margin-bottom:0.3rem;color:var(--text-muted)">Checks: ${issueChecks.map(([k,v]) => k + ' (' + v + ')').join(', ')}</div>` : ''}
-        ${l.issueCat && l.issueCat !== 'None' ? `<div style="font-size:11px;margin-bottom:0.3rem"><span style="font-family:'DM Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-dim)">Category: </span>${l.issueCat}</div>` : ''}
-        ${l.notes ? `<div style="font-size:11px;color:var(--text-muted);font-style:italic;margin-top:0.3rem">"${l.notes}"</div>` : ''}
-        ${l.photos?.length ? `<div class="image-preview-grid" style="margin-top:0.5rem">${l.photos.map(p => `<div class="image-thumb" onclick="openLightbox('${p.dataUrl}','${p.name}')"><img src="${p.dataUrl}" alt="${p.name}"></div>`).join('')}</div>` : ''}
-      </div>
-    `;
-  }).join('');
-}
-
-// ── LIGHTBOX ──
-function openLightbox(src, caption) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox-caption').textContent = caption || '';
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-}
-
-// ── EMAIL NOTIFICATION ON FLAG ──
-function notifyAdminIfFlagged(entry) {
-  const hasFlaggedChecks = entry.checks && Object.values(entry.checks).some(v => v !== 'OK');
-  const hasIssue = entry.condition === 'Repair Needed' || entry.condition === 'Monitor';
-  if (!hasFlaggedChecks && !hasIssue) return;
-
-  const company = load('nac-company', 'Fleet Client');
-  const subject = encodeURIComponent('[NAC OS] Flag: ' + entry.machineId + ' — ' + entry.condition + ' · ' + entry.date);
-  const issueChecks = entry.checks ? Object.entries(entry.checks).filter(([,v]) => v !== 'OK') : [];
-  const body = encodeURIComponent(
-    'Machine: ' + entry.machineId + '\n' +
-    'Date: ' + entry.date + '\n' +
-    'Operator: ' + entry.operator + '\n' +
-    'Condition: ' + entry.condition + '\n' +
-    (issueChecks.length ? 'Flagged Checks: ' + issueChecks.map(([k,v]) => k + ' (' + v + ')').join(', ') + '\n' : '') +
-    (entry.issueCat ? 'Issue Category: ' + entry.issueCat + '\n' : '') +
-    (entry.notes ? 'Notes: ' + entry.notes + '\n' : '') +
-    '\nReview in NAC OS Fleet Logbook → Documents → Flagged Entries.'
-  );
-
-  // Open email client — non-blocking
-  const mailto = 'mailto:info@naturalalternatives.ca?subject=' + subject + '&body=' + body;
-  window.open(mailto, '_blank');
-}
-
-// ══════════════════════════════════════════
-// OPERATOR MODE
-// ══════════════════════════════════════════
-
-let opMachineId = null;
-let opChecks = {};
-
-function initOperatorMode(machineId) {
-  opMachineId = machineId;
-  document.body.classList.add('operator-mode');
-
-  const machine = state.machines.find(m => m.id === machineId);
-  document.getElementById('op-machine-id').textContent = machineId;
-  document.getElementById('op-machine-model').textContent = machine
-    ? machine.model + ' · ' + machine.type
-    : 'Machine not found — contact admin';
-
-  document.getElementById('operator-view').style.display = 'flex';
-  window.history.replaceState({}, '', window.location.pathname);
-
-  // Check for open shift today
-  const openShifts = load('nac-open-shifts', {});
-  const openShift = openShifts[machineId];
-
-  if (openShift && openShift.date === today()) {
-    showEndShiftMode(openShift);
-  } else {
-    showStartShiftMode();
-  }
-}
-
-function showStartShiftMode() {
-  const machine = state.machines.find(m => m.id === opMachineId);
-  const currentHours = getMachineHours(opMachineId);
-  document.getElementById('op-form-wrap').style.display = 'none';
-  document.getElementById('op-success').classList.remove('show');
-
-  let el = document.getElementById('op-start-screen');
-  if (!el) {
-    el = document.createElement('div');
-    el.id = 'op-start-screen';
-    document.querySelector('.op-body').prepend(el);
-  }
-  el.style.cssText = 'display:flex;flex-direction:column;min-height:60vh;justify-content:center;gap:0';
-
-  const operators = load('nac-operators', ['Owner', 'Operator 1', 'Operator 2', 'Supervisor']);
-  const opOptions = operators.map(o => '<option value="' + o + '">' + o + '</option>').join('');
-
-  el.innerHTML = '<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green);margin-bottom:1rem">Start of shift</div>' +
-    '<div style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--white);line-height:1.15;margin-bottom:0.25rem">' + opMachineId + '</div>' +
-    '<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-dim);margin-bottom:1.5rem">' + (machine ? machine.model : '') + (currentHours ? ' · ' + fmtHours(currentHours) + ' hrs on meter' : '') + '</div>' +
-    '<div style="display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1rem">' +
-      '<div style="background:var(--surface);padding:0.85rem 1rem">' +
-        '<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Operator *</div>' +
-        '<select class="form-select" id="op-start-operator" style="background:transparent;border:none;padding:0;font-size:16px;font-weight:600;color:var(--white);outline:none;width:100%;-webkit-appearance:none">' +
-          '<option value="">Select your name...</option>' + opOptions +
-        '</select>' +
-      '</div>' +
-      '<div style="background:var(--surface);padding:0.85rem 1rem">' +
-        '<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.13em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Job / property</div>' +
-        '<input type="text" class="form-input" id="op-start-job" placeholder="Site name (optional)" style="background:transparent;border:none;padding:0;font-size:14px;color:var(--white);outline:none;width:100%">' +
-      '</div>' +
-    '</div>' +
-    '<button class="op-submit-btn" onclick="confirmStartShift()">Start Shift →</button>' +
-    '<div style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-top:1.25rem">Scan again at end of shift to log hours &amp; checks</div>';
-}
-
-function confirmStartShift() {
-  const operator = document.getElementById('op-start-operator') && document.getElementById('op-start-operator').value;
-  if (!operator) { showToast('Please select your name.', 'error'); return; }
-
-  const now = new Date();
-  const startTime = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-
-  const shift = {
-    date: today(),
-    operator,
-    job: (document.getElementById('op-start-job') && document.getElementById('op-start-job').value.trim()) || '',
-    startTime,
-    startHours: getMachineHours(opMachineId),
-    machineId: opMachineId,
-  };
-
-  const openShifts = load('nac-open-shifts', {});
-  openShifts[opMachineId] = shift;
-  save('nac-open-shifts', openShifts);
-
-  const el = document.getElementById('op-start-screen');
-  el.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:1rem">' +
-    '<div style="width:60px;height:60px;border-radius:50%;border:2px solid var(--green);background:var(--ok-bg);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--green)">✓</div>' +
-    '<div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--white)">Shift started.</div>' +
-    '<div style="font-size:12px;color:var(--text-muted);line-height:1.7">' + operator + '<br>' + opMachineId + ' · ' + startTime + '</div>' +
-    '<div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:0.85rem 1.25rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-top:0.5rem">Scan QR at end of shift to log hours</div>' +
-    '</div>';
-}
-
-function showEndShiftMode(openShift) {
-  const ss = document.getElementById('op-start-screen');
-  if (ss) ss.style.display = 'none';
-
-  document.getElementById('op-form-wrap').style.display = '';
-  document.getElementById('op-date').value = openShift.date;
-
-  const sel = document.getElementById('op-operator');
-  if (openShift.operator && !Array.from(sel.options).find(function(o){ return o.value === openShift.operator; })) {
-    const opt = document.createElement('option');
-    opt.value = openShift.operator;
-    opt.textContent = openShift.operator;
-    sel.appendChild(opt);
-  }
-  sel.value = openShift.operator;
-  document.getElementById('op-start-time').value = openShift.startTime || '';
-  document.getElementById('op-job').value = openShift.job || '';
-  document.getElementById('op-start-hrs-display').textContent = openShift.startHours ? fmtHours(openShift.startHours) : '—';
-
-  // End-of-shift banner
-  renderDriveBanner('op-drive-banner');
-  const banner = document.getElementById('op-drive-banner');
-  if (banner) {
-    banner.innerHTML = '<div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:0.6rem 1rem;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);margin-bottom:0.75rem;display:flex;justify-content:space-between;align-items:center">' +
-      '<span>End of shift · Started ' + (openShift.startTime || '—') + '</span>' +
-      '<span style="color:var(--text-dim)">' + openShift.operator + '</span></div>';
-  }
-
-  // Build checklist
-  const cl = document.getElementById('op-checklist');
-  cl.innerHTML = CHECKLIST_ITEMS.map(function(item) {
-    return '<div class="op-check-row"><div class="op-check-name">' + item + '</div><div class="op-check-btns">' +
-      '<button class="op-check-btn selected-ok" data-item="' + item + '" data-val="OK" onclick="opSetCheck('' + item + '', 'OK', this)">OK</button>' +
-      '<button class="op-check-btn" data-item="' + item + '" data-val="Monitor" onclick="opSetCheck('' + item + '', 'Monitor', this)">Mon</button>' +
-      '<button class="op-check-btn" data-item="' + item + '" data-val="Repair" onclick="opSetCheck('' + item + '', 'Repair', this)">Fix</button>' +
-      '</div></div>';
-  }).join('');
-  CHECKLIST_ITEMS.forEach(function(item) { opChecks[item] = 'OK'; });
-}
-
-function opSetCheck(item, val, btn) {
-  opChecks[item] = val;
-  // Reset all buttons for this item
-  document.querySelectorAll(`[data-item="${item}"]`).forEach(b => {
-    b.className = 'op-check-btn';
-  });
-  // Highlight selected
-  btn.className = 'op-check-btn ' + (val === 'OK' ? 'selected-ok' : val === 'Monitor' ? 'selected-warn' : 'selected-danger');
-}
-
-function opCalcHours() {
-  const machine = state.machines.find(m => m.id === opMachineId);
-  const startHours = getMachineHours(opMachineId);
-  const endHours = parseFloat(document.getElementById('op-end-hours').value);
-  if (!isNaN(endHours) && startHours) {
-    const used = endHours - startHours;
-    document.getElementById('op-hours-used-display').textContent = used >= 0 ? used.toFixed(1) : '—';
-    document.getElementById('op-hours-used-display').style.color = used >= 0 ? 'var(--green)' : '#ef5350';
-  }
-}
-
-function submitOperatorLog() {
-  const endHours = document.getElementById('op-end-hours').value;
-  if (!endHours) { showToast('End hours are required.', 'error'); document.getElementById('op-end-hours').focus(); return; }
-
-  // Pull open shift data (set at start of shift scan)
-  const openShifts = load('nac-open-shifts', {});
-  const openShift  = openShifts[opMachineId] || {};
-  const operator   = openShift.operator || document.getElementById('op-operator')?.value || '';
-  if (!operator) { showToast('No open shift found — please scan at start of shift first.', 'error'); return; }
-
-  const startHours = openShift.startHours || getMachineHours(opMachineId);
-  const hoursUsed  = (parseFloat(endHours) - parseFloat(startHours || 0)).toFixed(1);
-
-  const entry = {
-    id: Date.now(),
-    machineId: opMachineId,
-    date: openShift.date || today(),
-    operator,
-    status: 'Logged',
-    startTime: openShift.startTime || '',
-    endTime: document.getElementById('op-end-time').value,
-    job: openShift.job || '',
-    startHours: parseFloat(startHours) || '',
-    endHours: parseFloat(endHours),
-    hoursUsed,
-    fuel: document.getElementById('op-fuel').value,
-    material1: '', qty1: '',
-    // Walkaround checks from scan 1
-    walkChecks: openShift.walkChecks || {},
-    maintDone:  openShift.maintDone  || {},
-    preexisting: openShift.preexisting || '',
-    // End-of-shift data from scan 2
-    checks: { ...opChecks },
-    condition: document.getElementById('op-condition').value,
-    issueCat: document.getElementById('op-issue-cat').value,
-    notes: document.getElementById('op-notes').value,
-    supervisor: '',
-    opSig: document.getElementById('op-sig').value,
-    source: 'operator-qr',
-    photos: opPhotos.map(p => ({dataUrl: p.dataUrl, name: p.name})),
-  };
-
-  // Update machine hours
-  const idx = state.machines.findIndex(m => m.id === opMachineId);
-  if (idx >= 0 && parseFloat(endHours) > (parseFloat(state.machines[idx].hours) || 0)) {
-    state.machines[idx].hours = parseFloat(endHours);
-  }
-
-  state.logs.push(entry);
-  persist();
-  notifyAdminIfFlagged(entry);
-  opPhotos = [];
-  // Clear open shift
-  const _openShifts = load('nac-open-shifts', {});
-  delete _openShifts[opMachineId];
-  save('nac-open-shifts', _openShifts);
-
-  // Show success
-  document.getElementById('op-form-wrap').style.display = 'none';
-  const success = document.getElementById('op-success');
-  success.classList.add('show');
-
-  const issueItems = Object.entries(entry.walkChecks || {}).filter(([,v]) => v === 'mon' || v === 'fix');
-  const endFlagged = entry.condition === 'Monitor' || entry.condition === 'Repair Needed';
-  document.getElementById('op-success-heading').textContent = 'Log saved.';
-  document.getElementById('op-success-sub').innerHTML =
-    (issueItems.length > 0
-      ? '<span style="color:var(--warn)">' + issueItems.length + ' walkaround item' + (issueItems.length > 1 ? 's' : '') + ' flagged</span>'
-      : '<span style="color:var(--green)">Walkaround \u2714 all clear</span>') +
-    (endFlagged ? '<br><span style="color:var(--warn)">End condition flagged \u2014 admin notified</span>' : '');
-
-  document.getElementById('op-success-data').innerHTML = `
-    <div class="op-success-row"><span class="op-success-row-label">Machine</span><span class="op-success-row-val">${opMachineId}</span></div>
-    <div class="op-success-row"><span class="op-success-row-label">Operator</span><span class="op-success-row-val">${operator}</span></div>
-    <div class="op-success-row"><span class="op-success-row-label">End Hours</span><span class="op-success-row-val">${fmtHours(endHours)}</span></div>
-    ${hoursUsed ? `<div class="op-success-row"><span class="op-success-row-label">Hours Logged</span><span class="op-success-row-val">${hoursUsed}</span></div>` : ''}
-    ${entry.fuel ? `<div class="op-success-row"><span class="op-success-row-label">Fuel Added</span><span class="op-success-row-val">${entry.fuel} L</span></div>` : ''}
-  `;
-
-  // Scroll to top
-  window.scrollTo(0, 0);
-}
-
-function resetOperatorForm() {
-  document.getElementById('op-form-wrap').style.display = '';
-  document.getElementById('op-success').classList.remove('show');
-  document.getElementById('op-end-hours').value = '';
-  document.getElementById('op-fuel').value = '';
-  document.getElementById('op-notes').value = '';
-  document.getElementById('op-condition').value = '';
-  document.getElementById('op-issue-cat').value = '';
-  document.getElementById('op-sig').value = '';
-  document.getElementById('op-hours-used-display').textContent = '—';
-
-  // Reset start time to now
-  const now = new Date();
-  document.getElementById('op-start-time').value =
-    String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-
-  // Update start hours (may have changed from last submit)
-  const currentHours = getMachineHours(opMachineId);
-  document.getElementById('op-start-hrs-display').textContent = currentHours ? fmtHours(currentHours) : '—';
-
-  // Reset checks
-  CHECKLIST_ITEMS.forEach(item => { opChecks[item] = 'OK'; });
-  document.querySelectorAll('.op-check-btn').forEach(b => {
-    b.className = 'op-check-btn' + (b.dataset.val === 'OK' ? ' selected-ok' : '');
-  });
-  window.scrollTo(0, 0);
-}
-
-// ══════════════════════════════════════════
 // EXPORT & RESET
 // ══════════════════════════════════════════
 
@@ -6470,14 +5982,14 @@ const setupScreens = {
       </div>
       <div class="form-group form-full" style="margin-top:0.25rem">
         <div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:1rem;font-size:12px;color:var(--text-muted);line-height:1.65">
-          <strong style="color:var(--green);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:0.4rem">Your data stays on your device</strong>
+          <strong style="color:var(--green);font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:0.4rem">Your data stays on your device</strong>
           All log entries, photos, and fleet data store in your browser's local storage. Nothing leaves this device. Use Export in Reports to download a full backup including all photos.
         </div>
       </div>
     </div>
   `,
   2: () => `
-    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">Add your first machine — you can add more later from Fleet Assets.</div>
+    <div style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem">Add your first machine — you can add more later from Fleet Assets.</div>
     <div class="form-grid" style="gap:0.85rem">
       <div class="form-group">
         <label class="form-label">Machine ID <span>*</span></label>
@@ -6510,24 +6022,24 @@ const setupScreens = {
   3: () => `
     <div style="display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1rem">
       <div style="background:var(--surface2);padding:0.85rem 1rem;display:flex;justify-content:space-between">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Company</span>
+        <span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Company</span>
         <span style="font-size:12px;font-weight:600;color:var(--white)">${setupData.company}</span>
       </div>
       <div style="background:var(--surface2);padding:0.85rem 1rem;display:flex;justify-content:space-between">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Machine ID</span>
-        <span style="font-size:12px;font-weight:600;color:var(--green);font-family:'DM Mono',monospace">${setupData.machineId}</span>
+        <span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Machine ID</span>
+        <span style="font-size:12px;font-weight:600;color:var(--green);font-family:\'DM Mono\',monospace">${setupData.machineId}</span>
       </div>
       <div style="background:var(--surface2);padding:0.85rem 1rem;display:flex;justify-content:space-between">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Model</span>
+        <span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Model</span>
         <span style="font-size:12px;color:var(--text)">${setupData.machineModel} (${setupData.machineType})</span>
       </div>
       <div style="background:var(--surface2);padding:0.85rem 1rem;display:flex;justify-content:space-between">
-        <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Starting Hours</span>
-        <span style="font-size:12px;font-family:'DM Mono',monospace;color:var(--text)">${setupData.machineHours ? parseFloat(setupData.machineHours).toFixed(1) + ' hrs' : 'Not set'}</span>
+        <span style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-dim)">Starting Hours</span>
+        <span style="font-size:12px;font-family:\'DM Mono\',monospace;color:var(--text)">${setupData.machineHours ? parseFloat(setupData.machineHours).toFixed(1) + ' hrs' : 'Not set'}</span>
       </div>
     </div>
     <div style="background:var(--ok-bg);border:1px solid rgba(46,125,50,0.2);padding:1rem;font-size:12px;color:var(--text-muted);line-height:1.65">
-      <strong style="color:var(--green);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:0.4rem">Ready to launch</strong>
+      <strong style="color:var(--green);font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;display:block;margin-bottom:0.4rem">Ready to launch</strong>
       Your NAC OS Fleet Logbook will open pre-configured with the above machine. You can add more machines, log your first entry, and set PM service history from the dashboard.
     </div>
   `
@@ -6638,7 +6150,15 @@ function init() {
   checkLicenseGates();   // show renewal banner if key is expiring / expired
 }
 
-init();
+setTimeout(function() {
+  try { init(); } catch(e) { console.warn('NAC OS init:', e); }
+  // Always dismiss loader
+  var loader = document.getElementById('nac-loader-overlay');
+  if (loader) {
+    loader.classList.add('fade-out');
+    setTimeout(function() { if(loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
+  }
+}, 250);
 
 
 // Pre-fill billing rate input
@@ -6956,7 +6476,7 @@ function openInvoice(jobId) {
     let sectionRow = '';
     if (li.section !== prevSection) {
       prevSection = li.section;
-      sectionRow = `<tr><td colspan="5" style="background:var(--bg-alt);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:0.5rem 1rem;color:var(--text-dim)">${li.section}</td></tr>`;
+      sectionRow = `<tr><td colspan="5" style="background:var(--bg-alt);font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:0.5rem 1rem;color:var(--text-dim)">${li.section}</td></tr>`;
     }
     return sectionRow + `<tr>
       <td>${li.desc}</td>
@@ -6995,13 +6515,13 @@ function openInvoice(jobId) {
   document.getElementById('invoice-body').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2rem">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Bill To</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Bill To</div>
         <div class="bold" style="font-size:15px">${job.name}</div>
         <div style="color:var(--text-dim);font-size:13px">${job.address}</div>
         ${job.notes ? `<div style="color:var(--text-dim);font-size:12px;margin-top:0.25rem">${job.notes}</div>` : ''}
       </div>
       <div style="text-align:right">
-        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Invoice</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.5rem">Invoice</div>
         <div class="bold mono" style="font-size:14px">${invNum}</div>
         <div style="font-size:12px;color:var(--text-dim)">${today}</div>
         <div style="font-size:12px;color:var(--text-dim);margin-top:0.25rem">${machine.id} — ${machine.model}</div>
@@ -7028,7 +6548,7 @@ function openInvoice(jobId) {
         <div style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:0.5px solid var(--border)">
           <span style="color:var(--text-dim);display:flex;align-items:center;gap:6px">
             HST (13%)
-            <button onclick="toggleInvoiceTax('${job.id}')" style="font-size:10px;padding:2px 7px;border-radius:4px;border:0.5px solid var(--border);background:${taxExempt ? '#c62828' : 'var(--bg-alt)'};color:${taxExempt ? '#fff' : 'var(--text-dim)'};cursor:pointer;font-family:var(--font-sans)">${taxExempt ? 'EXEMPT — click to add HST' : 'ON — click to exempt'}</button>
+            <button onclick="toggleInvoiceTax('${job.id}')" style="font-size:10px;padding:2px 7px;border-radius:4px;border:0.5px solid var(--border);background:${taxExempt ? '#c62828' : 'var(--bg-alt)'};color:${taxExempt ? '#ffffff' : 'var(--text-dim)'};cursor:pointer;font-family:var(--font-sans)">${taxExempt ? 'EXEMPT — click to add HST' : 'ON — click to exempt'}</button>
           </span>
           <span class="mono">${taxExempt ? '<span style="color:var(--text-dim);font-size:12px">Tax exempt</span>' : '$'+hst.toLocaleString('en-CA', {minimumFractionDigits:2, maximumFractionDigits:2})}</span>
         </div>
@@ -7229,12 +6749,12 @@ function renderFuelConsumption(fills, logs) {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
       <div style="background:var(--bg-alt);padding:8px 10px;border-radius:4px">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:2px">Since ${since}</div>
-        <div style="font-size:18px;font-weight:500;font-family:'DM Mono',monospace;color:var(--green)">${totalL.toFixed(1)} L</div>
+        <div style="font-size:18px;font-weight:500;font-family:\'DM Mono\',monospace;color:var(--green)">${totalL.toFixed(1)} L</div>
         <div style="font-size:11px;color:var(--text-dim)">${totalShifts} shifts · $${costSinceFill.toFixed(2)}</div>
       </div>
       <div style="background:var(--bg-alt);padding:8px 10px;border-radius:4px">
         <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim);margin-bottom:2px">Avg per shift</div>
-        <div style="font-size:18px;font-weight:500;font-family:'DM Mono',monospace">${avgPerShift.toFixed(1)} L</div>
+        <div style="font-size:18px;font-weight:500;font-family:\'DM Mono\',monospace">${avgPerShift.toFixed(1)} L</div>
         <div style="font-size:11px;color:var(--text-dim)">$${(avgPerShift*price).toFixed(2)}/shift</div>
       </div>
     </div>
@@ -7442,7 +6962,7 @@ function getJobInvoiceBadge(jobId) {
   if (!rec || rec.status === 'Draft') return '';
   const colors = { Sent:'#e6a817', Paid:'#2E7D32', Overdue:'#c62828' };
   const c = colors[rec.status] || 'var(--text-dim)';
-  return `<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:${c};color:#fff;margin-right:3px;vertical-align:middle">${rec.status.toUpperCase()}</span>`;
+  return `<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:${c};color:#ffffff;margin-right:3px;vertical-align:middle">${rec.status.toUpperCase()}</span>`;
 }
 
 function checkOverdueInvoices() {
@@ -7561,7 +7081,7 @@ function updateNavCertBadge(count) {
   const el = document.getElementById('nav-certs-label');
   if (!el) return;
   el.innerHTML = count > 0
-    ? `Certifications <span style="background:#c62828;color:#fff;font-size:9px;padding:1px 5px;border-radius:10px;margin-left:4px;font-weight:600">${count}</span>`
+    ? `Certifications <span style="background:#c62828;color:#ffffff;font-size:9px;padding:1px 5px;border-radius:10px;margin-left:4px;font-weight:600">${count}</span>`
     : 'Certifications';
 }
 
@@ -7781,7 +7301,7 @@ function renderFuelPriceHistory() {
     return;
   }
   el.innerHTML = `
-    <div style="padding:0.6rem 1rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim)">Price History</div>
+    <div style="padding:0.6rem 1rem;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim)">Price History</div>
     <table class="data-table">
       <thead><tr><th>Effective Date</th><th>Price ($/L)</th><th>Change</th><th></th></tr></thead>
       <tbody>${history.map((e, i) => {
@@ -7863,7 +7383,7 @@ function renderQBPanel() {
           <div style="margin-top:0.5rem;font-size:11px;color:var(--text-dim)">Requires QuickBooks Online (Simple Start or higher). Uses Intuit OAuth 2.0.</div>
         </div>
         <div style="background:var(--bg-alt);border:1px solid var(--border);padding:1rem">
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.75rem">Alternative: QB-Compatible Export</div>
+          <div style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:0.75rem">Alternative: QB-Compatible Export</div>
           <div style="font-size:12px;color:var(--text-dim);margin-bottom:0.75rem">No direct connection needed — export a QB-formatted CSV that you import directly in QuickBooks under File → Import → Transactions.</div>
           <button class="btn btn-secondary" onclick="exportQBCSV()">↓ Download QB Import File</button>
         </div>
@@ -8118,12 +7638,12 @@ const OCOS_NAMES  = { 1:'Tier 1 — Compliance Foundation', 2:'Tier 2 — Employ
 //   OCOS Partner — all tiers                 →  /thank-you-partner.html
 // ────────────────────────────────────────────────────────────────────────────
 const STRIPE_LINKS = {
-  addon:   'https://buy.stripe.com/9B600icuHaPxeOJ6r6awo0c,    // $247 CAD one-time  — Fleet Add-on
-  fleet:   'https://buy.stripe.com/4gM4gyeCPf5N9updTyawo0e',   // $1,497 CAD/yr      — Fleet Fleet
-  ocos1:   'https://buy.stripe.com/28E8wOeCPf5N7mh3eUawo0d',   // $397 CAD one-time  — OCOS T1
-  ocos12:  'https://buy.stripe.com/eVq14m7an5vd0XTg1Gawo0f',  // $1,094 CAD         — T1+T2
-  ocos123: 'https://buy.stripe.com/5kQ3cu3Yb4r98ql8zeawo0g', // $1,691 CAD         — T1+T2+T3
-  bundle:  'https://buy.stripe.com/6oU5kCbqDbTB4a5aHmawo0h',  // $1,297 CAD         — Bundle
+  addon:   'https://buy.stripe.com/ADDON_PLACEHOLDER',    // $247 CAD one-time  — Fleet Add-on
+  fleet:   'https://buy.stripe.com/FLEET_PLACEHOLDER',   // $1,497 CAD/yr      — Fleet Fleet
+  ocos1:   'https://buy.stripe.com/OCOS1_PLACEHOLDER',   // $397 CAD one-time  — OCOS T1
+  ocos12:  'https://buy.stripe.com/OCOS12_PLACEHOLDER',  // $1,094 CAD         — T1+T2
+  ocos123: 'https://buy.stripe.com/OCOS123_PLACEHOLDER', // $1,691 CAD         — T1+T2+T3
+  bundle:  'https://buy.stripe.com/BUNDLE_PLACEHOLDER',  // $1,297 CAD         — Bundle
 };
 // Fallback: if a Stripe link hasn't been set yet, route to email instead
 Object.keys(STRIPE_LINKS).forEach(k => {
@@ -8318,7 +7838,7 @@ function _injectComplianceBanner() {
   banner.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:10px 14px;margin-bottom:1rem;border:1px solid rgba(46,125,50,0.3);background:rgba(46,125,50,0.06);border-radius:0;flex-wrap:wrap">
       <div>
-        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#2E7D32;margin-bottom:3px">OCOS™ · Ontario Compliance Operating System</div>
+        <div style="font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#2E7D32;margin-bottom:3px">OCOS™ · Ontario Compliance Operating System</div>
         <div style="font-size:13px;font-weight:500;color:var(--text)">
           ${urgent.length > 0
             ? urgent.length + ' cert' + (urgent.length > 1 ? 's' : '') + ' flagged — turn alerts into MOL-compliant records'
@@ -8326,7 +7846,7 @@ function _injectComplianceBanner() {
         </div>
         <div style="font-size:11px;color:var(--text-muted);margin-top:2px">Tier 1 from $397 CAD one-time · Permanent access</div>
       </div>
-      <button onclick="showComplianceUpsell()" style="padding:8px 16px;background:#2E7D32;color:#fff;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap;flex-shrink:0">Upgrade to OCOS →</button>
+      <button onclick="showComplianceUpsell()" style="padding:8px 16px;background:#2E7D32;color:#ffffff;border:none;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap;flex-shrink:0">Upgrade to OCOS →</button>
     </div>`;
 }
 
@@ -8434,13 +7954,13 @@ function renderInspectionsView() {
     const flagCount = Object.values(r.walkChecks||{}).filter(v=>v==='mon'||v==='fix').length;
     const machine = state.machines.find(m => m.id === r.machineId);
     return `<tr style="border-bottom:1px solid var(--border);cursor:pointer" onclick="showInspectionDetail('${r.id}')" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">
-      <td style="padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px;white-space:nowrap">${r.date||'—'}</td>
+      <td style="padding:8px 12px;font-family:\'DM Mono\',monospace;font-size:11px;white-space:nowrap">${r.date||'—'}</td>
       <td style="padding:8px 12px;font-size:12px">${r.machineId||'—'}<div style="font-size:10px;color:var(--text-muted)">${machine?.model||''}</div></td>
       <td style="padding:8px 12px;font-size:12px">${r.operator||'—'}</td>
       <td style="padding:8px 12px;font-size:12px;color:var(--text-muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.siteAddress||r.job||'—'}</td>
-      <td style="padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px">${r.startHours||'—'} h</td>
+      <td style="padding:8px 12px;font-family:\'DM Mono\',monospace;font-size:11px">${r.startHours||'—'} h</td>
       <td style="padding:8px 12px">${inspResultBadge(result)}${flagCount>0?` <span style="font-size:10px;color:var(--text-muted)">(${flagCount})</span>`:''}</td>
-      <td style="padding:8px 12px;font-family:'DM Mono',monospace;font-size:12px;font-weight:600">${r.opSigStart||r.opSig||'—'}</td>
+      <td style="padding:8px 12px;font-family:\'DM Mono\',monospace;font-size:12px;font-weight:600">${r.opSigStart||r.opSig||'—'}</td>
       <td style="padding:8px 4px"><button class="btn btn-secondary btn-sm" onclick="event.stopPropagation();printSingleInspection('${r.id}')">Print</button></td>
     </tr>`;
   }).join('');
@@ -8456,7 +7976,7 @@ function showInspectionDetail(logId) {
   // Build checks grid
   let checkRows = '';
   WALKAROUND_SECTIONS.forEach(sec => {
-    checkRows += `<tr><td colspan="3" style="padding:6px 10px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);border-top:1px solid var(--border);background:var(--surface2)">${sec.label}</td></tr>`;
+    checkRows += `<tr><td colspan="3" style="padding:6px 10px;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);border-top:1px solid var(--border);background:var(--surface2)">${sec.label}</td></tr>`;
     sec.items.forEach(item => {
       const val = checks[item.id] || 'ok';
       const badge = val === 'ok'  ? '<span style="color:var(--ok);font-weight:600">✓ OK</span>'
@@ -8488,28 +8008,28 @@ function showInspectionDetail(logId) {
         <!-- Header block -->
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1rem">
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Date</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Date</div>
             <div style="font-size:13px">${log.date||'—'}</div>
           </div>
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Operator</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Operator</div>
             <div style="font-size:13px">${log.operator||'—'}</div>
           </div>
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Signature</div>
-            <div style="font-size:16px;font-weight:600;font-family:'DM Mono',monospace">${log.opSigStart||log.opSig||'—'}</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Signature</div>
+            <div style="font-size:16px;font-weight:600;font-family:\'DM Mono\',monospace">${log.opSigStart||log.opSig||'—'}</div>
           </div>
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Machine / Unit</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Machine / Unit</div>
             <div style="font-size:13px">${log.machineId||'—'}</div>
             <div style="font-size:11px;color:var(--text-muted)">${machine?.model||''}</div>
           </div>
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Hour Meter</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Hour Meter</div>
             <div style="font-size:13px">${log.startHours||'—'} h</div>
           </div>
           <div style="background:var(--surface);padding:0.75rem 1rem">
-            <div class="form-label" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Site / Job Address</div>
+            <div class="form-label" style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px">Site / Job Address</div>
             <div style="font-size:13px">${log.siteAddress||log.job||'—'}</div>
           </div>
         </div>
@@ -8518,16 +8038,16 @@ function showInspectionDetail(logId) {
         <table style="width:100%;border-collapse:collapse;margin-bottom:1rem">
           <thead>
             <tr style="border-bottom:1px solid var(--border)">
-              <th style="padding:6px 10px;text-align:left;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Inspection item</th>
-              <th style="padding:6px 10px;text-align:left;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Result</th>
-              <th style="padding:6px 10px;text-align:left;font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Notes</th>
+              <th style="padding:6px 10px;text-align:left;font-family:\'DM Mono\',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Inspection item</th>
+              <th style="padding:6px 10px;text-align:left;font-family:\'DM Mono\',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Result</th>
+              <th style="padding:6px 10px;text-align:left;font-family:\'DM Mono\',monospace;font-size:9px;text-transform:uppercase;color:var(--text-muted)">Notes</th>
             </tr>
           </thead>
           <tbody>${checkRows}</tbody>
         </table>
 
         <!-- Preexisting notes -->
-        ${log.preexisting ? `<div style="padding:0.75rem 1rem;border:1px solid var(--border);margin-bottom:1rem;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em">Pre-existing damage / notes: </span>${log.preexisting}</div>` : ''}
+        ${log.preexisting ? `<div style="padding:0.75rem 1rem;border:1px solid var(--border);margin-bottom:1rem;font-size:12px"><span style="font-family:\'DM Mono\',monospace;font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em">Pre-existing damage / notes: </span>${log.preexisting}</div>` : ''}
 
         <!-- Result summary -->
         <div style="display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border:1px solid var(--border);background:var(--surface2)">
@@ -8536,7 +8056,7 @@ function showInspectionDetail(logId) {
         </div>
 
         <!-- Legal footer -->
-        <div style="margin-top:0.75rem;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-dim);line-height:1.6">
+        <div style="margin-top:0.75rem;font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-dim);line-height:1.6">
           OHSA PRE-OPERATION INSPECTION · ONTARIO REGULATION 213/91 · NATURAL ALTERNATIVES · THIS RECORD MUST BE RETAINED FOR A MINIMUM OF ONE YEAR
         </div>
 
@@ -8556,7 +8076,7 @@ function printSingleInspection(logId) {
   let checkRowsHtml = '';
   let itemNum = 1;
   WALKAROUND_SECTIONS.forEach(sec => {
-    checkRowsHtml += `<tr><td colspan="3" style="background:#f5f5f5;padding:5px 10px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#555;border:1px solid #ccc">${sec.label}</td></tr>`;
+    checkRowsHtml += `<tr><td colspan="3" style="background:#f5f5f5;padding:5px 10px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#555555;border:1px solid #cccccc">${sec.label}</td></tr>`;
     sec.items.forEach(item => {
       const val = checks[item.id] || '';
       const ok  = val === 'ok'  ? '☑' : '☐';
@@ -8566,31 +8086,31 @@ function printSingleInspection(logId) {
       checkRowsHtml += `<tr style="border-bottom:1px solid #e0e0e0">
         <td style="padding:5px 10px;font-size:11px;border:1px solid #e0e0e0">${itemNum++}. ${item.name}</td>
         <td style="padding:5px 10px;font-size:11px;text-align:center;border:1px solid #e0e0e0">${ok} OK &nbsp; ${mon} Monitor &nbsp; ${fix} Fix &nbsp; ${item.hasNA?na+' N/A':''}</td>
-        <td style="padding:5px 10px;font-size:10px;color:#666;border:1px solid #e0e0e0">${item.note||''}</td>
+        <td style="padding:5px 10px;font-size:10px;color:#666666;border:1px solid #e0e0e0">${item.note||''}</td>
       </tr>`;
     });
   });
 
   const printHtml = `<!DOCTYPE html><html><head><title>OHSA Pre-Op Inspection — ${log.date}</title>
   <style>
-    body{font-family:Arial,sans-serif;font-size:12px;margin:0;padding:20px;color:#000}
+    body{font-family:Arial,sans-serif;font-size:12px;margin:0;padding:20px;color:#000000}
     h1{font-size:16px;font-weight:700;margin:0 0 2px}
-    .header-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#ccc;border:1px solid #ccc;margin:10px 0}
-    .header-cell{background:#fff;padding:7px 10px}
-    .cell-label{font-size:8px;text-transform:uppercase;letter-spacing:0.08em;color:#888;font-weight:600}
+    .header-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#cccccc;border:1px solid #cccccc;margin:10px 0}
+    .header-cell{background:#ffffff;padding:7px 10px}
+    .cell-label{font-size:8px;text-transform:uppercase;letter-spacing:0.08em;color:#888888;font-weight:600}
     .cell-val{font-size:12px;font-weight:600;margin-top:2px}
     table{width:100%;border-collapse:collapse;margin-bottom:10px}
-    .legal{font-size:8px;text-transform:uppercase;letter-spacing:0.06em;color:#888;margin-top:12px;line-height:1.6;border-top:1px solid #ccc;padding-top:8px}
-    .sig-line{border-bottom:1px solid #000;width:200px;display:inline-block;margin:0 10px}
+    .legal{font-size:8px;text-transform:uppercase;letter-spacing:0.06em;color:#888888;margin-top:12px;line-height:1.6;border-top:1px solid #cccccc;padding-top:8px}
+    .sig-line{border-bottom:1px solid #000000;width:200px;display:inline-block;margin:0 10px}
     @media print{body{padding:10px}}
   </style></head><body>
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
     <div>
       <div style="font-size:9px;text-transform:uppercase;letter-spacing:0.15em;color:#2E7D32;font-weight:600;margin-bottom:3px">ONTARIO REGULATION 213/91</div>
       <h1>Pre-Operation Inspection Record</h1>
-      <div style="font-size:10px;color:#666">${company}</div>
+      <div style="font-size:10px;color:#666666">${company}</div>
     </div>
-    <div style="text-align:right;font-size:10px;color:#888">
+    <div style="text-align:right;font-size:10px;color:#888888">
       <div>Record #${log.id}</div>
       <div>Retain minimum 1 year</div>
     </div>
@@ -8608,27 +8128,27 @@ function printSingleInspection(logId) {
 
   <table>
     <thead><tr style="background:#f5f5f5">
-      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #ccc;width:35%">Inspection item</th>
-      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #ccc;width:35%">Result</th>
-      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #ccc">Standard</th>
+      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #cccccc;width:35%">Inspection item</th>
+      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #cccccc;width:35%">Result</th>
+      <th style="padding:5px 10px;text-align:left;font-size:9px;text-transform:uppercase;border:1px solid #cccccc">Standard</th>
     </tr></thead>
     <tbody>${checkRowsHtml}</tbody>
   </table>
 
-  ${log.preexisting ? `<div style="border:1px solid #ccc;padding:7px 10px;margin-bottom:10px"><div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888;margin-bottom:3px">Pre-existing damage / notes</div><div style="font-size:12px">${log.preexisting}</div></div>` : ''}
+  ${log.preexisting ? `<div style="border:1px solid #cccccc;padding:7px 10px;margin-bottom:10px"><div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888888;margin-bottom:3px">Pre-existing damage / notes</div><div style="font-size:12px">${log.preexisting}</div></div>` : ''}
 
   <div style="display:flex;justify-content:space-between;margin:16px 0 8px;gap:2rem">
     <div style="flex:1">
-      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888;margin-bottom:8px">Operator signature</div>
-      <div style="font-size:18px;font-weight:700;font-family:serif;border-bottom:1px solid #000;padding-bottom:4px;min-width:160px;display:inline-block">${log.opSigStart||log.opSig||'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</div>
+      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888888;margin-bottom:8px">Operator signature</div>
+      <div style="font-size:18px;font-weight:700;font-family:serif;border-bottom:1px solid #000000;padding-bottom:4px;min-width:160px;display:inline-block">${log.opSigStart||log.opSig||'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</div>
     </div>
     <div style="flex:1">
-      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888;margin-bottom:8px">Supervisor review</div>
-      <div style="border-bottom:1px solid #000;padding-bottom:4px;min-width:160px;display:inline-block">&nbsp;</div>
+      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888888;margin-bottom:8px">Supervisor review</div>
+      <div style="border-bottom:1px solid #000000;padding-bottom:4px;min-width:160px;display:inline-block">&nbsp;</div>
     </div>
     <div style="flex:1">
-      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888;margin-bottom:8px">Date reviewed</div>
-      <div style="border-bottom:1px solid #000;padding-bottom:4px;min-width:120px;display:inline-block">&nbsp;</div>
+      <div style="font-size:9px;text-transform:uppercase;font-weight:600;color:#888888;margin-bottom:8px">Date reviewed</div>
+      <div style="border-bottom:1px solid #000000;padding-bottom:4px;min-width:120px;display:inline-block">&nbsp;</div>
     </div>
   </div>
 
@@ -8887,7 +8407,7 @@ function _renderMachineCards(months) {
         <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:6px">
           <div style="height:100%;width:${util.toFixed(1)}%;background:${utilColor};border-radius:4px;transition:width .4s"></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);font-family:\'DM Mono\',monospace">
           <span>0%</span>
           <span style="color:var(--warn)">Target: 70%</span>
           <span>100%</span>
@@ -8947,19 +8467,19 @@ function _renderMonthlyTable(logs, svcRecs, billingRate) {
     const moLabel = new Date(parseInt(yr), parseInt(mon)-1, 1).toLocaleString('en-CA',{month:'short',year:'numeric'});
 
     return `<tr style="border-bottom:1px solid var(--border)">
-      <td style="padding:8px 12px;font-family:'DM Mono',monospace;font-size:11px">${moLabel}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">${d.hours.toFixed(1)}</td>
+      <td style="padding:8px 12px;font-family:\'DM Mono\',monospace;font-size:11px">${moLabel}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">${d.hours.toFixed(1)}</td>
       <td style="padding:8px 12px;text-align:right">
         <span style="font-size:11px;font-weight:600;color:${utilColor}">${util.toFixed(1)}%</span>
         <div style="height:3px;background:var(--border);margin-top:3px;border-radius:2px;width:60px;margin-left:auto">
           <div style="height:100%;width:${util.toFixed(0)}%;background:${utilColor};border-radius:2px"></div>
         </div>
       </td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">$${d.revenue.toFixed(0)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">$${d.fuelCost.toFixed(0)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-muted)">$${maint.toFixed(0)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:600">$${cph.toFixed(2)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">${billingRate > 0 ? '$'+billingRate.toFixed(2) : '—'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">$${d.revenue.toFixed(0)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;color:var(--text-muted)">$${d.fuelCost.toFixed(0)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;color:var(--text-muted)">$${maint.toFixed(0)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600">$${cph.toFixed(2)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">${billingRate > 0 ? '$'+billingRate.toFixed(2) : '—'}</td>
       <td style="padding:8px 12px;text-align:right;font-size:11px;font-weight:600;color:${marginColor}">${d.revenue > 0 ? margin.toFixed(1)+'%' : '—'}</td>
     </tr>`;
   }).join('');
@@ -8998,12 +8518,12 @@ function _renderOperatorTable(logs, billingRate) {
           <div style="font-size:13px">${op}</div>
         </div>
       </td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">${d.shifts}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;font-weight:600">${d.hours.toFixed(1)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">${avgShift.toFixed(1)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px">${d.fuel.toFixed(0)}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:${lPerHr > 12 ? '#ef5350' : lPerHr > 8 ? 'var(--warn)' : 'var(--ok)'}">${d.hours > 0 ? lPerHr.toFixed(1) : '—'}</td>
-      <td style="padding:8px 12px;text-align:right;font-family:'DM Mono',monospace;font-size:11px;color:var(--ok)">${billingRate > 0 ? '$'+rev.toFixed(0) : '—'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">${d.shifts}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600">${d.hours.toFixed(1)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">${avgShift.toFixed(1)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px">${d.fuel.toFixed(0)}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;color:${lPerHr > 12 ? '#ef5350' : lPerHr > 8 ? 'var(--warn)' : 'var(--ok)'}">${d.hours > 0 ? lPerHr.toFixed(1) : '—'}</td>
+      <td style="padding:8px 12px;text-align:right;font-family:\'DM Mono\',monospace;font-size:11px;color:var(--ok)">${billingRate > 0 ? '$'+rev.toFixed(0) : '—'}</td>
     </tr>`;
   }).join('');
 }
@@ -9106,30 +8626,30 @@ function renderHSTRemittance() {
 
     html += `<div style="border:1px solid var(--border);background:var(--surface);margin-bottom:8px">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)">
-        <div style="font-size:13px;font-weight:600">${year} ${q.label} &nbsp;<span style="font-size:11px;font-weight:400;color:var(--text-muted)">${q.months.map(m=>['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec')[parseInt(m)-1]).join('–')}</span></div>
+        <div style="font-size:13px;font-weight:600">${year} ${q.label} &nbsp;<span style="font-size:11px;font-weight:400;color:var(--text-muted)">${q.months.map(m=>['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][parseInt(m)-1]).join('–')}</span></div>
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace">Due ${q.deadline}</span>
+          <span style="font-size:10px;color:var(--text-muted);font-family:\'DM Mono\',monospace">Due ${q.deadline}</span>
           ${isPast && collected === 0 ? '<span style="font-size:10px;padding:2px 7px;background:var(--surface2);color:var(--text-muted);font-family:\'DM Mono\',monospace">NO DATA</span>' : ''}
         </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--border)">
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">HST collected</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">HST collected</div>
           <div style="font-size:18px;font-weight:600">$${collected.toFixed(2)}</div>
           <div style="font-size:10px;color:var(--text-muted)">${qInv.length} invoice${qInv.length!==1?'s':''}</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">ITCs — fuel</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">ITCs — fuel</div>
           <div style="font-size:18px;font-weight:600">($${qFuelITC.toFixed(2)})</div>
           <div style="font-size:10px;color:var(--text-muted)">HST on fuel inputs</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">ITCs — parts</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">ITCs — parts</div>
           <div style="font-size:18px;font-weight:600">($${qPartsITC.toFixed(2)})</div>
           <div style="font-size:10px;color:var(--text-muted)">HST on parts/maint</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Net remittance due</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Net remittance due</div>
           <div style="font-size:18px;font-weight:700;color:${remit>0?'#ef5350':'var(--ok)'}">$${remit.toFixed(2)}</div>
           <div style="font-size:10px;color:var(--text-muted)">Payable to CRA</div>
         </div>
@@ -9140,8 +8660,8 @@ function renderHSTRemittance() {
   html += `<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--border);background:var(--surface2);margin-top:4px">
     <div style="font-size:13px;font-weight:600">${year} Annual Total</div>
     <div style="display:flex;gap:2rem">
-      <div style="text-align:right"><div style="font-size:9px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase">HST collected</div><div style="font-weight:700">$${yearHSTCollected.toFixed(2)}</div></div>
-      <div style="text-align:right"><div style="font-size:9px;color:var(--text-muted);font-family:'DM Mono',monospace;text-transform:uppercase">Net remittance</div><div style="font-weight:700;color:${yearHSTRemit>0?'#ef5350':'var(--ok)'}">$${yearHSTRemit.toFixed(2)}</div></div>
+      <div style="text-align:right"><div style="font-size:9px;color:var(--text-muted);font-family:\'DM Mono\',monospace;text-transform:uppercase">HST collected</div><div style="font-weight:700">$${yearHSTCollected.toFixed(2)}</div></div>
+      <div style="text-align:right"><div style="font-size:9px;color:var(--text-muted);font-family:\'DM Mono\',monospace;text-transform:uppercase">Net remittance</div><div style="font-weight:700;color:${yearHSTRemit>0?'#ef5350':'var(--ok)'}">$${yearHSTRemit.toFixed(2)}</div></div>
     </div>
   </div>
   <div style="margin-top:10px;display:flex;gap:8px">
@@ -9218,29 +8738,29 @@ function renderDepreciationPanel() {
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)">
         <div>
           <div style="font-size:13px;font-weight:600">${m.id} <span style="font-weight:400;color:var(--text-muted)">${m.model}</span></div>
-          <div style="font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace">${CCA_CLASSES[ccaClass]?.label || 'Class ' + ccaClass} · ${(ccaRate*100).toFixed(0)}%/yr · Half-year rule applied</div>
+          <div style="font-size:10px;color:var(--text-muted);font-family:\'DM Mono\',monospace">${CCA_CLASSES[ccaClass]?.label || 'Class ' + ccaClass} · ${(ccaRate*100).toFixed(0)}%/yr · Half-year rule applied</div>
         </div>
         <button class="btn btn-secondary btn-sm" onclick="openDeprModal('${m.id}')">Edit depreciation details</button>
       </div>
       ${purchase > 0 ? `
       <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--border)">
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Purchase price</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Purchase price</div>
           <div style="font-size:17px;font-weight:600">$${purchase.toLocaleString('en-CA',{maximumFractionDigits:0})}</div>
           <div style="font-size:10px;color:var(--text-muted)">${m.purchaseYear || '—'}</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Current UCC</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Current UCC</div>
           <div style="font-size:17px;font-weight:600">$${currentUCC.toLocaleString('en-CA',{maximumFractionDigits:0})}</div>
           <div style="font-size:10px;color:var(--text-muted)">Undepreciated capital cost</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">${thisYear} CCA deduction</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">${thisYear} CCA deduction</div>
           <div style="font-size:17px;font-weight:600;color:var(--ok)">$${(currentYear?.cca||0).toLocaleString('en-CA',{maximumFractionDigits:0})}</div>
           <div style="font-size:10px;color:var(--text-muted)">Tax deduction this year</div>
         </div>
         <div style="background:var(--surface);padding:10px 14px">
-          <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Total depreciation</div>
+          <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">Total depreciation</div>
           <div style="font-size:17px;font-weight:600">$${totalDeprec.toLocaleString('en-CA',{maximumFractionDigits:0})}</div>
           <div style="font-size:10px;color:var(--text-muted)">${years} year${years!==1?'s':''} of ownership</div>
         </div>
@@ -9249,7 +8769,7 @@ function renderDepreciationPanel() {
         <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
           <div style="height:100%;width:${Math.min(100,(totalDeprec/purchase*100)).toFixed(0)}%;background:var(--warn);border-radius:3px;transition:width .4s"></div>
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:3px;font-family:'DM Mono',monospace">
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-muted);margin-top:3px;font-family:\'DM Mono\',monospace">
           <span>${(totalDeprec/purchase*100).toFixed(0)}% depreciated</span>
           <span>UCC remaining: ${(currentUCC/purchase*100).toFixed(0)}%</span>
         </div>
@@ -9348,7 +8868,7 @@ function renderARAgingPanel() {
 
   let html = `<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:1rem">
     ${bucketDefs.map(b=>`<div style="background:${b.bg};padding:10px 12px;border-left:3px solid ${b.color}">
-      <div style="font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">${b.label}</div>
+      <div style="font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px">${b.label}</div>
       <div style="font-size:18px;font-weight:700;color:${b.color}">$${total[b.key].toFixed(0)}</div>
       <div style="font-size:10px;color:var(--text-muted)">${buckets[b.key].length} invoice${buckets[b.key].length!==1?'s':''}</div>
     </div>`).join('')}
@@ -9357,7 +8877,7 @@ function renderARAgingPanel() {
   bucketDefs.forEach(b => {
     if (buckets[b.key].length === 0) return;
     html += `<div style="margin-bottom:8px">
-      <div style="font-size:10px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:${b.color};padding:5px 0;border-bottom:1px solid var(--border);margin-bottom:4px">${b.label}</div>
+      <div style="font-size:10px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:${b.color};padding:5px 0;border-bottom:1px solid var(--border);margin-bottom:4px">${b.label}</div>
       ${buckets[b.key].map(inv=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--border);margin-bottom:3px;background:var(--surface)">
         <div style="flex:1;min-width:0">
           <div style="font-size:12px;font-weight:500">${inv.invNum || inv.id} <span style="font-size:11px;font-weight:400;color:var(--text-muted)">— ${inv.jobName}</span></div>
@@ -9433,7 +8953,7 @@ function renderQuoteLines(lines) {
     <td style="padding:4px"><input type="number" class="form-input" value="${l.qty||1}" step="0.5" style="width:60px;font-size:12px;text-align:right" oninput="calcQuoteLine(${i})"></td>
     <td style="padding:4px"><select class="form-select" style="font-size:12px;padding:6px 8px"><option ${l.unit==='hr'?'selected':''}>hr</option><option ${l.unit==='day'?'selected':''}>day</option><option ${l.unit==='unit'?'selected':''}>unit</option><option ${l.unit==='ls'?'selected':''}>ls</option></select></td>
     <td style="padding:4px"><input type="number" class="form-input" value="${l.rate||''}" placeholder="0.00" step="0.01" style="width:80px;font-size:12px;text-align:right" oninput="calcQuoteLine(${i})"></td>
-    <td style="padding:4px;text-align:right;font-size:12px;font-family:'DM Mono',monospace" id="ql-amount-${i}">$${((parseFloat(l.qty)||0)*(parseFloat(l.rate)||0)).toFixed(2)}</td>
+    <td style="padding:4px;text-align:right;font-size:12px;font-family:\'DM Mono\',monospace" id="ql-amount-${i}">$${((parseFloat(l.qty)||0)*(parseFloat(l.rate)||0)).toFixed(2)}</td>
     <td style="padding:4px"><button onclick="removeQuoteLine(${i})" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:2px 6px">✕</button></td>
   </tr>`).join('');
   calcQuoteTotal();
@@ -9554,15 +9074,15 @@ function renderQuotesPanel() {
   const statusColor = { Draft:'var(--text-muted)', Sent:'#e6a817', Accepted:'var(--ok)', Declined:'#ef5350' };
   el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:12px">
     <thead><tr style="border-bottom:1px solid var(--border)">
-      ${['Quote #','Client / Job','Date','Valid','Amount','Status',''].map(h=>`<th style="padding:7px 12px;text-align:left;font-size:9px;font-family:'DM Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">${h}</th>`).join('')}
+      ${['Quote #','Client / Job','Date','Valid','Amount','Status',''].map(h=>`<th style="padding:7px 12px;text-align:left;font-size:9px;font-family:\'DM Mono\',monospace;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted)">${h}</th>`).join('')}
     </tr></thead>
     <tbody>${quotes.map(q=>`<tr style="border-bottom:1px solid var(--border)">
-      <td style="padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px">${q.id}</td>
+      <td style="padding:7px 12px;font-family:\'DM Mono\',monospace;font-size:11px">${q.id}</td>
       <td style="padding:7px 12px">${q.client||q.jobName||'—'}<div style="font-size:10px;color:var(--text-muted)">${q.address||''}</div></td>
-      <td style="padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px">${q.date||'—'}</td>
+      <td style="padding:7px 12px;font-family:\'DM Mono\',monospace;font-size:11px">${q.date||'—'}</td>
       <td style="padding:7px 12px;font-size:11px;color:var(--text-muted)">${q.validDays||30}d</td>
-      <td style="padding:7px 12px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600">$${(q.grandTotal||0).toFixed(2)}</td>
-      <td style="padding:7px 12px"><span style="font-size:10px;padding:2px 7px;border:1px solid currentColor;color:${statusColor[q.status]||'var(--text-muted)'}; font-family:'DM Mono',monospace">${q.status||'Draft'}</span></td>
+      <td style="padding:7px 12px;font-family:\'DM Mono\',monospace;font-size:11px;font-weight:600">$${(q.grandTotal||0).toFixed(2)}</td>
+      <td style="padding:7px 12px"><span style="font-size:10px;padding:2px 7px;border:1px solid currentColor;color:${statusColor[q.status]||'var(--text-muted)'}; font-family:\'DM Mono\',monospace">${q.status||'Draft'}</span></td>
       <td style="padding:7px 4px;display:flex;gap:4px;flex-wrap:wrap">
         ${q.status==='Accepted'&&q.convertedJobId ? `<button class="btn btn-secondary btn-sm" onclick="showView('jobs')">View Job</button>` : `<button class="btn btn-secondary btn-sm" onclick="editQuote('${q.id}')">Edit</button>`}
         ${(!q.convertedJobId && q.status!=='Declined') ? `<button class="btn btn-primary btn-sm" onclick="convertQuoteToJob('${q.id}')">→ Job</button>` : ''}

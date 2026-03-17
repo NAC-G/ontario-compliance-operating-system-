@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>NAC OS Fleet Logbook — QR Code Sheet</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
 
   /* ── CONFIGURE PANEL (screen only) ── */
   .config-panel {
-    background: #111; border-bottom: 2px solid var(--green);
+    background: #111111; border-bottom: 2px solid var(--green);
     padding: 1.5rem 2rem; display: flex; gap: 2rem; align-items: flex-end;
     flex-wrap: wrap;
   }
   .config-panel h1 {
     font-family: 'Playfair Display', serif; font-size: 1.3rem;
-    font-weight: 900; color: #fff; margin-bottom: 0.25rem;
+    font-weight: 900; color: #ffffff; margin-bottom: 0.25rem;
   }
   .config-eyebrow {
     font-family: 'DM Mono', monospace; font-size: 8px;
@@ -37,12 +37,12 @@
   }
   .config-input {
     background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
-    color: #fff; font-family: 'DM Mono', monospace; font-size: 12px;
+    color: #ffffff; font-family: 'DM Mono', monospace; font-size: 12px;
     padding: 0.5rem 0.75rem; outline: none; min-width: 280px;
   }
   .config-input:focus { border-color: var(--green); }
   .config-btn {
-    background: var(--green); color: #fff; border: none;
+    background: var(--green); color: #ffffff; border: none;
     font-family: 'DM Mono', monospace; font-size: 10px;
     letter-spacing: 0.15em; text-transform: uppercase;
     padding: 0.6rem 1.5rem; cursor: pointer; white-space: nowrap;
@@ -55,16 +55,16 @@
   }
 
   /* Machine row adder */
-  .machine-adder { background: #1a1a1a; padding: 1rem 2rem; border-bottom: 1px solid #333; display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
-  .adder-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: #fff; font-family: 'DM Mono', monospace; font-size: 11px; padding: 0.4rem 0.75rem; outline: none; }
+  .machine-adder { background: #1a1a1a; padding: 1rem 2rem; border-bottom: 1px solid #333333; display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; }
+  .adder-input { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: #ffffff; font-family: 'DM Mono', monospace; font-size: 11px; padding: 0.4rem 0.75rem; outline: none; }
   .adder-input:focus { border-color: var(--green); }
   .adder-input::placeholder { color: rgba(255,255,255,0.2); }
   .adder-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
   .adder-group { display: flex; flex-direction: column; }
-  .adder-btn { background: #333; color: #fff; border: 1px solid #444; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; align-self: flex-end; }
-  .adder-btn:hover { background: #444; }
+  .adder-btn { background: #333333; color: #ffffff; border: 1px solid #444444; font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 1rem; cursor: pointer; align-self: flex-end; }
+  .adder-btn:hover { background: #444444; }
   .adder-btn.remove { background: rgba(198,40,40,0.15); border-color: rgba(198,40,40,0.3); color: #ef5350; }
-  .machine-list { padding: 0.5rem 2rem; background: #1a1a1a; border-bottom: 1px solid #333; }
+  .machine-list { padding: 0.5rem 2rem; background: #1a1a1a; border-bottom: 1px solid #333333; }
   .machine-tag {
     display: inline-flex; align-items: center; gap: 0.5rem;
     background: rgba(46,125,50,0.1); border: 1px solid rgba(46,125,50,0.25);
@@ -76,7 +76,7 @@
 
   /* ── PRINT SHEET ── */
   .print-area {
-    background: #fff; max-width: 860px; margin: 2rem auto;
+    background: #ffffff; max-width: 860px; margin: 2rem auto;
     padding: 2.5rem; box-shadow: 0 2px 20px rgba(0,0,0,0.08);
   }
 
@@ -127,7 +127,7 @@
   }
   .qr-card-model { font-size: 10px; color: var(--body); }
   .qr-code-box {
-    background: #fff; padding: 10px; border: 1px solid var(--line);
+    background: #ffffff; padding: 10px; border: 1px solid var(--line);
     display: flex; align-items: center; justify-content: center;
   }
   .qr-card-instructions {
@@ -141,7 +141,7 @@
     font-family: 'DM Mono', monospace; width: 100%; text-align: left;
   }
   .qr-card-step-num {
-    background: var(--green); color: #fff; width: 14px; height: 14px;
+    background: var(--green); color: #ffffff; width: 14px; height: 14px;
     display: flex; align-items: center; justify-content: center;
     font-size: 7px; flex-shrink: 0; font-weight: 700;
   }
@@ -189,12 +189,12 @@
   }
   .sheet-footer-text {
     font-family: 'DM Mono', monospace; font-size: 8px;
-    letter-spacing: 0.12em; text-transform: uppercase; color: #bbb;
+    letter-spacing: 0.12em; text-transform: uppercase; color: #bbbbbb;
   }
 
   /* Screen toolbar */
   .screen-toolbar {
-    background: #111; padding: 0.75rem 2rem;
+    background: #111111; padding: 0.75rem 2rem;
     display: flex; gap: 1rem; align-items: center;
   }
   .toolbar-btn {
@@ -202,8 +202,8 @@
     letter-spacing: 0.13em; text-transform: uppercase;
     padding: 0.5rem 1.25rem; cursor: pointer; border: none;
   }
-  .toolbar-btn-primary { background: var(--green); color: #fff; }
-  .toolbar-btn-secondary { background: #333; color: #fff; }
+  .toolbar-btn-primary { background: var(--green); color: #ffffff; }
+  .toolbar-btn-secondary { background: #333333; color: #ffffff; }
   .toolbar-btn:hover { opacity: 0.85; }
   .toolbar-note { font-size: 11px; color: rgba(255,255,255,0.3); }
 
@@ -211,7 +211,7 @@
   @media print {
     .config-panel, .machine-adder, .machine-list,
     .screen-toolbar, .no-print { display: none !important; }
-    body { background: #fff; }
+    body { background: #ffffff; }
     .print-area {
       box-shadow: none; margin: 0;
       padding: 1.5cm; max-width: 100%;
@@ -326,7 +326,7 @@
   </div>
 
   <div class="sheet-footer">
-    <div class="sheet-footer-text">NAC OS Fleet Logbook™ · Natural Alternatives · naturalalternatives.ca · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="066f686069466867727374676a676a7263746867726f706375286567">[email&#160;protected]</a></div>
+    <div class="sheet-footer-text">NAC OS Fleet Logbook™ · Natural Alternatives · naturalalternatives.ca · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="066f686069466867727374676a676a7263746867726f706375286567">[email&#116600;protected]</a></div>
     <div class="sheet-footer-text" id="sheet-date"></div>
   </div>
 
