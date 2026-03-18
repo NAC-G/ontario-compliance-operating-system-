@@ -71,6 +71,22 @@
     text-transform: uppercase;
     color: var(--green);
   }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
   .nav-cta {
     font-family: 'DM Mono', monospace;
     font-size: 9px;
@@ -427,43 +443,54 @@
     line-height: 1.7;
   }
 
-  /* Inline CTA form (bottom) */
+  /* Inline CTA form (bottom) - Redesigned for lighter, more elegant appearance */
   .inline-form {
     display: flex;
-    gap: 0;
-    max-width: 480px;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 420px;
     margin: 0 auto;
   }
-  .inline-form input {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-right: none;
+  .inline-form input[type="email"] {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(46,125,50,0.25);
+    border-radius: 6px;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     font-size: 0.9rem;
-    padding: 0.85rem 1rem;
+    padding: 0.85rem 1.15rem;
     outline: none;
-    transition: border-color 0.2s;
-    border-radius: 0;
+    transition: all 0.25s ease;
   }
-  .inline-form input:focus { border-color: var(--green); }
+  .inline-form input[type="email"]:focus {
+    border-color: var(--green);
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+  }
   .inline-form input::placeholder { color: var(--text-muted); }
   .inline-form button {
-    background: var(--green);
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
     color: #ffffff;
-    border: 1px solid var(--green);
+    border: none;
+    border-radius: 6px;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    padding: 0.85rem 1.5rem;
+    padding: 0.95rem 2rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.25s ease;
     white-space: nowrap;
-    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(46,125,50,0.2);
   }
-  .inline-form button:hover { background: var(--green-deep); }
+  .inline-form button:hover { 
+    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green) 100%);
+    box-shadow: 0 6px 20px rgba(46,125,50,0.35);
+    transform: translateY(-1px);
+  }
+  .inline-form button:active {
+    transform: translateY(0);
+  }
 
   /* ── FOOTER ── */
   footer {
@@ -520,8 +547,6 @@
     .proof-item { border-right: none; padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
     .proof-item:last-child { border-bottom: none; padding-bottom: 0; }
     .bottom-cta { padding: 4rem 1.5rem; }
-    .inline-form { flex-direction: column; }
-    .inline-form input { border-right: 1px solid var(--border); border-bottom: none; }
     footer { padding: 2rem 1.5rem; }
   }
 </style>
@@ -531,7 +556,12 @@
 <!-- NAV -->
 <nav>
   <div class="nav-brand">Natural Alternatives · OCOS™</div>
-  <a href="pricing.html" class="nav-cta">View Full System →</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Overview</a></li>
+    <li><a href="contractor-os.html">Fleet Logbook</a></li>
+    <li><a href="pricing.html#practitioner-panel">OCOS Partner License</a></li>
+    <li><a href="pricing.html" class="nav-cta">View Full System →</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
