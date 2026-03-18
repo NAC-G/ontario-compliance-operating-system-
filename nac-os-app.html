@@ -3363,7 +3363,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
         <div class="upgrade-option" onclick="purchaseOption('fleet')">
           <div class="upgrade-option-left">
             <div class="upgrade-option-name">Fleet License</div>
-            <div class="upgrade-option-desc">Unlimited machines · All updates included · Best value at 4+ machines</div>
+            <div class="upgrade-option-desc">Multiple machines · All updates included · Best value at 4+ machines</div>
           </div>
           <div class="upgrade-option-price">$1,297<small>CAD · per year</small></div>
         </div>
@@ -3430,7 +3430,7 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
                 <span style="font-family:'DM Mono',monospace;font-size:9px;background:rgba(46,125,50,0.2);color:var(--green);padding:1px 5px">T3</span>
                 Financial &amp; CRA Compliance
               </div>
-              <div class="upgrade-option-desc">Unlimited machines · compliance dashboard · custom checklists</div>
+              <div class="upgrade-option-desc">Multiple machines · compliance dashboard · custom checklists</div>
             </div>
             <div style="text-align:right;flex-shrink:0">
               <div class="upgrade-option-price" style="margin:0">$597<small>CAD</small></div>
@@ -3733,7 +3733,7 @@ function renderLicensePanel() {
 
   // --- Machine limit display ---
   const limit     = getMachineLimit();
-  const limitStr  = limit === Infinity ? 'Unlimited' : String(limit);
+  const limitStr  = limit === Infinity ? 'Multiple' : String(limit);
   const machineRow = (v && v.valid && v.prefix === 'SOLO' && addOns > 0)
     ? `<div style="font-size:11.5px;color:var(--text-dim);margin-top:6px">1 Solo + ${addOns} Add-on${addOns > 1 ? 's' : ''} = ${limitStr} machine${limit > 1 ? 's' : ''} licensed</div>`
     : `<div style="font-size:11.5px;color:var(--text-dim);margin-top:6px">Machine limit: <span style="color:var(--text);font-weight:600">${limitStr}</span> &nbsp;·&nbsp; Currently registered: <span style="color:var(--text)">${state.machines.length}</span></div>`;
@@ -3783,7 +3783,7 @@ function renderLicensePanel() {
         <span style="font-weight:600;color:var(--text)">Add-on</span> — $247 one-time · +1 machine
       </div>
       <div style="font-size:11px;color:var(--text-dim)">
-        <span style="font-weight:600;color:var(--text)">Fleet</span> — $1,497/yr · Unlimited machines
+        <span style="font-weight:600;color:var(--text)">Fleet</span> — $1,497/yr · Multiple machines
       </div>
       <a href="mailto:info@naturalalternatives.ca?subject=NAC%20OS%20License%20Purchase" style="font-size:11px;color:var(--green)">Purchase →</a>
     </div>`;
@@ -7768,7 +7768,7 @@ function purchaseOption(type) {
     confirmText = 'Machine Add-on purchase initiated. You\'ll receive a confirmation email and your machine slot will be activated within 24 hours.';
   } else if (type === 'fleet') {
     link = STRIPE_LINKS.fleet;
-    confirmText = 'Fleet License upgrade initiated. Unlimited machines will be unlocked within 24 hours of payment confirmation.';
+    confirmText = 'Fleet License upgrade initiated. Multiple machines will be unlocked within 24 hours of payment confirmation.';
   } else if (type === 'bundle') {
     _bundleSelected = true;
     _ocosSelected   = new Set([1,2,3]);
