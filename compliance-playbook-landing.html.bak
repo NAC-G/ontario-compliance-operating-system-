@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>The Ontario Contractor Compliance Playbook — Free Download · Natural Alternatives</title>
+<meta name="description" content="What OHSA actually requires, the 5 violations that get Ontario contractors fined, WSIB clearance, and a 30-day compliance checklist. Free download.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:      #2E7D32;
+    --green-deep: #1B5E20;
+    --green-glow: rgba(46,125,50,0.15);
+    --green-line: rgba(46,125,50,0.3);
+    --ink:        #0A0C0A;
+    --surface:    #111411;
+    --panel:      #161A16;
+    --border:     rgba(255,255,255,0.07);
+    --text:       #F0EDE8;
+    --text-dim:   rgba(240,237,232,0.55);
+    --text-muted: rgba(240,237,232,0.3);
+    --warn:       #E65100;
+    --warn-bg:    rgba(230,81,0,0.12);
+    --warn-line:  rgba(230,81,0,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Grid texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(46,125,50,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(46,125,50,0.04) 40px);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10,12,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    transition: all 0.2s;
+  }
+  .nav-cta:hover { border-color: var(--green-line); color: var(--green); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0;
+    padding-top: 5rem;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 5rem 3rem 5rem 4rem;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px;
+    height: 1.5px;
+    background: var(--green);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.08;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Penalty callout */
+  .penalty-bar {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-line);
+    padding: 1rem 1.25rem;
+    margin-bottom: 2rem;
+    max-width: 440px;
+  }
+  .penalty-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .penalty-text { font-size: 0.82rem; color: #ffcc80; line-height: 1.6; }
+  .penalty-text strong { color: #ffffff; }
+
+  /* ── FORM PANEL ── */
+  .hero-right {
+    padding: 5rem 4rem 5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .form-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-card::before {
+    content: 'FREE';
+    position: absolute;
+    top: 1.25rem; right: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    color: var(--green);
+    background: rgba(46,125,50,0.1);
+    border: 1px solid var(--green-line);
+    padding: 3px 8px;
+  }
+
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .form-sub {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .form-field { margin-bottom: 1rem; }
+  .form-label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+  .form-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-input::placeholder { color: var(--text-muted); }
+  .form-input:focus { border-color: var(--green); }
+
+  .form-btn {
+    width: 100%;
+    background: var(--green);
+    color: #ffffff;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-btn:hover { background: var(--green-deep); }
+  .form-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-btn .btn-arrow { margin-left: 0.5rem; transition: transform 0.2s; display: inline-block; }
+  .form-btn:hover .btn-arrow { transform: translateX(4px); }
+
+  .form-note {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 0.9rem;
+    line-height: 1.6;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .form-note a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  .form-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* Remove underlines from all form links (consent labels, etc.) */
+  label a {
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  label a:hover {
+    opacity: 0.8;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+  .form-success.show { display: block; }
+  .form-success .success-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .form-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  .form-success p { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1.25rem; }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--green);
+    color: #ffffff;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.5rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .download-btn:hover { background: var(--green-deep); }
+
+  /* ── WHAT'S INSIDE ── */
+  .inside {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .inside-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+  }
+
+  .inside-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .inside-item {
+    padding: 2rem 1.75rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.2s;
+  }
+  .inside-item:hover { background: var(--panel); }
+  .inside-item:last-child { border-right: none; }
+
+  .inside-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+  }
+  .inside-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+  }
+  .inside-body {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* Page count badge */
+  .inside-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green);
+    background: rgba(46,125,50,0.08);
+    border: 1px solid var(--green-line);
+    padding: 2px 7px;
+    margin-top: 0.75rem;
+  }
+
+  /* ── PROOF STRIP ── */
+  .proof {
+    position: relative;
+    z-index: 1;
+    padding: 4rem;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .proof-item {
+    padding: 0 2.5rem;
+    border-right: 1px solid var(--border);
+  }
+  .proof-item:first-child { padding-left: 0; }
+  .proof-item:last-child { border-right: none; }
+
+  .proof-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--green);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .proof-label {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 4rem;
+    text-align: center;
+  }
+  .bottom-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .bottom-cta h2 em { font-style: italic; color: var(--green); }
+  .bottom-cta p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  /* Inline CTA form (bottom) */
+  .inline-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .inline-form input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: none;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 0;
+  }
+  .inline-form input:focus { border-color: var(--green); }
+  .inline-form input::placeholder { color: var(--text-muted); }
+  .inline-form button {
+    background: var(--green);
+    color: #ffffff;
+    border: 1px solid var(--green);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.85rem 1.5rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+  .inline-form button:hover { background: var(--green-deep); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .footer-links a {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--green); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+  h1             { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+  .hero-sub      { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
+  .penalty-bar   { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+  .form-card     { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { border-right: none; border-bottom: 1px solid var(--border); padding: 4rem 1.5rem 3rem; }
+    .hero-right { padding: 3rem 1.5rem 4rem; }
+    .inside { padding: 4rem 1.5rem; }
+    .proof { grid-template-columns: 1fr; gap: 2rem; }
+    .proof-item { border-right: none; padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+    .proof-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .bottom-cta { padding: 4rem 1.5rem; }
+    .inline-form { flex-direction: column; }
+    .inline-form input { border-right: 1px solid var(--border); border-bottom: none; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Natural Alternatives · OCOS™</div>
+  <a href="pricing.html" class="nav-cta">View Full System →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Free Download · Ontario Compliance</div>
+    <h1>The Ontario Contractor<br><em>Compliance Playbook.</em></h1>
+    <p class="hero-sub">What OHSA actually requires on a construction site. The 5 violations that get Ontario contractors fined. WSIB clearance explained. A 30-day checklist to get compliant before your next inspection.</p>
+
+    <div class="penalty-bar">
+      <div class="penalty-icon">⚠</div>
+      <div class="penalty-text">
+        <strong>MOL inspectors issued 18,000+ orders last year.</strong> Most violations aren't from not caring — they're from not knowing exactly what's required. This playbook closes that gap.
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="form-card">
+      <!-- Form state -->
+      <div id="form-wrap">
+        <div class="form-title">Get the Playbook</div>
+        <p class="form-sub">7 pages. No filler. Written for Ontario construction, excavation, and landscaping operators.</p>
+
+        <form id="lead-form" action="https://formspree.io/f/mzdjkneq" method="POST">
+          <!-- ↑ Replace FORMSPREE_ID with your Formspree form ID -->
+          <input type="hidden" name="_subject" value="Compliance Playbook Download">
+          <input type="hidden" name="_next" value="thank-you.html">
+
+          <div class="form-field">
+            <label class="form-label" for="fname">Your name</label>
+            <input class="form-input" type="text" id="fname" name="name" placeholder="First and last name" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="femail">Work email</label>
+            <input class="form-input" type="email" id="femail" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="fcompany">Company (optional)</label>
+            <input class="form-input" type="text" id="fcompany" name="company" placeholder="Business name">
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 .75rem;">
+            <input type="checkbox" id="casl-consent-1" name="casl_consent" value="yes" required
+              style="margin-top:.2rem;accent-color:#2E7D32;width:15px;height:15px;flex-shrink:0;">
+            <label for="casl-consent-1" style="font-size:.73rem;color:rgba(240,237,232,0.45);line-height:1.55;cursor:pointer;">
+              I agree to receive emails from Natural Alternatives about compliance resources and product updates. 
+              Unsubscribe anytime. <a href="privacy-policy.html" style="color:#2E7D32;">Privacy Policy</a> · <a href="terms-of-service.html" style="color:#2E7D32;">Terms of Service</a>.
+            </label>
+          </div>
+          <button class="form-btn" type="submit" id="submit-btn">
+            Send Me the Playbook <span class="btn-arrow">→</span>
+          </button>
+          <p class="form-note">No spam. One email with the download link. You can opt out any time. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="51383f373e113f30252423303d303d2534233f3025382734227f3230">[email&#116600;protected]</a></p>
+        </form>
+      </div>
+
+      <!-- Success state (shown after JS intercept) -->
+      <div class="form-success" id="form-success">
+        <div class="success-icon">✓</div>
+        <h3>Check your inbox.</h3>
+        <p>The playbook is on its way to your email. Download it below right now if you don't want to wait.</p>
+        <a href="ontario-contractor-compliance-playbook.pdf" class="download-btn" download>
+          ↓ Download Playbook PDF
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP -->
+<div class="proof">
+  <div class="proof-item">
+    <div class="proof-num">5</div>
+    <div class="proof-label">Specific violations that trigger MOL stop-work orders — with the exact penalty amounts.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">30</div>
+    <div class="proof-label">Day checklist. Items you can action immediately, before your next site inspection.</div>
+  </div>
+  <div class="proof-item">
+    <div class="proof-num">O.Reg<br>213/91</div>
+    <div class="proof-label">The construction regulation explained in plain language — what it requires, what it doesn't.</div>
+  </div>
+</div>
+
+<!-- WHAT'S INSIDE -->
+<section class="inside">
+  <div class="inside-eyebrow">What's inside the playbook</div>
+  <div class="inside-grid">
+    <div class="inside-item">
+      <div class="inside-num">01 · OHSA</div>
+      <div class="inside-title">What the Act Actually Requires</div>
+      <div class="inside-body">The five employer obligations every Ontario contractor is legally responsible for — written in plain language, not legislative. Includes the 10-item pre-shift inspection standard.</div>
+      <span class="inside-badge">O.Reg 213/91 · OHSA S.25</span>
+    </div>
+    <div class="inside-item">
+      <div class="inside-num">02 · FINES</div>
+      <div class="inside-title">The 5 Violations That Get Contractors Fined</div>
+      <div class="inside-body">The specific deficiencies MOL inspectors flag most often — incomplete inspection records, missing competent supervisor documentation, inadequate fall protection, WHMIS gaps, and more. Penalty amounts included.</div>
+      <span class="inside-badge">Up to $100,000 · Individual / $500,000 · Corporation</span>
+    </div>
+    <div class="inside-item">
+      <div class="inside-num">03 · WSIB</div>
+      <div class="inside-title">Clearance Certificates & Subcontractor Obligations</div>
+      <div class="inside-body">Which WSIB premium category applies to your work, what clearance certificates are required before you start, and the 3-step process to verify a subcontractor's standing before they set foot on site.</div>
+      <span class="inside-badge">Independent Operators · Subcontractors</span>
+    </div>
+    <div class="inside-item">
+      <div class="inside-num">04 · CRA</div>
+      <div class="inside-title">HST, ITCs, and Equipment Depreciation</div>
+      <div class="inside-body">HST registration threshold, how Input Tax Credits work on equipment purchases, and the CCA Class 38/10 depreciation rules with a worked example for a $150,000 excavator.</div>
+      <span class="inside-badge">HST · CCA Class 38 · Half-Year Rule</span>
+    </div>
+    <div class="inside-item">
+      <div class="inside-num">05 · CHECKLIST</div>
+      <div class="inside-title">30-Day Compliance Action Plan</div>
+      <div class="inside-body">12 actionable items. Each one is something you can complete yourself — no consultant required. Work through it in order and you'll cover the ground MOL inspectors look at first.</div>
+      <span class="inside-badge">12 Items · Printable Checklist</span>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <h2>Get compliant before<br><em>they show up.</em></h2>
+  <p>The playbook is free. Takes 20 minutes to read. Most contractors find at least one item in the checklist they haven't addressed — better to find it now than during a stop-work order.</p>
+
+  <form class="inline-form" id="bottom-form" action="https://formspree.io/f/mzdjkneq" method="POST">
+    <input type="hidden" name="_subject" value="Compliance Playbook Download (Bottom)">
+    <input type="hidden" name="_next" value="thank-you.html">
+    <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+    <div style="display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 .75rem;">
+      <input type="checkbox" id="casl-consent-2" name="casl_consent" value="yes" required
+        style="margin-top:.2rem;accent-color:#2E7D32;width:15px;height:15px;flex-shrink:0;">
+      <label for="casl-consent-2" style="font-size:.73rem;color:rgba(240,237,232,0.45);line-height:1.55;cursor:pointer;">
+        I agree to receive emails from Natural Alternatives about compliance resources and product updates. 
+        Unsubscribe anytime. <a href="privacy-policy.html" style="color:#2E7D32;">Privacy Policy</a> · <a href="terms-of-service.html" style="color:#2E7D32;">Terms of Service</a>.
+      </label>
+    </div>
+    <button type="submit">Get the Playbook →</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">© Natural Alternatives · Ontario Compliance Operating System™</div>
+  <ul class="footer-links">
+    <li><a href="pricing.html">OCOS Pricing</a></li>
+    <li><a href="contractor-os.html">Fleet Logbook</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#7811161e173816190c0d0a191419140c1d0a16190c110e1d0b561b19">Contact</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Form intercept — show inline success + download link ──
+document.getElementById('lead-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  const formData = new FormData(this);
+
+  try {
+    const res = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+    } else {
+      // Fallback — still show success and let them download
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+    }
+  } catch {
+    // Network error — still surface the download
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  }
+});
+
+// ── Bottom form — same pattern ──
+document.getElementById('bottom-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  const formData = new FormData(this);
+
+  try {
+    await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+  } catch {}
+
+  // Replace form with download link
+  this.innerHTML = '<a href="ontario-contractor-compliance-playbook.pdf" download style="display:inline-flex;align-items:center;gap:0.5rem;background:#2E7D32;color:#ffffff;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.85rem 1.5rem;text-decoration:none;">↓ Download Now</a><p style="margin-top:0.75rem;font-size:11px;color:rgba(240,237,232,0.4);font-family:\'DM Mono\',monospace">Check your inbox too — we\'re sending a copy there.</p>';
+});
+
+// ── Scroll reveal ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+docu
