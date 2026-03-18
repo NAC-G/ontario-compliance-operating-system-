@@ -255,6 +255,22 @@
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.04em;
   }
+  .form-note a {
+    color: var(--green);
+    text-decoration: none;
+  }
+  .form-note a:hover {
+    text-decoration: underline;
+  }
+
+  /* Remove underlines from all form links (consent labels, etc.) */
+  label a {
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  label a:hover {
+    opacity: 0.8;
+  }
 
   /* Success state */
   .form-success {
