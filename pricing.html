@@ -68,6 +68,9 @@
   .tab-btn:last-child { border-right: 1.5px solid var(--line); }
   .tab-btn.active { background: var(--graphite); color: var(--white); border-color: var(--graphite); }
   .tab-btn:hover:not(.active) { background: var(--white); color: var(--graphite); }
+  
+  /* Cloudflare Rocket Loader fallback - ensure tab panels are visible */
+  .tab-panel { opacity: 1 !important; }
 
   .pricing-section { padding: 4rem 4rem 6rem; max-width: 1300px; margin: 0 auto; }
   .tab-panel { display: none; }
@@ -572,9 +575,52 @@
     <li><a href="OCOS_Tier3.html">Tier 3</a></li>
     <li><a href="ocos-partner-terms.html">OCOS Partner Terms</a></li>
   </ul>
+  <span class="footer-tm">© Natural Alternatives. Ontario Compliance Operating System™ is a trademark of Natural Alternatives. All rights reserved.</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
   <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
   &nbsp;·&nbsp;
   <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
   &nbsp;·&nbsp; © Natural Alternatives
 </div>
+
+<script data-cfasync="false">
+// Tab switching function for pricing page
+function switchTab(panelId, clickedBtn) {
+  // Hide all panels
+  const panels = document.querySelectorAll('.tab-panel');
+  panels.forEach(panel => panel.classList.remove('active'));
+  
+  // Remove active class from all buttons
+  const buttons = document.querySelectorAll('.tab-btn');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  
+  // Show selected panel
+  const targetPanel = document.getElementById(panelId);
+  if (targetPanel) {
+    targetPanel.classList.add('active');
+  }
+  
+  // Add active class to clicked button
+  if (clickedBtn) {
+    clickedBtn.classList.add('active');
+  }
+}
+
+// Ensure first tab is active on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const firstPanel = document.getElementById('individual-panel');
+  const firstBtn = document.querySelector('.tab-btn');
+  if (firstPanel && !firstPanel.classList.contains('active')) {
+    firstPanel.classList.add('active');
+  }
+  if (firstBtn && !firstBtn.classList.contains('active')) {
+    firstBtn.classList.add('active');
+  }
+});
+</script>
+
+</body>
+</html>

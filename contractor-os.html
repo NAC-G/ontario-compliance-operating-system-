@@ -267,6 +267,9 @@
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .rd1 { transition-delay: 0.1s; } .rd2 { transition-delay: 0.2s; } .rd3 { transition-delay: 0.3s; }
+  
+  /* Cloudflare Rocket Loader fallback - ensure content is visible even if JS fails */
+  .reveal { opacity: 1 !important; }
 
   @media (max-width: 1100px) {
     .hero-inner, .what-grid, .features-header, .pm-header, .pricing-header, .workflow-header { grid-template-columns: 1fr; gap: 3rem; }
@@ -742,8 +745,8 @@
   &nbsp;·&nbsp; © Natural Alternatives
 </div>
 
-<script>
-// Reveal on scroll
+<script data-cfasync="false">
+// Reveal on scroll - IntersectionObserver for scroll animations
 const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
