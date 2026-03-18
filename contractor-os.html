@@ -286,7 +286,7 @@
     <span class="nav-logo-main">NAC OS Fleet Logbook™</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#ffeeaatures">Features</a></li>
+    <li><a href="#features">Features</a></li>
     <li><a href="#pm">PM Schedule</a></li>
     <li><a href="#workflow">How It Works</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -314,7 +314,7 @@
       <p class="hero-sub">The NAC OS Fleet Logbook — a browser-based fleet operating system. QR scan-start shifts, meter reading capture, PM scheduling with OEM part numbers, operator timesheets, invoicing, AR aging, HST remittance, and CCA depreciation. Built around the CASE 580SN — ready for any machine.</p>
       <div class="hero-actions">
         <a href="#pricing" class="btn-primary">Get Early Access ↗</a>
-        <a href="#ffeeaatures" class="btn-ghost">See What's Inside ↓</a>
+        <a href="#features" class="btn-ghost">See What's Inside ↓</a>
       </div>
       <div class="hero-proof">
         <div class="proof-item">
@@ -734,10 +734,26 @@
   <span class="footer-tm">© Natural Alternatives. NAC OS Fleet Logbook™ is a trademark of Natural Alternatives. All rights reserved.</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <div style="padding:1rem 2rem;border-top:1px solid rgba(255,255,255,0.07);text-align:center;font-family:monospace;font-size:10px;letter-spacing:.1em;color:rgba(240,237,232,0.28);">
   <a href="privacy-policy.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Privacy Policy</a>
   &nbsp;·&nbsp;
   <a href="terms-of-service.html" style="color:rgba(46,125,50,0.7);text-decoration:none;margin:0 .75rem;">Terms of Service</a>
   &nbsp;·&nbsp; © Natural Alternatives
 </div>
+
+<script>
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
