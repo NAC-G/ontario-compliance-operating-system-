@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCOS™ Tier 1 — Enterprise Compliance Foundation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* ── Natural Alternatives Official Brand Palette ── */
+    --green-accent:  #2E7D32;   /* Primary green — logo, dividers, highlights */
+    --green-deep:    #1B5E20;   /* Dark forest — headings, buttons, bars */
+    --green-dark:    #1B5E20;   /* alias */
+    --green-mid:     #2E7D32;   /* alias */
+    --green-sage:    #2E7D32;   /* alias */
+    --green-forest:  #1B5E20;   /* alias */
+
+    --graphite:      #333333;   /* Primary text / document headings */
+    --body-text:     #555555;   /* Body copy */
+    --grey-line:     #DDDDDD;   /* Borders, table separators */
+    --grey-bg:       #F5F5F5;   /* Panel / table header fill */
+    --grey-muted:    #888888;   /* De-emphasised labels */
+
+    --white:         #FFFFFF;
+    --cream:         #F5F5F5;
+    --cream-light:   #FAFAFA;
+    --charcoal:      #333333;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--graphite);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(51, 51, 51, 0.98);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--green-accent);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: 60px;
+  }
+
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    color: var(--green-accent);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a.active { color: var(--white); border-bottom: 1px solid var(--green-accent); padding-bottom: 2px; }
+
+  /* ─── COVER ─── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1a1a1a 0%, #2a2a2a 55%, #222222 100%);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px);
+    pointer-events: none;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(46,125,50,0.08) 0%, transparent 70%);
+    top: -80px; right: -120px;
+    pointer-events: none;
+  }
+
+  .cover-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 6rem 8rem 4rem;
+    position: relative; z-index: 1;
+  }
+
+  .cover-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .cover-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--green-accent);
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    max-width: 800px;
+  }
+
+  .cover-title .accent { color: var(--green-accent); }
+
+  .cover-subtitle {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 3rem;
+    max-width: 560px;
+    letter-spacing: 0.01em;
+  }
+
+  .cover-divider {
+    width: 60px; height: 2px;
+    background: var(--green-accent);
+    margin-bottom: 3rem;
+  }
+
+  .cover-meta {
+    display: flex; gap: 3rem;
+  }
+
+  .meta-item {
+    display: flex; flex-direction: column; gap: 0.25rem;
+  }
+
+  .meta-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+  }
+
+  .meta-value {
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .cover-footer {
+    padding: 2rem 8rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative; z-index: 1;
+  }
+
+  .cover-footer-brand {
+    font-family: 'Playfair Display', serif;
+    color: rgba(255,255,255,0.35);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+
+  .cover-doc-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--green-accent);
+    letter-spacing: 0.15em;
+  }
+
+  /* ─── TOC ─── */
+  .toc-section {
+    background: var(--white);
+    padding: 6rem 8rem;
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  .section-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--green-accent);
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+  }
+
+  .toc-item {
+    background: var(--white);
+    padding: 1.75rem 2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    display: flex; align-items: flex-start; gap: 1.25rem;
+    cursor: pointer;
+  }
+
+  .toc-item:hover {
+    background: var(--grey-bg);
+  }
+
+  .toc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--green-accent);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .toc-text {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--graphite);
+    line-height: 1.4;
+  }
+
+  /* ─── DOCUMENT CONTROL ─── */
+  .doc-control {
+    background: var(--grey-bg);
+    padding: 5rem 8rem;
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  .control-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+    margin-top: 3rem;
+  }
+
+  .control-row {
+    display: contents;
+  }
+
+  .control-label {
+    background: var(--green-deep);
+    color: rgba(255,255,255,0.9);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.25rem;
+    display: flex; align-items: center;
+  }
+
+  .control-value {
+    background: var(--white);
+    color: var(--body-text);
+    padding: 0.9rem 1.25rem;
+    font-size: 0.875rem;
+    display: flex; align-items: center;
+  }
+
+  /* ─── PROPRIETARY / DISCLAIMER ─── */
+  .notice-block {
+    padding: 5rem 8rem;
+    background: var(--white);
+    border-bottom: 1px solid var(--grey-line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .notice-card {
+    border-left: 3px solid var(--green-accent);
+    padding: 2rem;
+    background: var(--grey-bg);
+  }
+
+  .notice-card.warning {
+    border-left-color: var(--grey-muted);
+  }
+
+  .notice-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .notice-text {
+    font-size: 0.83rem;
+    line-height: 1.7;
+    color: var(--body-text);
+  }
+
+  /* ─── MAIN CONTENT SECTIONS ─── */
+  .content-section {
+    padding: 6rem 8rem;
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  .content-section:nth-child(even) {
+    background: var(--grey-bg);
+  }
+
+  .content-section:nth-child(odd) {
+    background: var(--white);
+  }
+
+  /* Offset anchor jump targets so fixed nav doesn't cover them */
+  .content-section,
+  .toc-section,
+  .doc-control,
+  .notice-block,
+  .signoff-section {
+    scroll-margin-top: 60px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--grey-line);
+    position: relative;
+  }
+
+  .section-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 60px; height: 2px;
+    background: var(--green-accent);
+  }
+
+  .section-num-badge {
+    background: var(--green-deep);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+  }
+
+  .section-title-wrap {}
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--graphite);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--grey-muted);
+    letter-spacing: 0.02em;
+  }
+
+  .body-text {
+    font-size: 0.93rem;
+    line-height: 1.8;
+    color: var(--body-text);
+    margin-bottom: 1.5rem;
+    max-width: 780px;
+  }
+
+  .body-text + .body-text { margin-top: -0.5rem; }
+
+  .h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--green-deep);
+    margin: 2.5rem 0 1rem;
+  }
+
+  /* ─── TIER CARDS ─── */
+  .tier-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+    margin: 2.5rem 0;
+  }
+
+  .tier-card {
+    background: var(--white);
+    padding: 2.25rem;
+  }
+
+  .tier-card:nth-child(1) { border-top: 3px solid var(--green-deep); }
+  .tier-card:nth-child(2) { border-top: 3px solid var(--green-accent); }
+  .tier-card:nth-child(3) { border-top: 3px solid var(--grey-muted); }
+
+  .tier-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .tier-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--graphite);
+    margin-bottom: 1rem;
+  }
+
+  .tier-desc {
+    font-size: 0.82rem;
+    color: var(--body-text);
+    line-height: 1.65;
+  }
+
+  /* ─── PULL QUOTE / CALLOUT ─── */
+  .callout {
+    background: var(--graphite);
+    color: var(--white);
+    padding: 2.5rem 3rem;
+    margin: 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+    max-width: 780px;
+    border-left: 4px solid var(--green-accent);
+  }
+
+  .callout::before {
+    content: '"';
+    position: absolute;
+    top: -1rem; left: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+
+  .callout-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.55;
+    position: relative;
+  }
+
+  .callout-source {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--green-accent);
+    text-transform: uppercase;
+    margin-top: 1rem;
+    display: block;
+    position: relative;
+  }
+
+  /* ─── BULLET LIST ─── */
+  .ocos-list {
+    list-style: none;
+    margin: 1.25rem 0 1.75rem;
+    max-width: 750px;
+  }
+
+  .ocos-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    font-size: 0.9rem;
+    color: var(--body-text);
+    line-height: 1.7;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .ocos-list li::before {
+    content: '→';
+    color: var(--green-accent);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  /* ─── DUTY TABLE ─── */
+  .duty-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.875rem;
+  }
+
+  .duty-table thead tr {
+    background: var(--green-deep);
+    color: var(--white);
+  }
+
+  .duty-table th {
+    padding: 0.9rem 1.25rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .duty-table tbody tr:nth-child(odd) { background: var(--white); }
+  .duty-table tbody tr:nth-child(even) { background: var(--grey-bg); }
+
+  .duty-table td {
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--grey-line);
+    vertical-align: top;
+    line-height: 1.65;
+    color: var(--body-text);
+  }
+
+  .duty-table td:first-child {
+    font-weight: 600;
+    color: var(--graphite);
+    font-size: 0.825rem;
+    white-space: nowrap;
+  }
+
+  /* ─── WORKFLOW STEPS ─── */
+  .workflow-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 2.5rem 0;
+    max-width: 750px;
+    border: 1px solid var(--grey-line);
+  }
+
+  .workflow-step {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  .workflow-step:last-child { border-bottom: none; }
+
+  .step-num {
+    background: var(--green-deep);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-body {
+    padding: 1.5rem 1.75rem;
+    background: var(--white);
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--green-deep);
+    margin-bottom: 0.35rem;
+  }
+
+  .step-desc {
+    font-size: 0.85rem;
+    color: var(--body-text);
+    line-height: 1.65;
+  }
+
+  /* ─── RCCF FRAMEWORK ─── */
+  .rccf-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5px;
+    background: var(--grey-line);
+    border: 1px solid var(--grey-line);
+    margin: 2.5rem 0;
+  }
+
+  .rccf-card {
+    background: var(--white);
+    padding: 1.75rem;
+  }
+
+  .rccf-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--green-accent);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .rccf-word {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--green-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .rccf-desc {
+    font-size: 0.8rem;
+    color: var(--body-text);
+    line-height: 1.6;
+  }
+
+  /* ─── LEGISLATION TABLE ─── */
+  .leg-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin: 2rem 0;
+  }
+
+  .leg-table thead tr { background: var(--green-deep); color: white; }
+
+  .leg-table th {
+    padding: 0.9rem 1.25rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+  }
+
+  .leg-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--grey-line);
+    vertical-align: top;
+    line-height: 1.65;
+    color: var(--body-text);
+  }
+
+  .leg-table tbody tr:nth-child(odd) { background: var(--white); }
+  .leg-table tbody tr:nth-child(even) { background: var(--grey-bg); }
+
+  .leg-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    background: rgba(27,94,32,0.08);
+    padding: 0.2rem 0.5rem;
+    display: inline-block;
+    margin-bottom: 0.4rem;
+  }
+
+  .leg-ref {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--graphite);
+    font-weight: 600;
+  }
+
+  /* ─── SIGN-OFF ─── */
+  .signoff-section {
+    background: var(--graphite);
+    color: var(--white);
+    padding: 6rem 8rem;
+  }
+
+  .signoff-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--white);
+  }
+
+  .signoff-intro {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 640px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  .signoff-list {
+    list-style: none;
+    max-width: 720px;
+    margin-bottom: 3.5rem;
+  }
+
+  .signoff-list li {
+    display: flex;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+  }
+
+  .signoff-list li::before {
+    content: '✓';
+    color: var(--green-accent);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    font-size: 0.85rem;
+  }
+
+  .signoff-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 700px;
+    margin-top: 3rem;
+  }
+
+  .sig-field {
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 0.75rem;
+  }
+
+  .sig-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #1a1a1a;
+    padding: 2.5rem 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid var(--green-accent);
+  }
+
+  footer .f-brand {
+    font-family: 'Playfair Display', serif;
+    color: rgba(255,255,255,0.35);
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  footer .f-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--green-accent);
+    letter-spacing: 0.18em;
+  }
+
+  footer .f-tm {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ─── DEFINITION BLOCK ─── */
+  .def-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--grey-line);
+    max-width: 780px;
+    margin: 2rem 0;
+  }
+
+  .def-item {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    border-bottom: 1px solid var(--grey-line);
+  }
+
+  .def-item:last-child { border-bottom: none; }
+
+  .def-term {
+    background: var(--grey-bg);
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--green-deep);
+    border-right: 1px solid var(--grey-line);
+    display: flex; align-items: flex-start;
+  }
+
+  .def-body {
+    padding: 1.25rem 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--body-text);
+    background: var(--white);
+  }
+
+  /* ─── INLINE HYPERLINKS ─── */
+  a.doc-link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--green-accent);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a.doc-link:hover {
+    color: var(--green-accent);
+    border-bottom-color: var(--green-accent);
+  }
+  /* On dark backgrounds */
+  a.doc-link-light {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(46,125,50,0.6);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  a.doc-link-light:hover {
+    color: var(--white);
+    border-bottom-color: var(--green-accent);
+  }
+  /* Monospace code links (control table, footer) */
+  a.doc-link-mono {
+    color: var(--green-accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--green-accent);
+    padding-bottom: 1px;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  a.doc-link-mono:hover { opacity: 0.75; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cover-inner > * {
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .cover-inner > *:nth-child(1) { animation-delay: 0.1s; }
+  .cover-inner > *:nth-child(2) { animation-delay: 0.25s; }
+  .cover-inner > *:nth-child(3) { animation-delay: 0.35s; }
+  .cover-inner > *:nth-child(4) { animation-delay: 0.45s; }
+  .cover-inner > *:nth-child(5) { animation-delay: 0.55s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .cover-inner, .toc-section, .doc-control, .notice-block,
+    .content-section, .signoff-section, footer { padding-left: 2rem; padding-right: 2rem; }
+    .notice-block { grid-template-columns: 1fr; gap: 2rem; }
+    .tier-cards { grid-template-columns: 1fr; }
+    .rccf-grid { grid-template-columns: 1fr 1fr; }
+    .signoff-fields { grid-template-columns: 1fr; }
+    .cover-meta { flex-direction: column; gap: 1.5rem; }
+    .def-item { grid-template-columns: 1fr; }
+    .def-term { border-right: none; border-bottom: 1px solid var(--grey-line); }
+    .nav-links { display: none; }
+    .control-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    nav, .cover-footer { display: none; }
+    .content-section { page-break-before: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">OCOS™ · Tier 1 Foundation</span>
+  <ul class="nav-links">
+    <li><a href="#toc">Contents</a></li>
+    <li><a href="#section-1">Architecture</a></li>
+    <li><a href="#section-4">Compliance</a></li>
+    <li><a href="#section-5">Duties</a></li>
+    <li><a href="#section-8">Legislation</a></li>
+    <li><a href="#section-9">Sign-Off</a></li>
+  </ul>
+</nav>
+
+<!-- COVER -->
+<section class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Ontario Compliance Operating System™</div>
+    <h1 class="cover-title">Enterprise<br>Compliance<br><span class="accent">Foundation</span></h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">Tier 1 · Enterprise Compliance Foundation Guide — the governance and orientation document that powers the entire OCOS compliance architecture.</p>
+    <div class="cover-meta">
+      <div class="meta-item">
+        <span class="meta-label">Document Code</span>
+        <span class="meta-value">OCOS-T1-FDN-001</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-value">1.0 · Released</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared By</span>
+        <span class="meta-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link-light">Natural Alternatives</a></span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Classification</span>
+        <span class="meta-value">Proprietary</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <a href="https://naturalalternatives.ca" target="_blank" class="cover-footer-brand" style="text-decoration:none;">Natural Alternatives</a>
+    <span class="cover-doc-code">OCOS-T1-FDN-001 · VERSION 1.0 · DRAFT — EMPLOYER RESPONSIBLE FOR IMPLEMENTATION</span>
+  </div>
+</section>
+
+<!-- TOC -->
+<section class="toc-section" id="toc">
+  <div class="section-eyebrow">Executive Contents</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--graphite);font-weight:700;">Table of Contents</h2>
+  <div class="toc-grid">
+    <a class="toc-item" href="#section-1"><span class="toc-num">1.0</span><span class="toc-text">Purpose, Scope, and OCOS Tier Architecture</span></a>
+    <a class="toc-item" href="#section-2"><span class="toc-num">2.0</span><span class="toc-text">Design Intent and Document Architecture</span></a>
+    <a class="toc-item" href="#section-3"><span class="toc-num">3.0</span><span class="toc-text">System Navigation and Documentation Workflow</span></a>
+    <a class="toc-item" href="#section-4"><span class="toc-num">4.0</span><span class="toc-text">Core Compliance Principles Under Ontario Legislation</span></a>
+    <a class="toc-item" href="#section-5"><span class="toc-num">5.0</span><span class="toc-text">Duties and Responsibilities Under the Occupational Health and Safety Act</span></a>
+    <a class="toc-item" href="#section-6"><span class="toc-num">6.0</span><span class="toc-text">Definitions and Legislative Interpretation Framework</span></a>
+    <a class="toc-item" href="#section-7"><span class="toc-num">7.0</span><span class="toc-text">Document Control, Review, and Continuous Improvement</span></a>
+    <a class="toc-item" href="#section-8"><span class="toc-num">8.0</span><span class="toc-text">Legislative Reference Appendix and Official Source Links</span></a>
+    <a class="toc-item" href="#section-9"><span class="toc-num">9.0</span><span class="toc-text">Employer Sign-Off, Authorization, and Implementation Record</span></a>
+  </div>
+</section>
+
+<!-- DOCUMENT CONTROL -->
+<section class="doc-control">
+  <div class="section-eyebrow">Document Control</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--graphite);font-weight:700;">Control Record</h2>
+  <div class="control-grid">
+    <div class="control-label">Document</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System (OCOS)</a></div>
+    <div class="control-label">Tier</div><div class="control-value">Tier 1 — Enterprise Compliance Foundation Guide</div>
+    <div class="control-label">Document Code</div><div class="control-value" style="font-family:'DM Mono',monospace;font-size:0.8rem;">OCOS-T1-FDN-001</div>
+    <div class="control-label">Version</div><div class="control-value">1.0</div>
+    <div class="control-label">Status</div><div class="control-value"><span style="background:rgba(27,94,32,0.1);color:var(--green-deep);padding:0.2rem 0.7rem;font-size:0.78rem;font-weight:600;">Released</span></div>
+    <div class="control-label">Prepared By</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Natural Alternatives</a></div>
+    <div class="control-label">Released Date</div><div class="control-value">[DATE]</div>
+    <div class="control-label">Review Date</div><div class="control-value">[DATE]</div>
+    <div class="control-label">Classification</div><div class="control-value">Proprietary — Natural Alternatives</div>
+    <div class="control-label">Authorized By</div><div class="control-value">[NAME / TITLE]</div>
+    <div class="control-label">Related Tier</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">OCOS Tier 2 — AI-Driven Compliance Generation Framework</a></div>
+    <div class="control-label">Related Tier</div><div class="control-value"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">OCOS Tier 3 — Compliance Operations System</a></div>
+  </div>
+</section>
+
+<!-- NOTICES -->
+<section class="notice-block">
+  <div class="notice-card">
+    <div class="notice-title">Proprietary Notice</div>
+    <p class="notice-text">This document is proprietary to Natural Alternatives and is provided under license as part of the <a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System™</a>. The OCOS framework, its architecture, terminology, tier structure, the RCCF prompt framework, document structures, and all associated compliance tools are the intellectual property of Natural Alternatives.<br><br>Reproduction, redistribution, modification, derivative use, or unauthorized sharing of this document or any component of the OCOS system without prior written authorization from Natural Alternatives is strictly prohibited.<br><br><em><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System™</a> is a trademark of Natural Alternatives.</em></p>
+  </div>
+  <div class="notice-card warning">
+    <div class="notice-title">Limitations and Disclaimer</div>
+    <p class="notice-text">The Ontario Compliance Operating System™ is an educational and organizational framework designed to support workplace compliance documentation. This document does not constitute legal advice. It does not replace consultation with qualified legal, regulatory, or occupational health and safety professionals.<br><br>The employer retains full and sole responsibility for ensuring compliance with all applicable legislation, regulations, and standards. Natural Alternatives makes no warranty, express or implied, that use of this system guarantees regulatory compliance, legal defence, or the absence of workplace incidents.<br><br>All documents generated through the OCOS system are drafts until reviewed, approved, and formally implemented by the employer.</p>
+  </div>
+</section>
+
+<!-- SECTION 1 -->
+<section class="content-section" id="section-1">
+  <div class="section-header">
+    <div class="section-num-badge">1.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Purpose, Scope, and OCOS Tier Architecture</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">The <a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Ontario Compliance Operating System™ (OCOS)</a> is a proprietary compliance architecture developed to bring enterprise-grade documentation discipline to Ontario workplaces — replacing fragmented safety binders with a structured, traceable, inspection-ready system built on the legislative framework of the Occupational Health and Safety Act, R.S.O. 1990, c. O.1.</p>
+
+  <p class="body-text">This foundation guide is the opening reference document within the OCOS system. It establishes the compliance logic, legal context, and documentation standards that govern all subsequent documents produced under the framework — whether generated manually or through the OCOS AI-powered generation engine.</p>
+
+  <h3 class="h3">System Purpose</h3>
+  <ul class="ocos-list">
+    <li>Explain how the OCOS architecture is structured and how it should be used</li>
+    <li>Define the legal duties the system supports</li>
+    <li>Introduce the AI-assisted generation model and the employer's role within it</li>
+    <li>Establish the documentation standards that all OCOS materials must meet</li>
+    <li>Prepare the employer to generate and implement operational compliance documents through subsequent tiers</li>
+  </ul>
+
+  <h3 class="h3">The Three-Tier Architecture</h3>
+  <div class="tier-cards">
+    <div class="tier-card">
+      <div class="tier-label">Tier 1</div>
+      <div class="tier-name">Enterprise Compliance Foundation Guide</div>
+      <p class="tier-desc">Establishes orientation, legal context, system architecture, definitions, document control principles, and employer authorization. Ensures the employer understands compliance requirements before any documents are generated.</p>
+    </div>
+    <div class="tier-card">
+      <div class="tier-label">Tier 2</div>
+      <div class="tier-name"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">AI-Driven Compliance Generation Framework</a></div>
+      <p class="tier-desc">Provides the generation engine — an AI-powered compliance document system accessed through the OCOS Notion workspace. Employers produce standardized draft policies, programs, procedures, inspection records, incident documentation, and training materials using the RCCF framework.</p>
+    </div>
+    <div class="tier-card">
+      <div class="tier-label">Tier 3</div>
+      <div class="tier-name"><a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Compliance Operations System</a></div>
+      <p class="tier-desc">Provides the operational infrastructure to manage the compliance program — including organized file structures, training registers, inspection logs, incident tracking, corrective action registers, compliance calendars, and document control systems.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p class="callout-text">A Tier 2 document generated without Tier 1 orientation risks misuse. A Tier 3 operation built without Tier 2 generation has no documents to manage. The tiers are sequential by design and cumulative by function.</p>
+    <span class="callout-source">OCOS Architecture Principle</span>
+  </div>
+
+  <h3 class="h3">The RCCF Framework</h3>
+  <p class="body-text">The OCOS Tier 2 generation system operates on a proprietary prompt architecture called the Role–Context–Command–Format (RCCF) framework. Every generator in the Compliance Generator Library is built on this architecture to ensure that AI outputs are consistent, structured, and suitable for Ontario compliance documentation.</p>
+
+  <div class="rccf-grid">
+    <div class="rccf-card">
+      <div class="rccf-letter">R</div>
+      <div class="rccf-word">Role</div>
+      <p class="rccf-desc">Defines who the AI is acting as. Sets the expertise and perspective used to draft the document.</p>
+    </div>
+    <div class="rccf-card">
+      <div class="rccf-letter">C</div>
+      <div class="rccf-word">Context</div>
+      <p class="rccf-desc">Explains the business situation and purpose of the document. Ensures output reflects real-world working conditions.</p>
+    </div>
+    <div class="rccf-card">
+      <div class="rccf-letter">C</div>
+      <div class="rccf-word">Command</div>
+      <p class="rccf-desc">Tells the AI exactly what to produce. Commands must be clear, specific, and limited to one task.</p>
+    </div>
+    <div class="rccf-card">
+      <div class="rccf-letter">F</div>
+      <div class="rccf-word">Format</div>
+      <p class="rccf-desc">Defines how the document should be structured and presented for professional workplace use.</p>
+    </div>
+  </div>
+
+  <h3 class="h3">Target Sectors and Audience</h3>
+  <p class="body-text">This framework is designed for Ontario-based employers operating in sectors including grounds maintenance and landscaping, snow and ice management, property maintenance and facility services, forestry, arboriculture, and vegetation management, light construction and site preparation, equipment services and fleet operations, and light industrial operations. The system is scalable for organizations ranging from owner-operator structures to multi-crew, multi-site enterprises.</p>
+</section>
+
+<!-- SECTION 2 -->
+<section class="content-section" id="section-2">
+  <div class="section-header">
+    <div class="section-num-badge">2.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Design Intent and Document Architecture</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">The OCOS framework was designed to eliminate the fragmentation, inconsistency, and ad hoc document accumulation that characterize most small and mid-size employer safety programs. A well-designed compliance system requires that different documents work together rather than stand alone.</p>
+
+  <p class="body-text">Policies shall connect to responsibilities. Responsibilities shall connect to procedures. Procedures shall connect to training. Training shall connect to evidence of implementation. When any link in that chain is missing, broken, or inconsistent, the system fails — not in theory, but in practice and under scrutiny.</p>
+
+  <h3 class="h3">Document Types Within the System</h3>
+  <table class="duty-table">
+    <thead><tr><th>Document Type</th><th>Function Within the System</th></tr></thead>
+    <tbody>
+      <tr><td>Policies</td><td>Define organizational expectations and safety commitments</td></tr>
+      <tr><td>Responsibilities</td><td>Assign accountability to specific roles</td></tr>
+      <tr><td>Programs</td><td>Establish systematic approaches to specific compliance requirements</td></tr>
+      <tr><td>Procedures</td><td>Describe required actions, sequences, and controls for specific tasks</td></tr>
+      <tr><td>Training Records</td><td>Confirm that instruction was delivered and understood</td></tr>
+      <tr><td>Inspection Logs</td><td>Verify that controls remain in effect through ongoing monitoring</td></tr>
+      <tr><td>Incident Reports</td><td>Document events, responses, and corrective actions</td></tr>
+      <tr><td>Corrective Action Logs</td><td>Track identified deficiencies through to resolution</td></tr>
+      <tr><td>Review Records</td><td>Demonstrate continuous improvement and system maintenance</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <p class="callout-text">When these documents share consistent terminology, formatting, and control logic, they create a compliance system — a documented operating system that can be trained, audited, inspected, and defended. When they do not, the employer possesses paperwork. Paperwork is not a system.</p>
+    <span class="callout-source">OCOS Design Philosophy</span>
+  </div>
+</section>
+
+<!-- SECTION 3 -->
+<section class="content-section" id="section-3">
+  <div class="section-header">
+    <div class="section-num-badge">3.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">System Navigation and Documentation Workflow</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">The OCOS system operates through a four-stage workflow. Each stage must be completed before the next is relied upon.</p>
+
+  <div class="workflow-steps">
+    <div class="workflow-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Orientation</div>
+        <p class="step-desc">Review this foundation guide in full. Understand legal duties, documentation objectives, approval requirements, and the relationship between draft documents and implemented controls. Designate persons responsible for document control and approval. This stage prevents misuse of generation tools by ensuring the system's logic is understood before it is expanded.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Document Development</div>
+        <p class="step-desc">Using the Tier 2 AI-powered generation framework, the employer produces standardized policies, programs, safe work procedures, inspection checklists, incident forms, training records, and corrective action logs. The Company Master Prompt is pasted at the start of each AI session. Every generated document must address a specific workplace hazard, legal requirement, or operational need, and must be treated as a draft until reviewed, approved, and formally implemented.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Implementation</div>
+        <p class="step-desc">Documents are formally approved, issued to the workplace, communicated to relevant parties, and embedded into supervision and training activities. The employer must formally approve the document, issue it to all affected workers and supervisors, deliver training on the document's content, confirm receipt and comprehension, and assign supervisory responsibility for enforcement and monitoring.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Review and Maintenance</div>
+        <p class="step-desc">Compliance documents shall be reviewed and, where necessary, revised or regenerated whenever legislation changes, new hazards are introduced, equipment or processes change, an incident reveals a gap, operational structure changes, or a scheduled review date is reached. The OCOS system supports both revision (incremental updates) and regeneration (full rebuild through Tier 2) — both are valid maintenance methods.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p class="callout-text">Orientation before generation. Generation before implementation. Implementation before reliance. This sequence is not optional — it is the architecture of the system.</p>
+    <span class="callout-source">OCOS Workflow Principle</span>
+  </div>
+</section>
+
+<!-- SECTION 4 -->
+<section class="content-section" id="section-4">
+  <div class="section-header">
+    <div class="section-num-badge">4.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Core Compliance Principles Under Ontario Legislation</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">Ontario occupational health and safety law operates through the Internal Responsibility System (IRS) — a model in which workplace safety is achieved through the shared participation and defined responsibilities of employers, supervisors, and workers. The IRS does not dilute employer accountability; the employer retains the primary duty to ensure that the workplace is maintained in a manner that protects workers.</p>
+
+  <h3 class="h3">Reasonable Precautions — The Standard</h3>
+  <p class="body-text">Ontario law expects employers to take every reasonable precaution for the protection of workers. A hazardous task cannot be considered adequately controlled merely because the workers involved are experienced. The employer is expected to:</p>
+
+  <ul class="ocos-list">
+    <li>Identify the hazard before work begins</li>
+    <li>Assess the level of risk</li>
+    <li>Select the control method — elimination, engineering controls, administrative controls, personal protective equipment</li>
+    <li>Communicate the procedure to affected workers</li>
+    <li>Provide the required equipment and protective devices</li>
+    <li>Train workers on the control and its requirements</li>
+    <li>Supervise to verify that the control remains in effect</li>
+    <li>Document each of these steps</li>
+  </ul>
+
+  <h3 class="h3">Documentation as Due Diligence Evidence</h3>
+  <table class="duty-table">
+    <thead><tr><th>Question</th><th>Documentation Required</th></tr></thead>
+    <tbody>
+      <tr><td>What does the organization require?</td><td>Policies, procedures, safe work practices</td></tr>
+      <tr><td>Who is responsible?</td><td>Responsibility assignments, supervisor designations</td></tr>
+      <tr><td>How is the requirement carried out?</td><td>Procedures, work instructions, training materials</td></tr>
+      <tr><td>What evidence confirms it occurred?</td><td>Training records, inspection logs, sign-offs</td></tr>
+      <tr><td>What happens when something goes wrong?</td><td>Incident reports, corrective action records</td></tr>
+      <tr><td>How does the system improve?</td><td>Review records, revision logs, audit findings</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="h3">JHSC and Health & Safety Representative Requirements</h3>
+  <table class="duty-table">
+    <thead><tr><th>Workforce Size</th><th>Requirement</th><th>OHSA Reference</th></tr></thead>
+    <tbody>
+      <tr><td>20+ regularly employed</td><td>Joint Health and Safety Committee (JHSC) required</td><td>s. 9</td></tr>
+      <tr><td>6–19 regularly employed</td><td>Health and Safety Representative required</td><td>s. 8</td></tr>
+      <tr><td>Construction projects</td><td>JHSC or Representative as prescribed by regulation</td><td>Various regulations</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 5 -->
+<section class="content-section" id="section-5">
+  <div class="section-header">
+    <div class="section-num-badge">5.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Duties and Responsibilities Under the OHSA</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <h3 class="h3">Employer Duties (s. 25)</h3>
+  <ul class="ocos-list">
+    <li>Ensure that equipment, materials, and protective devices are provided, maintained, and in good condition (s. 25(1)(a))</li>
+    <li>Provide information, instruction, and supervision to workers to protect their health and safety (s. 25(2)(a))</li>
+    <li>Ensure that supervisors are competent persons as defined by the Act (s. 25(2)(c))</li>
+    <li>Acquaint workers with any hazard in the work and in the handling, storage, use, disposal, and transport of any article, device, equipment, or agent (s. 25(2)(d))</li>
+    <li>Take every reasonable precaution in the circumstances for the protection of a worker (s. 25(2)(h))</li>
+    <li>Prepare and review at least annually a written occupational health and safety policy and develop a program to implement that policy (s. 25(2)(j) — applies to workplaces with 6+ workers)</li>
+    <li>Ensure compliance with the Act and its regulations (s. 25(1)(c))</li>
+  </ul>
+
+  <div class="callout">
+    <p class="callout-text">The employer's duties are not discretionary. They are statutory obligations that apply regardless of the employer's awareness, resources, or operational preferences. The duty to take every reasonable precaution (s. 25(2)(h)) is the broadest and most frequently cited employer obligation.</p>
+    <span class="callout-source">OHSA Obligations</span>
+  </div>
+
+  <h3 class="h3">Supervisor Duties (s. 27)</h3>
+  <ul class="ocos-list">
+    <li>Ensure that workers comply with the Act and regulations (s. 27(1)(a))</li>
+    <li>Ensure that workers use or wear the required protective equipment (s. 27(1)(b))</li>
+    <li>Advise workers of any potential or actual danger to health or safety (s. 27(2)(a))</li>
+    <li>Provide workers with written instructions as to measures and procedures to be taken for protection (s. 27(2)(b))</li>
+    <li>Take every reasonable precaution in the circumstances for the protection of a worker (s. 27(2)(c))</li>
+  </ul>
+
+  <h3 class="h3">Worker Duties (s. 28)</h3>
+  <ul class="ocos-list">
+    <li>Work in compliance with the Act and regulations (s. 28(1)(a))</li>
+    <li>Use or wear the protective equipment, devices, or clothing required by the employer (s. 28(1)(b))</li>
+    <li>Report to the employer or supervisor the absence of or defect in any protective equipment (s. 28(1)(c))</li>
+    <li>Report any known workplace hazard or contravention of the Act (s. 28(1)(d))</li>
+    <li>Not remove or make ineffective any protective device required by the employer or by regulation (s. 28(2)(a))</li>
+  </ul>
+
+  <h3 class="h3">Reprisal Protection (s. 50)</h3>
+  <p class="body-text">No employer, person acting on behalf of the employer, or trade union shall dismiss, discipline, suspend, threaten, impose any penalty upon, intimidate, or coerce a worker for acting in compliance with the OHSA — including exercising the right to refuse unsafe work, participating in JHSC activities, or reporting hazards. A compliance system that penalizes workers for using its own protective mechanisms is not a compliance system.</p>
+</section>
+
+<!-- SECTION 6 -->
+<section class="content-section" id="section-6">
+  <div class="section-header">
+    <div class="section-num-badge">6.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Definitions and Legislative Interpretation Framework</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">For the purpose of this framework, the following definitions apply. These definitions are consistent with the Occupational Health and Safety Act, R.S.O. 1990, c. O.1 and are used throughout all OCOS system documents.</p>
+
+  <div class="def-grid">
+    <div class="def-item">
+      <div class="def-term">Employer</div>
+      <div class="def-body">The party legally responsible for ensuring that the workplace compliance system is established, reviewed, approved, implemented, and maintained. Accountability follows the legal definition of the role — not the internal job title used by the organization.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">Supervisor</div>
+      <div class="def-body">Any person who has charge of a workplace or authority over a worker. Includes managers, crew leads, forepersons, site superintendents, and any individual who directs the work of others. In a mature compliance system, supervisory responsibilities are documented in a manner that can be trained, audited, and enforced.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">Competent Person</div>
+      <div class="def-body">As defined under the OHSA: a person qualified because of knowledge, training, and experience to organize the work and its performance; familiar with the Act and applicable regulations; and having knowledge of any potential or actual danger in the workplace. Demonstrated qualification is required — not simply tenure or seniority.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">Worker</div>
+      <div class="def-body">An individual performing work or supplying services for monetary compensation under the direction of an employer. Within the OCOS structure, worker-facing documents shall be written clearly enough to support practical use in field conditions and formally enough to support accountability, training verification, and legal review.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">Constructor</div>
+      <div class="def-body">A person who undertakes a project for an owner. Constructor duties apply under the OHSA and carry obligations distinct from and in addition to employer duties. Employers operating in construction shall determine whether they meet the definition of constructor and document the applicable duties accordingly.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">Due Diligence</div>
+      <div class="def-body">The demonstrable efforts taken by the employer to comply with legal obligations and protect workers. Established when hazards are identified and assessed, controls are established and communicated, responsibilities are assigned to specific roles, training is delivered and evidenced, inspections are completed and recorded, corrective actions are tracked through to resolution, and review dates are controlled and adhered to. Due diligence is not a single document — it is the cumulative effect of a functioning system.</div>
+    </div>
+    <div class="def-item">
+      <div class="def-term">RCCF Framework</div>
+      <div class="def-body">Role–Context–Command–Format — the proprietary prompt framework used by the OCOS Tier 2 generation system. Structures every AI generation interaction to ensure consistent, legislatively-aligned, enterprise-quality compliance documentation outputs. Detailed operational instructions are provided within the <a href="https://naturalalternatives.ca" target="_blank" class="doc-link">Tier 2 system</a>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7 -->
+<section class="content-section" id="section-7">
+  <div class="section-header">
+    <div class="section-num-badge">7.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Document Control, Review, and Continuous Improvement</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <h3 class="h3">Required Control Elements</h3>
+  <table class="duty-table">
+    <thead><tr><th>Element</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Document Code</td><td>Uniquely identifies the document within the system</td></tr>
+      <tr><td>Version Number</td><td>Tracks revision history</td></tr>
+      <tr><td>Status</td><td>Indicates whether the document is Draft, Approved, Superseded, or Archived</td></tr>
+      <tr><td>Release Date</td><td>Confirms when the document became active</td></tr>
+      <tr><td>Authorized By</td><td>Identifies who authorized the document for use</td></tr>
+      <tr><td>Review Date</td><td>Ensures periodic review is scheduled</td></tr>
+      <tr><td>Version Control</td><td>Ensures current versions are in use and superseded versions are removed</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="h3">Review Triggers</h3>
+  <p class="body-text">The employer shall initiate document review upon any of the following triggers — without waiting for a scheduled review cycle:</p>
+  <ul class="ocos-list">
+    <li>Legislative or regulatory amendment affecting the subject matter</li>
+    <li>Introduction of new equipment, materials, processes, or chemical agents</li>
+    <li>Change in supervision structure, staffing, or work location</li>
+    <li>Workplace incident, near-miss, or work refusal revealing a documentation gap</li>
+    <li>Findings from a JHSC inspection, workplace audit, or regulatory inspection</li>
+    <li>Feedback from workers or supervisors indicating that a procedure does not reflect actual practice</li>
+    <li>Updates to the OCOS Compliance Generator Library or RCCF framework</li>
+  </ul>
+
+  <h3 class="h3">Revision vs. Regeneration</h3>
+  <p class="body-text"><strong>Revision</strong> — the employer updates an existing approved document to reflect a specific change, incident finding, or legislative amendment. The version number is incremented, the change is communicated, and the prior version is archived.</p>
+  <p class="body-text"><strong>Regeneration</strong> — the employer returns to the Tier 2 generation framework, updates the Company Master Prompt with current operational information, and regenerates the document from the Compliance Generator Library. Particularly valuable when multiple changes have accumulated or when a full refresh produces a cleaner and more defensible document than incremental edits would.</p>
+
+  <div class="callout">
+    <p class="callout-text">A compliance system that never changes is a compliance system that has stopped paying attention. Continuous improvement is not optional — it is the mechanism that keeps the system credible, current, and defensible.</p>
+    <span class="callout-source">OCOS Continuous Improvement Principle</span>
+  </div>
+</section>
+
+<!-- SECTION 8 -->
+<section class="content-section" id="section-8">
+  <div class="section-header">
+    <div class="section-num-badge">8.0</div>
+    <div class="section-title-wrap">
+      <h2 class="section-title">Legislative Reference Appendix and Official Source Links</h2>
+      <p class="section-subtitle">Structured reference section aligned to the Natural Alternatives compliance presentation standard.</p>
+    </div>
+  </div>
+
+  <p class="body-text">Employers should consult official legislative sources when confirming statutory requirements. The following references support the obligations discussed throughout this guide.</p>
+
+  <table class="leg-table">
+    <thead>
+      <tr>
+        <th>Reference</th>
+        <th>Type</th>
+        <th>Scope and Application</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="leg-ref">Occupational Health and Safety Act</span><br>
+          R.S.O. 1990, c. O.1
+        </td>
+        <td><span class="leg-type">Official Ontario Statute</span></td>
+        <td>Primary source for employer, supervisor, and worker duties; JHSC and H&S Representative requirements; right to refuse unsafe work; workplace violence and harassment; reprisal protection; and all core obligations referenced throughout this guide.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">O. Reg. 297/13</span><br>
+          under the OHSA
+        </td>
+        <td><span class="leg-type">Official Ontario Regulation</span></td>
+        <td>Mandatory basic occupational health and safety awareness training requirements for every worker and supervisor in Ontario. Directly supports the training and orientation requirements referenced throughout the OCOS system.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">WHMIS Guidance</span>
+        </td>
+        <td><span class="leg-type">Official Federal Guidance</span></td>
+        <td>Validation of WHMIS program expectations, worker education requirements, supplier and workplace labels, and the role of safety data sheets in hazard communication.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">Workplace Safety and Insurance Act, 1997</span><br>
+          S.O. 1997, c. 16, Sched. A
+        </td>
+        <td><span class="leg-type">Official Ontario Statute</span></td>
+        <td>Employer obligations related to WSIB registration, workplace injury and illness reporting, record-keeping, return-to-work administration, and premium obligations.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">O. Reg. 213/91</span><br>
+          Construction Projects
+        </td>
+        <td><span class="leg-type">Official Ontario Regulation</span></td>
+        <td>Requirements applicable to employers and constructors on construction projects, including excavation, fall protection, scaffolding, confined spaces, and protective equipment. Applicable where OCOS users perform work meeting the definition of a construction project.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">R.R.O. 1990, Reg. 851</span><br>
+          Industrial Establishments
+        </td>
+        <td><span class="leg-type">Official Ontario Regulation</span></td>
+        <td>Requirements applicable to industrial establishments including machine guarding, material handling, maintenance, and workplace conditions. Applicable where OCOS users operate workshops, yards, or maintenance facilities.</td>
+      </tr>
+      <tr>
+        <td>
+          <span class="leg-ref">OHSA s. 32.0.1–32.0.8</span><br>
+          Workplace Violence & Harassment
+        </td>
+        <td><span class="leg-type">OHSA — Part III.0.1</span></td>
+        <td>Requirements for workplace violence and harassment policies, programs, risk assessments, and investigation procedures. Applicable to all Ontario employers covered by the OHSA.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SECTION 9 — SIGN OFF -->
+<section class="signoff-section" id="section-9">
+  <div class="section-eyebrow" style="color:var(--green-accent);">
+    <span style="display:inline-block;width:30px;height:1px;background:var(--green-accent);margin-right:1rem;"></span>
+    Section 9.0
+  </div>
+  <h2 class="signoff-title">Employer Sign-Off, Authorization, and Implementation Record</h2>
+  <p class="signoff-intro">By approving this document, the employer confirms that this foundation guide has been reviewed in full as part of the organization's compliance architecture, and that all obligations are understood and accepted.</p>
+
+  <ul class="signoff-list">
+    <li>This foundation guide has been reviewed in full as part of the organization's compliance architecture</li>
+    <li>The legal duties and obligations summarized in this guide are understood</li>
+    <li>The role of the OCOS AI-driven generation system, including the RCCF framework and human-in-the-loop review process, is understood</li>
+    <li>Subsequent documents generated under the OCOS system will be assessed for legal alignment, workplace fit, and operational readiness before use</li>
+    <li>The employer acknowledges that this guide is an educational and organizational framework and does not constitute legal advice</li>
+    <li>The employer retains full responsibility for compliance with all applicable legislation</li>
+  </ul>
+
+  <p style="font-size:0.88rem;color:rgba(255,255,255,0.55);max-width:680px;line-height:1.75;margin-bottom:2rem;">The employer further confirms that documentation produced through the <a href="https://naturalalternatives.ca" target="_blank" class="doc-link-light">Ontario Compliance Operating System™</a> will not be treated as complete merely because it has been drafted or generated. All OCOS documents will be subject to employer review, verification against actual workplace conditions, communication to affected workers and supervisors, supervisory enforcement, and record retention by the employer.</p>
+
+  <div class="signoff-fields">
+    <div class="sig-field">
+      <span class="sig-label">Authorized Signatory — Name</span>
+    </div>
+    <div class="sig-field">
+      <span class="sig-label">Title / Role</span>
+    </div>
+    <div class="sig-field">
+      <span class="sig-label">Signature</span>
+    </div>
+    <div class="sig-field">
+      <span class="sig-label">Date of Authorization</span>
+    </div>
+    <div class="sig-field" style="grid-column:1/-1">
+      <span class="sig-label">Organization Name</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://naturalalternatives.ca" target="_blank" class="f-brand" style="text-decoration:none;">Natural Alternatives</a>
+  <span class="f-code">OCOS-T1-FDN-001 · VERSION 1.0</span>
+  <span class="f-tm"><a href="https://naturalalternatives.ca" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,0.2);">Ontario Compliance Operating System™</a> is a trademark of Natural Alternatives. All rights reserved.</span>
+</footer>
+
+<script>
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  const targets = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+  function onScroll() {
+    let current = '';
+    targets.forEach(el => {
+      if (window.scrollY >= el.offsetTop - 80) current = el.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+</body>
+</html>
