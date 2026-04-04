@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OCOS™ Tier 2 — Access Hub · Natural Alternatives</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --green-accent:#2E7D32; --green-deep:#1B5E20; --graphite:#333333; --body-text:#555555; --grey-line:#DDDDDD; --grey-bg:#F5F5F5; --grey-muted:#888888; --white:#FFFFFF; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--graphite);font-size:15px;line-height:1.75}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(51,51,51,0.98);backdrop-filter:blur(12px);border-bottom:2px solid var(--green-accent);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px}
+  .nav-brand{font-family:'DM Mono',monospace;color:var(--green-accent);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:rgba(255,255,255,0.55);text-decoration:none;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s}
+  .nav-links a:hover{color:var(--white)}
+  .cover{min-height:70vh;padding-top:60px;background:linear-gradient(160deg,#1a1a1a 0%,#242424 55%,#1e1e1e 100%);display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+  .cover::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(255,255,255,0.02) 60px)}
+  .cover::after{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(46,125,50,0.07) 0%,transparent 70%);bottom:-100px;right:-150px;pointer-events:none}
+  .cover-inner{padding:5rem 8rem 4rem;position:relative;z-index:1}
+  .cover-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--green-accent);margin-bottom:2rem;display:flex;align-items:center;gap:1rem}
+  .cover-eyebrow::before{content:'';display:block;width:40px;height:1px;background:var(--green-accent)}
+  .cover-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;color:var(--white);line-height:1.05;margin-bottom:1rem}
+  .cover-title .accent{color:var(--green-accent)}
+  .cover-subtitle{font-size:1rem;color:rgba(255,255,255,0.5);max-width:580px;margin-bottom:2rem}
+  .cover-divider{width:60px;height:2px;background:var(--green-accent);margin:1.5rem 0 2rem}
+  .cover-meta{display:flex;gap:3rem;flex-wrap:wrap}
+  .meta-item{display:flex;flex-direction:column;gap:0.25rem}
+  .meta-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-accent)}
+  .meta-value{color:rgba(255,255,255,0.8);font-size:0.85rem;font-weight:500}
+  .prereq-bar{background:rgba(46,125,50,0.1);border:1px solid rgba(46,125,50,0.25);border-left:3px solid var(--green-accent);padding:1rem 2rem;display:flex;align-items:center;gap:1rem;position:relative;z-index:1;margin:0 8rem}
+  .prereq-bar span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.6)}
+  .prereq-bar a{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--green-accent);text-decoration:none}
+  .access-section{padding:6rem 8rem;background:var(--white);border-bottom:1px solid var(--grey-line)}
+  .section-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--green-accent);margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem}
+  .section-eyebrow::before{content:'';display:block;width:30px;height:1px;background:var(--green-accent)}
+  .access-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--graphite);margin-bottom:0.5rem}
+  .access-sub{font-size:0.88rem;color:var(--grey-muted);margin-bottom:3rem}
+  .access-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:var(--grey-line);border:1px solid var(--grey-line)}
+  .access-card{background:var(--white);padding:3rem;display:flex;flex-direction:column;gap:1rem}
+  .access-card.dark{background:#1a1a1a}
+  .card-eyebrow{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-accent)}
+  .card-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--graphite)}
+  .access-card.dark .card-title{color:var(--white)}
+  .card-desc{font-size:0.85rem;color:var(--body-text);line-height:1.7}
+  .access-card.dark .card-desc{color:rgba(255,255,255,0.5)}
+  .card-btn{display:inline-flex;align-items:center;gap:0.5rem;background:var(--green-accent);color:var(--white);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.85rem 1.75rem;text-decoration:none;transition:background 0.2s;margin-top:auto;align-self:flex-start}
+  .card-btn:hover{background:var(--green-deep)}
+  .card-btn.ghost{background:transparent;border:1px solid rgba(46,125,50,0.4);color:var(--green-accent)}
+  .card-btn.ghost:hover{background:rgba(46,125,50,0.1)}
+  .steps-section{padding:6rem 8rem;background:var(--grey-bg);border-bottom:1px solid var(--grey-line)}
+  .steps-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--graphite);margin-bottom:3rem}
+  .step-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--grey-line)}
+  .step-row{display:flex;align-items:stretch;border-bottom:1px solid var(--grey-line);background:var(--white)}
+  .step-row:last-child{border-bottom:none}
+  .step-num-block{background:var(--green-deep);color:var(--white);font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;width:65px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-content{padding:1.4rem 1.75rem}
+  .step-heading{font-weight:600;font-size:0.95rem;color:var(--graphite);margin-bottom:0.25rem}
+  .step-detail{font-size:0.84rem;color:var(--body-text);line-height:1.65}
+  .step-timing{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-accent);margin-top:0.35rem;display:block}
+  .callout{background:var(--graphite);color:var(--white);padding:2rem 2.5rem;margin:3rem 0 0;border-left:4px solid var(--green-accent);max-width:100%}
+  .callout p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;line-height:1.6}
+  .callout span{display:block;margin-top:0.75rem;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--green-accent)}
+  .upgrade-section{padding:6rem 8rem;background:var(--white)}
+  .upgrade-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--grey-line);border:1px solid var(--grey-line);margin-top:3rem}
+  .tier-card{background:var(--white);padding:2.25rem}
+  .tier-card.active{background:var(--grey-bg);border-top:3px solid var(--green-accent)}
+  .tier-card.locked{opacity:0.5}
+  .tier-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--green-accent);margin-bottom:0.5rem}
+  .tier-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--graphite);margin-bottom:0.75rem}
+  .tier-desc{font-size:0.82rem;color:var(--body-text);line-height:1.65}
+  .tier-status{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;margin-top:1rem;display:block}
+  .tier-status.done{color:var(--green-accent)}
+  .tier-status.current{color:var(--graphite)}
+  .tier-status.next{color:var(--grey-muted)}
+  footer{background:#1a1a1a;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--green-accent)}
+  .f-brand{font-family:'Playfair Display',serif;color:rgba(255,255,255,0.35);font-size:0.9rem;font-style:italic;text-decoration:none}
+  .f-code{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:rgba(255,255,255,0.2)}
+  .f-links a{font-family:'DM Mono',monospace;font-size:10px;color:rgba(46,125,50,0.7);text-decoration:none;margin:0 0.5rem}
+  @media(max-width:900px){.cover-inner,.access-section,.steps-section,.upgrade-section{padding-left:2rem;padding-right:2rem}.prereq-bar{margin:0 2rem}.access-grid,.upgrade-cards{grid-template-columns:1fr}.cover-meta{gap:1.5rem}nav{padding:0 1.5rem}.nav-links{display:none}footer{flex-direction:column;gap:1rem;text-align:center}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-brand">OCOS™ · Tier 2 Access Hub</a>
+  <ul class="nav-links">
+    <li><a href="#access">Access</a></li>
+    <li><a href="#steps">Getting Started</a></li>
+    <li><a href="#tiers">Tier Overview</a></li>
+  </ul>
+</nav>
+
+<section class="cover" id="top">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Ontario Compliance Operating System™ — Tier 2</div>
+    <h1 class="cover-title">AI-Driven <span class="accent">Compliance</span><br>Generation Framework</h1>
+    <p class="cover-subtitle">Your Tier 2 access is active. Use the RCCF framework and Company Master Prompt to generate inspection-ready Ontario compliance documents in your Notion workspace.</p>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div class="meta-item"><span class="meta-label">Tier</span><span class="meta-value">2 — AI Generation Framework</span></div>
+      <div class="meta-item"><span class="meta-label">Document Code</span><span class="meta-value">OCOS-T2-GEN-001</span></div>
+      <div class="meta-item"><span class="meta-label">Prerequisite</span><span class="meta-value">Tier 1 — Compliance Foundation</span></div>
+      <div class="meta-item"><span class="meta-label">Jurisdiction</span><span class="meta-value">Ontario, Canada</span></div>
+    </div>
+  </div>
+  <div class="prereq-bar">
+    <span>⚠ Tier 1 must be completed before using Tier 2 generation tools.</span>
+    <a href="https://naturalalternatives.ca/ontario-compliance-operating-system-/ocos-t1-hub.html">Access Tier 1 →</a>
+  </div>
+</section>
+
+<section class="access-section" id="access">
+  <div class="section-eyebrow">Your Access</div>
+  <h2 class="access-title">Tier 2 Resources</h2>
+  <p class="access-sub">Two components — read the guide first, then access your generation workspace.</p>
+  <div class="access-grid">
+    <div class="access-card">
+      <span class="card-eyebrow">OCOS-T2-GEN-001 · Version 1.0</span>
+      <span class="card-title">AI-Driven Compliance Generation Framework Guide</span>
+      <p class="card-desc">The complete Tier 2 reference document. Covers the RCCF framework, Company Master Prompt setup, the Compliance Generator Library, quality control requirements, and employer review obligations. Read this before using the generation workspace.</p>
+      <a href="https://naturalalternatives.ca/ontario-compliance-operating-system-/OCOS_Tier2.html" class="card-btn" target="_blank">Open Guide →</a>
+    </div>
+    <div class="access-card dark">
+      <span class="card-eyebrow">Notion Workspace · Tier 2</span>
+      <span class="card-title">Compliance Generator Library</span>
+      <p class="card-desc">Your OCOS Tier 2 Notion workspace. Contains the full Compliance Generator Library, Company Master Prompt template, generation instructions, and the complete RCCF prompt set. Access after reading the guide.</p>
+      <a href="https://www.notion.so/2fdaf11add63808f8104ca347d88949c" class="card-btn" target="_blank">Open Workspace →</a>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section" id="steps">
+  <div class="section-eyebrow">Getting Started</div>
+  <h2 class="steps-title">Tier 2 Generation — First Steps</h2>
+  <div class="step-list">
+    <div class="step-row">
+      <div class="step-num-block">1</div>
+      <div class="step-content">
+        <div class="step-heading">Read the Tier 2 Guide</div>
+        <p class="step-detail">Open the AI-Driven Compliance Generation Framework Guide above. Read Sections 3 and 4 — the RCCF Framework and Company Master Prompt — before opening your Notion workspace.</p>
+        <span class="step-timing">Before opening Notion</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-block">2</div>
+      <div class="step-content">
+        <div class="step-heading">Complete your Company Master Prompt</div>
+        <p class="step-detail">In the Notion workspace, open the Company Master Prompt template. Fill in your business name, sector, geographic area, workforce size, equipment inventory, hazard profile, and applicable regulations. Every generation session starts with this prompt.</p>
+        <span class="step-timing">First session setup — approximately 30 minutes</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-block">3</div>
+      <div class="step-content">
+        <div class="step-heading">Select a generator from the Compliance Library</div>
+        <p class="step-detail">Open the Compliance Generator Library in Notion. Select the document you need — Health & Safety Policy, Safe Work Procedure, Inspection Checklist, or others. Paste the Master Prompt, then the generator prompt, into a new AI session.</p>
+        <span class="step-timing">One generator per session</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-block">4</div>
+      <div class="step-content">
+        <div class="step-heading">Review every output before approving</div>
+        <p class="step-detail">Generated documents are drafts. Verify that all hazard descriptions, control measures, equipment references, and role assignments reflect your actual workplace before signing and issuing any document.</p>
+        <span class="step-timing">Mandatory — every document</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num-block">5</div>
+      <div class="step-content">
+        <div class="step-heading">Transfer approved documents to Tier 3</div>
+        <p class="step-detail">Reviewed and approved documents are filed, managed, and maintained through the Tier 3 Compliance Operations System. Tier 2 generates. Tier 3 operates.</p>
+        <span class="step-timing">Upon employer sign-off</span>
+      </div>
+    </div>
+  </div>
+  <div class="callout">
+    <p>A well-formatted AI-generated document that has not been reviewed, approved, communicated, and enforced provides no legal protection to the employer and no safety benefit to the worker. The format is not the control. The implementation is the control.</p>
+    <span>OCOS Employer Responsibility Principle</span>
+  </div>
+</section>
+
+<section class="upgrade-section" id="tiers">
+  <div class="section-eyebrow">OCOS System</div>
+  <h2 class="access-title">Your Tier Position</h2>
+  <p class="access-sub">OCOS is a three-tier progressive system. Each tier builds on the one before it.</p>
+  <div class="upgrade-cards">
+    <div class="tier-card">
+      <span class="tier-label">Tier 1</span>
+      <span class="tier-name">Enterprise Compliance Foundation Guide</span>
+      <p class="tier-desc">Legal framework, employer duties, document control standards, and the RCCF architecture. Must be completed before Tier 2.</p>
+      <span class="tier-status done">✓ Prerequisite — Complete</span>
+    </div>
+    <div class="tier-card active">
+      <span class="tier-label">Tier 2 — Current</span>
+      <span class="tier-name">AI-Driven Compliance Generation Framework</span>
+      <p class="tier-desc">RCCF-powered generation workspace. Produces standardized, Ontario-aligned compliance documents using your Company Master Prompt.</p>
+      <span class="tier-status current">→ You Are Here</span>
+    </div>
+    <div class="tier-card">
+      <span class="tier-label">Tier 3</span>
+      <span class="tier-name">Compliance Operations System</span>
+      <p class="tier-desc">Operational infrastructure — document control register, training records, inspection logs, corrective actions, and compliance calendar.</p>
+      <span class="tier-status next">Upgrade Available</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="https://naturalalternatives.ca" target="_blank" class="f-brand">Natural Alternatives</a>
+  <span class="f-code">OCOS-T2-GEN-001 · VERSION 1.0</span>
+  <div class="f-links">
+    <a href="https://naturalalternatives.ca/ontario-compliance-operating-system-/privacy-policy.html">Privacy Policy</a>
+    <a href="https://naturalalternatives.ca/ontario-compliance-operating-system-/terms-of-service.html">Terms of Service</a>
+    <span style="color:rgba(255,255,255,0.15);">© Natural Alternatives</span>
+  </div>
+</footer>
+
+</body>
+</html>
