@@ -39,7 +39,6 @@
     overflow-x: hidden;
   }
 
-  /* ── Grid texture overlay ── */
   body::before {
     content: '';
     position: fixed;
@@ -147,10 +146,7 @@
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
   }
-  h1 em {
-    font-style: italic;
-    color: var(--green);
-  }
+  h1 em { font-style: italic; color: var(--green); }
 
   .hero-sub {
     font-size: 1rem;
@@ -160,7 +156,6 @@
     margin-bottom: 2.5rem;
   }
 
-  /* Penalty callout */
   .penalty-bar {
     display: flex;
     align-items: flex-start;
@@ -271,24 +266,12 @@
     font-family: 'DM Mono', monospace;
     letter-spacing: 0.04em;
   }
-  .form-note a {
-    color: var(--green);
-    text-decoration: none;
-  }
-  .form-note a:hover {
-    text-decoration: underline;
-  }
+  .form-note a { color: var(--green); text-decoration: none; }
+  .form-note a:hover { text-decoration: underline; }
 
-  /* Remove underlines from all form links (consent labels, etc.) */
-  label a {
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  label a:hover {
-    opacity: 0.8;
-  }
+  label a { text-decoration: none; transition: opacity 0.2s; }
+  label a:hover { opacity: 0.8; }
 
-  /* Success state */
   .form-success {
     display: none;
     text-align: center;
@@ -372,7 +355,6 @@
     line-height: 1.7;
   }
 
-  /* Page count badge */
   .inside-badge {
     display: inline-block;
     font-family: 'DM Mono', monospace;
@@ -443,7 +425,6 @@
     line-height: 1.7;
   }
 
-  /* Inline CTA form (bottom) - Redesigned for lighter, more elegant appearance */
   .inline-form {
     display: flex;
     flex-direction: column;
@@ -451,6 +432,7 @@
     max-width: 420px;
     margin: 0 auto;
   }
+  .inline-form input[type="text"],
   .inline-form input[type="email"] {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(46,125,50,0.25);
@@ -462,7 +444,7 @@
     outline: none;
     transition: all 0.25s ease;
   }
-  .inline-form input[type="email"]:focus {
+  .inline-form input:focus {
     border-color: var(--green);
     background: rgba(255,255,255,0.05);
     box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
@@ -483,14 +465,12 @@
     white-space: nowrap;
     box-shadow: 0 4px 12px rgba(46,125,50,0.2);
   }
-  .inline-form button:hover { 
+  .inline-form button:hover {
     background: linear-gradient(135deg, var(--green-deep) 0%, var(--green) 100%);
     box-shadow: 0 6px 20px rgba(46,125,50,0.35);
     transform: translateY(-1px);
   }
-  .inline-form button:active {
-    transform: translateY(0);
-  }
+  .inline-form button:active { transform: translateY(0); }
 
   /* ── FOOTER ── */
   footer {
@@ -531,11 +511,11 @@
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .hero-eyebrow  { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
-  h1             { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
-  .hero-sub      { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
-  .penalty-bar   { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
-  .form-card     { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; animation-delay: 0.1s; }
+  h1            { animation: fadeUp 0.6s ease both; animation-delay: 0.2s; }
+  .hero-sub     { animation: fadeUp 0.6s ease both; animation-delay: 0.3s; }
+  .penalty-bar  { animation: fadeUp 0.6s ease both; animation-delay: 0.35s; }
+  .form-card    { animation: fadeUp 0.6s ease both; animation-delay: 0.25s; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -581,16 +561,13 @@
 
   <div class="hero-right">
     <div class="form-card">
+
       <!-- Form state -->
       <div id="form-wrap">
         <div class="form-title">Get the Playbook</div>
         <p class="form-sub">7 pages. No filler. Written for Ontario construction, excavation, and landscaping operators.</p>
 
-        <form id="lead-form" action="https://formspree.io/f/mzdjkneq" method="POST">
-          <!-- ↑ Replace FORMSPREE_ID with your Formspree form ID -->
-          <input type="hidden" name="_subject" value="Compliance Playbook Download">
-          <input type="hidden" name="_next" value="thank-you.html">
-
+        <form id="lead-form" action="https://nacosapp.craig3113.workers.dev/api/leads/submit" method="POST">
           <div class="form-field">
             <label class="form-label" for="fname">Your name</label>
             <input class="form-input" type="text" id="fname" name="name" placeholder="First and last name" required autocomplete="name">
@@ -607,14 +584,14 @@
             <input type="checkbox" id="casl-consent-1" name="casl_consent" value="yes" required
               style="margin-top:.2rem;accent-color:#2E7D32;width:15px;height:15px;flex-shrink:0;">
             <label for="casl-consent-1" style="font-size:.73rem;color:rgba(240,237,232,0.45);line-height:1.55;cursor:pointer;">
-              I agree to receive emails from Natural Alternatives about compliance resources and product updates. 
+              I agree to receive emails from Natural Alternatives about compliance resources and product updates.
               Unsubscribe anytime. <a href="privacy-policy.html" style="color:#2E7D32;">Privacy Policy</a> · <a href="terms-of-service.html" style="color:#2E7D32;">Terms of Service</a>.
             </label>
           </div>
           <button class="form-btn" type="submit" id="submit-btn">
             Send Me the Playbook <span class="btn-arrow">→</span>
           </button>
-          <p class="form-note">No spam. One email with the download link. You can opt out any time. <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="51383f373e113f30252423303d303d2534233f3025382734227f3230">[email&#116600;protected]</a></p>
+          <p class="form-note">No spam. One email with the download link. Opt out any time. <a href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
         </form>
       </div>
 
@@ -627,6 +604,7 @@
           ↓ Download Playbook PDF
         </a>
       </div>
+
     </div>
   </div>
 </section>
@@ -689,15 +667,14 @@
   <h2>Get compliant before<br><em>they show up.</em></h2>
   <p>The playbook is free. Takes 20 minutes to read. Most contractors find at least one item in the checklist they haven't addressed — better to find it now than during a stop-work order.</p>
 
-  <form class="inline-form" id="bottom-form" action="https://formspree.io/f/mzdjkneq" method="POST">
-    <input type="hidden" name="_subject" value="Compliance Playbook Download (Bottom)">
-    <input type="hidden" name="_next" value="thank-you.html">
+  <form class="inline-form" id="bottom-form" action="https://nacosapp.craig3113.workers.dev/api/leads/submit" method="POST">
+    <input type="text" name="name" placeholder="Your name" required autocomplete="name">
     <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
-    <div style="display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 .75rem;">
+    <div style="display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 .75rem;text-align:left;">
       <input type="checkbox" id="casl-consent-2" name="casl_consent" value="yes" required
         style="margin-top:.2rem;accent-color:#2E7D32;width:15px;height:15px;flex-shrink:0;">
       <label for="casl-consent-2" style="font-size:.73rem;color:rgba(240,237,232,0.45);line-height:1.55;cursor:pointer;">
-        I agree to receive emails from Natural Alternatives about compliance resources and product updates. 
+        I agree to receive emails from Natural Alternatives about compliance resources and product updates.
         Unsubscribe anytime. <a href="privacy-policy.html" style="color:#2E7D32;">Privacy Policy</a> · <a href="terms-of-service.html" style="color:#2E7D32;">Terms of Service</a>.
       </label>
     </div>
@@ -711,12 +688,15 @@
   <ul class="footer-links">
     <li><a href="pricing.html">OCOS Pricing</a></li>
     <li><a href="contractor-os.html">Fleet Logbook</a></li>
-    <li><a href="/cdn-cgi/l/email-protection#7811161e173816190c0d0a191419140c1d0a16190c110e1d0b561b19">Contact</a></li>
+    <li><a href="mailto:info@naturalalternatives.ca">Contact</a></li>
   </ul>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ── Form intercept — show inline success + download link ──
+<script>
+// ── Worker endpoint ──────────────────────────────────────────────────────────
+const WORKER = 'https://nacosapp.craig3113.workers.dev/api/leads/submit';
+
+// ── Hero form — intercept, submit to Worker, show success state ──────────────
 document.getElementById('lead-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
@@ -726,28 +706,24 @@ document.getElementById('lead-form').addEventListener('submit', async function(e
   const formData = new FormData(this);
 
   try {
-    const res = await fetch(this.action, {
+    const res = await fetch(WORKER, {
       method: 'POST',
       body: formData,
-      headers: { 'Accept': 'application/json' }
     });
 
-    if (res.ok) {
-      document.getElementById('form-wrap').style.display = 'none';
-      document.getElementById('form-success').classList.add('show');
-    } else {
-      // Fallback — still show success and let them download
-      document.getElementById('form-wrap').style.display = 'none';
-      document.getElementById('form-success').classList.add('show');
-    }
-  } catch {
-    // Network error — still surface the download
+    // Worker returns redirect (303) or JSON success — either way show success
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+
+  } catch (err) {
+    // Network error — still surface the download so user isn't left hanging
+    console.error('Submit error:', err);
     document.getElementById('form-wrap').style.display = 'none';
     document.getElementById('form-success').classList.add('show');
   }
 });
 
-// ── Bottom form — same pattern ──
+// ── Bottom form — intercept, submit to Worker, replace with download link ────
 document.getElementById('bottom-form').addEventListener('submit', async function(e) {
   e.preventDefault();
   const btn = this.querySelector('button');
@@ -757,18 +733,28 @@ document.getElementById('bottom-form').addEventListener('submit', async function
   const formData = new FormData(this);
 
   try {
-    await fetch(this.action, {
+    await fetch(WORKER, {
       method: 'POST',
       body: formData,
-      headers: { 'Accept': 'application/json' }
     });
-  } catch {}
+  } catch (err) {
+    console.error('Submit error:', err);
+  }
 
-  // Replace form with download link
-  this.innerHTML = '<a href="ontario-contractor-compliance-playbook.pdf" download style="display:inline-flex;align-items:center;gap:0.5rem;background:#2E7D32;color:#ffffff;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;padding:0.85rem 1.5rem;text-decoration:none;">↓ Download Now</a><p style="margin-top:0.75rem;font-size:11px;color:rgba(240,237,232,0.4);font-family:\'DM Mono\',monospace">Check your inbox too — we\'re sending a copy there.</p>';
+  // Replace form with download link regardless of network result
+  this.innerHTML = `
+    <a href="ontario-contractor-compliance-playbook.pdf" download
+       style="display:inline-flex;align-items:center;gap:0.5rem;background:#2E7D32;color:#ffffff;
+              font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;
+              text-transform:uppercase;padding:0.85rem 1.5rem;text-decoration:none;">
+      ↓ Download Now
+    </a>
+    <p style="margin-top:0.75rem;font-size:11px;color:rgba(240,237,232,0.4);font-family:'DM Mono',monospace;">
+      Check your inbox too — we're sending a copy there.
+    </p>`;
 });
 
-// ── Scroll reveal ──
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -778,4 +764,12 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1 });
 
-docu
+document.querySelectorAll('.inside-item, .proof-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
