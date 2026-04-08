@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>Command Center — Ontario Compliance Operating System™</title>
+<meta name="description" content="Your central hub for all NAC OS tools, resources, and compliance documentation.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:      #2E7D32;
+  --green-light:#43A047;
+  --green-deep: #1B5E20;
+  --green-glow: rgba(46,125,50,0.15);
+  --ink:        #0A0C0A;
+  --surface:    #111411;
+  --panel:      #161A16;
+  --border:     rgba(255,255,255,0.07);
+  --border2:    rgba(255,255,255,0.12);
+  --text:       #F0EDE8;
+  --text-dim:   rgba(240,237,232,0.55);
+  --text-muted: rgba(240,237,232,0.3);
+  --white:      #ffffff;
+  --warn:       #F57C00;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ink);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(10,12,10,0.95); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(46,125,50,0.3);
+  height: 56px; display: flex; align-items: center;
+  padding: 0 2rem; justify-content: space-between;
+}
+.nav-logo { display: flex; flex-direction: column; gap: 1px; text-decoration: none; }
+.nav-logo-top {
+  font-family: 'DM Mono', monospace; font-size: 8px;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--green);
+}
+.nav-logo-main {
+  font-family: 'Playfair Display', serif; font-size: 13px;
+  font-weight: 700; color: var(--white); letter-spacing: 0.04em;
+}
+.nav-back {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-dim); text-decoration: none; transition: color 0.2s;
+}
+.nav-back:hover { color: var(--green); }
+
+/* ── HERO ── */
+.hero {
+  padding: 7rem 2rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1rem;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900; color: var(--white);
+  line-height: 1.2; margin-bottom: 0.75rem;
+}
+.hero p {
+  font-size: 14px; color: var(--text-dim);
+  max-width: 480px; margin: 0 auto;
+}
+
+/* ── GRID ── */
+.section { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--green); margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.section-label::before {
+  content: ''; width: 24px; height: 1px; background: var(--green);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.75rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  position: relative; overflow: hidden;
+}
+.card:hover {
+  border-color: var(--green);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(46,125,50,0.12);
+}
+.card-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--green-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px; font-weight: 700; color: var(--white);
+}
+.card-desc {
+  font-size: 13px; color: var(--text-dim); line-height: 1.5;
+}
+.card-tag {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--green); margin-top: auto; padding-top: 0.5rem;
+}
+.card.primary { border-color: rgba(46,125,50,0.3); }
+.card.primary .card-icon { background: var(--green); color: var(--white); }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--text-muted);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+footer a { color: var(--text-dim); text-decoration: none; }
+footer a:hover { color: var(--green); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  nav { padding: 0 1rem; }
+  .hero { padding: 6rem 1.25rem 2rem; }
+  .section { padding: 2rem 1.25rem; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-top">Natural Alternatives</span>
+    <span class="nav-logo-main">Command Center</span>
+  </a>
+  <a href="index.html" class="nav-back">Home</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Ontario Compliance Operating System</div>
+  <h1>Command Center</h1>
+  <p>Your central hub for every tool, resource, and workspace in the NAC OS ecosystem.</p>
+</div>
+
+<!-- ═══ APPS & TOOLS ═══ -->
+<div class="section">
+  <div class="section-label">Apps &amp; Tools</div>
+  <div class="grid">
+
+    <a href="nac-os-app.html" class="card primary">
+      <div class="card-icon">&#9881;</div>
+      <div class="card-title">Fleet Logbook</div>
+      <div class="card-desc">Daily logs, PM schedules, fuel tracking, operator timesheets, QR scan-start, invoicing, and compliance dashboards.</div>
+      <div class="card-tag">Launch App</div>
+    </a>
+
+    <a href="course-portal/index.html" class="card primary">
+      <div class="card-icon">&#127891;</div>
+      <div class="card-title">Course Portal</div>
+      <div class="card-desc">Ontario compliance training modules with progress tracking and certification.</div>
+      <div class="card-tag">Launch App</div>
+    </a>
+
+    <a href="nac-os-qr-sheet.html" class="card">
+      <div class="card-icon">&#9638;</div>
+      <div class="card-title">QR Code Sheet</div>
+      <div class="card-desc">Generate and print QR codes for your fleet equipment. Operators scan to start logging.</div>
+      <div class="card-tag">Open Tool</div>
+    </a>
+
+    <a href="upgrade/index.html" class="card">
+      <div class="card-icon">&#8593;</div>
+      <div class="card-title">Upgrade Tier</div>
+      <div class="card-desc">Compare Tier 1, 2, and 3 side-by-side. Purchase an upgrade instantly.</div>
+      <div class="card-tag">Open</div>
+    </a>
+
+  </div>
+
+  <!-- ═══ COMPLIANCE RESOURCES ═══ -->
+  <div class="section-label">Compliance Resources</div>
+  <div class="grid">
+
+    <a href="compliance-playbook-landing.html" class="card">
+      <div class="card-icon">&#128214;</div>
+      <div class="card-title">Compliance Playbook</div>
+      <div class="card-desc">Free Ontario contractor compliance guide covering OHSA, WSIB clearance, and a 30-day checklist.</div>
+      <div class="card-tag">Download</div>
+    </a>
+
+    <a href="guide.html" class="card">
+      <div class="card-icon">&#128218;</div>
+      <div class="card-title">Foundation Guide</div>
+      <div class="card-desc">Tier 1 compliance foundations — core principles and minimum system requirements for Ontario employers.</div>
+      <div class="card-tag">Read</div>
+    </a>
+
+    <a href="checklist.html" class="card">
+      <div class="card-icon">&#9745;</div>
+      <div class="card-title">Supervisor Checklists</div>
+      <div class="card-desc">Printable weekly compliance checklists for supervisors. Tier 1 documentation support.</div>
+      <div class="card-tag">Print</div>
+    </a>
+
+  </div>
+
+  <!-- ═══ TIER WORKSPACES ═══ -->
+  <div class="section-label">Tier Workspaces</div>
+  <div class="grid">
+
+    <a href="ocos-t1-hub.html" class="card">
+      <div class="card-icon">1</div>
+      <div class="card-title">Tier 1 — Foundation</div>
+      <div class="card-desc">Document hub for Tier 1 templates, orientation materials, and compliance records.</div>
+      <div class="card-tag">Open Workspace</div>
+    </a>
+
+    <a href="ocos-t2-hub.html" class="card">
+      <div class="card-icon">2</div>
+      <div class="card-title">Tier 2 — Generation</div>
+      <div class="card-desc">Access hub for Tier 2 document generation, prerequisites, and advanced templates.</div>
+      <div class="card-tag">Open Workspace</div>
+    </a>
+
+    <a href="ocos-t3-hub.html" class="card">
+      <div class="card-icon">3</div>
+      <div class="card-title">Tier 3 — Operations</div>
+      <div class="card-desc">Full operations workspace with advanced features and operational documentation.</div>
+      <div class="card-tag">Open Workspace</div>
+    </a>
+
+  </div>
+
+  <!-- ═══ BUSINESS ═══ -->
+  <div class="section-label">Business</div>
+  <div class="grid">
+
+    <a href="pricing.html" class="card">
+      <div class="card-icon">&#36;</div>
+      <div class="card-title">Licensing &amp; Pricing</div>
+      <div class="card-desc">Individual tier licenses and OCOS Partner program pricing. Purchase via Stripe.</div>
+      <div class="card-tag">View Plans</div>
+    </a>
+
+    <a href="become-a-partner.html" class="card">
+      <div class="card-icon">&#9733;</div>
+      <div class="card-title">Partner Program</div>
+      <div class="card-desc">Deploy OCOS across multiple clients as a licensed partner. White-label templates and legislative updates.</div>
+      <div class="card-tag">Apply</div>
+    </a>
+
+    <a href="contractor-os.html" class="card">
+      <div class="card-icon">&#128666;</div>
+      <div class="card-title">Fleet Logbook — Product Page</div>
+      <div class="card-desc">Features overview, use cases, and early access details for NAC OS Fleet Logbook.</div>
+      <div class="card-tag">Learn More</div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>Natural Alternatives Canada &middot; <a href="privacy-policy.html">Privacy</a> &middot; <a href="terms-of-service.html">Terms</a> &middot; <a href="mailto:info@naturalalternatives.ca">info@naturalalternatives.ca</a></p>
+</footer>
+
+</body>
+</html>
