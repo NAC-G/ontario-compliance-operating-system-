@@ -1,5 +1,0 @@
-/ontario-contractor-compliance-playbook.pdf
-  Content-Disposition: attachment; filename="ontario-contractor-compliance-playbook.pdf"
-
-/nac-os-app.html
-  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://nacosapp.craig3113.workers.dev https://static.cloudflareinsights.com data: blob:
