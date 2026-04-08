@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' fonts.googleapis.com fonts.gstatic.com cdnjs.cloudflare.com nacosapp.craig3113.workers.dev static.cloudflareinsights.com data: blob:; style-src 'self' 'unsafe-inline' fonts.googleapis.com fonts.gstatic.com; font-src 'self' fonts.googleapis.com fonts.gstatic.com; connect-src 'self' nacosapp.craig3113.workers.dev static.cloudflareinsights.com; img-src 'self' data: blob:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>NAC OS Fleet Logbook™</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1755,8 +1756,6 @@ body.operator-mode #operator-view { display: flex !important; flex-direction: co
 }
 
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
@@ -4547,7 +4546,7 @@ function renderReports() {
   const allMonths = new Set([...Object.keys(months), ...Object.keys(svcMonths)]);
   const sortedMonths = [...allMonths].sort().reverse();
 
-  document.getElementById('monthly-report-tbody').innerHTML = sortedMonths.length === 0
+  document.getElementById('report-revenue-table').innerHTML = sortedMonths.length === 0
     ? `<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-dim)">No data recorded yet.</td></tr>`
     : sortedMonths.map(m => {
         const d = months[m] || {};
@@ -6159,43 +6158,6 @@ setTimeout(function() {
     setTimeout(function() { if(loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
   }
 }, 250);
-
-
-// Pre-fill billing rate input
-  const rateInput = document.getElementById('report-billing-rate');
-  if (rateInput && billingRate) rateInput.value = billingRate;
-
-  // Monthly revenue / utilization table
-  const revenueTableEl = document.getElementById('report-revenue-table');
-  if (revenueTableEl) {
-    if (monthlyRows.length === 0) {
-      revenueTableEl.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><div>No log data yet. Start logging shifts to see monthly breakdown.</div></div>';
-    } else {
-      revenueTableEl.innerHTML = `
-        <table class="data-table">
-          <thead><tr>
-            <th>Month</th><th>Entries</th><th>Hours</th><th>Fuel (L)</th>
-            ${billingRate ? '<th>Revenue</th>' : ''}
-          </tr></thead>
-          <tbody>
-            ${monthlyRows.map(row => `<tr>
-              <td class="bold">${row.label}</td>
-              <td class="mono">${row.entries}</td>
-              <td class="mono green">${row.hours.toFixed(1)}</td>
-              <td class="mono">${row.fuel > 0 ? row.fuel.toLocaleString('en-CA',{maximumFractionDigits:0}) : '—'}</td>
-              ${billingRate ? '<td class="mono green bold">$' + Math.round(row.revenue).toLocaleString('en-CA') + '</td>' : ''}
-            </tr>`).join('')}
-            <tr style="border-top:2px solid var(--border);font-weight:600">
-              <td class="bold">Total</td>
-              <td class="mono">${allLogs.length}</td>
-              <td class="mono green">${totalHours.toFixed(1)}</td>
-              <td class="mono">${totalFuel > 0 ? totalFuel.toLocaleString('en-CA',{maximumFractionDigits:0}) : '—'}</td>
-              ${billingRate ? '<td class="mono green bold">$' + Math.round(totalRevenue).toLocaleString('en-CA') + '</td>' : ''}
-            </tr>
-          </tbody>
-        </table>`;
-    }
-  }
 
 // ══════════════════════════════════════════
 // JOB SITES MODULE
