@@ -1,0 +1,25 @@
+{
+  "id": "FC-CL-008",
+  "title": "Incident / Near Miss Report",
+  "category": "Incident / Near Miss",
+  "frequency": "Per Task",
+  "site_types": ["Residential", "ICI", "Roadwork", "All"],
+  "regulatory_anchors": ["OHSA s.51", "OReg 420/21", "WSIB Form 7"],
+  "default": true,
+  "items": [
+    { "id": "inc-01", "prompt": "Date, time, and exact location of incident:", "type": "text", "requires_photo": false, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-02", "prompt": "Type of incident:", "type": "select", "options": ["Injury — worker", "Injury — visitor", "Near miss", "Property damage", "Environmental", "Other"], "requires_photo": false, "regulatory_ref": null },
+    { "id": "inc-03", "prompt": "Worker(s) involved (name, role, employer):", "type": "text", "requires_photo": false, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-04", "prompt": "Describe what happened (sequence of events):", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "inc-05", "prompt": "Immediate cause (unsafe act / unsafe condition):", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "inc-06", "prompt": "Root cause (why did the condition/act occur?):", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "inc-07", "prompt": "First aid administered on site?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-08", "prompt": "Worker transported to hospital / clinic?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-09", "prompt": "MOL notification required (critical injury or fatality)?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.51(1)" },
+    { "id": "inc-10", "prompt": "MOL notified — time and inspector name (if applicable):", "type": "text", "requires_photo": false, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-11", "prompt": "WSIB Form 7 required and initiated?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "WSIA" },
+    { "id": "inc-12", "prompt": "Scene photos captured?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OHSA s.51" },
+    { "id": "inc-13", "prompt": "Corrective actions to prevent recurrence:", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "inc-14", "prompt": "Reported by (name, role, date):", "type": "text", "requires_photo": false, "regulatory_ref": "OHSA s.51" }
+  ]
+}

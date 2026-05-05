@@ -1,0 +1,20 @@
+{
+  "id": "FC-CL-005",
+  "title": "Hot Work Permit",
+  "category": "Hot Work",
+  "frequency": "Per Task",
+  "site_types": ["Residential", "ICI"],
+  "regulatory_anchors": ["NFPA 51B", "OReg 213/91", "OHSA s.25"],
+  "default": true,
+  "items": [
+    { "id": "hw-01", "prompt": "Hot work permit issued and posted at work location?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "NFPA 51B" },
+    { "id": "hw-02", "prompt": "All combustibles removed or shielded within 10m of work area?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "NFPA 51B s.4.3" },
+    { "id": "hw-03", "prompt": "Fire extinguisher (min 2A:10BC) immediately accessible?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "NFPA 51B" },
+    { "id": "hw-04", "prompt": "Fire watch assigned — trained, staying 30 min after work ends?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "NFPA 51B s.5.5" },
+    { "id": "hw-05", "prompt": "Atmosphere tested in areas where gas/vapour possible?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "NFPA 51B s.4.5" },
+    { "id": "hw-06", "prompt": "Ventilation adequate — fumes not accumulating?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91" },
+    { "id": "hw-07", "prompt": "Sprinklers and smoke detectors protected or temporarily disabled with authorization?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "NFPA 51B s.4.4" },
+    { "id": "hw-08", "prompt": "Worker holds competency in hot work safety?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.25(2)(a)" },
+    { "id": "hw-09", "prompt": "Notes / hazards identified:", "type": "text", "requires_photo": false, "regulatory_ref": null }
+  ]
+}

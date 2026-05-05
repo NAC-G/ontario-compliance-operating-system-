@@ -1,0 +1,20 @@
+{
+  "id": "FC-CL-003",
+  "title": "Scaffold Daily Sign-off",
+  "category": "Scaffolding",
+  "frequency": "Daily",
+  "site_types": ["Residential", "ICI"],
+  "regulatory_anchors": ["OReg 213/91 Part III", "OHSA s.25"],
+  "default": true,
+  "items": [
+    { "id": "scf-01", "prompt": "Scaffold erected by competent worker per engineering drawings?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.130" },
+    { "id": "scf-02", "prompt": "All frames, braces, and pins in place and undamaged?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 Part III" },
+    { "id": "scf-03", "prompt": "Planking fully decked — no gaps >25mm between boards?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 s.141" },
+    { "id": "scf-04", "prompt": "Guardrails on all open sides >2.4m (top rail, mid rail, toe board)?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 s.26.3" },
+    { "id": "scf-05", "prompt": "Base plates on firm, level footing — no settled or undermined legs?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.132" },
+    { "id": "scf-06", "prompt": "Tied to structure at required intervals?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.139" },
+    { "id": "scf-07", "prompt": "Load rating posted and not exceeded?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.131" },
+    { "id": "scf-08", "prompt": "Access ladder in place and secured?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.143" },
+    { "id": "scf-09", "prompt": "Notes / deficiencies observed:", "type": "text", "requires_photo": false, "regulatory_ref": null }
+  ]
+}

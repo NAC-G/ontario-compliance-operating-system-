@@ -1,0 +1,20 @@
+{
+  "id": "FC-CL-001",
+  "title": "Working at Heights — Pre-Task",
+  "category": "Working at Heights",
+  "frequency": "Per Task",
+  "site_types": ["Residential", "ICI", "Roadwork"],
+  "regulatory_anchors": ["OReg 213/91 s.26", "OReg 297/13", "OHSA s.25"],
+  "default": true,
+  "items": [
+    { "id": "wah-01", "prompt": "All workers performing WAH tasks hold valid OReg 297/13 certification (3-yr cycle)?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 297/13" },
+    { "id": "wah-02", "prompt": "Fall protection plan reviewed and on site?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.26" },
+    { "id": "wah-03", "prompt": "Anchor points inspected and rated ≥2x maximum arrest force?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 s.26.7" },
+    { "id": "wah-04", "prompt": "Harnesses inspected, donned correctly, all buckles engaged?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 s.26.5" },
+    { "id": "wah-05", "prompt": "Lanyards/SRL in good condition, no cuts, fraying, or missing snap gates?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.26.5" },
+    { "id": "wah-06", "prompt": "Guardrails or covers in place over all unguarded openings ≥3m?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 213/91 s.26.3" },
+    { "id": "wah-07", "prompt": "Rescue plan in place and communicated to all workers?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.26.1" },
+    { "id": "wah-08", "prompt": "Weather conditions acceptable? (Wind < 40km/h, no ice/wet surfaces at height)", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.25" },
+    { "id": "wah-09", "prompt": "Notes / deficiencies observed:", "type": "text", "requires_photo": false, "regulatory_ref": null }
+  ]
+}

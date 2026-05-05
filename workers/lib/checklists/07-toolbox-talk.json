@@ -1,0 +1,18 @@
+{
+  "id": "FC-CL-007",
+  "title": "Toolbox Talk Record",
+  "category": "Toolbox Talk / Competency",
+  "frequency": "Per Task",
+  "site_types": ["Residential", "ICI", "Roadwork", "All"],
+  "regulatory_anchors": ["OHSA s.25(2)(a)"],
+  "default": true,
+  "items": [
+    { "id": "tbx-01", "prompt": "Talk leader name and role:", "type": "text", "requires_photo": false, "regulatory_ref": "OHSA s.25(2)(a)" },
+    { "id": "tbx-02", "prompt": "Topic covered today:", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "tbx-03", "prompt": "OHSA or O.Reg section addressed (if applicable):", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "tbx-04", "prompt": "All workers present and listed below / signed off?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OHSA s.25(2)(a)" },
+    { "id": "tbx-05", "prompt": "Questions raised during talk:", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "tbx-06", "prompt": "Actions assigned (who, what, by when):", "type": "text", "requires_photo": false, "regulatory_ref": null },
+    { "id": "tbx-07", "prompt": "Photo of group or sign-in sheet captured?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OHSA s.25(2)(a)" }
+  ]
+}

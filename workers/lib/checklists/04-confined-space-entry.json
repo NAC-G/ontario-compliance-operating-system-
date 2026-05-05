@@ -1,0 +1,22 @@
+{
+  "id": "FC-CL-004",
+  "title": "Confined Space Entry Permit",
+  "category": "Confined Space",
+  "frequency": "Per Task",
+  "site_types": ["ICI", "Roadwork"],
+  "regulatory_anchors": ["OReg 632/05", "OHSA s.25"],
+  "default": true,
+  "items": [
+    { "id": "cs-01", "prompt": "Written confined space program in place at this workplace?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.6" },
+    { "id": "cs-02", "prompt": "Entry supervisor designated and on site?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.14" },
+    { "id": "cs-03", "prompt": "Atmospheric testing conducted — O2 19.5–23%, LEL <10%, CO <25ppm?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 632/05 s.48" },
+    { "id": "cs-04", "prompt": "Continuous monitoring in place during entry?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.49" },
+    { "id": "cs-05", "prompt": "Attendant stationed outside — trained, not entering, in communication?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.54" },
+    { "id": "cs-06", "prompt": "Rescue plan written and rescue team on standby?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.57" },
+    { "id": "cs-07", "prompt": "All energy sources isolated, locked, and tagged?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 632/05 s.41" },
+    { "id": "cs-08", "prompt": "Ventilation adequate and confirmed by testing?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.50" },
+    { "id": "cs-09", "prompt": "All entrants trained in hazards and rescue procedures?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 632/05 s.11" },
+    { "id": "cs-10", "prompt": "Entry permit signed by entry supervisor?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "OReg 632/05 s.14" },
+    { "id": "cs-11", "prompt": "Notes / hazards identified:", "type": "text", "requires_photo": false, "regulatory_ref": null }
+  ]
+}

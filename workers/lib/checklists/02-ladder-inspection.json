@@ -1,0 +1,19 @@
+{
+  "id": "FC-CL-002",
+  "title": "Ladder Inspection",
+  "category": "Ladders",
+  "frequency": "Daily",
+  "site_types": ["Residential", "ICI", "Roadwork", "All"],
+  "regulatory_anchors": ["OReg 213/91 s.78-84", "CSA Z11"],
+  "default": true,
+  "items": [
+    { "id": "lad-01", "prompt": "Ladder rated for load (worker + tools + materials)?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.78" },
+    { "id": "lad-02", "prompt": "No visible cracks, bends, missing rungs, or damaged feet?", "type": "yes_no", "requires_photo": true, "regulatory_ref": "CSA Z11" },
+    { "id": "lad-03", "prompt": "Ladder extends ≥1m (3 rungs) above landing?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.81" },
+    { "id": "lad-04", "prompt": "Set at correct angle (1:4 ratio — 1 out for every 4 up)?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.80" },
+    { "id": "lad-05", "prompt": "Top and bottom secured or held by second worker?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.82" },
+    { "id": "lad-06", "prompt": "Placed on firm, level surface — no boxes, debris, or ice?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.79" },
+    { "id": "lad-07", "prompt": "Workers face ladder when ascending/descending, both hands on rungs?", "type": "yes_no", "requires_photo": false, "regulatory_ref": "OReg 213/91 s.84" },
+    { "id": "lad-08", "prompt": "Notes / deficiencies observed:", "type": "text", "requires_photo": false, "regulatory_ref": null }
+  ]
+}

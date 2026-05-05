@@ -1,0 +1,19 @@
+{
+  "name": "ocos-fc-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev field-compliance-worker.js",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 execute DB --file=lib/migrations/001_fc_tables.sql"
+  },
+  "dependencies": {
+    "@pdf-lib/pdf-lib": "^1.17.1",
+    "mammoth": "^1.7.0",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,41 @@
+name = "ocos-fc"
+main = "field-compliance-worker.js"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[r2_buckets]]
+binding = "FC_PHOTOS"
+bucket_name = "ocos-fc-photos"
+
+[[r2_buckets]]
+binding = "FC_VOICE"
+bucket_name = "ocos-fc-voice"
+
+[[r2_buckets]]
+binding = "FC_REPORTS"
+bucket_name = "ocos-fc-reports"
+
+[[r2_buckets]]
+binding = "FC_STYLE"
+bucket_name = "ocos-fc-style"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nac-os-licenses"
+database_id = "cb6f16b4-066e-4496-9d5c-a2a921576967"
+
+[vars]
+FRONTEND_URL = "https://field.naturalalternatives.ca"
+IN_HOUSE_PAGE_ID = "300af11add638033b7e1f00747a7f387"
+CLIENT_LICENSES_COLLECTION_ID = "24de07c6-8c01-44f4-aed2-c033c755567a"
+T1_WORKSPACE_ID = "300af11add63802a99f2e54df827046a"
+T2_WORKSPACE_ID = "2fdaf11add63808f8104ca347d88949c"
+T3_WORKSPACE_ID = "2fdaf11add6380ce8e90e09db23ea7df"
+FC_WORKER_URL = "https://ocos-fc.naturalalternatives.ca"
+
+# Secrets — set via: wrangler secret put <NAME>
+# NOTION_TOKEN
+# ANTHROPIC_API_KEY
+# RESEND_API_KEY
+# STRIPE_WEBHOOK_SECRET   (same secret as nacosapp — for verifying the inbound provision hook)
+# FC_INTERNAL_SECRET      (shared secret: nacosapp → POST /fc/provision)

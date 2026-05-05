@@ -1711,6 +1711,11 @@ async function handleStripeWebhook(request, env) {
         const key = generateLicenseKey(tier.toUpperCase(), days);
         const lic = await createLicense(env.DB, { key, tier: tier.toUpperCase(), email, customer_name: name, source: "stripe", stripe_payment_id: session.payment_intent || session.id });
         await approveOrder(env.DB, order.id, key, lic.id, "auto", "Auto-approved");
+        // FC provision hook — fire-and-forget, non-blocking
+        if (env.FC_WORKER_URL && env.FC_INTERNAL_SECRET && ["OCOS2","OCOS3"].includes(tier.toUpperCase())) {
+          const fcTier = tier.toUpperCase() === "OCOS3" ? "T3" : "T2";
+          fetch(env.FC_WORKER_URL + "/fc/provision", { method: "POST", headers: { "Content-Type": "application/json", "X-FC-Internal": env.FC_INTERNAL_SECRET }, body: JSON.stringify({ licenseId: key, tier: fcTier, clientName: name }) }).catch(e => console.error("FC provision failed:", e.message));
+        }
         if (email) {
           try {
             await sendLicenseEmail(env, email, key, tier.toUpperCase(), name);
