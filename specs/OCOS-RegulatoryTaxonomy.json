@@ -1,0 +1,570 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "id": "OCOS-RegulatoryTaxonomy",
+  "version": "1.0.0",
+  "jurisdiction": "Ontario, Canada",
+  "last_reviewed": "2026-04",
+  "review_frequency_months": 6,
+  "regulatory_anchors": {
+    "OHSA": "Occupational Health and Safety Act, R.S.O. 1990, c. O.1",
+    "OReg_213_91": "O. Reg. 213/91 — Construction Projects",
+    "OReg_297_13": "O. Reg. 297/13 — Working at Heights Training",
+    "OReg_420_21": "O. Reg. 420/21 — Notices and Reports",
+    "OReg_632_05": "O. Reg. 632/05 — Confined Spaces",
+    "OReg_860": "R.R.O. 1990, Reg. 860 — WHMIS",
+    "OReg_851": "R.R.O. 1990, Reg. 851 — Industrial Establishments",
+    "OReg_67_93": "O. Reg. 67/93 — Health Care and Residential Facilities",
+    "HPR": "Hazardous Products Regulations (federal) — GHS 7th edition amendments effective Dec 2025",
+    "WfWA_5": "Working for Workers Five Act, 2024",
+    "WfWA_6": "Working for Workers Six Act, 2024",
+    "WSIA": "Workplace Safety and Insurance Act, 1997"
+  },
+  "categories": [
+    {
+      "id": "wah",
+      "label": "Working at Heights",
+      "color": "#E8A830",
+      "icon": "altitude",
+      "description": "Any work where a worker can fall 3 metres or more, into operating equipment, into hazardous substances, or through an opening."
+    },
+    {
+      "id": "fall_protection",
+      "label": "Fall Protection",
+      "color": "#E8A830",
+      "icon": "harness",
+      "description": "Guardrails, harnesses, anchors, lanyards, lifelines, travel restraint, fall arrest."
+    },
+    {
+      "id": "scaffold",
+      "label": "Scaffolding",
+      "color": "#E8A830",
+      "icon": "scaffold",
+      "description": "Erection, alteration, dismantling, and use of scaffolds."
+    },
+    {
+      "id": "ladder",
+      "label": "Ladders",
+      "color": "#E8A830",
+      "icon": "ladder",
+      "description": "Portable, fixed, and extension ladders. Inspection and use."
+    },
+    {
+      "id": "whmis",
+      "label": "WHMIS / Hazardous Materials",
+      "color": "#FFB000",
+      "icon": "hazard_diamond",
+      "description": "Labelling, SDS access, training, controlled products. GHS 7th edition compliance."
+    },
+    {
+      "id": "ppe",
+      "label": "Personal Protective Equipment",
+      "color": "#5EE830",
+      "icon": "helmet",
+      "description": "Hard hats, eye protection, hearing protection, foot protection, hi-vis, respirators."
+    },
+    {
+      "id": "excavation",
+      "label": "Excavation & Trenching",
+      "color": "#E84830",
+      "icon": "trench",
+      "description": "Shoring, sloping, benching, locates, soil classification."
+    },
+    {
+      "id": "confined_space",
+      "label": "Confined Space",
+      "color": "#E84830",
+      "icon": "manhole",
+      "description": "Entry permits, atmospheric testing, attendants, rescue plans."
+    },
+    {
+      "id": "hot_work",
+      "label": "Hot Work",
+      "color": "#E84830",
+      "icon": "flame",
+      "description": "Welding, cutting, grinding, brazing — fire watch, permits, ventilation."
+    },
+    {
+      "id": "electrical",
+      "label": "Electrical Safety",
+      "color": "#FFB000",
+      "icon": "bolt",
+      "description": "Lockout/tagout, arc flash, panel work, lines, GFCI, temporary power."
+    },
+    {
+      "id": "mobile_equip",
+      "label": "Mobile Equipment",
+      "color": "#FFB000",
+      "icon": "forklift",
+      "description": "Lift trucks, skid steers, excavators, aerial work platforms, MEWPs."
+    },
+    {
+      "id": "housekeeping",
+      "label": "Housekeeping",
+      "color": "#5EE830",
+      "icon": "broom",
+      "description": "Slip/trip/fall prevention, debris removal, walkway clearance."
+    },
+    {
+      "id": "first_aid",
+      "label": "First Aid",
+      "color": "#5EE830",
+      "icon": "medical_kit",
+      "description": "First aid kits, eyewash, AED, posted procedures, trained attendants."
+    },
+    {
+      "id": "emergency",
+      "label": "Emergency Preparedness",
+      "color": "#FFB000",
+      "icon": "alarm",
+      "description": "Evacuation, muster points, fire extinguishers, alarms, emergency lighting."
+    },
+    {
+      "id": "jhsc",
+      "label": "JHSC / H&S Rep",
+      "color": "#5EE830",
+      "icon": "committee",
+      "description": "Joint Health & Safety Committee or H&S Representative duties and inspections."
+    },
+    {
+      "id": "competency",
+      "label": "Toolbox Talk / Competency",
+      "color": "#5EE830",
+      "icon": "talk",
+      "description": "Pre-task briefings, training records, competency proofs."
+    },
+    {
+      "id": "incident",
+      "label": "Incident / Near Miss",
+      "color": "#E84830",
+      "icon": "warning_triangle",
+      "description": "Injuries, property damage, near misses. Notice-and-report obligations."
+    },
+    {
+      "id": "mol_order",
+      "label": "MOL Order Compliance",
+      "color": "#E84830",
+      "icon": "gavel",
+      "description": "Documentation tied to a Ministry of Labour, Immigration, Training and Skills Development order or stop-work."
+    },
+    {
+      "id": "violence_harassment",
+      "label": "Workplace Violence & Harassment",
+      "color": "#FFB000",
+      "icon": "shield",
+      "description": "OHSA Part III.0.1 — policies, programs, risk assessments, reporting."
+    },
+    {
+      "id": "psh_naloxone",
+      "label": "Naloxone & Worker Wellness",
+      "color": "#FFB000",
+      "icon": "wellness",
+      "description": "Naloxone kits, washroom access, menstrual products, heat/cold stress (Working for Workers Acts)."
+    }
+  ],
+  "tags": [
+    {
+      "id": "WAH-3M",
+      "category": "wah",
+      "label": "Fall hazard ≥3 m",
+      "ohsa": ["OHSA s.25"],
+      "oreg": ["OReg_213_91 s.26", "OReg_297_13"],
+      "severity_default": "High",
+      "requires_photo": true,
+      "auto_status": "Hazard - Open",
+      "description": "Worker exposed to a fall of 3 metres or more without compliant fall protection."
+    },
+    {
+      "id": "WAH-OPENING",
+      "category": "wah",
+      "label": "Unguarded opening",
+      "ohsa": ["OHSA s.25"],
+      "oreg": ["OReg_213_91 s.26.3"],
+      "severity_default": "High",
+      "requires_photo": true,
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "WAH-CERT-EXPIRED",
+      "category": "wah",
+      "label": "WAH training expired or absent",
+      "ohsa": ["OHSA s.25(2)(a)"],
+      "oreg": ["OReg_297_13"],
+      "severity_default": "High",
+      "requires_photo": false,
+      "auto_status": "Hazard - Open",
+      "description": "Worker performing WAH-triggering work without valid OReg 297/13 certification (3-year cycle)."
+    },
+    {
+      "id": "FP-GUARDRAIL-OK",
+      "category": "fall_protection",
+      "label": "Guardrail compliant",
+      "oreg": ["OReg_213_91 s.26.3"],
+      "severity_default": "Info",
+      "auto_status": "Routine"
+    },
+    {
+      "id": "FP-GUARDRAIL-MISSING",
+      "category": "fall_protection",
+      "label": "Guardrail missing or non-compliant",
+      "oreg": ["OReg_213_91 s.26.3"],
+      "severity_default": "High",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "FP-HARNESS-OK",
+      "category": "fall_protection",
+      "label": "Harness inspected and donned correctly",
+      "oreg": ["OReg_213_91 s.26.5"],
+      "severity_default": "Info",
+      "auto_status": "Routine"
+    },
+    {
+      "id": "FP-ANCHOR-INSPECT",
+      "category": "fall_protection",
+      "label": "Anchor point inspection",
+      "oreg": ["OReg_213_91 s.26.7"],
+      "severity_default": "Med"
+    },
+    {
+      "id": "SCAFF-DAILY",
+      "category": "scaffold",
+      "label": "Scaffold daily inspection",
+      "oreg": ["OReg_213_91 Part III"],
+      "severity_default": "Info",
+      "auto_status": "Inspection"
+    },
+    {
+      "id": "SCAFF-DEFICIENCY",
+      "category": "scaffold",
+      "label": "Scaffold deficiency",
+      "oreg": ["OReg_213_91 Part III"],
+      "severity_default": "High",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "LADDER-INSPECT",
+      "category": "ladder",
+      "label": "Ladder inspection",
+      "oreg": ["OReg_213_91 s.78-84"],
+      "severity_default": "Info"
+    },
+    {
+      "id": "LADDER-DAMAGED",
+      "category": "ladder",
+      "label": "Damaged or non-compliant ladder",
+      "oreg": ["OReg_213_91 s.78-84"],
+      "severity_default": "Med",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "WHMIS-LABEL-MISSING",
+      "category": "whmis",
+      "label": "Container missing WHMIS label",
+      "oreg": ["OReg_860 s.5"],
+      "ohsa": ["OHSA s.38"],
+      "severity_default": "Med",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "WHMIS-SDS-ACCESS",
+      "category": "whmis",
+      "label": "SDS not accessible at workplace",
+      "oreg": ["OReg_860 s.7"],
+      "ohsa": ["OHSA s.38"],
+      "severity_default": "Med",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "WHMIS-GHS7",
+      "category": "whmis",
+      "label": "GHS 7th edition compliance check",
+      "oreg": ["HPR (Dec 2025 amendments)"],
+      "severity_default": "Info",
+      "description": "Verify SDS and labels reflect HPR amendments aligning Canada to GHS 7th edition (in force Dec 15, 2025)."
+    },
+    {
+      "id": "PPE-MISSING",
+      "category": "ppe",
+      "label": "Required PPE not worn",
+      "oreg": ["OReg_213_91 s.21-24"],
+      "ohsa": ["OHSA s.28(1)(b)"],
+      "severity_default": "Med",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "PPE-OK",
+      "category": "ppe",
+      "label": "PPE compliant",
+      "severity_default": "Info",
+      "auto_status": "Routine"
+    },
+    {
+      "id": "EXC-SHORING",
+      "category": "excavation",
+      "label": "Excavation shoring / sloping check",
+      "oreg": ["OReg_213_91 Part IV"],
+      "severity_default": "Med"
+    },
+    {
+      "id": "EXC-LOCATES",
+      "category": "excavation",
+      "label": "Underground locates verification",
+      "oreg": ["OReg_213_91 s.228"],
+      "severity_default": "High"
+    },
+    {
+      "id": "CS-PERMIT",
+      "category": "confined_space",
+      "label": "Confined space entry permit",
+      "oreg": ["OReg_632_05"],
+      "severity_default": "High",
+      "requires_photo": true
+    },
+    {
+      "id": "CS-ATMOS",
+      "category": "confined_space",
+      "label": "Atmospheric testing record",
+      "oreg": ["OReg_632_05 s.18"],
+      "severity_default": "High"
+    },
+    {
+      "id": "HW-PERMIT",
+      "category": "hot_work",
+      "label": "Hot work permit issued",
+      "oreg": ["OReg_213_91"],
+      "severity_default": "High",
+      "requires_photo": true
+    },
+    {
+      "id": "HW-FIREWATCH",
+      "category": "hot_work",
+      "label": "Fire watch posted",
+      "severity_default": "High"
+    },
+    {
+      "id": "ELEC-LOTO",
+      "category": "electrical",
+      "label": "Lockout / tagout applied",
+      "oreg": ["OReg_213_91 s.190", "OReg_851 s.42"],
+      "severity_default": "High"
+    },
+    {
+      "id": "ELEC-ARC-FLASH",
+      "category": "electrical",
+      "label": "Arc flash boundary observed",
+      "oreg": ["CSA Z462"],
+      "severity_default": "High"
+    },
+    {
+      "id": "ELEC-EXPOSED",
+      "category": "electrical",
+      "label": "Exposed energized conductors",
+      "oreg": ["OReg_213_91 s.182"],
+      "severity_default": "Critical",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "ME-PRE-USE",
+      "category": "mobile_equip",
+      "label": "Mobile equipment pre-use inspection",
+      "oreg": ["OReg_213_91 s.96"],
+      "severity_default": "Info"
+    },
+    {
+      "id": "ME-OPERATOR-CERT",
+      "category": "mobile_equip",
+      "label": "Operator certification verified",
+      "ohsa": ["OHSA s.25(2)(a)"],
+      "severity_default": "Med"
+    },
+    {
+      "id": "HK-SLIP-TRIP",
+      "category": "housekeeping",
+      "label": "Slip / trip / fall hazard",
+      "ohsa": ["OHSA s.25"],
+      "severity_default": "Low",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "HK-CLEAR",
+      "category": "housekeeping",
+      "label": "Site housekeeping satisfactory",
+      "severity_default": "Info"
+    },
+    {
+      "id": "FA-KIT-CHECK",
+      "category": "first_aid",
+      "label": "First aid kit inventory check",
+      "oreg": ["OReg_1101 (WSIA)"],
+      "severity_default": "Info"
+    },
+    {
+      "id": "FA-AED-CHECK",
+      "category": "first_aid",
+      "label": "AED present and operational",
+      "severity_default": "Info"
+    },
+    {
+      "id": "EM-EVAC-POSTED",
+      "category": "emergency",
+      "label": "Evacuation plan posted",
+      "ohsa": ["OHSA s.25"],
+      "severity_default": "Low"
+    },
+    {
+      "id": "EM-EXTINGUISHER",
+      "category": "emergency",
+      "label": "Fire extinguisher inspection",
+      "severity_default": "Low"
+    },
+    {
+      "id": "JHSC-WALK",
+      "category": "jhsc",
+      "label": "JHSC monthly workplace inspection",
+      "ohsa": ["OHSA s.9(26)"],
+      "severity_default": "Info",
+      "auto_status": "Inspection",
+      "description": "JHSC is required when 20+ workers are regularly employed (OHSA s.9). H&S Rep required when 6-19."
+    },
+    {
+      "id": "JHSC-RECOMMENDATION",
+      "category": "jhsc",
+      "label": "JHSC written recommendation",
+      "ohsa": ["OHSA s.9(20)"],
+      "severity_default": "Med"
+    },
+    {
+      "id": "TBT-DELIVERED",
+      "category": "competency",
+      "label": "Toolbox talk delivered",
+      "ohsa": ["OHSA s.25(2)(a)"],
+      "severity_default": "Info",
+      "auto_status": "Inspection"
+    },
+    {
+      "id": "TBT-SIGNOFF",
+      "category": "competency",
+      "label": "Worker sign-off captured",
+      "ohsa": ["OHSA s.25(2)(a)"],
+      "severity_default": "Info"
+    },
+    {
+      "id": "INC-INJURY",
+      "category": "incident",
+      "label": "Worker injury",
+      "ohsa": ["OHSA s.51", "OHSA s.52"],
+      "oreg": ["OReg_420_21"],
+      "severity_default": "High",
+      "auto_status": "Incident",
+      "description": "Triggers Section 51/52 notice obligations depending on severity. Critical injury or fatality = immediate notification."
+    },
+    {
+      "id": "INC-PROPERTY",
+      "category": "incident",
+      "label": "Property damage / equipment failure",
+      "severity_default": "Med",
+      "auto_status": "Incident"
+    },
+    {
+      "id": "INC-NEAR-MISS",
+      "category": "incident",
+      "label": "Near miss",
+      "severity_default": "Low",
+      "auto_status": "Incident"
+    },
+    {
+      "id": "MOL-ORDER",
+      "category": "mol_order",
+      "label": "MOL inspector order issued",
+      "ohsa": ["OHSA s.57"],
+      "severity_default": "Critical",
+      "auto_status": "Hazard - Open"
+    },
+    {
+      "id": "MOL-COMPLIANCE",
+      "category": "mol_order",
+      "label": "MOL order compliance documented",
+      "severity_default": "Info",
+      "auto_status": "Hazard - Corrected"
+    },
+    {
+      "id": "VH-INCIDENT",
+      "category": "violence_harassment",
+      "label": "Workplace violence or harassment incident",
+      "ohsa": ["OHSA Part III.0.1"],
+      "severity_default": "High",
+      "auto_status": "Incident"
+    },
+    {
+      "id": "VH-RISK-ASSESS",
+      "category": "violence_harassment",
+      "label": "Violence risk assessment review",
+      "ohsa": ["OHSA s.32.0.3"],
+      "severity_default": "Info"
+    },
+    {
+      "id": "PSH-NALOXONE",
+      "category": "psh_naloxone",
+      "label": "Naloxone kit present",
+      "ohsa": ["OHSA s.25.2"],
+      "severity_default": "Info",
+      "description": "Naloxone kit requirement (Working for Workers Four Act / OHSA amendments) where prescribed risk exists."
+    },
+    {
+      "id": "PSH-WASHROOM",
+      "category": "psh_naloxone",
+      "label": "Washroom access compliance",
+      "ohsa": ["WfWA_5"],
+      "severity_default": "Low",
+      "description": "Working for Workers Five Act washroom and cleanliness requirements at construction projects."
+    },
+    {
+      "id": "PSH-HEAT",
+      "category": "psh_naloxone",
+      "label": "Heat / cold stress controls",
+      "severity_default": "Med",
+      "description": "Heat-related illness response and prevention. Hydration, shade, rest cycles."
+    }
+  ],
+  "rules": {
+    "auto_severity_escalation": [
+      {
+        "if_tag_in": ["WAH-3M", "ELEC-EXPOSED", "MOL-ORDER", "INC-INJURY"],
+        "then_severity_min": "High",
+        "then_status": "Hazard - Open"
+      }
+    ],
+    "report_inclusion": {
+      "toolbox_talk": ["TBT-DELIVERED", "TBT-SIGNOFF", "competency:*"],
+      "jhsc_inspection": ["JHSC-WALK", "JHSC-RECOMMENDATION", "*"],
+      "incident_report": ["INC-INJURY", "INC-PROPERTY", "INC-NEAR-MISS", "MOL-ORDER"],
+      "daily_log": ["*"]
+    },
+    "notification_triggers": [
+      {
+        "tag": "INC-INJURY",
+        "action": "Show OHSA s.51/52 notification helper. If critical injury or fatality, surface MOL contact + Section 51 24-hour written report template."
+      },
+      {
+        "tag": "MOL-ORDER",
+        "action": "Lock site to admin-only edits. Surface compliance deadline tracker."
+      }
+    ]
+  },
+  "competency_certifications": {
+    "WAH": { "regulation": "OReg_297_13", "cycle_years": 3 },
+    "WHMIS": { "regulation": "OReg_860", "cycle_years": 1, "note": "Annual review of training is good practice; not a hard re-cert under OReg 860 itself." },
+    "Confined_Space": { "regulation": "OReg_632_05", "cycle_years": 3 },
+    "First_Aid": { "regulation": "WSIA Reg 1101", "cycle_years": 3 },
+    "Lift_Truck": { "regulation": "CSA B335", "cycle_years": 3 }
+  },
+  "notes_for_implementer": [
+    "This file is the source of truth for the in-app tag picker. UI surfaces categories first, then tags within.",
+    "Tag IDs are stable. Never rename — add new tags and deprecate old ones via an `active: false` flag in v1.1+.",
+    "When a photo gets a tag, OHSA References on the FC-Photos record auto-fill from this file.",
+    "Severity defaults can be overridden by user; record both the default and the override.",
+    "On every taxonomy version bump, log to the Generator Update Log per the T2 pattern.",
+    "Consult an Ontario H&S professional before final publication — taxonomy is informational, not legal advice."
+  ],
+  "disclaimer": "This taxonomy is a documentation aid. It does not constitute legal advice. Operators retain responsibility for confirming current OHSA / O.Reg requirements and for compliance with all applicable Ontario workplace health and safety laws."
+}
