@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080A07">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="OCOS Field">
+  <title>OCOS Field</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <!-- ── App header (hidden during onboarding) ──────────────────────────── -->
+  <header class="app-header" id="app-header" hidden>
+    <button class="back-btn" id="back-btn" hidden aria-label="Back">&#8592;</button>
+    <span class="app-title" id="app-title">OCOS Field</span>
+    <div class="sync-chip" id="sync-chip">All synced</div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       ONBOARDING
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="welcome" class="screen onboarding-screen active">
+    <div class="onboarding-content">
+      <div class="logo-mark">OCOS<span class="logo-mark-field">FIELD</span></div>
+      <h1 class="onboarding-headline" id="welcome-headline"></h1>
+      <p  class="onboarding-sub"      id="welcome-sub"></p>
+      <button class="btn btn-primary btn-full" id="welcome-btn"></button>
+    </div>
+  </section>
+
+  <section data-screen="permissions" class="screen onboarding-screen">
+    <div class="onboarding-content">
+      <div class="logo-mark logo-mark--small">OCOS FIELD</div>
+      <h1 class="onboarding-headline" id="permissions-headline"></h1>
+      <p  class="onboarding-sub"      id="permissions-sub"></p>
+      <ul class="perm-list" id="perm-list"></ul>
+      <button class="btn btn-primary btn-full" id="permissions-btn"></button>
+    </div>
+  </section>
+
+  <section data-screen="site-setup" class="screen onboarding-screen">
+    <div class="onboarding-content">
+      <div class="logo-mark logo-mark--small">OCOS FIELD</div>
+      <h1 class="onboarding-headline" id="site-setup-headline"></h1>
+      <p  class="onboarding-sub"      id="site-setup-sub"></p>
+      <button class="btn btn-primary  btn-full" id="site-setup-existing-btn"></button>
+      <button class="btn btn-secondary btn-full" id="site-setup-new-btn"></button>
+    </div>
+  </section>
+
+  <section data-screen="ready" class="screen onboarding-screen">
+    <div class="onboarding-content">
+      <div class="logo-mark logo-mark--small">OCOS FIELD</div>
+      <h1 class="onboarding-headline" id="ready-headline"></h1>
+      <p  class="onboarding-sub"      id="ready-sub"></p>
+      <button class="btn btn-primary btn-full" id="ready-btn"></button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SITE SCREENS
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="site-new" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Name your site</h2>
+      <p  class="section-sub">You can rename it later.</p>
+      <div class="form-group">
+        <label class="form-label" for="new-site-name">Site name</label>
+        <input type="text" id="new-site-name" class="form-input" placeholder="e.g. 123 King St — Tower A">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="new-site-address">Address <span class="form-hint">optional</span></label>
+        <input type="text" id="new-site-address" class="form-input" placeholder="123 King St, Toronto, ON">
+      </div>
+      <div class="px-20">
+        <button class="btn btn-primary btn-full" id="create-site-btn">Create site</button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="site-list" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Choose a site</h2>
+      <div class="option-list" id="site-list-items"></div>
+      <div class="px-20 mt-16">
+        <button class="btn btn-secondary btn-full" id="add-site-from-list-btn">Start a new site</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       MAIN CAPTURE
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="capture" class="screen capture-screen">
+    <div class="dossier-header">
+      <span class="dossier-counts" id="dossier-counts">Loading…</span>
+      <button class="site-switch-btn" id="site-switch-btn">
+        <span id="current-site-name">Site</span> &#9662;
+      </button>
+    </div>
+
+    <div class="filter-row" id="filter-row"></div>
+
+    <div class="photo-grid" id="photo-grid">
+      <div class="empty-state" id="capture-empty" style="grid-column:1/-1">
+        <p class="empty-state-heading" id="capture-empty-heading"></p>
+        <p class="empty-state-sub"     id="capture-empty-sub"></p>
+      </div>
+    </div>
+
+    <button class="capture-btn" id="capture-btn" aria-label="Capture photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>
+        <path d="M9 3h6l1.5 2.5H14M5 7h1"/>
+      </svg>
+    </button>
+
+    <nav class="bottom-nav">
+      <button class="nav-btn nav-btn--active" data-nav="capture">Photos</button>
+      <button class="nav-btn" data-nav="inspections">Inspections</button>
+      <button class="nav-btn" data-nav="reports">Reports</button>
+      <button class="nav-btn" data-nav="settings">Settings</button>
+    </nav>
+  </section>
+
+  <!-- Photo card — bottom sheet shown after capture -->
+  <div class="bottom-sheet" id="photo-card" hidden>
+    <div class="bottom-sheet-handle"></div>
+    <h2 class="section-head" id="photo-card-heading" style="padding:0"></h2>
+    <p  class="section-sub"  id="photo-card-line1"   style="padding:0"></p>
+    <p  class="section-sub"  id="photo-card-line2"   style="padding:0"></p>
+    <div class="photo-card-preview"><img id="photo-preview-img" alt="Captured photo"></div>
+    <button class="btn btn-primary btn-full" id="tag-this-photo-btn">Tag this photo</button>
+    <div class="voice-btn-wrap">
+      <button class="voice-btn" id="voice-btn-card" aria-label="Record voice note">&#127908;</button>
+      <span id="voice-btn-label" class="text-sm text-dim">Hold to dictate a note</span>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TAG PICKER
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="tag-picker" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="tag-picker-heading"></h2>
+      <p  class="section-sub"  id="tag-picker-sub"></p>
+      <div class="tag-grid" id="tag-grid"></div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-primary btn-full" id="tag-picker-done-btn" disabled>Done</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SEVERITY
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="severity" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="severity-heading"></h2>
+      <p  class="section-sub"  id="severity-helper"></p>
+      <div class="severity-row" id="severity-row"></div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-primary btn-full" id="severity-done-btn" disabled>Next</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       STATUS
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="status" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="status-heading"></h2>
+      <div class="option-list" id="status-list"></div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-primary btn-full" id="status-done-btn" disabled>File photo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       VOICE NOTE
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="voice" class="screen">
+    <div class="screen-content voice-screen-content">
+      <h2 class="section-head" id="voice-heading" style="padding:0;text-align:center"></h2>
+      <p  class="section-sub"  id="voice-sub"    style="padding:0;text-align:center"></p>
+      <button class="voice-btn voice-btn--large" id="voice-record-btn" aria-label="Record voice note">&#127908;</button>
+
+      <div class="voice-transcript" id="voice-transcript" hidden>
+        <p id="voice-transcript-text"></p>
+        <div class="voice-transcript-actions">
+          <button class="btn btn-primary"   id="voice-confirm-btn"></button>
+          <button class="btn btn-secondary" id="voice-edit-btn"></button>
+        </div>
+        <textarea class="form-input" id="voice-edit-area" rows="4" hidden></textarea>
+        <button class="btn btn-primary btn-full" id="voice-save-edited-btn" hidden>Save note</button>
+      </div>
+
+      <button class="btn btn-ghost btn-full" id="voice-skip-btn">Skip voice note</button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       BEFORE / AFTER
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="before-after" class="screen">
+    <div class="screen-content" style="padding-top:40px">
+      <h2 class="section-head" id="ba-heading"></h2>
+      <p  class="section-sub"  id="ba-sub"></p>
+      <div class="px-20 stack">
+        <button class="btn btn-primary  btn-full" id="ba-pair-btn"></button>
+        <button class="btn btn-secondary btn-full" id="ba-skip-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filing overlay -->
+  <div class="full-overlay" id="filing-overlay" hidden>
+    <div class="spinner"></div>
+    <span>Filing your photo…</span>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       INSPECTIONS
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="inspections" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Inspections</h2>
+      <div id="inspections-list">
+        <div class="empty-state">
+          <p class="empty-state-heading">No inspections yet.</p>
+          <p class="empty-state-sub">Start a new walk to build your record.</p>
+        </div>
+      </div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-primary btn-full" id="start-inspection-btn">Start an inspection</button>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <button class="nav-btn" data-nav="capture">Photos</button>
+      <button class="nav-btn nav-btn--active" data-nav="inspections">Inspections</button>
+      <button class="nav-btn" data-nav="reports">Reports</button>
+      <button class="nav-btn" data-nav="settings">Settings</button>
+    </nav>
+  </section>
+
+  <section data-screen="inspection-type" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="insp-type-heading">What kind of walk?</h2>
+      <div class="option-list" id="insp-type-list"></div>
+    </div>
+  </section>
+
+  <section data-screen="inspection-checklist" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="checklist-title">Checklist</h2>
+      <div class="checklist-list" id="checklist-items"></div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-primary btn-full" id="checklist-done-btn">Complete walk</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SIGN-OFF
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="signoff-workers" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="signoff-workers-heading"></h2>
+      <p  class="section-sub"  id="signoff-workers-sub"></p>
+      <div class="workers-list-wrap" id="workers-list"></div>
+      <div class="px-20 mt-16 stack">
+        <button class="btn btn-secondary btn-full" id="add-worker-btn"></button>
+        <button class="btn btn-ghost    btn-full" id="alone-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <div class="bottom-sheet" id="add-worker-sheet" hidden>
+    <div class="bottom-sheet-handle"></div>
+    <h3 class="section-head" style="padding:0">Add worker</h3>
+    <input type="text"  id="worker-name-input" class="form-input" placeholder="Full name">
+    <input type="text"  id="worker-role-input" class="form-input" placeholder="Role (optional)">
+    <button class="btn btn-primary btn-full" id="save-worker-btn">Add</button>
+  </div>
+
+  <section data-screen="signoff-draw" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="signoff-draw-heading"></h2>
+      <p  class="section-sub"  id="signoff-draw-sub"></p>
+      <div class="sig-canvas-wrap">
+        <canvas class="sig-canvas" id="sig-canvas" width="340" height="200"></canvas>
+        <button class="sig-clear-btn" id="sig-clear-btn">Clear</button>
+      </div>
+      <div class="px-20 mt-16 stack">
+        <button class="btn btn-primary  btn-full" id="sig-save-btn"  disabled></button>
+        <button class="btn btn-ghost    btn-full" id="sig-pin-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="signoff-pin" class="screen">
+    <div class="screen-content" style="padding-top:24px">
+      <h2 class="section-head" id="pin-heading"></h2>
+      <p  class="section-sub"  id="pin-sub"></p>
+      <div class="pin-dots" id="pin-dots"></div>
+      <div class="pin-keypad" id="pin-keypad"></div>
+    </div>
+  </section>
+
+  <section data-screen="inspection-complete" class="screen">
+    <div class="screen-content centered">
+      <div class="success-icon">&#10003;</div>
+      <h2 class="section-head" id="insp-complete-heading" style="padding:0"></h2>
+      <p  class="section-sub"  id="insp-complete-sub"    style="padding:0"></p>
+      <div class="px-20 stack" style="width:100%;margin-top:16px">
+        <button class="btn btn-primary  btn-full" id="insp-generate-report-btn"></button>
+        <button class="btn btn-secondary btn-full" id="insp-draft-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       REPORTS
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="reports" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="reports-title"></h2>
+      <div class="filter-row" id="reports-filter-row"></div>
+      <div id="reports-list"></div>
+    </div>
+    <nav class="bottom-nav">
+      <button class="nav-btn" data-nav="capture">Photos</button>
+      <button class="nav-btn" data-nav="inspections">Inspections</button>
+      <button class="nav-btn nav-btn--active" data-nav="reports">Reports</button>
+      <button class="nav-btn" data-nav="settings">Settings</button>
+    </nav>
+  </section>
+
+  <div class="full-overlay" id="report-generating-overlay" hidden>
+    <div class="spinner"></div>
+    <h2 id="report-gen-heading" style="font-family:var(--font-display);font-size:26px"></h2>
+    <p  id="report-gen-sub" style="font-size:13px;color:var(--grey-4)"></p>
+  </div>
+
+  <section data-screen="report-ready" class="screen">
+    <div class="screen-content centered">
+      <h2 class="section-head" id="report-ready-heading" style="padding:0"></h2>
+      <p  class="section-sub"  id="report-ready-sub"    style="padding:0"></p>
+      <div class="px-20 stack" style="width:100%;margin-top:16px">
+        <button class="btn btn-primary   btn-full" id="report-open-pdf-btn"></button>
+        <button class="btn btn-secondary btn-full" id="report-send-quick-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="report-send" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="report-send-heading"></h2>
+      <p  class="section-sub"  id="report-send-sub"></p>
+      <div class="option-list" id="recipients-list"></div>
+      <div class="px-20 mt-8">
+        <button class="btn btn-ghost" id="add-recipient-btn">+ Add recipient</button>
+      </div>
+      <div id="add-recipient-form" hidden style="padding:0 20px;display:flex;flex-direction:column;gap:10px">
+        <input type="email" id="recipient-email" class="form-input" placeholder="Email address" autocomplete="email">
+        <select id="recipient-role" class="form-select"><option value="">Role…</option></select>
+        <button class="btn btn-ghost" id="save-recipient-btn">Add</button>
+      </div>
+      <div class="send-actions px-20">
+        <button class="btn btn-primary  btn-full" id="send-report-btn"  disabled></button>
+        <button class="btn btn-ghost    btn-full" id="download-report-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="report-locked" class="screen">
+    <div class="screen-content centered">
+      <div class="lock-icon">&#128274;</div>
+      <h2 class="section-head" id="report-locked-heading" style="padding:0"></h2>
+      <p  class="section-sub"  id="report-locked-sub"    style="padding:0"></p>
+      <div class="px-20" style="width:100%;margin-top:16px">
+        <button class="btn btn-primary btn-full" id="report-locked-done-btn"></button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="version-history" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="version-history-heading"></h2>
+      <div id="version-history-list"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       SETTINGS
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="settings" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Settings</h2>
+
+      <p class="settings-section-label">Account</p>
+      <div class="settings-list">
+        <button class="settings-row" id="settings-license-row">
+          <span>License key</span>
+          <span id="settings-license-preview" class="settings-value">Not set</span>
+        </button>
+        <button class="settings-row" id="settings-tier-row">
+          <span>Plan</span>
+          <span id="settings-tier-value" class="settings-value">—</span>
+        </button>
+      </div>
+
+      <p class="settings-section-label">Site</p>
+      <div class="settings-list">
+        <button class="settings-row" id="settings-site-row">
+          <span>Active site</span>
+          <span id="settings-site-name" class="settings-value">Not set</span>
+        </button>
+        <button class="settings-row" id="settings-workers-row">
+          <span>Workers</span>
+          <span class="settings-value settings-chevron">›</span>
+        </button>
+        <button class="settings-row" id="settings-sync-row">
+          <span>Sync</span>
+          <span id="settings-sync-value" class="settings-value">All synced</span>
+        </button>
+      </div>
+
+      <p class="settings-section-label" id="settings-t3-label" hidden>T3 Features</p>
+      <div class="settings-list" id="settings-t3-block" hidden>
+        <button class="settings-row" id="settings-style-row">
+          <span>Style learning</span>
+          <span class="settings-value text-green">Manage ›</span>
+        </button>
+        <button class="settings-row" id="settings-brand-row">
+          <span>Custom branding</span>
+          <span class="settings-value text-green">Manage ›</span>
+        </button>
+      </div>
+
+      <p class="settings-section-label">App</p>
+      <div class="settings-list">
+        <div class="settings-row settings-row--static">
+          <span>Version</span>
+          <span class="settings-value">1.0.0</span>
+        </div>
+        <a class="settings-row" href="mailto:support@naturalalternatives.ca">
+          <span>Support</span>
+          <span class="settings-value settings-chevron">›</span>
+        </a>
+        <a class="settings-row" href="https://naturalalternatives.ca/privacy" target="_blank" rel="noopener">
+          <span>Privacy policy</span>
+          <span class="settings-value settings-chevron">›</span>
+        </a>
+      </div>
+
+      <p class="settings-footer">OCOS Field · naturalalternatives.ca<br>Licensed for use under your OCOS subscription.</p>
+    </div>
+    <nav class="bottom-nav">
+      <button class="nav-btn" data-nav="capture">Photos</button>
+      <button class="nav-btn" data-nav="inspections">Inspections</button>
+      <button class="nav-btn" data-nav="reports">Reports</button>
+      <button class="nav-btn nav-btn--active" data-nav="settings">Settings</button>
+    </nav>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       WORKERS LIST (Settings → Workers)
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="site-workers" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Site Workers</h2>
+      <div id="site-workers-list"></div>
+      <div class="px-20 mt-16">
+        <button class="btn btn-ghost btn-full" id="add-site-worker-btn">+ Add worker</button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="license-entry" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Enter license key</h2>
+      <p  class="section-sub">Your key is in the email from OCOS.</p>
+      <div class="form-group">
+        <label class="form-label" for="license-input">License key</label>
+        <input type="text" id="license-input" class="form-input" placeholder="OCOS-XXXX-XXXX-XXXX"
+               autocomplete="off" spellcheck="false" autocapitalize="off">
+      </div>
+      <div class="px-20">
+        <button class="btn btn-primary btn-full" id="save-license-btn">Save key</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       T3: STYLE LEARNING
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="style-learning" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head">Style Learning</h2>
+
+      <div id="style-empty" hidden>
+        <div class="empty-state">
+          <p class="empty-state-heading" id="style-empty-heading"></p>
+          <p class="empty-state-sub"     id="style-empty-sub"></p>
+          <button class="btn btn-primary" id="style-upload-btn"></button>
+          <p class="privacy-line"         id="style-privacy"></p>
+        </div>
+      </div>
+
+      <div id="style-samples-list"></div>
+
+      <div class="px-20 mt-8">
+        <button class="btn btn-secondary btn-full" id="style-add-another-btn" hidden>Upload another report</button>
+      </div>
+
+      <div id="style-uploading" hidden style="padding:40px 20px;text-align:center">
+        <div class="spinner" style="margin:0 auto 16px"></div>
+        <h3 class="section-head" id="style-uploading-heading" style="padding:0;margin-bottom:8px"></h3>
+        <p  class="section-sub"  id="style-uploading-sub"    style="padding:0"></p>
+      </div>
+
+      <div id="style-sample-ready" hidden style="padding:0 20px">
+        <h3 class="section-head" id="style-ready-heading" style="padding:0 0 8px"></h3>
+        <p  class="section-sub"  id="style-ready-sub"    style="padding:0 0 16px"></p>
+        <div class="option-list" id="style-tag-list"></div>
+        <button class="btn btn-primary btn-full mt-8" id="style-confirm-tag-btn">Confirm</button>
+      </div>
+
+      <input type="file" id="style-file-input" accept=".pdf,.docx,.doc,.txt" hidden>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       T3: CUSTOM BRANDING
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="branding-setup" class="screen">
+    <div class="screen-content">
+      <h2 class="section-head" id="branding-heading"></h2>
+      <p  class="section-sub"  id="branding-sub"></p>
+
+      <div class="form-group">
+        <label class="form-label">Logo <span class="form-hint">PNG or SVG, transparent background recommended</span></label>
+        <div class="logo-upload-area" id="logo-upload-area">
+          <img id="logo-preview" hidden alt="Logo preview">
+          <span id="logo-upload-placeholder">Tap to upload</span>
+          <input type="file" id="logo-file-input" accept="image/png,image/svg+xml" hidden>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Primary colour</label>
+        <div class="color-input-wrap" style="padding:0">
+          <input type="color" id="brand-primary-color" value="#080A07" class="color-swatch">
+          <input type="text"  id="brand-primary-hex"   value="#080A07" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Accent colour</label>
+        <div class="color-input-wrap" style="padding:0">
+          <input type="color" id="brand-accent-color" value="#5EE830" class="color-swatch">
+          <input type="text"  id="brand-accent-hex"   value="#5EE830" class="form-input color-hex" maxlength="7">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="brand-company-name">Company name as it appears on the report</label>
+        <input type="text" id="brand-company-name" class="form-input" placeholder="Your company name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="brand-footer-line">Footer line <span class="form-hint">optional — address, phone, website</span></label>
+        <input type="text" id="brand-footer-line" class="form-input" placeholder="123 Main St · 416-555-0100">
+      </div>
+
+      <div class="px-20 stack">
+        <button class="btn btn-primary btn-full" id="brand-save-btn"></button>
+        <p class="privacy-line" id="branding-footer-note" style="padding:0;margin-top:4px"></p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen="brand-preview" class="screen">
+    <div class="screen-content centered">
+      <h2 class="section-head" style="padding:0 0 16px">Preview</h2>
+      <div class="brand-preview" id="brand-preview-box" style="width:100%"></div>
+      <div class="px-20 stack" style="width:100%;margin-top:16px">
+        <button class="btn btn-primary   btn-full" id="brand-confirm-btn">Looks good — save</button>
+        <button class="btn btn-ghost     btn-full" id="brand-back-edit-btn">Edit</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       ERROR MODAL
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <div class="modal-backdrop" id="error-modal" hidden role="dialog" aria-modal="true" aria-labelledby="error-headline">
+    <div class="modal">
+      <h3 class="modal-headline" id="error-headline"></h3>
+      <p  class="modal-body"     id="error-body"></p>
+      <div class="modal-actions" id="error-actions"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       TOAST
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

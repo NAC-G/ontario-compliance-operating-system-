@@ -28,6 +28,7 @@ import {
   handleStyleDelete,
 } from './lib/handlers/style.js';
 import { handleProvision } from './lib/handlers/provision.js';
+import { seedDemoData } from './lib/demo-seeder.js';
 
 const ALLOWED_ORIGINS = [
   'https://field.naturalalternatives.ca',
@@ -87,59 +88,59 @@ export default {
 
       // ── Photo ────────────────────────────────────────────────────────────
       } else if (method === 'POST' && path === '/fc/photo') {
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handlePhotoUpload(request, env);
 
       // ── Site ─────────────────────────────────────────────────────────────
       } else if (method === 'GET' && path.startsWith('/fc/site/')) {
         const siteId = path.slice('/fc/site/'.length);
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleSiteGet(request, env, siteId);
 
       // ── Inspection ───────────────────────────────────────────────────────
       } else if (method === 'POST' && path === '/fc/inspection') {
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleInspectionCreate(request, env);
 
       } else if (method === 'POST' && /^\/fc\/inspection\/[^/]+\/signoff$/.test(path)) {
         const inspectionId = path.split('/')[3];
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleInspectionSignoff(request, env, inspectionId);
 
       // ── Checklist ────────────────────────────────────────────────────────
       } else if (method === 'GET' && path.startsWith('/fc/checklist/')) {
         const checklistId = path.slice('/fc/checklist/'.length);
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleChecklistGet(request, env, checklistId);
 
       // ── AI summarize ─────────────────────────────────────────────────────
       } else if (method === 'POST' && path === '/fc/ai/summarize') {
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleAiSummarize(request, env);
 
       // ── Reports ──────────────────────────────────────────────────────────
       } else if (method === 'POST' && path === '/fc/report/generate') {
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleReportGenerate(request, env);
 
       } else if (method === 'POST' && /^\/fc\/report\/[^/]+\/lock$/.test(path)) {
         const reportId = path.split('/')[3];
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleReportLock(request, env, reportId);
 
       } else if (method === 'POST' && /^\/fc\/report\/[^/]+\/send$/.test(path)) {
         const reportId = path.split('/')[3];
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleReportSend(request, env, reportId);
 
       } else if (method === 'POST' && /^\/fc\/report\/[^/]+\/regenerate$/.test(path)) {
         const reportId = path.split('/')[3];
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleReportRegenerate(request, env, reportId);
 
       } else if (method === 'GET' && /^\/fc\/report\/[^/]+\/versions$/.test(path)) {
         const reportId = path.split('/')[3];
-        await validateLicense(request, env);
+        request._license = await validateLicense(request, env);
         response = await handleReportVersions(request, env, reportId);
 
       // ── Style Learning (T3) ──────────────────────────────────────────────
@@ -158,6 +159,15 @@ export default {
         const license = await validateLicense(request, env);
         await requireTier(license, 'T3');
         response = await handleStyleDelete(request, env, license, sampleId);
+
+      // ── Demo seed ────────────────────────────────────────────────────────
+      } else if (method === 'POST' && path === '/fc/demo/seed') {
+        const license = await validateLicense(request, env);
+        const mapping = await env.DB.prepare(
+          'SELECT * FROM fc_license_mapping WHERE license_id=? LIMIT 1'
+        ).bind(license.id).first();
+        if (!mapping) return err('FC workspace not provisioned. Run /fc/provision first.', 409);
+        response = json(await seedDemoData(env, license, mapping));
 
       // ── Health ───────────────────────────────────────────────────────────
       } else if (method === 'GET' && path === '/fc/health') {

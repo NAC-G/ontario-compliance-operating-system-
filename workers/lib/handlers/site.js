@@ -27,6 +27,7 @@ export async function handleSiteGet(request, env, siteId) {
   ).length;
 
   return json({
+    tier: license.tier || 'T2',
     site: {
       id: sitePage.id,
       name: sitePage.properties?.['Site Name']?.title?.[0]?.plain_text || '',
