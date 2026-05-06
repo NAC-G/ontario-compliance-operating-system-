@@ -24,6 +24,7 @@ export async function handlePhotoUpload(request, env) {
     capturedAt,
     geoLat,
     geoLng,
+    gps,
     deviceId,
     tags = [],
     statusOverride,
@@ -31,7 +32,12 @@ export async function handlePhotoUpload(request, env) {
     voiceNoteId,
     inspectionId,
     capturedBy,
+    captureSource = 'Live',
   } = meta;
+
+  // Accept gps: { lat, lng } from PWA as well as flat geoLat/geoLng
+  const resolvedLat = geoLat != null ? geoLat : gps?.lat;
+  const resolvedLng = geoLng != null ? geoLng : gps?.lng;
 
   if (!siteId) return json({ error: 'siteId required in metadata' }, 400);
 
@@ -77,9 +83,10 @@ export async function handlePhotoUpload(request, env) {
       'Site': { relation: [{ id: siteId }] },
       'Captured At': capturedAt ? { date: { start: capturedAt } } : undefined,
       'Captured By': capturedBy ? { relation: [{ id: capturedBy }] } : undefined,
-      'Geo Lat': geoLat != null ? { number: parseFloat(geoLat) } : undefined,
-      'Geo Lng': geoLng != null ? { number: parseFloat(geoLng) } : undefined,
+      'Geo Lat': resolvedLat != null ? { number: parseFloat(resolvedLat) } : undefined,
+      'Geo Lng': resolvedLng != null ? { number: parseFloat(resolvedLng) } : undefined,
       'Device ID': deviceId ? { rich_text: [{ text: { content: String(deviceId) } }] } : undefined,
+      'Capture Source': { select: { name: captureSource } },
       'Tags': { multi_select: tags.map(t => ({ name: t })) },
       'OHSA References': { rich_text: [{ text: { content: ohsaRefs } }] },
       'Status': { select: { name: status } },

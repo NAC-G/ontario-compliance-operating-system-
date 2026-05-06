@@ -688,6 +688,27 @@ textarea { min-height: 100px; resize: vertical; }
 .capture-btn svg { width: 28px; height: 28px; stroke: var(--dark); }
 .capture-btn:active { transform: translateX(-50%) scale(0.92); }
 
+.library-btn {
+  position: absolute;
+  bottom: calc(83px + var(--safe-bottom));
+  left: calc(50% + 52px);
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--grey-1);
+  border: 1.5px solid var(--grey-3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s, border-color 0.1s;
+}
+.library-btn svg { width: 20px; height: 20px; stroke: var(--grey-5); color: var(--grey-5); }
+.library-btn:active { transform: scale(0.92); }
+.library-btn:hover  { border-color: var(--green); }
+
 /* ── Bottom sheet ────────────────────────────────────────────────────────── */
 .bottom-sheet {
   position: fixed;

@@ -9,7 +9,7 @@ import { uploadPhoto, getSite, createInspection, signoffInspection,
          generateReport as apiGenerateReport, lockReport, sendReport as apiSendReport,
          regenerateReport, getReportVersions, seedDemoData } from './modules/api.js';
 import { requestPermissions } from './modules/permissions.js';
-import { openCamera } from './modules/camera.js';
+import { openCamera, openLibrary } from './modules/camera.js';
 import { recordVoice, stopRecording, transcribeVoice } from './modules/voice.js';
 import { loadTaxonomy, getSeverityDefault, getAutoStatus } from './modules/tag-picker.js';
 import { getChecklistForType } from './modules/inspection.js';
@@ -601,24 +601,31 @@ async function loadSiteList() {
 document.getElementById('capture-btn').addEventListener('click', async () => {
   if (!state.licenseKey) { showScreen('license-entry'); return; }
   if (!state.currentSite) { showToast('Select a site first.'); return; }
-  await startCapture();
+  await startCapture('live');
 });
 
-async function startCapture() {
-  const result = await openCamera();
+document.getElementById('library-btn').addEventListener('click', async () => {
+  if (!state.licenseKey) { showScreen('license-entry'); return; }
+  if (!state.currentSite) { showToast('Select a site first.'); return; }
+  await startCapture('library');
+});
+
+async function startCapture(source = 'live') {
+  const result = source === 'library' ? await openLibrary() : await openCamera();
   if (!result.photoBlob) return;
 
   const photoId = 'photo-' + Date.now();
   state.captureState = {
     photoId,
-    photoBlob: result.photoBlob,
-    photoUrl:  result.photoUrl,
-    exif:      result.exif,
-    tags:      [],
-    severity:  null,
-    status:    null,
-    voiceNote: null,
-    pairedWithId: null,
+    photoBlob:     result.photoBlob,
+    photoUrl:      result.photoUrl,
+    exif:          result.exif,
+    captureSource: result.captureSource || 'Live',
+    tags:          [],
+    severity:      null,
+    status:        null,
+    voiceNote:     null,
+    pairedWithId:  null,
   };
 
   document.getElementById('photo-preview-img').src = result.photoUrl;
@@ -780,16 +787,17 @@ async function filePhoto() {
   const formData = new FormData();
   formData.append('photo', cs.photoBlob, `${cs.photoId}.jpg`);
   formData.append('metadata', JSON.stringify({
-    photoId:      cs.photoId,
-    siteId:       state.currentSite?.id,
-    tags:         cs.tags,
-    severity:     cs.severity,
-    status:       cs.status,
-    voiceNote:    cs.voiceNote,
-    pairedWithId: cs.pairedWithId,
-    capturedAt:   new Date().toISOString(),
-    gps:          cs.exif?.gps || null,
-    deviceInfo:   navigator.userAgent,
+    photoId:       cs.photoId,
+    siteId:        state.currentSite?.id,
+    tags:          cs.tags,
+    severity:      cs.severity,
+    status:        cs.status,
+    voiceNote:     cs.voiceNote,
+    pairedWithId:  cs.pairedWithId,
+    capturedAt:    cs.exif?.capturedAt || new Date().toISOString(),
+    gps:           cs.exif?.gps || null,
+    captureSource: cs.captureSource || 'Live',
+    deviceInfo:    navigator.userAgent,
   }));
 
   try {
