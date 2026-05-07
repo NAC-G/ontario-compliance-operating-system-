@@ -8,13 +8,13 @@ import { makeClient } from '../notion.js';
 
 export async function handleSiteGet(request, env, siteId) {
   const license = request._license;
-  await requireLicenseMapping(env.DB, license.id);
+  await requireLicenseMapping(env.DB, license.key);
 
   const notion = makeClient(env.NOTION_TOKEN);
 
   const [sitePage, photosRes] = await Promise.all([
     notion.get(`/pages/${siteId}`),
-    notion.post('/databases/' + (await getPhotosDbId(env.DB, license.id)) + '/query', {
+    notion.post('/databases/' + (await getPhotosDbId(env.DB, license.key)) + '/query', {
       filter: { property: 'Site', relation: { contains: siteId } },
       sorts: [{ property: 'Captured At', direction: 'descending' }],
       page_size: 50,
@@ -48,6 +48,15 @@ export async function handleSiteGet(request, env, siteId) {
       tags: (p.properties?.['Tags']?.multi_select || []).map(t => t.name),
       ohsaRefs: p.properties?.['OHSA References']?.rich_text?.[0]?.plain_text || '',
       hash: p.properties?.['Hash']?.rich_text?.[0]?.plain_text || '',
+      capturedByName: p.properties?.['Captured By Name']?.rich_text?.[0]?.plain_text || '',
+      geoLat: p.properties?.['Geo Lat']?.number ?? null,
+      geoLng: p.properties?.['Geo Lng']?.number ?? null,
+      notes: p.properties?.['Notes']?.rich_text?.[0]?.plain_text || '',
+      transcription: p.properties?.['Transcription']?.rich_text?.[0]?.plain_text || '',
+      voiceKey: p.properties?.['Voice Key']?.rich_text?.[0]?.plain_text || '',
+      photoKey: p.properties?.['Photo Key']?.rich_text?.[0]?.plain_text || '',
+      pairBeforeId: (p.properties?.['Pair: Before']?.relation || [])[0]?.id || null,
+      pairAfterId: (p.properties?.['Pair: After']?.relation || [])[0]?.id || null,
     })),
   });
 }

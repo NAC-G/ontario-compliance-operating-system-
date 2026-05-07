@@ -17,6 +17,7 @@ import {
 import { handleAiSummarize } from './lib/handlers/ai-summarize.js';
 import {
   handleReportGenerate,
+  handleReportList,
   handleReportLock,
   handleReportSend,
   handleReportRegenerate,
@@ -29,17 +30,28 @@ import {
 } from './lib/handlers/style.js';
 import { handleProvision } from './lib/handlers/provision.js';
 import { seedDemoData } from './lib/demo-seeder.js';
+import { seedFixtures } from './lib/seed-fixtures.js';
+import { handlePhotoAudio, handlePhotoImage } from './lib/handlers/photo-media.js';
 
 const ALLOWED_ORIGINS = [
   'https://field.naturalalternatives.ca',
   'https://naturalalternatives.ca',
   'https://www.naturalalternatives.ca',
   'https://app.naturalalternatives.ca',
+  'http://localhost:3000',
+  'http://localhost:5173',
 ];
+
+function isAllowedOrigin(origin) {
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  if (origin.endsWith('.loca.lt')) return true;       // localtunnel dev tunnels
+  if (origin.endsWith('.workers.dev')) return true;   // CF workers.dev previews
+  return false;
+}
 
 function corsHeaders(request, env) {
   const origin = request?.headers?.get('Origin') || '';
-  const allowed = ALLOWED_ORIGINS.includes(origin)
+  const allowed = isAllowedOrigin(origin)
     ? origin
     : (env.FRONTEND_URL || 'https://field.naturalalternatives.ca');
   return {
@@ -119,6 +131,10 @@ export default {
         response = await handleAiSummarize(request, env);
 
       // ── Reports ──────────────────────────────────────────────────────────
+      } else if (method === 'GET' && path === '/fc/reports') {
+        request._license = await validateLicense(request, env);
+        response = await handleReportList(request, env);
+
       } else if (method === 'POST' && path === '/fc/report/generate') {
         request._license = await validateLicense(request, env);
         response = await handleReportGenerate(request, env);
@@ -165,9 +181,29 @@ export default {
         const license = await validateLicense(request, env);
         const mapping = await env.DB.prepare(
           'SELECT * FROM fc_license_mapping WHERE license_id=? LIMIT 1'
-        ).bind(license.id).first();
+        ).bind(license.key).first();
         if (!mapping) return err('FC workspace not provisioned. Run /fc/provision first.', 409);
         response = json(await seedDemoData(env, license, mapping));
+
+      // ── Phase 1.1 fixtures ───────────────────────────────────────────────
+      } else if (method === 'POST' && path === '/fc/fixtures/seed') {
+        const license = await validateLicense(request, env);
+        const mapping = await env.DB.prepare(
+          'SELECT * FROM fc_license_mapping WHERE license_id=? LIMIT 1'
+        ).bind(license.key).first();
+        if (!mapping) return err('FC workspace not provisioned. Run /fc/provision first.', 409);
+        response = json(await seedFixtures(env, license, mapping));
+
+      // ── Photo media (audio / image) ──────────────────────────────────────
+      } else if (method === 'GET' && path.match(/^\/fc\/photo\/[^/]+\/audio$/)) {
+        const photoId = path.split('/')[3];
+        const license = await validateLicense(request, env);
+        response = await handlePhotoAudio(request, env, license, photoId);
+
+      } else if (method === 'GET' && path.match(/^\/fc\/photo\/[^/]+\/image$/)) {
+        const photoId = path.split('/')[3];
+        const license = await validateLicense(request, env);
+        response = await handlePhotoImage(request, env, license, photoId);
 
       // ── Health ───────────────────────────────────────────────────────────
       } else if (method === 'GET' && path === '/fc/health') {
@@ -181,7 +217,7 @@ export default {
     } catch (e) {
       if (e.status) return withCors(err(e.message, e.status));
       console.error('FC worker error:', e);
-      return withCors(err('Internal error', 500));
+      return withCors(err(e.message || 'Internal error', 500));
     }
   },
 };

@@ -18,7 +18,7 @@ export async function handleChecklistGet(request, env, checklistId) {
     return json(DEFAULT_MAP[checklistId]);
   }
 
-  await requireLicenseMapping(env.DB, license.id);
+  await requireLicenseMapping(env.DB, license.key);
   const notion = makeClient(env.NOTION_TOKEN);
 
   const page = await notion.get(`/pages/${checklistId}`);

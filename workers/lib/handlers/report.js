@@ -18,7 +18,7 @@ import { sendEmailMulti, buildSendHistoryEntry } from '../resend.js';
 
 export async function handleReportGenerate(request, env) {
   const license = request._license;
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   const body = await request.json();
 
   const {
@@ -54,7 +54,7 @@ export async function handleReportGenerate(request, env) {
 
   // Branding: T3 reads from Client Licenses, T2 uses NAC defaults
   const branding = license.tier === 'T3'
-    ? await fetchBranding(notion, env.CLIENT_LICENSES_COLLECTION_ID, license.id)
+    ? await fetchBranding(notion, env.CLIENT_LICENSES_COLLECTION_ID, license.key)
     : {};
 
   // Style samples: T3 only, Sonnet 4.6 when present
@@ -75,7 +75,7 @@ export async function handleReportGenerate(request, env) {
     version: 1,
     generatedAt: new Date().toISOString(),
     generatedBy: body.generatedBy || 'OCOS Field',
-    licenseId: license.id,
+    licenseId: license.key,
   };
 
   // Generate PDF (includes audit appendix)
@@ -93,7 +93,7 @@ export async function handleReportGenerate(request, env) {
   }
 
   // Upload to R2
-  const r2Key = reportKey(license.id, reportId, 1);
+  const r2Key = reportKey(license.key, reportId, 1);
   await putObject(env.FC_REPORTS, r2Key, pdfBytes, 'application/pdf');
   const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 3600);
 
@@ -130,7 +130,7 @@ export async function handleReportGenerate(request, env) {
 
 export async function handleReportLock(request, env, reportId) {
   const license = request._license;
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   const notion = makeClient(env.NOTION_TOKEN);
 
   const reportPage = await notion.get(`/pages/${reportId}`);
@@ -152,7 +152,7 @@ export async function handleReportLock(request, env, reportId) {
   // Fetch PDF from R2 to compute hash
   const version = props['Version']?.number || 1;
   const siteId = props['Site']?.relation?.[0]?.id;
-  const r2Key = reportKey(license.id, reportId, version);
+  const r2Key = reportKey(license.key, reportId, version);
   const r2Obj = await env.FC_REPORTS.get(r2Key);
   if (!r2Obj) return json({ error: 'PDF not found in storage' }, 404);
 
@@ -174,7 +174,7 @@ export async function handleReportLock(request, env, reportId) {
     reportId,
     reportNotionPageId: reportId,
     pdfHash,
-    licenseId: license.id,
+    licenseId: license.key,
     siteId: siteId || '',
   });
 
@@ -185,7 +185,7 @@ export async function handleReportLock(request, env, reportId) {
 
 export async function handleReportSend(request, env, reportId) {
   const license = request._license;
-  await requireLicenseMapping(env.DB, license.id);
+  await requireLicenseMapping(env.DB, license.key);
   const body = await request.json();
 
   const { recipients = [], channel = 'Resend Email' } = body;
@@ -210,7 +210,7 @@ export async function handleReportSend(request, env, reportId) {
 
   // Fetch signed URL for the PDF
   const version = props['Version']?.number || 1;
-  const r2Key = reportKey(license.id, reportId, version);
+  const r2Key = reportKey(license.key, reportId, version);
   const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 86400);
 
   const reportTitle = props['Report Title']?.title?.[0]?.plain_text || 'OCOS Field Compliance Report';
@@ -250,7 +250,7 @@ export async function handleReportSend(request, env, reportId) {
 
 export async function handleReportRegenerate(request, env, reportId) {
   const license = request._license;
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   const body = await request.json();
   const notion = makeClient(env.NOTION_TOKEN);
 
@@ -292,7 +292,7 @@ export async function handleReportRegenerate(request, env, reportId) {
 
 export async function handleReportVersions(request, env, reportId) {
   const license = request._license;
-  await requireLicenseMapping(env.DB, license.id);
+  await requireLicenseMapping(env.DB, license.key);
   const notion = makeClient(env.NOTION_TOKEN);
 
   // Walk the version chain
@@ -511,6 +511,41 @@ function buildReportEmailHtml(reportTitle, siteName, pdfUrl) {
 
 function safeParseJson(raw, fallback) {
   try { return JSON.parse(raw || 'null') || fallback; } catch { return fallback; }
+}
+
+// ── List ──────────────────────────────────────────────────────────────────────
+
+export async function handleReportList(request, env) {
+  const license = request._license;
+  const mapping = await requireLicenseMapping(env.DB, license.key);
+  const notion = makeClient(env.NOTION_TOKEN);
+  const url = new URL(request.url);
+  const siteId = url.searchParams.get('siteId');
+
+  const filter = siteId
+    ? { property: 'Site', relation: { contains: siteId } }
+    : {};
+
+  const res = await notion.post(`/databases/${mapping.reports_db_id}/query`, {
+    ...(siteId ? { filter } : {}),
+    sorts: [{ timestamp: 'created_time', direction: 'descending' }],
+    page_size: 20,
+  });
+
+  const reports = (res.results || []).map(p => {
+    const props = p.properties || {};
+    return {
+      id: p.id,
+      title: props['Report Title']?.title?.[0]?.plain_text || 'Untitled',
+      type: props['Type']?.select?.name || '',
+      date: props['Date Range Start']?.date?.start || props['Date Range End']?.date?.start || null,
+      version: props['Version']?.number || 1,
+      locked: props['Locked?']?.checkbox || false,
+      photoCount: props['Photo Count']?.number || 0,
+    };
+  });
+
+  return json({ reports });
 }
 
 function json(data, status = 200) {

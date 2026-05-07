@@ -12,7 +12,7 @@ import { styleKey, putObject } from '../r2.js';
 const MAX_ACTIVE_SAMPLES = 10;
 
 export async function handleStyleUpload(request, env, license) {
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   if (!mapping.style_samples_db_id) {
     return json({ error: 'Style Learning not provisioned for this license' }, 409);
   }
@@ -60,7 +60,7 @@ export async function handleStyleUpload(request, env, license) {
 
   // Store original in R2
   const sampleId = `FC-SS-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const r2Key = styleKey(license.id, sampleId, ext);
+  const r2Key = styleKey(license.key, sampleId, ext);
   await putObject(env.FC_STYLE, r2Key, fileBytes, mimeType || 'application/octet-stream');
 
   // Create FC-StyleSamples Notion record
@@ -90,7 +90,7 @@ export async function handleStyleUpload(request, env, license) {
 }
 
 export async function handleStyleList(request, env, license) {
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   if (!mapping.style_samples_db_id) return json({ samples: [] });
 
   const notion = makeClient(env.NOTION_TOKEN);
@@ -118,7 +118,7 @@ export async function handleStyleList(request, env, license) {
 }
 
 export async function handleStyleDelete(request, env, license, sampleId) {
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   if (!mapping.style_samples_db_id) return json({ error: 'Style Learning not provisioned' }, 409);
 
   const notion = makeClient(env.NOTION_TOKEN);

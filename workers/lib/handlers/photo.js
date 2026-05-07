@@ -33,6 +33,9 @@ export async function handlePhotoUpload(request, env) {
     inspectionId,
     capturedBy,
     captureSource = 'Live',
+    notes,
+    transcription,
+    capturedByName,
   } = meta;
 
   // Accept gps: { lat, lng } from PWA as well as flat geoLat/geoLng
@@ -41,7 +44,7 @@ export async function handlePhotoUpload(request, env) {
 
   if (!siteId) return json({ error: 'siteId required in metadata' }, 400);
 
-  const mapping = await getLicenseMapping(env.DB, license.id);
+  const mapping = await getLicenseMapping(env.DB, license.key);
   if (!mapping) return json({ error: 'FC workspace not provisioned for this license' }, 409);
 
   // Hash original bytes BEFORE any processing — chain of custody
@@ -51,7 +54,7 @@ export async function handlePhotoUpload(request, env) {
   // Generate photo ID
   const photoId = `FC-P-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
   const ext = (photoFile.type || 'image/jpeg').split('/')[1] || 'jpg';
-  const r2Key = photoKey(license.id, siteId, photoId, ext);
+  const r2Key = photoKey(license.key, siteId, photoId, ext);
 
   await putObject(env.FC_PHOTOS, r2Key, photoBuf, photoFile.type || 'image/jpeg');
 
@@ -65,7 +68,7 @@ export async function handlePhotoUpload(request, env) {
   const voiceFile = formData.get('voice');
   if (voiceFile) {
     const vId = voiceNoteId || `FC-V-${Date.now()}`;
-    voiceR2Key = voiceKey(license.id, siteId, vId);
+    voiceR2Key = voiceKey(license.key, siteId, vId);
     await putObject(env.FC_VOICE, voiceR2Key, await voiceFile.arrayBuffer(), 'audio/mp4');
   }
 
@@ -93,6 +96,11 @@ export async function handlePhotoUpload(request, env) {
       'Severity': { select: { name: severity } },
       'Inspection': inspectionId ? { relation: [{ id: inspectionId }] } : undefined,
       'Hash': { rich_text: [{ text: { content: hash } }] },
+      'Notes': notes ? { rich_text: [{ text: { content: String(notes).slice(0, 2000) } }] } : undefined,
+      'Transcription': transcription ? { rich_text: [{ text: { content: String(transcription).slice(0, 2000) } }] } : undefined,
+      'Voice Key': voiceR2Key ? { rich_text: [{ text: { content: voiceR2Key } }] } : undefined,
+      'Photo Key': { rich_text: [{ text: { content: r2Key } }] },
+      'Captured By Name': capturedByName ? { rich_text: [{ text: { content: capturedByName } }] } : undefined,
     },
   });
 

@@ -9,7 +9,7 @@ import { putObject } from '../r2.js';
 
 export async function handleInspectionCreate(request, env) {
   const license = request._license;
-  const mapping = await requireLicenseMapping(env.DB, license.id);
+  const mapping = await requireLicenseMapping(env.DB, license.key);
   const body = await request.json();
 
   const {
@@ -47,7 +47,7 @@ export async function handleInspectionCreate(request, env) {
 
 export async function handleInspectionSignoff(request, env, inspectionId) {
   const license = request._license;
-  await requireLicenseMapping(env.DB, license.id);
+  await requireLicenseMapping(env.DB, license.key);
 
   const formData = await request.formData();
   const sigFile = formData.get('signature');
@@ -63,7 +63,7 @@ export async function handleInspectionSignoff(request, env, inspectionId) {
   // Upload signature image to R2
   let sigUrl = null;
   if (sigFile) {
-    const key = `${license.id}/signatures/${inspectionId}-${workerId || 'anon'}-${Date.now()}.png`;
+    const key = `${license.key}/signatures/${inspectionId}-${workerId || 'anon'}-${Date.now()}.png`;
     await putObject(env.FC_PHOTOS, key, await sigFile.arrayBuffer(), 'image/png');
     sigUrl = key;
   }

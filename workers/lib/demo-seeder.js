@@ -107,7 +107,7 @@ const DEMO_PHOTOS = [
 ];
 
 export async function seedDemoData(env, license, mapping) {
-  const idempKey = `demo_seed:${license.id}`;
+  const idempKey = `demo_seed:${license.key}`;
   const existing = await checkIdempotency(env.DB, idempKey);
   if (existing) return existing;
 
@@ -172,7 +172,7 @@ export async function seedDemoData(env, license, mapping) {
     // R2 upload is best-effort — demo works without it
     const r2PhotoId = `DEMO-P-${String(i + 1).padStart(2, '0')}-${spec.slug}`;
     try {
-      const key = photoKey(license.id, siteId, r2PhotoId, 'jpg');
+      const key = photoKey(license.key, siteId, r2PhotoId, 'jpg');
       await putObject(env.FC_PHOTOS, key, photoBytes, 'image/jpeg');
     } catch { /* R2 optional in local dev */ }
 
@@ -300,7 +300,7 @@ export async function seedDemoData(env, license, mapping) {
     version: 1,
     generatedAt,
     generatedBy: 'OCOS Demo Seeder',
-    licenseId: license.id,
+    licenseId: license.key,
   };
 
   let pdfHash = 'demo-pdf-unavailable';
@@ -322,7 +322,7 @@ export async function seedDemoData(env, license, mapping) {
 
     pdfHash = await sha256Hex(pdfBytes.buffer);
 
-    const r2Key = reportKey(license.id, reportId, 1);
+    const r2Key = reportKey(license.key, reportId, 1);
     await putObject(env.FC_REPORTS, r2Key, pdfBytes, 'application/pdf');
     locked = true;
   } catch (e) {
@@ -362,7 +362,7 @@ export async function seedDemoData(env, license, mapping) {
       reportId: reportNotionId,
       reportNotionPageId: reportNotionId,
       pdfHash,
-      licenseId: license.id,
+      licenseId: license.key,
       siteId,
     });
   }
