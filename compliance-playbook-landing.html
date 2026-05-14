@@ -567,7 +567,7 @@
         <div class="form-title">Get the Playbook</div>
         <p class="form-sub">7 pages. No filler. Written for Ontario construction, excavation, and landscaping operators.</p>
 
-        <form id="lead-form" action="https://nacosapp.craig3113.workers.dev/api/leads/submit" method="POST">
+        <form id="lead-form" action="https://app.naturalalternatives.ca/api/leads/submit" method="POST">
           <div class="form-field">
             <label class="form-label" for="fname">Your name</label>
             <input class="form-input" type="text" id="fname" name="name" placeholder="First and last name" required autocomplete="name">
@@ -667,7 +667,7 @@
   <h2>Get compliant before<br><em>they show up.</em></h2>
   <p>The playbook is free. Takes 20 minutes to read. Most contractors find at least one item in the checklist they haven't addressed — better to find it now than during a stop-work order.</p>
 
-  <form class="inline-form" id="bottom-form" action="https://nacosapp.craig3113.workers.dev/api/leads/submit" method="POST">
+  <form class="inline-form" id="bottom-form" action="https://app.naturalalternatives.ca/api/leads/submit" method="POST">
     <input type="text" name="name" placeholder="Your name" required autocomplete="name">
     <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
     <div style="display:flex;align-items:flex-start;gap:.6rem;margin:.25rem 0 .75rem;text-align:left;">
@@ -694,7 +694,7 @@
 
 <script>
 // ── Worker endpoint ──────────────────────────────────────────────────────────
-const WORKER = 'https://nacosapp.craig3113.workers.dev/api/leads/submit';
+const WORKER = 'https://app.naturalalternatives.ca/api/leads/submit';
 
 // ── Hero form — intercept, submit to Worker, show success state ──────────────
 document.getElementById('lead-form').addEventListener('submit', async function(e) {
