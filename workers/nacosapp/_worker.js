@@ -1320,7 +1320,7 @@ async function sendSaleNotification(env, { email, name, tier, amount, currency, 
 <tr><td style="color:rgba(237,245,240,.5);padding:5px 0;">Product</td><td style="color:#4fd28c;font-weight:700;">${tier}</td></tr>
 <tr><td style="color:rgba(237,245,240,.5);padding:5px 0;">Order #</td><td>${orderId}</td></tr>
 <tr><td style="color:rgba(237,245,240,.5);padding:5px 0;">Time</td><td>${time} ET</td></tr></table>
-<a href="https://nacosapp.craig3113.workers.dev/dashboard" style="display:block;margin-top:18px;padding:12px;background:rgba(79,210,140,.15);border:1px solid rgba(79,210,140,.3);border-radius:10px;color:#4fd28c;text-decoration:none;text-align:center;font-weight:700;">View Dashboard \u2192</a>
+<a href="https://app.naturalalternatives.ca/dashboard" style="display:block;margin-top:18px;padding:12px;background:rgba(79,210,140,.15);border:1px solid rgba(79,210,140,.3);border-radius:10px;color:#4fd28c;text-decoration:none;text-align:center;font-weight:700;">View Dashboard \u2192</a>
 </div></body></html>`;
   return sendEmail(env, { from: "NAC OS <noreply@naturalalternatives.ca>", to: "info@naturalalternatives.ca", subject: `\u{1F4B0} New sale \u2014 ${tier} (${amt})`, html, text: `NEW SALE: ${amt}
 Customer: ${name}
@@ -1334,7 +1334,7 @@ __name2(sendSaleNotification, "sendSaleNotification");
 async function sendLeadMagnetEmail(env, { name, email }) {
   const first = name?.split(" ")[0] || "there";
   const yr = (/* @__PURE__ */ new Date()).getFullYear();
-  const pdf = "https://nacosapp.craig3113.workers.dev/api/download/playbook";
+  const pdf = "https://app.naturalalternatives.ca/api/download/playbook";
   const html = `<!DOCTYPE html><html><body style="margin:0;padding:0;background:#060807;font-family:-apple-system,sans-serif;">
 <div style="max-width:580px;margin:0 auto;padding:40px 20px;">
 <div style="text-align:center;padding-bottom:24px;border-bottom:1px solid rgba(79,210,140,.15);">
@@ -1348,7 +1348,7 @@ async function sendLeadMagnetEmail(env, { name, email }) {
 <p style="font-size:13px;color:rgba(237,245,240,.55);">Over the next few days I'll share practical tips on contractor compliance in Ontario.</p>
 <p style="font-size:14px;margin-top:24px;color:rgba(237,245,240,.75);">\u2014 Craig<br><span style="font-size:12px;color:rgba(237,245,240,.4);">Natural Alternatives</span></p></div>
 <p style="font-size:11px;color:rgba(237,245,240,.2);text-align:center;">You received this because you requested the Compliance Playbook.<br>
-<a href="https://nacosapp.craig3113.workers.dev/unsubscribe?email=${encodeURIComponent(email)}" style="color:rgba(79,210,140,.4);">Unsubscribe</a> \xB7 \xA9 ${yr} Natural Alternatives</p>
+<a href="https://app.naturalalternatives.ca/unsubscribe?email=${encodeURIComponent(email)}" style="color:rgba(79,210,140,.4);">Unsubscribe</a> \xB7 \xA9 ${yr} Natural Alternatives</p>
 </div></body></html>`;
   return sendEmail(env, { from: "Natural Alternatives <info@naturalalternatives.ca>", to: email, subject: "Your Ontario Contractor Compliance Playbook \u2014 download inside", html, text: `Hi ${first},
 
@@ -1359,7 +1359,7 @@ More tips coming over the next few days.
 \u2014 Craig
 Natural Alternatives
 
-Unsubscribe: https://nacosapp.craig3113.workers.dev/unsubscribe?email=${encodeURIComponent(email)}` });
+Unsubscribe: https://app.naturalalternatives.ca/unsubscribe?email=${encodeURIComponent(email)}` });
 }
 __name(sendLeadMagnetEmail, "sendLeadMagnetEmail");
 __name2(sendLeadMagnetEmail, "sendLeadMagnetEmail");
@@ -1378,7 +1378,7 @@ function nurtureDay1Html(first) {
 <li>Records on-site and available for Ministry review</li></ul>
 <p style="margin:16px 0;">The "passed" checkbox format most contractors use is <strong>not sufficient</strong> under s.93\u2013104.</p>
 <p style="margin-top:24px;">\u2014 Craig<br><span style="font-size:12px;color:rgba(237,245,240,.4);">Natural Alternatives</span></p>
-<p style="font-size:11px;color:rgba(237,245,240,.2);margin-top:24px;">Unsubscribe: <a href="https://nacosapp.craig3113.workers.dev/unsubscribe?email=${encodeURIComponent(first)}" style="color:rgba(79,210,140,.4);">click here</a></p>
+<p style="font-size:11px;color:rgba(237,245,240,.2);margin-top:24px;">Unsubscribe: <a href="https://app.naturalalternatives.ca/unsubscribe?email=${encodeURIComponent(first)}" style="color:rgba(79,210,140,.4);">click here</a></p>
 </div></body></html>`;
 }
 __name(nurtureDay1Html, "nurtureDay1Html");
@@ -2228,7 +2228,7 @@ function renderLicenses(){if(!stats)return'';return\`<div class="topbar"><div cl
 function renderAuto(){const autos=[{n:'Stripe Webhook \u2192 Order Creation',d:'POST /api/stripe/webhook \xB7 checkout.session.completed \xB7 creates D1 order record'},{n:'Auto-Approve \u2192 License + Email',d:'Generates license key \xB7 sends via Resend from billing@naturalalternatives.ca'},{n:'Sale Notification \u2192 Owner Email',d:'Fires on every purchase \xB7 delivers to info@naturalalternatives.ca instantly'},{n:'Lead Capture \u2192 PDF Delivery',d:'POST /api/leads/submit \xB7 saves to D1 \xB7 Resend Day 0 \xB7 redirects to thank-you.html'},{n:'Nurture Cron \u2192 Day 1/3/7 Emails',d:'Cloudflare Cron 0 13 * * * (8 AM ET) \xB7 purchase suppression built in'},{n:'Support Chat \u2192 Static FAQ',d:'GET /api/support/widget.js \xB7 30+ Q&As \xB7 escalation to info@naturalalternatives.ca'},{n:'CASL Unsubscribe',d:'GET /unsubscribe?email=... \xB7 D1 flag set instantly \xB7 CASL s.11 compliant'}];
 return\`<div class="topbar"><div class="topbar-left"><h1>Automation <em>Stack.</em></h1><div class="sub">All 7 live on Cloudflare Workers \xB7 zero third-party platforms</div></div></div>
 <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)"><div class="card stat-card"><div class="stat-eyebrow">Total Automations</div><div class="stat-value green">7</div></div><div class="card stat-card"><div class="stat-eyebrow">Healthy</div><div class="stat-value green">7</div></div><div class="card stat-card"><div class="stat-eyebrow">Platform Cost</div><div class="stat-value">$0</div><div class="stat-meta">Cloudflare free tier</div></div></div>
-<div class="card"><div class="card-head"><div><h2>Automation Registry</h2><div class="sub">nacosapp.craig3113.workers.dev</div></div><div class="pill">All Live</div></div><div class="task-list">\${autos.map(a=>\`<div class="task"><div class="tick" style="background:rgba(79,210,140,.15);border-color:rgba(79,210,140,.4);display:flex;align-items:center;justify-content:center;font-size:9px;color:#4fd28c">\u2713</div><div><div class="task-title">\${a.n}</div><div class="task-sub">\${a.d}</div></div><div style="margin-left:auto;flex-shrink:0"><span class="tag" style="color:var(--accent);border-color:rgba(79,210,140,.3)">live</span></div></div>\`).join('')}</div></div>\`;}
+<div class="card"><div class="card-head"><div><h2>Automation Registry</h2><div class="sub">app.naturalalternatives.ca</div></div><div class="pill">All Live</div></div><div class="task-list">\${autos.map(a=>\`<div class="task"><div class="tick" style="background:rgba(79,210,140,.15);border-color:rgba(79,210,140,.4);display:flex;align-items:center;justify-content:center;font-size:9px;color:#4fd28c">\u2713</div><div><div class="task-title">\${a.n}</div><div class="task-sub">\${a.d}</div></div><div style="margin-left:auto;flex-shrink:0"><span class="tag" style="color:var(--accent);border-color:rgba(79,210,140,.3)">live</span></div></div>\`).join('')}</div></div>\`;}
 function renderNurture(){return\`<div class="topbar"><div class="topbar-left"><h1>Email <em>Sequences.</em></h1><div class="sub">Lead nurture \xB7 product onboarding \xB7 renewal reminders</div></div></div>
 <div class="stats-grid" style="grid-template-columns:repeat(2,1fr)"><div class="card stat-card"><div class="stat-eyebrow">Lead Nurture</div><div class="stat-value green">4</div><div class="stat-meta">Day 0/1/3/7 \xB7 Cloudflare Cron</div></div><div class="card stat-card"><div class="stat-eyebrow">Engine</div><div class="stat-value">Resend</div><div class="stat-meta">3,000/mo free tier</div></div></div>
 <div class="card"><div class="card-head"><div><h2>Active Sequences</h2></div><div class="pill">Live</div></div><div class="task-list"><div class="task"><div class="tick"></div><div><div class="task-title">Day 0 \u2014 Ontario Contractor Compliance Playbook</div><div class="task-sub">Instant on submit. PDF download link. From info@naturalalternatives.ca.</div></div></div><div class="task"><div class="tick"></div><div><div class="task-title">Day 1 \u2014 MOL Pre-Shift Inspection</div><div class="task-sub">O.Reg 213/91. Educational, no pitch.</div></div></div><div class="task"><div class="tick"></div><div><div class="task-title">Day 3 \u2014 WSIB Clearance Liability</div><div class="task-sub">WSIA s.141. Soft CTA to OCOS T1.</div></div></div><div class="task"><div class="tick"></div><div><div class="task-title">Day 7 \u2014 MOL Audit Checklist + OCOS T1 Offer</div><div class="task-sub">$397 one-time. Final email in sequence.</div></div></div></div></div>\`;}

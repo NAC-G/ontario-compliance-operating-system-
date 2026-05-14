@@ -12,7 +12,7 @@ export async function validateLicense(request, env) {
   if (!license) throw httpErr('Invalid license key', 401);
   if (!license.is_active) throw httpErr('License inactive', 403);
 
-  await env.DB.prepare('UPDATE licenses SET last_seen=? WHERE id=?')
+  await env.DB.prepare('UPDATE licenses SET last_used_at=? WHERE id=?')
     .bind(new Date().toISOString(), license.id)
     .run();
 

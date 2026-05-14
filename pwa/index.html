@@ -149,9 +149,82 @@
     <button class="btn btn-primary btn-full" id="tag-this-photo-btn">Tag this photo</button>
     <div class="voice-btn-wrap">
       <button class="voice-btn" id="voice-btn-card" aria-label="Record voice note">&#127908;</button>
-      <span id="voice-btn-label" class="text-sm text-dim">Hold to dictate a note</span>
+      <span id="voice-btn-label" class="text-sm text-dim">Add voice note</span>
     </div>
   </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════
+       PHOTO ANNOTATE — unified capture annotation screen
+       ════════════════════════════════════════════════════════════════════ -->
+
+  <section data-screen="photo-annotate" class="screen ann-screen">
+
+    <div class="ann-photo-wrap">
+      <img id="ann-photo-img" class="ann-photo-img" alt="Captured photo">
+      <button class="ann-back-btn" id="ann-back-btn" aria-label="Back">&#8592;</button>
+    </div>
+
+    <div class="ann-body">
+
+      <!-- Tags -->
+      <div class="ann-section">
+        <div class="ann-label">Tags</div>
+        <div class="tag-grid" id="ann-tag-grid"></div>
+      </div>
+
+      <!-- Status -->
+      <div class="ann-section">
+        <div class="ann-label">Status</div>
+        <div class="ann-chips" id="ann-status-chips"></div>
+      </div>
+
+      <!-- Severity -->
+      <div class="ann-section">
+        <div class="ann-label">Severity</div>
+        <div class="ann-chips" id="ann-sev-chips"></div>
+      </div>
+
+      <!-- Before / After — only when Hazard - Corrected -->
+      <div class="ann-section" id="ann-ba-section" hidden>
+        <div class="ann-label">Before / After</div>
+        <p class="ann-ba-hint">This is the <strong>After</strong> photo. Tap below to also capture the Before.</p>
+        <button class="btn btn-secondary" id="ann-ba-btn">&#128247; Capture Before photo</button>
+        <p class="ann-ba-paired" id="ann-ba-paired" hidden>Paired &#10003;</p>
+      </div>
+
+      <!-- Voice note -->
+      <div class="ann-section">
+        <div class="ann-label">Voice Note</div>
+        <div class="ann-voice">
+          <button class="voice-btn" id="ann-mic-btn" aria-label="Record voice note">&#127908;</button>
+          <div class="voice-recording-bar" id="ann-rec-bar" hidden>
+            <span class="voice-rec-dot"></span>
+            <span class="voice-timer" id="ann-timer">0:00</span>
+          </div>
+          <div class="voice-controls" id="ann-rec-controls" hidden>
+            <button class="btn btn-secondary" id="ann-pause-btn">Pause</button>
+            <button class="btn btn-danger"    id="ann-stop-btn">Stop</button>
+          </div>
+          <div class="voice-playback-row" id="ann-playback-row" hidden>
+            <button class="voice-play-btn" id="ann-play-btn" aria-label="Play recording">&#9654;</button>
+            <div class="voice-playback-info">
+              <span class="voice-playback-label">Review recording</span>
+              <span class="voice-playback-dur" id="ann-dur">0:00</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" id="ann-rerecord-btn">Re-record</button>
+          </div>
+          <p class="voice-transcript-preview" id="ann-transcript" hidden></p>
+          <textarea class="form-input" id="ann-notes" rows="3" placeholder="Add notes&#8230;"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ann-footer">
+      <button class="btn btn-primary btn-full" id="ann-file-btn">File this photo</button>
+    </div>
+
+  </section>
 
   <!-- ════════════════════════════════════════════════════════════════════
        TAG PICKER
@@ -203,18 +276,45 @@
 
   <section data-screen="voice" class="screen">
     <div class="screen-content voice-screen-content">
+
+      <!-- Photo + tag context strip -->
+      <div class="voice-context" id="voice-context" hidden>
+        <img class="voice-thumb" id="voice-thumb" alt="Captured photo">
+        <div class="voice-thumb-tags" id="voice-thumb-tags"></div>
+      </div>
+
       <h2 class="section-head" id="voice-heading" style="padding:0;text-align:center"></h2>
       <p  class="section-sub"  id="voice-sub"    style="padding:0;text-align:center"></p>
+
+      <!-- Idle: mic button -->
       <button class="voice-btn voice-btn--large" id="voice-record-btn" aria-label="Record voice note">&#127908;</button>
 
-      <div class="voice-transcript" id="voice-transcript" hidden>
-        <p id="voice-transcript-text"></p>
-        <div class="voice-transcript-actions">
-          <button class="btn btn-primary"   id="voice-confirm-btn"></button>
-          <button class="btn btn-secondary" id="voice-edit-btn"></button>
+      <!-- Active: recording indicator -->
+      <div class="voice-recording-bar" id="voice-recording-bar" hidden>
+        <span class="voice-rec-dot"></span>
+        <span class="voice-timer" id="voice-timer">0:00</span>
+      </div>
+
+      <!-- Active: recording controls -->
+      <div class="voice-controls" id="voice-controls" hidden>
+        <button class="btn btn-secondary" id="voice-pause-btn">Pause</button>
+        <button class="btn btn-danger"    id="voice-stop-btn">Stop</button>
+      </div>
+
+      <!-- Review: playback + transcript + notes -->
+      <div class="voice-review" id="voice-review" hidden>
+        <div class="voice-playback-row">
+          <button class="voice-play-btn" id="voice-play-btn" aria-label="Play recording">&#9654;</button>
+          <div class="voice-playback-info">
+            <span class="voice-playback-label">Review recording</span>
+            <span class="voice-playback-dur" id="voice-playback-dur">0:00</span>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="voice-rerecord-btn">Re-record</button>
         </div>
-        <textarea class="form-input" id="voice-edit-area" rows="4" hidden></textarea>
-        <button class="btn btn-primary btn-full" id="voice-save-edited-btn" hidden>Save note</button>
+        <p class="voice-transcript-preview" id="voice-transcript-preview">Transcribing…</p>
+        <label class="voice-notes-label">Notes</label>
+        <textarea class="form-input" id="voice-notes-area" rows="3" placeholder="Add or edit notes…"></textarea>
+        <button class="btn btn-primary btn-full" id="voice-confirm-btn"></button>
       </div>
 
       <button class="btn btn-ghost btn-full" id="voice-skip-btn">Skip voice note</button>
@@ -292,21 +392,37 @@
     <div class="screen-content">
       <h2 class="section-head" id="signoff-workers-heading"></h2>
       <p  class="section-sub"  id="signoff-workers-sub"></p>
+
+      <!-- Recent workers (chips populated from DB) -->
+      <div class="recent-workers-wrap" id="recent-workers-wrap" hidden>
+        <div class="recent-workers-label">Recent</div>
+        <div class="recent-workers-chips" id="recent-workers-chips"></div>
+      </div>
+
+      <!-- Inline quick-add row (always visible) -->
+      <div class="worker-inline-add" id="worker-inline-add">
+        <input type="text" id="worker-name-input" class="form-input worker-inline-name" placeholder="Worker name">
+        <input type="text" id="worker-role-input" class="form-input worker-inline-role" placeholder="Role (optional)">
+        <button class="btn btn-secondary btn-full" id="save-worker-btn">+ Add to list</button>
+      </div>
+
       <div class="workers-list-wrap" id="workers-list"></div>
-      <div class="px-20 mt-16 stack">
-        <button class="btn btn-secondary btn-full" id="add-worker-btn"></button>
-        <button class="btn btn-ghost    btn-full" id="alone-btn"></button>
+
+      <!-- I was alone — prompts for supervisor name then signs -->
+      <div class="alone-wrap">
+        <div class="alone-divider"><span>or</span></div>
+        <div class="alone-inline" id="alone-inline" hidden>
+          <p class="alone-label">Your name for the record</p>
+          <input type="text" id="alone-name-input" class="form-input" placeholder="Your full name">
+          <button class="btn btn-primary btn-full" id="alone-sign-btn">Sign &amp; continue</button>
+        </div>
+        <button class="btn btn-ghost btn-full" id="alone-btn">I was alone on site</button>
       </div>
     </div>
   </section>
 
-  <div class="bottom-sheet" id="add-worker-sheet" hidden>
-    <div class="bottom-sheet-handle"></div>
-    <h3 class="section-head" style="padding:0">Add worker</h3>
-    <input type="text"  id="worker-name-input" class="form-input" placeholder="Full name">
-    <input type="text"  id="worker-role-input" class="form-input" placeholder="Role (optional)">
-    <button class="btn btn-primary btn-full" id="save-worker-btn">Add</button>
-  </div>
+  <!-- Keep for backwards compat but hidden -->
+  <div id="add-worker-sheet" hidden></div>
 
   <section data-screen="signoff-draw" class="screen">
     <div class="screen-content">
@@ -639,6 +755,68 @@
        ════════════════════════════════════════════════════════════════════ -->
 
   <div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+  <!-- ── Photo Detail ─────────────────────────────────────────────────────── -->
+  <section data-screen="photo-detail" class="screen">
+    <div class="screen-content">
+      <div class="photo-detail-img-wrap">
+        <img id="photo-detail-img" src="" alt="" class="photo-detail-img" />
+        <div class="photo-detail-img-placeholder" id="photo-detail-placeholder">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>No image stored</span>
+        </div>
+      </div>
+
+      <div class="photo-detail-body">
+        <p class="photo-detail-caption" id="photo-detail-caption"></p>
+
+        <div class="photo-detail-chips" id="photo-detail-chips"></div>
+
+        <!-- Audio player -->
+        <div class="photo-detail-audio-wrap" id="photo-detail-audio-wrap" hidden>
+          <div class="photo-meta-label">Voice note</div>
+          <audio id="photo-detail-audio" controls class="photo-detail-audio-player" preload="none"></audio>
+        </div>
+
+        <!-- Transcription -->
+        <div class="photo-detail-transcript-wrap" id="photo-detail-transcript-wrap" hidden>
+          <div class="photo-meta-label">Transcript</div>
+          <p class="photo-detail-transcript-text" id="photo-detail-transcript-text"></p>
+        </div>
+
+        <div class="photo-detail-meta">
+          <div class="photo-meta-row" id="photo-meta-ohsa-wrap">
+            <span class="photo-meta-label">OHSA</span>
+            <span class="photo-meta-value" id="photo-detail-ohsa"></span>
+          </div>
+          <div class="photo-meta-row" id="photo-meta-by-wrap">
+            <span class="photo-meta-label">By</span>
+            <span class="photo-meta-value" id="photo-detail-by"></span>
+          </div>
+          <div class="photo-meta-row" id="photo-meta-gps-wrap">
+            <span class="photo-meta-label">GPS</span>
+            <span class="photo-meta-value" id="photo-detail-gps"></span>
+          </div>
+          <div class="photo-meta-row" id="photo-meta-notes-wrap">
+            <span class="photo-meta-label">Notes</span>
+            <span class="photo-meta-value" id="photo-detail-notes"></span>
+          </div>
+          <div class="photo-meta-row">
+            <span class="photo-meta-label">Captured</span>
+            <span class="photo-meta-value" id="photo-detail-date"></span>
+          </div>
+          <div class="photo-meta-row">
+            <span class="photo-meta-label">Hash</span>
+            <span class="photo-meta-value photo-meta-hash" id="photo-detail-hash"></span>
+          </div>
+          <div class="photo-meta-row" id="photo-detail-pair-wrap">
+            <span class="photo-meta-label">Pair</span>
+            <span class="photo-meta-value" id="photo-detail-pair-label"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <script type="module" src="/app.js"></script>
 </body>

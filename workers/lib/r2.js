@@ -27,8 +27,8 @@ export async function putObject(bucket, key, body, contentType) {
   return key;
 }
 
-export async function getSignedUrl(bucket, key, expiresIn = 3600) {
-  return bucket.createSignedUrl
-    ? bucket.createSignedUrl(key, { expiresIn })
-    : `https://r2-proxy.naturalalternatives.ca/${key}?expires=${Date.now() + expiresIn * 1000}`;
+export async function getSignedUrl(bucket, key, expiresIn = 3600, baseUrl = 'https://ocos-fc.naturalalternatives.ca') {
+  if (bucket.createSignedUrl) return bucket.createSignedUrl(key, { expiresIn });
+  const expires = Date.now() + expiresIn * 1000;
+  return `${baseUrl}/fc/dl?key=${encodeURIComponent(key)}&expires=${expires}`;
 }

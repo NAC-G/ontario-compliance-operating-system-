@@ -4,7 +4,7 @@
  * Queued photo/voice uploads sync via Background Sync when back online.
  */
 
-const CACHE_NAME = 'ocos-field-v2';
+const CACHE_NAME = 'ocos-field-v17';
 const SHELL = [
   '/',
   '/index.html',
@@ -33,7 +33,11 @@ const SYNC_TAG = 'fc-photo-upload';
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.all(SHELL.map(url =>
+        fetch(new Request(url, { cache: 'reload' })).then(res => cache.put(url, res))
+      ))
+    ).then(() => self.skipWaiting())
   );
 });
 

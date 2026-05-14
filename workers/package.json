@@ -9,7 +9,7 @@
     "migrate": "wrangler d1 execute DB --file=lib/migrations/001_fc_tables.sql"
   },
   "dependencies": {
-    "@pdf-lib/pdf-lib": "^1.17.1",
+    "pdf-lib": "^1.17.1",
     "mammoth": "^1.7.0",
     "pdf-parse": "^1.1.1"
   },

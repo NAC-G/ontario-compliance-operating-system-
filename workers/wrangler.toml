@@ -2,6 +2,7 @@ name = "ocos-fc"
 main = "field-compliance-worker.js"
 compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
+workers_dev = true
 
 [[r2_buckets]]
 binding = "FC_PHOTOS"
@@ -24,10 +25,14 @@ binding = "DB"
 database_name = "nac-os-licenses"
 database_id = "cb6f16b4-066e-4496-9d5c-a2a921576967"
 
+[[routes]]
+pattern = "ocos-fc.naturalalternatives.ca"
+custom_domain = true
+
 [vars]
 FRONTEND_URL = "https://field.naturalalternatives.ca"
 IN_HOUSE_PAGE_ID = "300af11add638033b7e1f00747a7f387"
-CLIENT_LICENSES_COLLECTION_ID = "24de07c6-8c01-44f4-aed2-c033c755567a"
+CLIENT_LICENSES_COLLECTION_ID = "dc5d6aa2570841ad980e608c84962c89"
 T1_WORKSPACE_ID = "300af11add63802a99f2e54df827046a"
 T2_WORKSPACE_ID = "2fdaf11add63808f8104ca347d88949c"
 T3_WORKSPACE_ID = "2fdaf11add6380ce8e90e09db23ea7df"

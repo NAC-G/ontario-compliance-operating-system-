@@ -73,6 +73,45 @@ function err(message, status = 400) {
   return json({ error: message }, status);
 }
 
+async function handleFileDownload(request, env) {
+  const url = new URL(request.url);
+  const key = url.searchParams.get('key');
+  const expires = parseInt(url.searchParams.get('expires') || '0', 10);
+
+  if (!key) return new Response(JSON.stringify({ error: 'key required' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+  if (Date.now() > expires) return new Response(JSON.stringify({ error: 'Link has expired' }), { status: 410, headers: { 'Content-Type': 'application/json' } });
+
+  let bucket, contentType, disposition;
+  if (key.includes('/reports/') || key.endsWith('.pdf')) {
+    bucket = env.FC_REPORTS;
+    contentType = 'application/pdf';
+    disposition = `attachment; filename="${key.split('/').pop()}"`;
+  } else if (key.endsWith('.m4a')) {
+    bucket = env.FC_VOICE;
+    contentType = 'audio/mp4';
+    disposition = 'inline';
+  } else if (key.includes('/style/')) {
+    bucket = env.FC_STYLE;
+    contentType = 'application/pdf';
+    disposition = 'inline';
+  } else {
+    bucket = env.FC_PHOTOS;
+    contentType = key.endsWith('.png') ? 'image/png' : 'image/jpeg';
+    disposition = 'inline';
+  }
+
+  const obj = await bucket.get(key);
+  if (!obj) return new Response(JSON.stringify({ error: 'File not found' }), { status: 404, headers: { 'Content-Type': 'application/json' } });
+
+  return new Response(obj.body, {
+    headers: {
+      'Content-Type': contentType,
+      'Content-Disposition': disposition,
+      'Cache-Control': 'private, max-age=3600',
+    },
+  });
+}
+
 export default {
   async fetch(request, env, ctx) {
     const cors = corsHeaders(request, env);
@@ -204,6 +243,10 @@ export default {
         const photoId = path.split('/')[3];
         const license = await validateLicense(request, env);
         response = await handlePhotoImage(request, env, license, photoId);
+
+      // ── File download (time-limited, no auth header required) ────────────
+      } else if (method === 'GET' && path === '/fc/dl') {
+        response = await handleFileDownload(request, env);
 
       // ── Health ───────────────────────────────────────────────────────────
       } else if (method === 'GET' && path === '/fc/health') {

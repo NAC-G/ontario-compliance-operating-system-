@@ -30,13 +30,19 @@ export async function handleProvision(request, env) {
   // Step 1: ensure FC Module container page exists
   const fcModulePageId = await ensureFCModulePage(notion, inHousePageId);
 
-  // Step 2: ensure Client Licenses DB has branding columns (idempotent)
-  await ensureClientLicenseBrandingColumns(notion, clientLicensesCollectionId);
+  // Step 2: ensure Client Licenses DB has branding columns (idempotent, non-fatal)
+  let accessibleClientLicensesDbId = null;
+  try {
+    await ensureClientLicenseBrandingColumns(notion, clientLicensesCollectionId);
+    accessibleClientLicensesDbId = clientLicensesCollectionId;
+  } catch (e) {
+    console.warn('PROVISION: skipped branding columns (integration lacks Client Licenses access):', e.message);
+  }
 
   // Step 3: create 7 FC databases for this client
   const dbs = await provisionFCDatabases(notion, {
     fcModulePageId,
-    clientLicensesDbId: clientLicensesCollectionId,
+    clientLicensesDbId: accessibleClientLicensesDbId,
     licenseId,
     tier,
     clientName: clientName || '',

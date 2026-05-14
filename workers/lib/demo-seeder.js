@@ -169,10 +169,9 @@ export async function seedDemoData(env, license, mapping) {
     const hash = await sha256Hex(photoBytes);
     photoHashes.push(hash);
 
-    // R2 upload is best-effort — demo works without it
     const r2PhotoId = `DEMO-P-${String(i + 1).padStart(2, '0')}-${spec.slug}`;
+    const key = photoKey(license.key, siteId, r2PhotoId, 'jpg');
     try {
-      const key = photoKey(license.key, siteId, r2PhotoId, 'jpg');
       await putObject(env.FC_PHOTOS, key, photoBytes, 'image/jpeg');
     } catch { /* R2 optional in local dev */ }
 
@@ -191,6 +190,7 @@ export async function seedDemoData(env, license, mapping) {
         'Status':          { select: { name: spec.status } },
         'Severity':        { select: { name: spec.severity } },
         'Hash':            { rich_text: [{ text: { content: hash } }] },
+        'Photo Key':       { rich_text: [{ text: { content: key } }] },
       },
     });
     photoIds.push(photoPage.id);
@@ -238,7 +238,6 @@ export async function seedDemoData(env, license, mapping) {
   const inspectionId = inspectionPage.id;
 
   // ── 5. Generate + Lock PDF Report ─────────────────────────────────────────
-  const reportId = `DEMO-R-001`;
   const generatedAt = '2026-05-01T09:00:00Z';
   const lockedAt    = '2026-05-01T09:02:00Z';
 
@@ -295,8 +294,31 @@ export async function seedDemoData(env, license, mapping) {
     'WHMIS 2015',
   ];
 
+  // Create Notion report page first to obtain the page ID for the R2 key
+  const reportPage = await notion.post('/pages', {
+    parent: { database_id: mapping.reports_db_id },
+    properties: {
+      'Report Title': { title: [{ text: { content: 'Toolbox Talk Record — Demo Site, Apr 28–30 2026' } }] },
+      'Type':         { select: { name: 'Toolbox Talk Record' } },
+      'Site':         { relation: [{ id: siteId }] },
+      'Inspection':   { relation: [{ id: inspectionId }] },
+      'Version':      { number: 1 },
+      'Photo Count':  { number: photoIds.length },
+      'Date Range Start': { date: { start: '2026-04-28' } },
+      'Date Range End':   { date: { start: '2026-04-30' } },
+      'Locked?':      { checkbox: false },
+      'PDF Hash':     { rich_text: [{ text: { content: '' } }] },
+      'Recipients':   { rich_text: [{ text: { content: '[]' } }] },
+      'Send History': { rich_text: [{ text: { content: '[]' } }] },
+      'Audit Appendix Included?': { checkbox: true },
+      'Branding Profile': { select: { name: 'NAC Default' } },
+      'Style-Conditioned?': { checkbox: false },
+    },
+  });
+  const reportNotionId = reportPage.id;
+
   const reportMeta = {
-    id: reportId,
+    id: reportNotionId,
     version: 1,
     generatedAt,
     generatedBy: 'OCOS Demo Seeder',
@@ -321,41 +343,20 @@ export async function seedDemoData(env, license, mapping) {
     });
 
     pdfHash = await sha256Hex(pdfBytes.buffer);
-
-    const r2Key = reportKey(license.key, reportId, 1);
+    const r2Key = reportKey(license.key, reportNotionId, 1);
     await putObject(env.FC_REPORTS, r2Key, pdfBytes, 'application/pdf');
     locked = true;
   } catch (e) {
     console.error('[demo-seeder] PDF generation failed:', e.message);
   }
 
-  // Create Notion report record
-  const reportProps = {
-    'Report Title': { title: [{ text: { content: 'Toolbox Talk Record — Demo Site, Apr 28–30 2026' } }] },
-    'Type':         { select: { name: 'Toolbox Talk Record' } },
-    'Site':         { relation: [{ id: siteId }] },
-    'Inspection':   { relation: [{ id: inspectionId }] },
-    'Version':      { number: 1 },
-    'Photo Count':  { number: photoIds.length },
-    'Date Range Start': { date: { start: '2026-04-28' } },
-    'Date Range End':   { date: { start: '2026-04-30' } },
-    'Locked?':      { checkbox: locked },
-    'PDF Hash':     { rich_text: [{ text: { content: pdfHash } }] },
-    'Recipients':   { rich_text: [{ text: { content: '[]' } }] },
-    'Send History': { rich_text: [{ text: { content: '[]' } }] },
-    'Audit Appendix Included?': { checkbox: true },
-    'Branding Profile': { select: { name: 'NAC Default' } },
-    'Style-Conditioned?': { checkbox: false },
+  // Update Notion page with final lock status
+  const lockPatch = {
+    'PDF Hash': { rich_text: [{ text: { content: pdfHash } }] },
+    'Locked?':  { checkbox: locked },
   };
-  if (locked) {
-    reportProps['Locked At'] = { date: { start: lockedAt } };
-  }
-
-  const reportPage = await notion.post('/pages', {
-    parent: { database_id: mapping.reports_db_id },
-    properties: reportProps,
-  });
-  const reportNotionId = reportPage.id;
+  if (locked) lockPatch['Locked At'] = { date: { start: lockedAt } };
+  await notion.patch(`/pages/${reportNotionId}`, { properties: lockPatch });
 
   if (locked) {
     await recordAuditIndex(env.DB, {

@@ -115,17 +115,18 @@ function formula(expression) {
 // ── DB 1: FC-Sites ───────────────────────────────────────────────────────────
 
 function fcSitesSchema(clientLicensesDbId) {
-  return {
+  const schema = {
     'Site Name': { title: {} },
     'Address': rich_text,
     'Geocode': rich_text,
-    'Client License': relation(clientLicensesDbId),
     'Status': select(['Active', 'On Hold', 'Closed', 'Archived']),
     'Site Type': select(['Residential', 'ICI', 'Roadwork', 'Other']),
     'WAH Site?': checkbox,
     'Created': created_time,
     'Created By': created_by,
   };
+  if (clientLicensesDbId) schema['Client License'] = relation(clientLicensesDbId);
+  return schema;
 }
 
 // ── DB 2: FC-Photos ──────────────────────────────────────────────────────────
@@ -326,12 +327,7 @@ async function addRelationsPass2(notion, dbs) {
   }
   patches.push(notion.patch(`/databases/${dbs.reports}`, { properties: reportPatches }));
 
-  // FC-Sites rollups and formula
-  patches.push(notion.patch(`/databases/${dbs.sites}`, {
-    properties: {
-      'JHSC Required?': formula('prop("Worker Count") >= 20'),
-    },
-  }));
+  // FC-Sites rollups — Worker Count rollup and JHSC formula added post-provision
 
   await Promise.all(patches);
 }

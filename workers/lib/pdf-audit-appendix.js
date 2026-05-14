@@ -120,7 +120,7 @@ export async function appendAuditTrail(pdfDoc, auditData) {
 
   // ── Report metadata ───────────────────────────────────────────────────────
   drawSectionHeader('Report Metadata');
-  const truncLicense = (report.licenseId || '').slice(0, 8) + '…';
+  const truncLicense = String(report.licenseId || '').slice(0, 8) + '…';
   const reportMeta = [
     `Report ID: ${report.id}`,
     `Version: ${report.version || 1}`,

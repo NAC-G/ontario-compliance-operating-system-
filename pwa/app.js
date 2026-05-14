@@ -7,15 +7,15 @@ import { C } from './modules/copy.js';
 import { getSetting, setSetting, getPendingCount } from './modules/db.js';
 import { uploadPhoto, getSite, createInspection, signoffInspection,
          generateReport as apiGenerateReport, lockReport, sendReport as apiSendReport,
-         regenerateReport, getReportVersions, seedDemoData } from './modules/api.js';
+         regenerateReport, getReportVersions, listReports, seedDemoData, getPhotoAudioUrl } from './modules/api.js';
 import { requestPermissions } from './modules/permissions.js';
 import { openCamera, openLibrary } from './modules/camera.js';
-import { recordVoice, stopRecording, transcribeVoice } from './modules/voice.js';
+import { recordVoice, stopRecording, pauseRecording, resumeRecording, transcribeVoice, VOICE_MAX_SECONDS, VOICE_CL_MAX_SECONDS } from './modules/voice.js';
 import { loadTaxonomy, getSeverityDefault, getAutoStatus } from './modules/tag-picker.js';
 import { getChecklistForType } from './modules/inspection.js';
 import { SyncManager } from './modules/sync.js';
 import { loadStyleSamples, uploadSample } from './modules/style-samples.js';
-import { renderVersionRow } from './modules/reports.js';
+import { renderReportCard, renderVersionRow } from './modules/reports.js';
 
 // ── State ──────────────────────────────────────────────────────────────────
 
@@ -41,7 +41,10 @@ function showScreen(id, push = true) {
   document.querySelectorAll('[data-screen]').forEach(s => s.classList.remove('active'));
   const target = document.querySelector(`[data-screen="${id}"]`);
   if (target) target.classList.add('active');
-  if (push) screenStack.push(id);
+  if (push) {
+    screenStack.push(id);
+    history.pushState({ screen: id, stackLen: screenStack.length }, '', `#${id}`);
+  }
   updateHeader(id);
 }
 
@@ -55,6 +58,23 @@ function goBack() {
     updateHeader(prev);
   }
 }
+
+// Native browser/device back & forward buttons
+window.addEventListener('popstate', e => {
+  const id = e.state?.screen;
+  if (!id) return;
+  // Rebuild stack position without pushing new history
+  const stackIdx = screenStack.lastIndexOf(id);
+  if (stackIdx !== -1) {
+    screenStack = screenStack.slice(0, stackIdx + 1);
+  } else {
+    screenStack = [id];
+  }
+  document.querySelectorAll('[data-screen]').forEach(s => s.classList.remove('active'));
+  const target = document.querySelector(`[data-screen="${id}"]`);
+  if (target) target.classList.add('active');
+  updateHeader(id);
+});
 
 const ONBOARDING = new Set(['welcome', 'permissions', 'site-setup', 'ready']);
 const MAIN_TABS  = new Set(['capture', 'inspections', 'reports', 'settings']);
@@ -172,6 +192,21 @@ async function init() {
 
   populateCopy();
 
+  // ?key=XXXX in URL → auto-install license, seed demo workspace, skip onboarding
+  const urlKey = new URLSearchParams(location.search).get('key');
+  if (urlKey) {
+    await setSetting('licenseKey', urlKey);
+    await setSetting('onboardingComplete', true);
+    history.replaceState({}, '', location.pathname);
+    try {
+      const result = await seedDemoData();
+      if (result?.siteId) {
+        await setSetting('activeSiteId', result.siteId);
+        await setSetting('demoSeeded', true);
+      }
+    } catch (_) { /* non-fatal */ }
+  }
+
   state.licenseKey = await getSetting('licenseKey');
   const onboarded  = await getSetting('onboardingComplete');
 
@@ -247,7 +282,6 @@ function populateCopy() {
   setText('voice-heading',         C.voiceIdle.heading);
   setText('voice-sub',             C.voiceIdle.sub);
   setText('voice-confirm-btn',     C.voiceDone.btnConfirm);
-  setText('voice-edit-btn',        C.voiceDone.btnEdit);
   setText('ba-heading',            C.beforeAfter.heading);
   setText('ba-sub',                C.beforeAfter.sub);
   setText('ba-pair-btn',           C.beforeAfter.btnPair);
@@ -496,20 +530,21 @@ function renderDossier(data) {
   const filtered = filterPhotos(photos, currentDossierFilter);
   const grid     = document.getElementById('photo-grid');
   const empty    = document.getElementById('capture-empty');
-
   if (filtered.length === 0) {
     const isFiltered = currentDossierFilter !== 'All';
     document.getElementById('capture-empty-heading').textContent =
       isFiltered ? C.emptyFilter.heading : C.emptyCapture.headline;
     document.getElementById('capture-empty-sub').textContent =
       isFiltered ? C.emptyFilter.sub : C.emptyCapture.sub;
-    grid.innerHTML = '';
-    grid.appendChild(empty);
-    empty.hidden = false;
+    grid.querySelectorAll('.photo-thumb').forEach(t => t.remove());
+    if (empty) {
+      if (!grid.contains(empty)) grid.appendChild(empty);
+      empty.hidden = false;
+    }
     return;
   }
-  empty.hidden = true;
-  grid.innerHTML = '';
+  if (empty) empty.hidden = true;
+  grid.querySelectorAll('.photo-thumb').forEach(t => t.remove());
 
   filtered.forEach(photo => {
     const thumb = document.createElement('div');
@@ -530,10 +565,7 @@ function renderDossier(data) {
     else badge.classList.add('incident');
     thumb.appendChild(badge);
 
-    let holdTimer;
-    thumb.addEventListener('pointerdown', () => { holdTimer = setTimeout(() => showPhotoDetail(photo), 500); });
-    thumb.addEventListener('pointerup',   () => clearTimeout(holdTimer));
-    thumb.addEventListener('pointerleave',() => clearTimeout(holdTimer));
+    thumb.addEventListener('click', () => showPhotoDetail(photo));
     grid.appendChild(thumb);
   });
 }
@@ -567,10 +599,119 @@ function filterDossier(filter) {
 }
 
 function showPhotoDetail(photo) {
-  const ts   = photo.capturedAt ? formatDate(photo.capturedAt) : '';
-  const tags  = (photo.tags || []).join(', ');
-  const refs  = (photo.ohsaRefs || []).join(' · ');
-  showToast([ts, tags, refs].filter(Boolean).join('\n'), 5000);
+  // Image
+  const img = document.getElementById('photo-detail-img');
+  const placeholder = document.getElementById('photo-detail-placeholder');
+  if (photo.thumbnailUrl || photo.imageUrl) {
+    img.src = photo.thumbnailUrl || photo.imageUrl;
+    img.hidden = false;
+    placeholder.hidden = true;
+  } else {
+    img.src = '';
+    img.hidden = true;
+    placeholder.hidden = false;
+  }
+
+  // Caption
+  document.getElementById('photo-detail-caption').textContent = photo.caption || '';
+
+  // Status + Severity chips
+  const chipsEl = document.getElementById('photo-detail-chips');
+  chipsEl.innerHTML = '';
+  if (photo.status) {
+    const s = document.createElement('span');
+    s.className = 'detail-chip detail-chip--status';
+    const slug = photo.status.toLowerCase().replace(/[^a-z]+/g, '-');
+    s.classList.add(`detail-chip--${slug}`);
+    s.textContent = photo.status;
+    chipsEl.appendChild(s);
+  }
+  if (photo.severity) {
+    const s = document.createElement('span');
+    s.className = 'detail-chip detail-chip--sev';
+    s.classList.add(`detail-chip--sev-${photo.severity.toLowerCase()}`);
+    s.textContent = photo.severity;
+    chipsEl.appendChild(s);
+  }
+  (photo.tags || []).forEach(tag => {
+    const s = document.createElement('span');
+    s.className = 'detail-chip detail-chip--tag';
+    s.textContent = tag;
+    chipsEl.appendChild(s);
+  });
+
+  // Meta rows
+  const ohsa = typeof photo.ohsaRefs === 'string' ? photo.ohsaRefs : (photo.ohsaRefs || []).join(' · ');
+  document.getElementById('photo-detail-ohsa').textContent = ohsa;
+  document.getElementById('photo-meta-ohsa-wrap').hidden = !ohsa;
+  document.getElementById('photo-detail-date').textContent = photo.capturedAt ? formatDate(photo.capturedAt) : '';
+  document.getElementById('photo-detail-hash').textContent = photo.hash ? photo.hash.slice(0, 16) + '…' : '';
+
+  // GPS row
+  const gpsWrap = document.getElementById('photo-meta-gps-wrap');
+  if (gpsWrap) {
+    if (photo.geoLat && photo.geoLng) {
+      document.getElementById('photo-detail-gps').textContent =
+        `${Number(photo.geoLat).toFixed(5)}, ${Number(photo.geoLng).toFixed(5)}`;
+      gpsWrap.hidden = false;
+    } else { gpsWrap.hidden = true; }
+  }
+
+  // Captured by
+  const byWrap = document.getElementById('photo-meta-by-wrap');
+  if (byWrap) {
+    if (photo.capturedByName) {
+      document.getElementById('photo-detail-by').textContent = photo.capturedByName;
+      byWrap.hidden = false;
+    } else { byWrap.hidden = true; }
+  }
+
+  // Notes
+  const notesWrap = document.getElementById('photo-meta-notes-wrap');
+  if (notesWrap) {
+    if (photo.notes) {
+      document.getElementById('photo-detail-notes').textContent = photo.notes;
+      notesWrap.hidden = false;
+    } else { notesWrap.hidden = true; }
+  }
+
+  // Transcription
+  const transcriptWrap = document.getElementById('photo-detail-transcript-wrap');
+  if (transcriptWrap) {
+    if (photo.transcription) {
+      document.getElementById('photo-detail-transcript-text').textContent = photo.transcription;
+      transcriptWrap.hidden = false;
+    } else { transcriptWrap.hidden = true; }
+  }
+
+  // Audio player
+  const audioWrap = document.getElementById('photo-detail-audio-wrap');
+  if (audioWrap) {
+    if (photo.voiceKey) {
+      const audioUrl = getPhotoAudioUrl(photo.id);
+      const audioEl = document.getElementById('photo-detail-audio');
+      audioEl.src = audioUrl;
+      const hdr = { 'X-OCOS-License': state.licenseKey };
+      // Can't set custom headers on <audio src>, so use blob URL approach
+      fetch(audioUrl, { headers: hdr })
+        .then(r => r.blob())
+        .then(b => { audioEl.src = URL.createObjectURL(b); })
+        .catch(() => {});
+      audioWrap.hidden = false;
+    } else { audioWrap.hidden = true; }
+  }
+
+  // Before/After
+  const pairWrap = document.getElementById('photo-detail-pair-wrap');
+  if (pairWrap) {
+    if (photo.pairBeforeId || photo.pairAfterId) {
+      pairWrap.hidden = false;
+      const pairLabel = document.getElementById('photo-detail-pair-label');
+      if (pairLabel) pairLabel.textContent = photo.pairBeforeId ? 'Paired with Before photo' : 'Paired with After photo';
+    } else { pairWrap.hidden = true; }
+  }
+
+  showScreen('photo-detail');
 }
 
 document.getElementById('site-switch-btn').addEventListener('click', () => { showScreen('site-list'); loadSiteList(); });
@@ -628,17 +769,225 @@ async function startCapture(source = 'live') {
     pairedWithId:  null,
   };
 
-  document.getElementById('photo-preview-img').src = result.photoUrl;
-  document.getElementById('photo-card').hidden = false;
+  showAnnotateScreen();
 }
 
-document.getElementById('tag-this-photo-btn').addEventListener('click', () => {
-  document.getElementById('photo-card').hidden = true;
-  showScreen('tag-picker');
-  renderTagGrid();
+// ── PHOTO ANNOTATE SCREEN ──────────────────────────────────────────────────
+
+let annVoiceActive = false;
+let annVoiceTimerInterval = null;
+let annVoiceTimerSeconds = 0;
+let annVoicePaused = false;
+let annVoiceBlob = null;
+let annVoiceAudioEl = null;
+
+async function showAnnotateScreen() {
+  const cs = state.captureState;
+  document.getElementById('ann-photo-img').src = cs.photoUrl;
+  document.getElementById('ann-playback-row').hidden = true;
+  document.getElementById('ann-transcript').hidden = true;
+  document.getElementById('ann-notes').value = '';
+  document.getElementById('ann-rec-bar').hidden = true;
+  document.getElementById('ann-rec-controls').hidden = true;
+  document.getElementById('ann-mic-btn').hidden = false;
+  document.getElementById('ann-pause-btn').textContent = 'Pause';
+  document.getElementById('ann-timer').textContent = '0:00';
+  document.getElementById('ann-ba-section').hidden = true;
+  document.getElementById('ann-ba-paired').hidden = true;
+  if (annVoiceAudioEl) { annVoiceAudioEl.pause(); annVoiceAudioEl = null; }
+  annVoiceBlob = null;
+
+  await renderAnnTagGrid();
+  renderAnnStatusChips();
+  renderAnnSevChips(cs.severity || getSeverityDefault(cs.tags || []));
+  showScreen('photo-annotate');
+}
+
+async function renderAnnTagGrid() {
+  const grid = document.getElementById('ann-tag-grid');
+  grid.innerHTML = '';
+  const taxonomy = await loadTaxonomy();
+  const selected = new Set(state.captureState?.tags || []);
+  taxonomy.categories.forEach(cat => {
+    const chip = document.createElement('button');
+    chip.className = 'tag-chip' + (selected.has(cat.id) ? ' tag-chip--selected' : '');
+    chip.textContent = cat.label;
+    chip.dataset.catId = cat.id;
+    chip.style.setProperty('--cat-color', cat.color);
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('tag-chip--selected');
+      const tags = [...grid.querySelectorAll('.tag-chip--selected')].map(c => c.dataset.catId);
+      if (state.captureState) state.captureState.tags = tags;
+      const autoSev = getSeverityDefault(tags);
+      const autoStatus = getAutoStatus(tags);
+      renderAnnSevChips(autoSev, true);
+      if (autoStatus && !state.captureState.status) selectAnnStatus(autoStatus);
+    });
+    grid.appendChild(chip);
+  });
+}
+
+function renderAnnStatusChips() {
+  const container = document.getElementById('ann-status-chips');
+  container.innerHTML = '';
+  C.status.options.forEach(opt => {
+    const chip = document.createElement('button');
+    chip.className = 'ann-chip';
+    chip.textContent = opt.label;
+    chip.dataset.value = opt.value;
+    chip.addEventListener('click', () => selectAnnStatus(opt.value, chip));
+    container.appendChild(chip);
+  });
+}
+
+function selectAnnStatus(value, chipEl) {
+  const container = document.getElementById('ann-status-chips');
+  container.querySelectorAll('.ann-chip').forEach(c => c.classList.remove('ann-chip--active'));
+  const target = chipEl || [...container.querySelectorAll('.ann-chip')].find(c => c.dataset.value === value);
+  if (target) target.classList.add('ann-chip--active');
+  if (state.captureState) state.captureState.status = value;
+  document.getElementById('ann-ba-section').hidden = value !== 'Hazard - Corrected';
+}
+
+function renderAnnSevChips(activeValue, autoSelect = false) {
+  const container = document.getElementById('ann-sev-chips');
+  container.innerHTML = '';
+  C.severity.options.forEach(sev => {
+    const chip = document.createElement('button');
+    chip.className = `ann-chip ann-chip--sev-${sev.toLowerCase()}`;
+    chip.textContent = sev;
+    chip.dataset.sev = sev.toLowerCase();
+    chip.addEventListener('click', () => {
+      container.querySelectorAll('.ann-chip').forEach(c => c.classList.remove('ann-chip--active'));
+      chip.classList.add('ann-chip--active');
+      if (state.captureState) state.captureState.severity = sev;
+    });
+    container.appendChild(chip);
+  });
+  if (activeValue) {
+    const match = [...container.querySelectorAll('.ann-chip')]
+      .find(c => c.textContent.toLowerCase() === activeValue.toLowerCase());
+    if (match) {
+      match.classList.add('ann-chip--active');
+      if (autoSelect && state.captureState) state.captureState.severity = activeValue;
+    }
+  }
+}
+
+// Annotate voice recording
+function annVoiceTimerTick() {
+  if (!annVoicePaused) {
+    annVoiceTimerSeconds++;
+    const el = document.getElementById('ann-timer');
+    el.textContent = fmtDuration(annVoiceTimerSeconds);
+    const rem = VOICE_MAX_SECONDS - annVoiceTimerSeconds;
+    if (rem <= 5)       el.className = 'voice-timer voice-timer--critical';
+    else if (rem <= 15) el.className = 'voice-timer voice-timer--warn';
+    else                el.className = 'voice-timer';
+  }
+}
+
+function setAnnRecordingUI(active) {
+  document.getElementById('ann-mic-btn').hidden    = active;
+  document.getElementById('ann-rec-bar').hidden    = !active;
+  document.getElementById('ann-rec-controls').hidden = !active;
+}
+
+document.getElementById('ann-mic-btn').addEventListener('click', async () => {
+  if (annVoiceActive) return;
+  annVoiceActive = true;
+  annVoicePaused = false;
+  annVoiceTimerSeconds = 0;
+  document.getElementById('ann-timer').textContent = '0:00';
+  if (annVoiceAudioEl) { annVoiceAudioEl.pause(); annVoiceAudioEl = null; }
+  setAnnRecordingUI(true);
+  document.getElementById('ann-playback-row').hidden = true;
+  document.getElementById('ann-transcript').hidden = true;
+  annVoiceTimerInterval = setInterval(annVoiceTimerTick, 1000);
+
+  try {
+    const blob = await recordVoice(VOICE_MAX_SECONDS);
+    clearInterval(annVoiceTimerInterval);
+    annVoiceBlob = blob;
+    setAnnRecordingUI(false);
+    if (annVoiceTimerSeconds >= VOICE_MAX_SECONDS) showToast(`Recording stopped — ${fmtDuration(VOICE_MAX_SECONDS)} limit reached.`);
+
+    annVoiceAudioEl = new Audio(URL.createObjectURL(blob));
+    annVoiceAudioEl.addEventListener('ended', () => {
+      document.getElementById('ann-play-btn').textContent = '▶';
+    });
+    document.getElementById('ann-dur').textContent = fmtDuration(annVoiceTimerSeconds);
+    document.getElementById('ann-play-btn').textContent = '▶';
+    document.getElementById('ann-playback-row').hidden = false;
+
+    const transcriptEl = document.getElementById('ann-transcript');
+    transcriptEl.textContent = 'Transcribing…';
+    transcriptEl.hidden = false;
+
+    transcribeVoice(blob, state.captureState?.photoId).then(text => {
+      transcriptEl.textContent = text;
+      const notes = document.getElementById('ann-notes');
+      notes.value = notes.value ? notes.value + '\n' + text : text;
+      if (state.captureState) state.captureState.voiceNote = notes.value;
+    }).catch(() => { transcriptEl.textContent = 'Transcription unavailable.'; });
+
+  } catch (_) {
+    clearInterval(annVoiceTimerInterval);
+    setAnnRecordingUI(false);
+    showToast('Microphone access denied or recording failed.');
+  } finally {
+    annVoiceActive = false;
+    annVoicePaused = false;
+  }
 });
 
-document.getElementById('voice-btn-card').addEventListener('pointerdown', startVoiceFlow);
+document.getElementById('ann-stop-btn').addEventListener('click', () => stopRecording());
+
+document.getElementById('ann-pause-btn').addEventListener('click', () => {
+  const btn = document.getElementById('ann-pause-btn');
+  const dot = document.querySelector('#ann-rec-bar .voice-rec-dot');
+  if (annVoicePaused) {
+    resumeRecording(); annVoicePaused = false;
+    btn.textContent = 'Pause';
+    if (dot) dot.style.animationPlayState = 'running';
+  } else {
+    pauseRecording(); annVoicePaused = true;
+    btn.textContent = 'Resume';
+    if (dot) dot.style.animationPlayState = 'paused';
+  }
+});
+
+document.getElementById('ann-play-btn').addEventListener('click', () => {
+  if (!annVoiceAudioEl) return;
+  const btn = document.getElementById('ann-play-btn');
+  if (annVoiceAudioEl.paused) { annVoiceAudioEl.play(); btn.textContent = '⏸'; }
+  else { annVoiceAudioEl.pause(); btn.textContent = '▶'; }
+});
+
+document.getElementById('ann-rerecord-btn').addEventListener('click', () => {
+  if (annVoiceAudioEl) { annVoiceAudioEl.pause(); annVoiceAudioEl = null; }
+  annVoiceBlob = null;
+  document.getElementById('ann-playback-row').hidden = true;
+  document.getElementById('ann-transcript').hidden = true;
+  document.getElementById('ann-mic-btn').hidden = false;
+});
+
+document.getElementById('ann-notes').addEventListener('input', () => {
+  if (state.captureState) state.captureState.voiceNote = document.getElementById('ann-notes').value.trim();
+});
+
+document.getElementById('ann-back-btn').addEventListener('click', () => {
+  if (annVoiceAudioEl) { annVoiceAudioEl.pause(); annVoiceAudioEl = null; }
+  stopRecording();
+  resetCaptureState();
+  showScreen('capture');
+});
+
+document.getElementById('ann-file-btn').addEventListener('click', filePhoto);
+
+document.getElementById('ann-ba-btn').addEventListener('click', () => {
+  showToast('File this photo first, then capture the Before photo.');
+});
 
 // ── TAG PICKER ─────────────────────────────────────────────────────────────
 
@@ -689,77 +1038,168 @@ function onStatusSelected(val) {
 document.getElementById('status-done-btn').addEventListener('click', () => {
   const status = state.captureState?.status;
   if (status === 'Hazard - Corrected') showScreen('before-after');
-  else showScreen('voice');
+  else { showScreen('voice'); showVoicePhotoContext(); }
 });
 
 // ── VOICE ──────────────────────────────────────────────────────────────────
 
 let voiceActive = false;
+let voiceTimerInterval = null;
+let voiceTimerSeconds = 0;
+let voicePaused = false;
+let voiceBlob = null;
+let voiceAudioEl = null;
+
+function fmtDuration(s) {
+  return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
+}
+
+function voiceTimerTick() {
+  if (!voicePaused) {
+    voiceTimerSeconds++;
+    const el = document.getElementById('voice-timer');
+    el.textContent = fmtDuration(voiceTimerSeconds);
+    const remaining = VOICE_MAX_SECONDS - voiceTimerSeconds;
+    if (remaining <= 5)       el.className = 'voice-timer voice-timer--critical';
+    else if (remaining <= 15) el.className = 'voice-timer voice-timer--warn';
+    else                      el.className = 'voice-timer';
+  }
+}
+
+function setVoiceRecordingUI(active) {
+  document.getElementById('voice-record-btn').hidden    = active;
+  document.getElementById('voice-recording-bar').hidden = !active;
+  document.getElementById('voice-controls').hidden      = !active;
+}
+
+function setVoiceReviewUI(show) {
+  document.getElementById('voice-review').hidden    = !show;
+  document.getElementById('voice-skip-btn').hidden  = show;
+}
+
+function showVoicePhotoContext() {
+  const cs = state.captureState;
+  const ctx = document.getElementById('voice-context');
+  if (!cs?.photoUrl) { ctx.hidden = true; return; }
+  document.getElementById('voice-thumb').src = cs.photoUrl;
+  const tagsEl = document.getElementById('voice-thumb-tags');
+  tagsEl.innerHTML = '';
+  (cs.tags || []).slice(0, 6).forEach(tag => {
+    const chip = document.createElement('span');
+    chip.className = 'chip chip--sm';
+    chip.textContent = tag.replace(/-/g, '\u2011'); // non-breaking hyphen
+    tagsEl.appendChild(chip);
+  });
+  ctx.hidden = false;
+}
 
 async function startVoiceFlow() {
   if (voiceActive) return;
   voiceActive = true;
+  voicePaused = false;
+  voiceTimerSeconds = 0;
+  document.getElementById('voice-timer').textContent = '0:00';
+  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
 
-  const recordBtn = document.getElementById('voice-record-btn');
-  recordBtn.classList.add('recording');
   setText('voice-heading', C.voiceRecording.heading);
   setText('voice-sub',     C.voiceRecording.sub);
-
-  const releaseHandler = async () => {
-    recordBtn.removeEventListener('pointerup',    releaseHandler);
-    recordBtn.removeEventListener('pointerleave', releaseHandler);
-    stopRecording();
-  };
-  recordBtn.addEventListener('pointerup',    releaseHandler, { once: true });
-  recordBtn.addEventListener('pointerleave', releaseHandler, { once: true });
+  setVoiceRecordingUI(true);
+  setVoiceReviewUI(false);
+  voiceTimerInterval = setInterval(voiceTimerTick, 1000);
 
   try {
-    const blob = await recordVoice(90);
-    recordBtn.classList.remove('recording');
+    const blob = await recordVoice(VOICE_MAX_SECONDS);
+    if (voiceTimerSeconds >= VOICE_MAX_SECONDS) showToast(`Recording stopped — ${fmtDuration(VOICE_MAX_SECONDS)} limit reached.`);
+    clearInterval(voiceTimerInterval);
+    voiceBlob = blob;
+    setVoiceRecordingUI(false);
+
+    // Set up audio playback
+    const blobURL = URL.createObjectURL(blob);
+    voiceAudioEl = new Audio(blobURL);
+    voiceAudioEl.addEventListener('ended', () => {
+      document.getElementById('voice-play-btn').textContent = '▶';
+    });
+    document.getElementById('voice-playback-dur').textContent = fmtDuration(voiceTimerSeconds);
+    document.getElementById('voice-play-btn').textContent = '▶';
+
+    // Show review panel immediately — transcription fills in async
     setText('voice-heading', C.voiceTranscribing.heading);
     setText('voice-sub',     C.voiceTranscribing.sub);
+    document.getElementById('voice-transcript-preview').textContent = 'Transcribing…';
+    document.getElementById('voice-notes-area').value = '';
+    setText('voice-confirm-btn', C.voiceDone.btnConfirm);
+    setVoiceReviewUI(true);
 
-    const text = await transcribeVoice(blob, state.captureState?.photoId);
-    if (state.captureState) state.captureState.voiceNote = text;
+    transcribeVoice(blob, state.captureState?.photoId).then(text => {
+      document.getElementById('voice-transcript-preview').textContent = text;
+      document.getElementById('voice-notes-area').value = text;
+      if (state.captureState) state.captureState.voiceNote = text;
+      setText('voice-heading', C.voiceDone.heading);
+      setText('voice-sub',     '');
+    }).catch(() => {
+      document.getElementById('voice-transcript-preview').textContent = 'Transcription unavailable.';
+    });
 
-    document.getElementById('voice-transcript-text').textContent = text;
-    document.getElementById('voice-transcript').hidden = false;
-    setText('voice-heading', C.voiceDone.heading);
-    setText('voice-sub',     '');
   } catch (_) {
-    recordBtn.classList.remove('recording');
+    clearInterval(voiceTimerInterval);
+    setVoiceRecordingUI(false);
     setText('voice-heading', C.voiceIdle.heading);
     setText('voice-sub',     C.voiceIdle.sub);
-    showToast('Voice note failed. Type one instead.');
+    showToast('Microphone access denied or recording failed.');
   } finally {
     voiceActive = false;
+    voicePaused = false;
   }
 }
 
-document.getElementById('voice-record-btn').addEventListener('pointerdown', startVoiceFlow);
+document.getElementById('voice-record-btn').addEventListener('click', startVoiceFlow);
 
-document.getElementById('voice-confirm-btn').addEventListener('click', () => {
-  document.getElementById('voice-transcript').hidden = true;
+document.getElementById('voice-stop-btn').addEventListener('click', () => stopRecording());
+
+document.getElementById('voice-pause-btn').addEventListener('click', () => {
+  const btn = document.getElementById('voice-pause-btn');
+  const dot = document.querySelector('.voice-rec-dot');
+  if (voicePaused) {
+    resumeRecording();
+    voicePaused = false;
+    btn.textContent = 'Pause';
+    if (dot) dot.style.animationPlayState = 'running';
+  } else {
+    pauseRecording();
+    voicePaused = true;
+    btn.textContent = 'Resume';
+    if (dot) dot.style.animationPlayState = 'paused';
+  }
+});
+
+document.getElementById('voice-play-btn').addEventListener('click', () => {
+  if (!voiceAudioEl) return;
+  const btn = document.getElementById('voice-play-btn');
+  if (voiceAudioEl.paused) {
+    voiceAudioEl.play();
+    btn.textContent = '⏸';
+  } else {
+    voiceAudioEl.pause();
+    btn.textContent = '▶';
+  }
+});
+
+document.getElementById('voice-rerecord-btn').addEventListener('click', () => {
+  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
+  voiceBlob = null;
+  setVoiceReviewUI(false);
   setText('voice-heading', C.voiceIdle.heading);
   setText('voice-sub',     C.voiceIdle.sub);
-  filePhoto();
 });
 
-document.getElementById('voice-edit-btn').addEventListener('click', () => {
-  const area = document.getElementById('voice-edit-area');
-  area.value = state.captureState?.voiceNote || '';
-  area.hidden = false;
-  document.getElementById('voice-save-edited-btn').hidden = false;
-  document.getElementById('voice-confirm-btn').hidden = true;
-  document.getElementById('voice-edit-btn').hidden = true;
-});
-
-document.getElementById('voice-save-edited-btn').addEventListener('click', () => {
-  if (state.captureState) state.captureState.voiceNote = document.getElementById('voice-edit-area').value.trim();
-  document.getElementById('voice-edit-area').hidden = true;
-  document.getElementById('voice-save-edited-btn').hidden = true;
-  document.getElementById('voice-confirm-btn').hidden = false;
-  document.getElementById('voice-edit-btn').hidden = false;
+document.getElementById('voice-confirm-btn').addEventListener('click', () => {
+  const notes = document.getElementById('voice-notes-area').value.trim();
+  if (state.captureState) state.captureState.voiceNote = notes;
+  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
+  setVoiceReviewUI(false);
+  setText('voice-heading', C.voiceIdle.heading);
+  setText('voice-sub',     C.voiceIdle.sub);
   filePhoto();
 });
 
@@ -774,7 +1214,7 @@ document.getElementById('ba-pair-btn').addEventListener('click', () => {
   filterDossier('Open hazards');
 });
 
-document.getElementById('ba-skip-btn').addEventListener('click', () => showScreen('voice'));
+document.getElementById('ba-skip-btn').addEventListener('click', () => { showScreen('voice'); showVoicePhotoContext(); });
 
 // ── FILE PHOTO ─────────────────────────────────────────────────────────────
 
@@ -783,6 +1223,11 @@ async function filePhoto() {
   if (!cs) return;
 
   document.getElementById('filing-overlay').hidden = false;
+
+  // Include transcription from annotate screen
+  const rawTranscript = document.getElementById('ann-transcript')?.textContent || '';
+  const transcription = (rawTranscript && rawTranscript !== 'Transcribing…' && rawTranscript !== 'Transcription unavailable.')
+    ? rawTranscript : '';
 
   const formData = new FormData();
   formData.append('photo', cs.photoBlob, `${cs.photoId}.jpg`);
@@ -798,7 +1243,15 @@ async function filePhoto() {
     gps:           cs.exif?.gps || null,
     captureSource: cs.captureSource || 'Live',
     deviceInfo:    navigator.userAgent,
+    transcription,
+    capturedByName: '',
   }));
+
+  // Send voice blob if available (annotate screen or voice screen)
+  const activeVoiceBlob = annVoiceBlob || voiceBlob;
+  if (activeVoiceBlob) {
+    formData.append('voice', activeVoiceBlob, `${cs.photoId || 'voice'}.mp4`);
+  }
 
   try {
     const res = await uploadPhoto(formData);
@@ -828,11 +1281,16 @@ async function filePhoto() {
 
 function resetCaptureState() {
   state.captureState = null;
-  document.getElementById('voice-transcript').hidden = true;
-  document.getElementById('voice-edit-area').hidden = true;
-  document.getElementById('voice-save-edited-btn').hidden = true;
-  document.getElementById('voice-confirm-btn').hidden = false;
-  document.getElementById('voice-edit-btn').hidden = false;
+  document.getElementById('voice-record-btn').hidden    = false;
+  document.getElementById('voice-recording-bar').hidden = true;
+  document.getElementById('voice-controls').hidden      = true;
+  document.getElementById('voice-review').hidden        = true;
+  document.getElementById('voice-skip-btn').hidden      = false;
+  document.getElementById('voice-pause-btn').textContent = 'Pause';
+  document.getElementById('voice-timer').textContent = '0:00';
+  document.getElementById('voice-context').hidden = true;
+  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
+  voiceBlob = null;
   setText('voice-heading', C.voiceIdle.heading);
   setText('voice-sub',     C.voiceIdle.sub);
   // Reset status options
@@ -866,9 +1324,128 @@ async function loadChecklist(inspectionType) {
   }
 }
 
+// Per-item recording state for checklist notes
+let clActiveIdx = null;
+let clTimerInterval = null;
+let clTimerSeconds = 0;
+const clAudioEls = {};
+
+function buildClNotePanel(idx, item) {
+  const panel = document.createElement('div');
+  panel.className = 'cl-item-note';
+  panel.hidden = true;
+
+  // Regulatory ref chip(s)
+  if (item.regulatory_ref) {
+    const refRow = document.createElement('div');
+    refRow.className = 'cl-note-refs';
+    item.regulatory_ref.split(',').map(r => r.trim()).filter(Boolean).forEach(ref => {
+      const chip = document.createElement('span');
+      chip.className = 'chip chip--ref';
+      chip.textContent = ref;
+      refRow.appendChild(chip);
+    });
+    panel.appendChild(refRow);
+  }
+
+  // Recorder row
+  const recRow = document.createElement('div');
+  recRow.className = 'cl-note-recorder';
+
+  const micBtn = document.createElement('button');
+  micBtn.className = 'cl-mic-btn';
+  micBtn.title = 'Record voice note';
+  micBtn.textContent = '🎙';
+
+  const timerSpan = document.createElement('span');
+  timerSpan.className = 'cl-note-timer';
+  timerSpan.textContent = '0:00';
+  timerSpan.hidden = true;
+
+  const stopBtn = document.createElement('button');
+  stopBtn.className = 'btn btn-danger btn-sm';
+  stopBtn.textContent = '⏹ Stop';
+  stopBtn.hidden = true;
+
+  const playBtn = document.createElement('button');
+  playBtn.className = 'cl-note-play';
+  playBtn.textContent = '▶ Play';
+  playBtn.hidden = true;
+
+  micBtn.addEventListener('click', () => {
+    if (clActiveIdx === idx) return;
+    if (clActiveIdx !== null) { showToast('Stop the current recording first.'); return; }
+    clActiveIdx = idx;
+    clTimerSeconds = 0;
+    timerSpan.textContent = '0:00';
+    timerSpan.hidden = false;
+    stopBtn.hidden = false;
+    micBtn.classList.add('recording');
+    micBtn.textContent = '⏺';
+    clTimerInterval = setInterval(() => {
+      clTimerSeconds++;
+      timerSpan.textContent = fmtDuration(clTimerSeconds);
+      const rem = VOICE_CL_MAX_SECONDS - clTimerSeconds;
+      timerSpan.style.color = rem <= 5 ? 'var(--red)' : rem <= 15 ? 'var(--amber)' : '';
+    }, 1000);
+
+    recordVoice(VOICE_CL_MAX_SECONDS).then(blob => {
+      if (clTimerSeconds >= VOICE_CL_MAX_SECONDS) showToast(`Recording stopped — ${fmtDuration(VOICE_CL_MAX_SECONDS)} limit reached.`);
+      clearInterval(clTimerInterval);
+      clActiveIdx = null;
+      item.voiceBlob = blob;
+      micBtn.classList.remove('recording');
+      micBtn.textContent = '🎙';
+      timerSpan.hidden = true;
+      stopBtn.hidden = true;
+      playBtn.hidden = false;
+      clAudioEls[idx] = new Audio(URL.createObjectURL(blob));
+      clAudioEls[idx].addEventListener('ended', () => { playBtn.textContent = '▶ Play'; });
+      transcribeVoice(blob, null).then(text => {
+        textarea.value = textarea.value ? textarea.value + '\n' + text : text;
+        item.voiceNote = textarea.value;
+      }).catch(() => {});
+    }).catch(() => {
+      clearInterval(clTimerInterval);
+      clActiveIdx = null;
+      micBtn.classList.remove('recording');
+      micBtn.textContent = '🎙';
+      timerSpan.hidden = true;
+      stopBtn.hidden = true;
+    });
+  });
+
+  stopBtn.addEventListener('click', () => stopRecording());
+
+  playBtn.addEventListener('click', () => {
+    const audio = clAudioEls[idx];
+    if (!audio) return;
+    if (audio.paused) { audio.play(); playBtn.textContent = '⏸ Pause'; }
+    else { audio.pause(); playBtn.textContent = '▶ Play'; }
+  });
+
+  recRow.appendChild(micBtn);
+  recRow.appendChild(timerSpan);
+  recRow.appendChild(stopBtn);
+  recRow.appendChild(playBtn);
+  panel.appendChild(recRow);
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'form-input cl-note-text';
+  textarea.rows = 2;
+  textarea.placeholder = item.flagged ? 'Describe the issue…' : 'Add compliance note…';
+  textarea.addEventListener('input', () => { item.voiceNote = textarea.value; });
+  panel.appendChild(textarea);
+
+  return { panel, textarea };
+}
+
 function renderChecklist(container, items) {
   container.innerHTML = '';
   items.forEach((item, idx) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'checklist-wrap';
+
     const row = document.createElement('div');
     row.className = 'checklist-item';
     row.dataset.idx = idx;
@@ -876,20 +1453,22 @@ function renderChecklist(container, items) {
     const textDiv = document.createElement('div');
     textDiv.className = 'cl-text';
     textDiv.textContent = item.prompt;
-    if (item.regulatory_ref) {
-      const ref = document.createElement('div');
-      ref.className = 'cl-ref';
-      ref.textContent = item.regulatory_ref;
-      textDiv.appendChild(ref);
-    }
 
     const actionsDiv = document.createElement('div');
     actionsDiv.className = 'cl-actions';
 
+    const { panel: notePanel } = buildClNotePanel(idx, item);
+
     const checkBtn = document.createElement('button');
     checkBtn.className = 'cl-check';
-    checkBtn.title = 'Done';
+    checkBtn.title = 'Got it';
     checkBtn.textContent = '✓';
+
+    const flagBtn = document.createElement('button');
+    flagBtn.className = 'cl-check';
+    flagBtn.title = 'Flag issue';
+    flagBtn.textContent = '⚠';
+
     checkBtn.addEventListener('click', () => {
       item.checked = !item.checked;
       item.flagged = false;
@@ -897,12 +1476,10 @@ function renderChecklist(container, items) {
       flagBtn.classList.remove('flagged');
       row.classList.toggle('checklist-item--checked', item.checked);
       row.classList.remove('checklist-item--flagged');
+      notePanel.hidden = !item.checked;
+      notePanel.className = item.checked ? 'cl-item-note cl-item-note--done' : 'cl-item-note';
     });
 
-    const flagBtn = document.createElement('button');
-    flagBtn.className = 'cl-check';
-    flagBtn.title = 'Flag issue';
-    flagBtn.textContent = '⚠';
     flagBtn.addEventListener('click', () => {
       item.flagged = !item.flagged;
       item.checked = false;
@@ -910,6 +1487,8 @@ function renderChecklist(container, items) {
       checkBtn.classList.remove('done');
       row.classList.toggle('checklist-item--flagged', item.flagged);
       row.classList.remove('checklist-item--checked');
+      notePanel.hidden = !item.flagged;
+      notePanel.className = item.flagged ? 'cl-item-note cl-item-note--flagged' : 'cl-item-note';
       if (item.flagged && item.requires_photo) showToast(C.checklistItem.photoHelper);
     });
 
@@ -917,32 +1496,78 @@ function renderChecklist(container, items) {
     actionsDiv.appendChild(flagBtn);
     row.appendChild(textDiv);
     row.appendChild(actionsDiv);
-    container.appendChild(row);
+    wrap.appendChild(row);
+    wrap.appendChild(notePanel);
+    container.appendChild(wrap);
   });
 }
 
-document.getElementById('checklist-done-btn').addEventListener('click', () => showScreen('signoff-workers'));
+document.getElementById('checklist-done-btn').addEventListener('click', () => {
+  state.pendingWorkers = [];
+  document.getElementById('workers-list').innerHTML = '';
+  document.getElementById('alone-inline').hidden = true;
+  document.getElementById('alone-btn').hidden = false;
+  document.getElementById('worker-name-input').value = '';
+  document.getElementById('worker-role-input').value = '';
+  showScreen('signoff-workers');
+  loadRecentWorkers();
+});
 
 // ── SIGN-OFF ───────────────────────────────────────────────────────────────
 
-document.getElementById('add-worker-btn').addEventListener('click', () => {
-  document.getElementById('add-worker-sheet').hidden = false;
-});
+async function loadRecentWorkers() {
+  const wrap = document.getElementById('recent-workers-wrap');
+  const chips = document.getElementById('recent-workers-chips');
+  chips.innerHTML = '';
+  const recent = (await getSetting('recentWorkers')) || [];
+  if (!recent.length) { wrap.hidden = true; return; }
+  wrap.hidden = false;
+  recent.forEach(w => {
+    const chip = document.createElement('button');
+    chip.className = 'recent-worker-chip';
+    chip.textContent = w.role ? `${w.name} · ${w.role}` : w.name;
+    chip.addEventListener('click', () => {
+      if (state.pendingWorkers.some(p => p.name === w.name)) return;
+      state.pendingWorkers.push({ name: w.name, role: w.role, signed: false, signature: null, method: null });
+      renderWorkersList();
+    });
+    chips.appendChild(chip);
+  });
+}
 
-document.getElementById('save-worker-btn').addEventListener('click', () => {
+async function saveRecentWorker(name, role) {
+  const recent = (await getSetting('recentWorkers')) || [];
+  const filtered = recent.filter(w => w.name.toLowerCase() !== name.toLowerCase());
+  filtered.unshift({ name, role });
+  await setSetting('recentWorkers', filtered.slice(0, 10));
+}
+
+document.getElementById('save-worker-btn').addEventListener('click', async () => {
   const name = document.getElementById('worker-name-input').value.trim();
-  if (!name) return;
+  if (!name) { showToast('Enter a name.'); return; }
   const role = document.getElementById('worker-role-input').value.trim();
   state.pendingWorkers.push({ name, role, signed: false, signature: null, method: null });
+  await saveRecentWorker(name, role);
   renderWorkersList();
-  document.getElementById('add-worker-sheet').hidden = true;
+  loadRecentWorkers();
   document.getElementById('worker-name-input').value = '';
   document.getElementById('worker-role-input').value = '';
 });
 
 document.getElementById('alone-btn').addEventListener('click', () => {
-  state.pendingWorkers = [];
-  completeSignoffs();
+  document.getElementById('alone-btn').hidden = true;
+  document.getElementById('alone-inline').hidden = false;
+  document.getElementById('alone-name-input').focus();
+});
+
+document.getElementById('alone-sign-btn').addEventListener('click', async () => {
+  const name = document.getElementById('alone-name-input').value.trim() || 'Supervisor';
+  state.pendingWorkers = [{ name, role: 'Supervisor', signed: false, signature: null, method: null }];
+  await saveRecentWorker(name, 'Supervisor');
+  document.getElementById('alone-name-input').value = '';
+  document.getElementById('alone-inline').hidden = true;
+  document.getElementById('alone-btn').hidden = false;
+  startSignoff(0);
 });
 
 function renderWorkersList() {
@@ -1112,11 +1737,24 @@ let currentReportsFilter = 'All';
 
 async function loadReports() {
   const container = document.getElementById('reports-list');
-  container.innerHTML = `
-    <div class="empty-state">
-      <p class="empty-state-heading">${C.reportList.empty.heading}</p>
-      <p class="empty-state-sub">${C.reportList.empty.sub}</p>
-    </div>`;
+  container.innerHTML = '';
+  try {
+    const data = await listReports(state.currentSite?.id);
+    const reports = data.reports || [];
+    if (reports.length === 0) {
+      container.innerHTML = `<div class="empty-state"><p class="empty-state-heading">${C.reportList.empty.heading}</p><p class="empty-state-sub">${C.reportList.empty.sub}</p></div>`;
+      return;
+    }
+    reports.forEach(r => {
+      const card = renderReportCard(r, report => {
+        state.currentReport = report;
+        showScreen('report-ready');
+      });
+      container.appendChild(card);
+    });
+  } catch (_) {
+    container.innerHTML = `<div class="empty-state"><p class="empty-state-heading">${C.reportList.empty.heading}</p><p class="empty-state-sub">${C.reportList.empty.sub}</p></div>`;
+  }
 }
 
 function filterReports(filter) { currentReportsFilter = filter; }

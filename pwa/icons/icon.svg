@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#080A07" rx="96"/>
+  <text x="256" y="200" font-family="Impact, sans-serif" font-size="120" font-weight="bold"
+        fill="#5EE830" text-anchor="middle" letter-spacing="4">OCOS</text>
+  <text x="256" y="310" font-family="Impact, sans-serif" font-size="72"
+        fill="#FFFFFF" text-anchor="middle" letter-spacing="2">FIELD</text>
+  <rect x="176" y="336" width="160" height="4" fill="#5EE830" rx="2"/>
+  <circle cx="256" cy="392" r="24" fill="none" stroke="#5EE830" stroke-width="4"/>
+  <circle cx="256" cy="392" r="10" fill="#5EE830"/>
+</svg>

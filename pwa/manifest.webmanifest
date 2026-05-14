@@ -1,0 +1,14 @@
+{
+  "name": "OCOS Field Compliance",
+  "short_name": "OCOS Field",
+  "description": "The compliance camera Ontario contractors actually use.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080A07",
+  "theme_color": "#080A07",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["productivity", "utilities"]
+}

@@ -7,7 +7,7 @@
  * before computing the final lock hash.
  */
 
-import { PDFDocument, rgb, StandardFonts } from '@pdf-lib/pdf-lib';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { appendAuditTrail } from './pdf-audit-appendix.js';
 
 const DARK  = rgb(8 / 255, 10 / 255, 7 / 255);

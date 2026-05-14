@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "PWA — OCOS Field (static)",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3000", "--directory", "pwa"],
+      "port": 3000
+    },
+    {
+      "name": "FC Worker — wrangler dev",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["wrangler", "dev", "field-compliance-worker.js", "--port", "8787"],
+      "port": 8787
+    }
+  ]
+}

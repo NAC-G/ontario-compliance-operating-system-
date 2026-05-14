@@ -68,36 +68,7 @@ export async function handleReportGenerate(request, env) {
     aiBody = await generateAiBody(env, { reportType, site, inspection, photos, styleText: '', useStyleSamples: false });
   }
 
-  // Build report metadata
-  const reportId = `FC-R-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const reportMeta = {
-    id: reportId,
-    version: 1,
-    generatedAt: new Date().toISOString(),
-    generatedBy: body.generatedBy || 'OCOS Field',
-    licenseId: license.key,
-  };
-
-  // Generate PDF (includes audit appendix)
-  let pdfBytes;
-  try {
-    pdfBytes = await generateReport({
-      reportType, site, inspection, photos, signoffs, regulatoryAnchors,
-      branding, report: reportMeta,
-      licenseeName: branding.companyName || license.client_name || '',
-      aiBody,
-    });
-  } catch (e) {
-    console.error('PDF generation failed:', e);
-    return json({ error: 'Report generation failed', detail: e.message }, 500);
-  }
-
-  // Upload to R2
-  const r2Key = reportKey(license.key, reportId, 1);
-  await putObject(env.FC_REPORTS, r2Key, pdfBytes, 'application/pdf');
-  const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 604800);
-
-  // Create Notion FC-Reports record
+  // Create Notion FC-Reports record first to obtain the page ID for the R2 key
   const reportProps = {
     'Report Title': { title: [{ text: { content: `${reportType} — ${site.name}` } }] },
     'Type': { select: { name: reportType } },
@@ -122,6 +93,33 @@ export async function handleReportGenerate(request, env) {
     parent: { database_id: mapping.reports_db_id },
     properties: reportProps,
   });
+
+  const reportMeta = {
+    id: reportPage.id,
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    generatedBy: body.generatedBy || 'OCOS Field',
+    licenseId: license.key,
+  };
+
+  // Generate PDF (includes audit appendix)
+  let pdfBytes;
+  try {
+    pdfBytes = await generateReport({
+      reportType, site, inspection, photos, signoffs, regulatoryAnchors,
+      branding, report: reportMeta,
+      licenseeName: branding.companyName || license.client_name || '',
+      aiBody,
+    });
+  } catch (e) {
+    console.error('PDF generation failed:', e);
+    return json({ error: 'Report generation failed', detail: e.message }, 500);
+  }
+
+  // Upload to R2 using Notion page ID as key — consistent with lock/versions/send handlers
+  const r2Key = reportKey(license.key, reportPage.id, 1);
+  await putObject(env.FC_REPORTS, r2Key, pdfBytes, 'application/pdf');
+  const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 604800, env.FC_WORKER_URL);
 
   return json({ reportId: reportPage.id, version: 1, signedUrl, pdfHash: null, locked: false }, 201);
 }
@@ -211,7 +209,7 @@ export async function handleReportSend(request, env, reportId) {
   // Fetch signed URL for the PDF
   const version = props['Version']?.number || 1;
   const r2Key = reportKey(license.key, reportId, version);
-  const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 604800);
+  const signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 604800, env.FC_WORKER_URL);
 
   const reportTitle = props['Report Title']?.title?.[0]?.plain_text || 'OCOS Field Compliance Report';
   const siteName = ''; // could enrich
@@ -302,13 +300,23 @@ export async function handleReportVersions(request, env, reportId) {
   while (currentId) {
     const page = await notion.get(`/pages/${currentId}`);
     const props = page.properties || {};
+    const locked = props['Locked?']?.checkbox || false;
+    const version = props['Version']?.number || 1;
+
+    let signedUrl = null;
+    if (locked) {
+      const r2Key = reportKey(license.key, page.id, version);
+      signedUrl = await getSignedUrl(env.FC_REPORTS, r2Key, 604800, env.FC_WORKER_URL).catch(() => null);
+    }
+
     versions.push({
       id: page.id,
-      version: props['Version']?.number || 1,
-      locked: props['Locked?']?.checkbox || false,
+      version,
+      locked,
       lockedAt: props['Locked At']?.date?.start || null,
       pdfHash: props['PDF Hash']?.rich_text?.[0]?.plain_text || null,
       sentVia: (props['Sent Via']?.multi_select || []).map(s => s.name),
+      signedUrl,
     });
     // If this report has a Parent Report, there's an older version
     const parentId = props['Parent Report']?.relation?.[0]?.id;
@@ -366,17 +374,27 @@ function extractSignoffs(notesText) {
 }
 
 async function fetchPhotos(notion, photosDbId, siteId, photoIds) {
-  const filter = photoIds.length
-    ? { or: photoIds.map(id => ({ property: 'Site', relation: { contains: id } })) }
-    : { property: 'Site', relation: { contains: siteId } };
+  let pages;
 
-  const res = await notion.post(`/databases/${photosDbId}/query`, {
-    filter,
-    sorts: [{ property: 'Captured At', direction: 'ascending' }],
-    page_size: 100,
-  });
+  if (photoIds.length) {
+    // Fetch each photo page individually by ID — the Site relation filter
+    // cannot be used to look up pages by their own page ID.
+    const results = await Promise.all(
+      photoIds.map(id =>
+        notion.get(`/pages/${id}`).catch(() => null) // skip 404s gracefully
+      )
+    );
+    pages = results.filter(Boolean);
+  } else {
+    const res = await notion.post(`/databases/${photosDbId}/query`, {
+      filter: { property: 'Site', relation: { contains: siteId } },
+      sorts: [{ property: 'Captured At', direction: 'ascending' }],
+      page_size: 100,
+    });
+    pages = res.results || [];
+  }
 
-  return (res.results || []).map(p => {
+  return pages.map(p => {
     const props = p.properties || {};
     return {
       photoId: p.id,
