@@ -39,25 +39,33 @@ export async function handleSiteGet(request, env, siteId) {
     },
     photoCount: photos.length,
     openHazards,
-    photos: photos.slice(0, 20).map(p => ({
-      id: p.id,
-      caption: p.properties?.['Caption']?.title?.[0]?.plain_text || '',
-      status: p.properties?.['Status']?.select?.name || '',
-      severity: p.properties?.['Severity']?.select?.name || '',
-      capturedAt: p.properties?.['Captured At']?.date?.start || null,
-      tags: (p.properties?.['Tags']?.multi_select || []).map(t => t.name),
-      ohsaRefs: p.properties?.['OHSA References']?.rich_text?.[0]?.plain_text || '',
-      hash: p.properties?.['Hash']?.rich_text?.[0]?.plain_text || '',
-      capturedByName: p.properties?.['Captured By Name']?.rich_text?.[0]?.plain_text || '',
-      geoLat: p.properties?.['Geo Lat']?.number ?? null,
-      geoLng: p.properties?.['Geo Lng']?.number ?? null,
-      notes: p.properties?.['Notes']?.rich_text?.[0]?.plain_text || '',
-      transcription: p.properties?.['Transcription']?.rich_text?.[0]?.plain_text || '',
-      voiceKey: p.properties?.['Voice Key']?.rich_text?.[0]?.plain_text || '',
-      photoKey: p.properties?.['Photo Key']?.rich_text?.[0]?.plain_text || '',
-      pairBeforeId: (p.properties?.['Pair: Before']?.relation || [])[0]?.id || null,
-      pairAfterId: (p.properties?.['Pair: After']?.relation || [])[0]?.id || null,
-    })),
+    photos: photos.slice(0, 20).map(p => {
+      const photoKey = p.properties?.['Photo Key']?.rich_text?.[0]?.plain_text || '';
+      const workerUrl = env.FC_WORKER_URL || 'https://ocos-fc.naturalalternatives.ca';
+      const thumbnailUrl = photoKey
+        ? `${workerUrl}/fc/dl?key=${encodeURIComponent(photoKey)}&expires=${Date.now() + 3600000}`
+        : null;
+      return {
+        id: p.id,
+        caption: p.properties?.['Caption']?.title?.[0]?.plain_text || '',
+        status: p.properties?.['Status']?.select?.name || '',
+        severity: p.properties?.['Severity']?.select?.name || '',
+        capturedAt: p.properties?.['Captured At']?.date?.start || null,
+        tags: (p.properties?.['Tags']?.multi_select || []).map(t => t.name),
+        ohsaRefs: p.properties?.['OHSA References']?.rich_text?.[0]?.plain_text || '',
+        hash: p.properties?.['Hash']?.rich_text?.[0]?.plain_text || '',
+        capturedByName: p.properties?.['Captured By Name']?.rich_text?.[0]?.plain_text || '',
+        geoLat: p.properties?.['Geo Lat']?.number ?? null,
+        geoLng: p.properties?.['Geo Lng']?.number ?? null,
+        notes: p.properties?.['Notes']?.rich_text?.[0]?.plain_text || '',
+        transcription: p.properties?.['Transcription']?.rich_text?.[0]?.plain_text || '',
+        voiceKey: p.properties?.['Voice Key']?.rich_text?.[0]?.plain_text || '',
+        photoKey,
+        thumbnailUrl,
+        pairBeforeId: (p.properties?.['Pair: Before']?.relation || [])[0]?.id || null,
+        pairAfterId: (p.properties?.['Pair: After']?.relation || [])[0]?.id || null,
+      };
+    }),
   });
 }
 
