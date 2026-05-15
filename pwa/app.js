@@ -1765,6 +1765,7 @@ async function doGenerateReport() {
     const result = await apiGenerateReport({
       siteId:       state.currentSite?.id,
       inspectionId: state.currentInspection?.id,
+      reportType:   state.currentInspection?.type || 'Daily Log',
     });
     state.currentReport = result;
     document.getElementById('report-generating-overlay').hidden = true;
