@@ -1,6 +1,3 @@
---add78fe8eb355024ba9f101653a7673fc8398ce473093155e86e471217b4
-Content-Disposition: form-data; name="index.js"
-
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
@@ -3120,14 +3117,20 @@ var src_default = {
         response = await handleAdminDemoLeads(request, env);
       else if (path.match(/^\/api\/admin\/demo-leads\/\d+\/revoke\/?$/) && request.method === "POST")
         response = await handleAdminDemoRevoke(request, env, path);
-      else
+      else if (env.ASSETS) {
+        // Fall through to the static site bundle (nac-os-app.html, pricing.html,
+        // pwa/, upgrade/, etc.) served via Workers Static Assets.
+        response = await env.ASSETS.fetch(request);
+        if (response.status === 404)
+          response = Response.json({ error: "Not found", path }, { status: 404 });
+      } else
         response = Response.json({ error: "Not found", path }, { status: 404 });
       const headers = new Headers(response.headers);
       for (const [k, v] of Object.entries(corsHeaders(env, request)))
         headers.set(k, v);
       const ct = response.headers.get("Content-Type") || "";
       if (ct.includes("text/html")) {
-        headers.set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; object-src 'none';");
+        headers.set("Content-Security-Policy", "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://app.naturalalternatives.ca https://static.cloudflareinsights.com; object-src 'none';");
       }
       return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
     } catch (error) {
@@ -3145,6 +3148,3 @@ var src_default = {
 export {
   src_default as default
 };
-//# sourceMappingURL=index.js.map
-
---add78fe8eb355024ba9f101653a7673fc8398ce473093155e86e471217b4--
