@@ -8,19 +8,38 @@ endpoints, and — via Workers Static Assets — the static site files
 
 ## Why the two 404s happened (July 2026 incident)
 
-1. **`/nac-os/command-centre` → 404** — the Worker running in production did
-   not have the Command Centre routes. The old
-   `nac-os-app.naturalalternatives.ca` repo still carries
-   `wrangler.toml` with `name = "nacosapp"` pointing at its v3.0.0 worker
-   source (license/lead/admin only). A `wrangler deploy` from that repo
-   overwrites this Worker and silently drops the `CMD_DB` (nac-command-centre
-   D1) binding, killing the Command Centre page and its panel APIs
-   (`/api/command-centre/draws|budget|settings|lock|sync`).
-2. **`/nac-os-app.html` → 404** — no version of the Worker ever served the
-   static site. Since the apex domain became a Worker custom domain, requests
-   for GitHub-Pages-era files stopped reaching any static host and hit the
-   Worker's JSON 404 fallback. Fixed by bundling the repo's static files as
+**Confirmed root cause (verified against the live account on 2026-07-17):
+the apex domain lost its attachment to the Worker.** Requests to
+naturalalternatives.ca never reach `nacosapp`, so every path 404s.
+
+Evidence:
+- The live `nacosapp` script (modified 2026-07-12) DOES contain the
+  `/nac-os/command-centre` route — its code is functionally identical to
+  `index.js` here, minus the ASSETS/CSP fixes.
+- The `nac-command-centre` D1 is healthy: all tables present
+  (`draws`, `budget_items`, `draw_line_items`, `settings`, `audit_log`,
+  `field_jobs`, `field_scans`), with writes up to **2026-07-06** — the
+  Command Centre worked until then.
+- DNS for the apex resolves to Cloudflare (not GitHub Pages), so the zone
+  is fine; the missing piece is the Worker custom-domain binding.
+- The 2026-07-12 `modified_on` shows someone re-deployed the same bundle
+  (it is visibly a re-bundle of the identical code) — a plain deploy
+  cannot fix this, because it does not re-attach a detached custom domain.
+
+Why this config fixes it:
+1. **`/nac-os/command-centre`** — `wrangler.toml` declares
+   `pattern = "naturalalternatives.ca", custom_domain = true`, so
+   `wrangler deploy` re-attaches the apex to the Worker. Both D1 bindings
+   are declared so no deploy can silently drop `CMD_DB` again.
+2. **`/nac-os-app.html`** — no version of the Worker ever served the
+   static site; even with the domain attached, GitHub-Pages-era files hit
+   the JSON 404 fallback. Fixed by bundling the repo's static files as
    Workers Static Assets (`env.ASSETS` fallback in the router).
+
+Secondary hazard (also fixed): the old `nac-os-app.naturalalternatives.ca`
+repo carried `wrangler.toml` with `name = "nacosapp"` and v3.0.0 source
+(license/lead/admin only, no `CMD_DB`). A deploy from that repo would
+overwrite production; it has been renamed to `nacosapp-legacy`.
 
 ## Files
 
