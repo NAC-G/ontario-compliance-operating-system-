@@ -28,9 +28,15 @@ directory = "./public"
 binding = "ASSETS"
 run_worker_first = true
 
-# Apex domain is a Worker custom domain
+# Worker custom domains. BOTH must stay declared here — a domain missing from
+# this list can be dropped on deploy (this is how app.naturalalternatives.ca
+# briefly disappeared on 2026-07-18, and how the apex was lost originally).
 [[routes]]
 pattern = "naturalalternatives.ca"
+custom_domain = true
+
+[[routes]]
+pattern = "app.naturalalternatives.ca"
 custom_domain = true
 
 # Daily nurture cron — 8:00 AM ET (13:00 UTC)
