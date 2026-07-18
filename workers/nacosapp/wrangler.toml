@@ -15,10 +15,22 @@ account_id = "3eff3eb9a85fbc5b027e51589d5ae634"
 compatibility_date = "2024-11-01"
 workers_dev = false
 
-# Preserve plain-text vars already configured on the live Worker
-# (FRONTEND_URL, FC_WORKER_URL, OCOS_T1/T2/T3/BUNDLE_PRODUCT_ID) so a deploy
-# from this file does not wipe them. Secrets always persist across deploys.
+# Preserve plain-text vars already configured on the live Worker.
+# Secrets always persist across deploys.
 keep_vars = true
+
+# Explicitly declared (not just relying on keep_vars) after these were found
+# missing from the live Worker on 2026-07-18 — OCOS_*_PRODUCT_ID silently
+# dropping breaks Stripe product-id -> tier mapping for OCOS purchases.
+[vars]
+COMPANY_NAME = "Natural Alternatives"
+EMAIL_FROM = "info@naturalalternatives.ca"
+FRONTEND_URL = "https://app.naturalalternatives.ca"
+SUPPORT_EMAIL = "info@naturalalternatives.ca"
+OCOS_BUNDLE_PRODUCT_ID = "prod_U9ewelCxbRlABO"
+OCOS_T1_PRODUCT_ID = "prod_U9ehasZtqC0gHH"
+OCOS_T2_PRODUCT_ID = "prod_U9epXGEUaQj2cG"
+OCOS_T3_PRODUCT_ID = "prod_U9esi8bKI1nYvZ"
 
 # Static site bundle (nac-os-app.html, pricing.html, pwa/, upgrade/, …).
 # run_worker_first keeps the Worker's routes (/, /dashboard, /nac-os/…) in
