@@ -82,9 +82,14 @@ curl -sI https://naturalalternatives.ca/nac-os/command-centre # 200 text/html
 curl -sI https://naturalalternatives.ca/nac-os-app.html       # 200 text/html (Fleet Logbook)
 curl -s https://naturalalternatives.ca/api/command-centre/settings | head -c 200
 # License validation smoke test (Fleet Logbook):
+# Two active licenses exist in nac-os-licenses (checked 2026-07-17):
+#   id 1: SOLO-0-0… (tier SOLO, source stripe)
+#   id 2: OCOS-T3-… (tier T3, source dev — last validated OK 2026-05-15)
+# Use the full dev key (id 2) from the admin panel or D1:
 curl -s -X POST https://naturalalternatives.ca/api/license/validate \
   -H 'Content-Type: application/json' \
-  -d '{"license_key":"<known-test-key>"}'
+  -d '{"license_key":"<OCOS-T3 dev key>"}'
+# Expect {"valid":true,...} and licenses.last_used_at to update.
 ```
 
 ## Local dev
