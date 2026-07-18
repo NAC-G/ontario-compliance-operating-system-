@@ -53,11 +53,12 @@ overwrite production; it has been renamed to `nacosapp-legacy`.
 ## Pre-deploy checklist (first deploy only)
 
 1. Authenticate: `npx wrangler login` (or set `CLOUDFLARE_API_TOKEN`).
-2. Fill in the `DEMO_CODES` KV namespace id in `wrangler.toml`:
-   `npx wrangler kv namespace list` → copy the id for the demo-codes
-   namespace. The placeholder fails the deploy on purpose so the binding is
-   never silently dropped. (If the namespace was never created:
-   `npx wrangler kv namespace create DEMO_CODES`.)
+2. `DEMO_CODES` KV namespace id: `deploy.sh` auto-fills it on first run by
+   querying the account (`wrangler kv namespace list`, matching a title
+   containing "demo") and rewriting `wrangler.toml` — commit that change.
+   If lookup fails, fill it in manually, or create the namespace first:
+   `npx wrangler kv namespace create DEMO_CODES`. The placeholder fails the
+   deploy on purpose so the binding is never silently dropped.
 3. Confirm secrets exist (they persist across deploys):
    `npx wrangler secret list` should show `ADMIN_PASSWORD`,
    `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`,
