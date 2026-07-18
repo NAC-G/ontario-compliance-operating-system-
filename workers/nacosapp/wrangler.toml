@@ -52,13 +52,10 @@ database_name = "nac-command-centre"
 database_id = "f171258e-eda8-4e58-a951-3967d791880b"
 
 # ── KV — demo access codes ───────────────────────────────────────────────────
-# Fill in the real namespace id before deploying:
-#   npx wrangler kv namespace list
-# (deploy fails loudly on the placeholder — that is intentional, so the
-# binding is never silently dropped)
+# Account namespace "lumo-demo-codes" (the only demo-codes KV on the account)
 [[kv_namespaces]]
 binding = "DEMO_CODES"
-id = "REPLACE_WITH_DEMO_CODES_NAMESPACE_ID"
+id = "e324b5653a4a460b866599ab1afd1e9a"
 
 # ── SECRETS (persist across deploys; set once via `wrangler secret put`) ─────
 # ADMIN_PASSWORD, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
