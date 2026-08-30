@@ -25,6 +25,9 @@ binding = "DB"
 database_name = "nac-os-licenses"
 database_id = "cb6f16b4-066e-4496-9d5c-a2a921576967"
 
+[ai]
+binding = "AI"
+
 [[routes]]
 pattern = "ocos-fc.naturalalternatives.ca"
 custom_domain = true

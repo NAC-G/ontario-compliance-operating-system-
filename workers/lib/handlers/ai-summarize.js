@@ -3,11 +3,21 @@
  * Model: claude-haiku-4-5-20251001 — fast, cheap, short summaries.
  *
  * Body (JSON): { photoUrl?, voiceTranscript?, tags, siteContext?, capturedAt? }
- * Returns: { summary }
+ *          or: { type: 'voice_transcription', audioBase64, audioMimeType, photoId? }
+ * Returns: { summary } or { transcription }
+ *
+ * The voice_transcription branch runs speech-to-text on Workers AI (Claude
+ * has no audio input support) and returns the raw transcript — no AI
+ * summarization applied, this is meant as a live preview of what was said.
  */
 
 export async function handleAiSummarize(request, env) {
   const body = await request.json();
+
+  if (body.type === 'voice_transcription') {
+    return handleVoiceTranscription(request, env, body);
+  }
+
   const { photoUrl, voiceTranscript, tags = [], siteContext, capturedAt } = body;
 
   if (!voiceTranscript && !photoUrl) {
@@ -62,6 +72,31 @@ export async function handleAiSummarize(request, env) {
   const summary = data.content?.[0]?.text?.trim() || '';
 
   return json({ summary });
+}
+
+async function handleVoiceTranscription(request, env, body) {
+  const { audioBase64 } = body;
+  if (!audioBase64) return json({ error: 'audioBase64 required' }, 400);
+
+  let audioBytes;
+  try {
+    const bin = atob(audioBase64);
+    audioBytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) audioBytes[i] = bin.charCodeAt(i);
+  } catch {
+    return json({ error: 'audioBase64 is not valid base64' }, 400);
+  }
+  if (audioBytes.length === 0) return json({ transcription: '' });
+
+  try {
+    const result = await env.AI.run('@cf/openai/whisper', {
+      audio: Array.from(audioBytes),
+    });
+    return json({ transcription: (result?.text || '').trim() });
+  } catch (e) {
+    console.error('Whisper transcription error:', e);
+    return json({ error: 'Transcription unavailable' }, 502);
+  }
 }
 
 function json(data, status = 200) {
