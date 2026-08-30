@@ -112,6 +112,9 @@ export async function handlePhotoUpload(request, env) {
       },
     });
   } catch (e) {
+    // Log so `wrangler tail` shows the real Notion rejection detail without
+    // needing a manual curl reproduction every time this happens.
+    console.error('Photo Notion write failed:', e.message || e);
     return json({ error: 'Failed to create photo record', detail: String(e.message || e), r2Key }, 502);
   }
 
