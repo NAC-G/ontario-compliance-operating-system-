@@ -4,7 +4,7 @@
  */
 
 import { C } from './modules/copy.js';
-import { getSetting, setSetting, getPendingCount } from './modules/db.js';
+import { getSetting, setSetting, getPendingCount, queueUpload } from './modules/db.js';
 import { uploadPhoto, getSite, createSite, updatePhoto, deletePhoto, createInspection, signoffInspection,
          generateReport as apiGenerateReport, lockReport, sendReport as apiSendReport,
          regenerateReport, getReportVersions, listReports, seedDemoData, getPhotoAudioUrl } from './modules/api.js';
@@ -530,6 +530,28 @@ document.getElementById('save-license-btn').addEventListener('click', async () =
 // ── DOSSIER ────────────────────────────────────────────────────────────────
 
 let currentDossierFilter = 'All';
+let currentSearchQuery = ''; // persisted across "Load more" pages, see loadMorePhotos
+
+let dossierSearchDebounce = null;
+document.getElementById('dossier-search-input').addEventListener('input', e => {
+  const q = e.target.value.trim();
+  document.getElementById('dossier-search-clear-btn').hidden = !q;
+  clearTimeout(dossierSearchDebounce);
+  dossierSearchDebounce = setTimeout(() => {
+    currentSearchQuery = q;
+    loadDossier(state.currentSite?.id); // fresh first page — a new search invalidates any prior "load more" cursor
+  }, 350);
+});
+
+document.getElementById('dossier-search-clear-btn').addEventListener('click', () => {
+  const input = document.getElementById('dossier-search-input');
+  input.value = '';
+  input.focus();
+  document.getElementById('dossier-search-clear-btn').hidden = true;
+  clearTimeout(dossierSearchDebounce);
+  currentSearchQuery = '';
+  loadDossier(state.currentSite?.id);
+});
 
 // When true, the next photo tile tapped in the grid is captured as the
 // "before" photo for the pairing flow (see ba-pair-btn below) instead of
@@ -560,7 +582,7 @@ async function loadDossier(siteId) {
   }
   document.getElementById('current-site-name').textContent = state.currentSite?.name || siteId;
   try {
-    const data = await getSite(siteId);
+    const data = await getSite(siteId, { search: currentSearchQuery });
     state.currentSite = normalizeSite(data, siteId);
     state.tier = state.currentSite.tier;
     document.getElementById('current-site-name').textContent = state.currentSite.name || siteId;
@@ -582,11 +604,12 @@ function renderDossier(data) {
   const empty    = document.getElementById('capture-empty');
   grid.querySelector('.load-more-btn')?.remove(); // always re-added below if still needed — stale otherwise
   if (filtered.length === 0) {
-    const isFiltered = currentDossierFilter !== 'All';
+    const isFiltered = currentDossierFilter !== 'All' || !!currentSearchQuery;
     document.getElementById('capture-empty-heading').textContent =
       isFiltered ? C.emptyFilter.heading : C.emptyCapture.headline;
-    document.getElementById('capture-empty-sub').textContent =
-      isFiltered ? C.emptyFilter.sub : C.emptyCapture.sub;
+    document.getElementById('capture-empty-sub').textContent = isFiltered
+      ? (currentSearchQuery ? `No matches for "${currentSearchQuery}". Try a different search or filter.` : C.emptyFilter.sub)
+      : C.emptyCapture.sub;
     grid.querySelectorAll('.photo-thumb').forEach(t => t.remove());
     if (empty) {
       if (!grid.contains(empty)) grid.appendChild(empty);
@@ -659,7 +682,7 @@ async function loadMorePhotos(btn) {
   btn.disabled = true;
   btn.textContent = 'Loading…';
   try {
-    const result = await getSite(site.id, site.nextCursor);
+    const result = await getSite(site.id, { cursor: site.nextCursor, search: currentSearchQuery });
     site.photos = [...(site.photos || []), ...(result.photos || [])];
     site.hasMore = !!result.hasMore;
     site.nextCursor = result.nextCursor || null;
@@ -956,6 +979,11 @@ async function loadSiteList() {
     btn.textContent = state.currentSite.name;
     btn.addEventListener('click', async () => {
       await setSetting('activeSiteId', state.currentSite.id);
+      // A search from the previous site shouldn't silently carry over.
+      currentSearchQuery = '';
+      const searchInput = document.getElementById('dossier-search-input');
+      if (searchInput) searchInput.value = '';
+      document.getElementById('dossier-search-clear-btn').hidden = true;
       goBack();
     });
     container.appendChild(btn);
@@ -1307,10 +1335,7 @@ async function filePhoto() {
   // server/grid fall back to that when no thumbnail exists.
   const thumbnailBlob = await createThumbnail(cs.photoBlob).catch(() => null);
 
-  const formData = new FormData();
-  formData.append('photo', cs.photoBlob, `${cs.photoId}.jpg`);
-  if (thumbnailBlob) formData.append('thumbnail', thumbnailBlob, `${cs.photoId}-thumb.jpg`);
-  formData.append('metadata', JSON.stringify({
+  const metadata = {
     photoId:       cs.photoId,
     siteId:        state.currentSite?.id,
     tags:          cs.tags,
@@ -1324,38 +1349,76 @@ async function filePhoto() {
     deviceInfo:    navigator.userAgent,
     transcription,
     capturedByName: '',
-  }));
+  };
 
-  // Send voice blob if available
   const activeVoiceBlob = annVoiceBlob;
-  if (activeVoiceBlob) {
-    formData.append('voice', activeVoiceBlob, `${cs.photoId || 'voice'}.mp4`);
-  }
 
+  const formData = new FormData();
+  formData.append('photo', cs.photoBlob, `${cs.photoId}.jpg`);
+  if (thumbnailBlob) formData.append('thumbnail', thumbnailBlob, `${cs.photoId}-thumb.jpg`);
+  if (activeVoiceBlob) formData.append('voice', activeVoiceBlob, `${cs.photoId || 'voice'}.mp4`);
+  formData.append('metadata', JSON.stringify(metadata));
+
+  // Distinguish a genuine connectivity failure (fetch() itself throws —
+  // queue for automatic retry) from a response the server actually sent
+  // back (even an error one — retrying the identical request won't fix a
+  // 400/502, so don't silently requeue something that will just fail the
+  // same way again). Previously any non-ok response OTHER than 402/403/413
+  // fell into the same catch as a real network failure and showed "saved
+  // offline, will sync" — which was a lie: nothing was ever queued, so it
+  // never did sync, whether the cause was really offline or not.
+  let res;
   try {
-    const res = await uploadPhoto(formData);
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      document.getElementById('filing-overlay').hidden = true;
-      if (res.status === 402)      { showError('licenseExpired');  return; }
-      if (res.status === 403)      { showError('noFieldAccess');   return; }
-      if (res.status === 413)      { showError('fileTooLarge');    return; }
-      throw new Error(body.error || 'Upload failed');
-    }
-    document.getElementById('filing-overlay').hidden = true;
-    showToast('Photo filed.');
-    resetCaptureState();
-    showScreen('capture', false);
-    screenStack = ['capture'];
-    loadDossier(state.currentSite?.id);
+    res = await uploadPhoto(formData);
   } catch (_) {
     document.getElementById('filing-overlay').hidden = true;
-    showError('offlineCaptured');
+    try {
+      await queueUpload({
+        photoBytes: cs.photoBlob,
+        fileName: `${cs.photoId}.jpg`,
+        thumbnailBytes: thumbnailBlob || undefined,
+        thumbnailFileName: thumbnailBlob ? `${cs.photoId}-thumb.jpg` : undefined,
+        voiceBytes: activeVoiceBlob || undefined,
+        voiceFileName: activeVoiceBlob ? `${cs.photoId || 'voice'}.mp4` : undefined,
+        metadata,
+        licenseKey: state.licenseKey,
+        siteId: state.currentSite?.id,
+      });
+      showError('offlineCaptured'); // now genuinely true — see SyncManager
+      syncMgr.requestSync();
+    } catch (_) {
+      // IndexedDB itself failed (quota, private-browsing restrictions,
+      // etc.) — nothing to retry from, so say so plainly rather than
+      // claiming it's saved when it isn't.
+      showToast('Could not save this photo — it was not filed and is not queued to retry.');
+    }
     resetCaptureState();
     showScreen('capture', false);
     screenStack = ['capture'];
     syncMgr.updateFromDB();
+    return;
   }
+
+  document.getElementById('filing-overlay').hidden = true;
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    if (res.status === 402) { showError('licenseExpired'); return; }
+    if (res.status === 403) { showError('noFieldAccess');  return; }
+    if (res.status === 413) { showError('fileTooLarge');   return; }
+    // A real rejection from the server, not a connectivity problem.
+    showToast(`Could not save: ${body.error || 'upload failed'}. Not queued to retry — check the details and try again.`, 5000);
+    resetCaptureState();
+    showScreen('capture', false);
+    screenStack = ['capture'];
+    return;
+  }
+
+  showToast('Photo filed.');
+  resetCaptureState();
+  showScreen('capture', false);
+  screenStack = ['capture'];
+  loadDossier(state.currentSite?.id);
 }
 
 function resetCaptureState() {

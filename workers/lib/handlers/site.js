@@ -9,8 +9,29 @@
 import { requireLicenseMapping } from '../db.js';
 import { makeClient } from '../notion.js';
 import { deriveThumbKey } from '../r2.js';
+import { findTagIdsByLabel } from '../taxonomy.js';
 
 const PAGE_SIZE = 20;
+
+// Text search hits Caption/Notes/Transcription/OHSA References directly,
+// plus any tag whose human label matches the query (so typing "slip"
+// finds photos tagged HK-SLIP-TRIP via its label "Slip / trip / fall
+// hazard", not just literal photo text) — all OR'd together server-side
+// so search covers the whole site, not just whatever page happens to be
+// loaded client-side.
+function buildSearchFilter(search) {
+  if (!search) return null;
+  const orClauses = [
+    { property: 'Caption', title: { contains: search } },
+    { property: 'Notes', rich_text: { contains: search } },
+    { property: 'Transcription', rich_text: { contains: search } },
+    { property: 'OHSA References', rich_text: { contains: search } },
+  ];
+  for (const tagId of findTagIdsByLabel(search)) {
+    orClauses.push({ property: 'Tags', multi_select: { contains: tagId } });
+  }
+  return { or: orClauses };
+}
 
 function mapPhoto(p, env) {
   const photoKey = p.properties?.['Photo Key']?.rich_text?.[0]?.plain_text || '';
@@ -53,9 +74,14 @@ export async function handleSiteGet(request, env, siteId) {
 
   const url = new URL(request.url);
   const cursor = url.searchParams.get('cursor') || undefined;
+  const search = url.searchParams.get('search')?.trim() || '';
 
   const notion = makeClient(env.NOTION_TOKEN);
   const photosDbId = await getPhotosDbId(env.DB, license.key);
+
+  const siteClause = { property: 'Site', relation: { contains: siteId } };
+  const searchClause = buildSearchFilter(search);
+  const filter = searchClause ? { and: [siteClause, searchClause] } : siteClause;
 
   // On a "load more" request (cursor present), skip re-fetching the site
   // page and open-hazard count — those describe the whole site, not this
@@ -63,7 +89,7 @@ export async function handleSiteGet(request, env, siteId) {
   const [sitePage, photosRes] = await Promise.all([
     cursor ? Promise.resolve(null) : notion.get(`/pages/${siteId}`),
     notion.post(`/databases/${photosDbId}/query`, {
-      filter: { property: 'Site', relation: { contains: siteId } },
+      filter,
       sorts: [{ property: 'Captured At', direction: 'descending' }],
       page_size: PAGE_SIZE,
       start_cursor: cursor,
@@ -74,7 +100,9 @@ export async function handleSiteGet(request, env, siteId) {
   const mapped = photos.map(p => mapPhoto(p, env));
 
   if (cursor) {
-    // "Load more" page — just the next batch of photos to append.
+    // "Load more" page — just the next batch of photos to append. The
+    // client re-sends the same ?search= on every load-more request so
+    // this stays consistent with page 1.
     return json({
       photos: mapped,
       hasMore: !!photosRes.has_more,
@@ -82,13 +110,14 @@ export async function handleSiteGet(request, env, siteId) {
     });
   }
 
-  // First page — also need the total open-hazard count across the whole
-  // site (not just this page), which needs its own lightweight query
-  // (only the Status property matters, but Notion's API doesn't support
-  // fetching a subset of properties, so this still pulls full pages —
-  // still far cheaper than what a "load everything to count it" approach
-  // would cost as a site grows).
-  const openHazards = await countOpenHazards(notion, photosDbId, siteId);
+  // First page — also need the open-hazard count across the whole
+  // matched set (not just this page), which needs its own lightweight
+  // query (only the Status property matters, but Notion's API doesn't
+  // support fetching a subset of properties, so this still pulls full
+  // pages — still far cheaper than what a "load everything to count it"
+  // approach would cost as a site grows). Respects the same search filter
+  // so the count matches what's actually being shown.
+  const openHazards = await countOpenHazards(notion, photosDbId, siteClause, searchClause);
 
   return json({
     tier: license.tier || 'T2',
@@ -109,19 +138,19 @@ export async function handleSiteGet(request, env, siteId) {
   });
 }
 
-// Open-hazard count across the whole site, capped at a few pages so a
-// very large site can't turn a routine page load into an unbounded scan.
-async function countOpenHazards(notion, photosDbId, siteId) {
+// Open-hazard count across the whole matched set, capped at a few pages
+// so a very large site can't turn a routine page load into an unbounded
+// scan.
+async function countOpenHazards(notion, photosDbId, siteClause, searchClause) {
+  const statusClause = { property: 'Status', select: { equals: 'Hazard - Open' } };
+  const clauses = [siteClause, statusClause];
+  if (searchClause) clauses.push(searchClause);
+
   let count = 0;
   let cursor;
   for (let i = 0; i < 5; i++) { // up to 500 photos scanned for the count
     const res = await notion.post(`/databases/${photosDbId}/query`, {
-      filter: {
-        and: [
-          { property: 'Site', relation: { contains: siteId } },
-          { property: 'Status', select: { equals: 'Hazard - Open' } },
-        ],
-      },
+      filter: { and: clauses },
       page_size: 100,
       start_cursor: cursor,
     });

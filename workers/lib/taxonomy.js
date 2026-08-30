@@ -10,6 +10,14 @@ export function getTag(tagId) {
   return TAG_MAP[tagId] || null;
 }
 
+// Tag ids whose human-readable label contains the query (case-insensitive)
+// — lets a text search match "slip" against the HK-SLIP-TRIP tag's label
+// "Slip / trip / fall hazard", not just literal photo text.
+export function findTagIdsByLabel(query) {
+  const q = query.toLowerCase();
+  return TAXONOMY.tags.filter(t => t.label.toLowerCase().includes(q)).map(t => t.id);
+}
+
 export function resolveOhsaRefs(tagIds) {
   const refs = new Set();
   for (const id of tagIds) {

@@ -58,6 +58,31 @@ export async function getPendingCount() {
   });
 }
 
+// Main-thread retry path (see modules/sync.js _flushInMainThread) — used
+// on browsers without Background Sync support (notably iOS Safari, which
+// this app otherwise nudges users toward installing to the Home Screen).
+// Without this, queued uploads on those browsers would only ever retry
+// if the service worker's 'sync' event fired, which it never does there.
+export async function getAllPendingUploads() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('upload_queue', 'readonly');
+    const req = tx.objectStore('upload_queue').index('synced').getAll(0);
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror = e => reject(e.target.error);
+  });
+}
+
+export async function deleteQueuedUpload(id) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('upload_queue', 'readwrite');
+    tx.objectStore('upload_queue').delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = e => reject(e.target.error);
+  });
+}
+
 export async function getSetting(key) {
   const db = await openDB();
   return new Promise((resolve, reject) => {
