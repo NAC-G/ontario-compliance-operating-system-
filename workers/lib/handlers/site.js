@@ -110,14 +110,20 @@ export async function handleSiteGet(request, env, siteId) {
     });
   }
 
-  // First page — also need the open-hazard count across the whole
-  // matched set (not just this page), which needs its own lightweight
-  // query (only the Status property matters, but Notion's API doesn't
-  // support fetching a subset of properties, so this still pulls full
-  // pages — still far cheaper than what a "load everything to count it"
-  // approach would cost as a site grows). Respects the same search filter
-  // so the count matches what's actually being shown.
-  const openHazards = await countOpenHazards(notion, photosDbId, siteClause, searchClause);
+  // First page — also need the open-hazard and open-deficiency counts
+  // across the whole matched set (not just this page), which needs its
+  // own lightweight query each (only the Status property matters, but
+  // Notion's API doesn't support fetching a subset of properties, so this
+  // still pulls full pages — still far cheaper than what a "load
+  // everything to count it" approach would cost as a site grows).
+  // Respects the same search filter so the counts match what's shown.
+  // Deficiencies (workmanship issues) are tracked as a separate status
+  // from safety hazards, so they get their own count rather than being
+  // folded into openHazards.
+  const [openHazards, openDeficiencies] = await Promise.all([
+    countByStatus(notion, photosDbId, siteClause, searchClause, 'Hazard - Open'),
+    countByStatus(notion, photosDbId, siteClause, searchClause, 'Deficiency - Open'),
+  ]);
 
   return json({
     tier: license.tier || 'T2',
@@ -132,17 +138,19 @@ export async function handleSiteGet(request, env, siteId) {
     },
     photoCount: mapped.length, // count of THIS page — client tracks the running total as more pages load
     openHazards,
+    openDeficiencies,
     hasMore: !!photosRes.has_more,
     nextCursor: photosRes.next_cursor || null,
     photos: mapped,
   });
 }
 
-// Open-hazard count across the whole matched set, capped at a few pages
-// so a very large site can't turn a routine page load into an unbounded
-// scan.
-async function countOpenHazards(notion, photosDbId, siteClause, searchClause) {
-  const statusClause = { property: 'Status', select: { equals: 'Hazard - Open' } };
+// Count of photos matching a given Status value across the whole matched
+// set, capped at a few pages so a very large site can't turn a routine
+// page load into an unbounded scan. Shared by the open-hazard and
+// open-deficiency counts above.
+async function countByStatus(notion, photosDbId, siteClause, searchClause, statusValue) {
+  const statusClause = { property: 'Status', select: { equals: statusValue } };
   const clauses = [siteClause, statusClause];
   if (searchClause) clauses.push(searchClause);
 

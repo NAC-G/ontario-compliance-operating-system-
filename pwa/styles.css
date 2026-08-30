@@ -1202,6 +1202,15 @@ input[type="datetime-local"].form-input { color-scheme: dark; }
   border: 2px solid var(--red);
   pointer-events: none;
 }
+/* Quality deficiency — amber, not red, so it reads as "needs attention"
+   without implying a safety hazard the way the red hazard border does. */
+.photo-thumb.photo-thumb--deficiency::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--amber);
+  pointer-events: none;
+}
 
 /* ── Photo Detail Screen ─────────────────────────────────────────────────── */
 .photo-detail-img-wrap {
@@ -1243,10 +1252,18 @@ input[type="datetime-local"].form-input { color-scheme: dark; }
 }
 .detail-chip--tag { background: var(--grey-6); color: var(--white); }
 .detail-chip--status { background: var(--grey-5); color: var(--white); }
-.detail-chip--hazard---open   { background: #3d1a1a; color: var(--red); }
-.detail-chip--hazard---corrected { background: #1a2d1a; color: var(--green); }
+/* Slug is generated as status.toLowerCase().replace(/[^a-z]+/g, '-')
+   (app.js showPhotoDetail) — "Hazard - Open" -> "hazard-open" (single
+   dash), not "hazard---open". These two selectors never matched anything
+   before this fix; the status chip silently fell back to the plain grey
+   .detail-chip--status style for every hazard photo. */
+.detail-chip--hazard-open      { background: #3d1a1a; color: var(--red); }
+.detail-chip--hazard-corrected { background: #1a2d1a; color: var(--green); }
+.detail-chip--deficiency-open      { background: #3d2f1a; color: var(--amber); }
+.detail-chip--deficiency-corrected { background: #1a2d1a; color: var(--green); }
 .detail-chip--routine         { background: #1a2233; color: #7eb8ff; }
 .detail-chip--inspection      { background: #1e1e2e; color: #a0a0ff; }
+.detail-chip--incident        { background: #3d1a1a; color: var(--red); }
 .detail-chip--sev { background: var(--grey-5); color: var(--white); }
 .detail-chip--sev-critical { background: #3d1a1a; color: var(--red); }
 .detail-chip--sev-high     { background: #3d2a1a; color: #ff8c42; }

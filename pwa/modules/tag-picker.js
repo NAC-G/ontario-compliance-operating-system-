@@ -36,7 +36,9 @@ export function getSeverityDefault(tagIds) {
 
 export function getAutoStatus(tagIds) {
   if (!_tagMap || !tagIds?.length) return 'Routine';
-  const priority = ['Incident', 'Hazard - Open', 'Inspection', 'Routine'];
+  // Keep in sync with workers/lib/taxonomy.js's server-side copy of this
+  // priority order.
+  const priority = ['Incident', 'Hazard - Open', 'Deficiency - Open', 'Hazard - Corrected', 'Deficiency - Corrected', 'Inspection', 'Routine'];
   let best = priority.length - 1;
   tagIds.forEach(id => {
     const t = _tagMap[id];

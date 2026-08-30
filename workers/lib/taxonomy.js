@@ -42,17 +42,25 @@ export function getSeverityDefault(tagIds) {
   return highest;
 }
 
+// Order matters: earlier = higher priority when a photo has multiple tags
+// whose auto_status disagrees. Previously missing 'Hazard - Corrected' and
+// 'Deficiency - Corrected' entirely, and the loop below had no guard for
+// indexOf returning -1 for an unlisted status — since -1 < any real index,
+// an unlisted status (e.g. any tag using 'Hazard - Corrected', which
+// MOL-COMPLIANCE does) would always incorrectly win over every other tag,
+// including 'Incident'. Fixed by listing every real status value and
+// guarding the -1 case explicitly (matches pwa/modules/tag-picker.js's
+// client-side copy of this same function, which already had the guard).
 export function getAutoStatus(tagIds) {
-  const priority = ['Incident', 'Hazard - Open', 'Inspection', 'Routine'];
-  let best = 'Routine';
+  const priority = ['Incident', 'Hazard - Open', 'Deficiency - Open', 'Hazard - Corrected', 'Deficiency - Corrected', 'Inspection', 'Routine'];
+  let best = priority.length - 1;
   for (const id of tagIds) {
     const tag = TAG_MAP[id];
     if (!tag?.auto_status) continue;
-    if (priority.indexOf(tag.auto_status) < priority.indexOf(best)) {
-      best = tag.auto_status;
-    }
+    const idx = priority.indexOf(tag.auto_status);
+    if (idx !== -1 && idx < best) best = idx;
   }
-  return best;
+  return priority[best];
 }
 
 export function getAllTags() {
