@@ -35,6 +35,16 @@ export async function getSite(siteId) {
   return fcFetch(`/site/${siteId}`).then(r => r.json());
 }
 
+export async function createSite(name, address) {
+  const res = await fcFetch('/site', {
+    method: 'POST',
+    body: JSON.stringify({ name, address }),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error || 'Failed to create site');
+  return body;
+}
+
 export async function createInspection(body) {
   return fcFetch('/inspection', { method: 'POST', body: JSON.stringify(body) }).then(r => r.json());
 }

@@ -1,6 +1,9 @@
 /**
  * GET /fc/site/:id
  * Returns site record + recent photos + open hazard count.
+ *
+ * POST /fc/site
+ * Creates a new site. Body (JSON): { name, address? }.
  */
 
 import { requireLicenseMapping } from '../db.js';
@@ -67,6 +70,42 @@ export async function handleSiteGet(request, env, siteId) {
       };
     }),
   });
+}
+
+export async function handleSiteCreate(request, env) {
+  const license = request._license;
+  const mapping = await requireLicenseMapping(env.DB, license.key);
+
+  const body = await request.json().catch(() => ({}));
+  const name = (body.name || '').trim();
+  if (!name) return json({ error: 'name required' }, 400);
+  const address = (body.address || '').trim();
+
+  const notion = makeClient(env.NOTION_TOKEN);
+  let page;
+  try {
+    page = await notion.post('/pages', {
+      parent: { database_id: mapping.sites_db_id },
+      properties: {
+        'Site Name': { title: [{ text: { content: name } }] },
+        'Address': address ? { rich_text: [{ text: { content: address } }] } : undefined,
+        'Status': { select: { name: 'Active' } },
+        'Site Type': { select: { name: 'Residential' } },
+        'WAH Site?': { checkbox: false },
+      },
+    });
+  } catch (e) {
+    console.error('Site Notion write failed:', e.message || e);
+    return json({ error: 'Failed to create site', detail: String(e.message || e) }, 502);
+  }
+
+  return json({
+    id: page.id,
+    name,
+    address,
+    status: 'Active',
+    siteType: 'Residential',
+  }, 201);
 }
 
 async function getPhotosDbId(db, licenseId) {

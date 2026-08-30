@@ -20,17 +20,21 @@ export async function handlePhotoUpload(request, env) {
   const metaRaw = formData.get('metadata');
   const meta = metaRaw ? JSON.parse(metaRaw) : {};
 
+  // NB: field names here must match what pwa/app.js's filePhoto() actually
+  // sends (severity/status/deviceInfo) — this previously destructured
+  // severityOverride/statusOverride/deviceId, which the client never sends,
+  // so the user's chosen severity/status were silently discarded in favor
+  // of tag-based auto-defaults every time, and device info was never saved.
   const {
     siteId,
     capturedAt,
     geoLat,
     geoLng,
     gps,
-    deviceId,
+    deviceInfo,
     tags = [],
-    statusOverride,
-    severityOverride,
-    voiceNoteId,
+    status: statusOverride,
+    severity: severityOverride,
     inspectionId,
     capturedBy,
     captureSource = 'Live',
@@ -97,7 +101,7 @@ export async function handlePhotoUpload(request, env) {
         'Captured By': capturedBy ? { relation: [{ id: capturedBy }] } : undefined,
         'Geo Lat': resolvedLat != null ? { number: parseFloat(resolvedLat) } : undefined,
         'Geo Lng': resolvedLng != null ? { number: parseFloat(resolvedLng) } : undefined,
-        'Device ID': deviceId ? { rich_text: [{ text: { content: String(deviceId) } }] } : undefined,
+        'Device ID': deviceInfo ? { rich_text: [{ text: { content: String(deviceInfo).slice(0, 200) } }] } : undefined,
         'Tags': { multi_select: tags.map(t => ({ name: t })) },
         'OHSA References': { rich_text: [{ text: { content: ohsaRefs } }] },
         'Status': { select: { name: status } },

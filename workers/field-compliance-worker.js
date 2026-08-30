@@ -6,7 +6,7 @@
 
 import { validateLicense, requireTier } from './lib/auth.js';
 import { handlePhotoUpload } from './lib/handlers/photo.js';
-import { handleSiteGet } from './lib/handlers/site.js';
+import { handleSiteGet, handleSiteCreate } from './lib/handlers/site.js';
 import {
   handleInspectionCreate,
   handleInspectionSignoff,
@@ -143,6 +143,10 @@ export default {
         response = await handlePhotoUpload(request, env);
 
       // ── Site ─────────────────────────────────────────────────────────────
+      } else if (method === 'POST' && path === '/fc/site') {
+        request._license = await validateLicense(request, env);
+        response = await handleSiteCreate(request, env);
+
       } else if (method === 'GET' && path.startsWith('/fc/site/')) {
         const siteId = path.slice('/fc/site/'.length);
         request._license = await validateLicense(request, env);
