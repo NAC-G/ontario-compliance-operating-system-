@@ -8,6 +8,7 @@ import { sha256Hex } from '../hash.js';
 import { photoKey, voiceKey, putObject } from '../r2.js';
 import { resolveOhsaRefs, getSeverityDefault, getAutoStatus } from '../taxonomy.js';
 import { getLicenseMapping } from '../db.js';
+import { makeClient } from '../notion.js';
 
 export async function handlePhotoUpload(request, env) {
   const license = request._license;
@@ -77,32 +78,42 @@ export async function handlePhotoUpload(request, env) {
     ? meta.caption.slice(0, 80)
     : `Photo at ${new Date(capturedAt || Date.now()).toUTCString()}`;
 
-  // Create Notion record
-  const notion = makeNotionClient(env.NOTION_TOKEN);
-  const page = await notion.post('/pages', {
-    parent: { database_id: mapping.photos_db_id },
-    properties: {
-      'Caption': { title: [{ text: { content: caption } }] },
-      'Site': { relation: [{ id: siteId }] },
-      'Captured At': capturedAt ? { date: { start: capturedAt } } : undefined,
-      'Captured By': capturedBy ? { relation: [{ id: capturedBy }] } : undefined,
-      'Geo Lat': resolvedLat != null ? { number: parseFloat(resolvedLat) } : undefined,
-      'Geo Lng': resolvedLng != null ? { number: parseFloat(resolvedLng) } : undefined,
-      'Device ID': deviceId ? { rich_text: [{ text: { content: String(deviceId) } }] } : undefined,
-      'Capture Source': { select: { name: captureSource } },
-      'Tags': { multi_select: tags.map(t => ({ name: t })) },
-      'OHSA References': { rich_text: [{ text: { content: ohsaRefs } }] },
-      'Status': { select: { name: status } },
-      'Severity': { select: { name: severity } },
-      'Inspection': inspectionId ? { relation: [{ id: inspectionId }] } : undefined,
-      'Hash': { rich_text: [{ text: { content: hash } }] },
-      'Notes': notes ? { rich_text: [{ text: { content: String(notes).slice(0, 2000) } }] } : undefined,
-      'Transcription': transcription ? { rich_text: [{ text: { content: String(transcription).slice(0, 2000) } }] } : undefined,
-      'Voice Key': voiceR2Key ? { rich_text: [{ text: { content: voiceR2Key } }] } : undefined,
-      'Photo Key': { rich_text: [{ text: { content: r2Key } }] },
-      'Captured By Name': capturedByName ? { rich_text: [{ text: { content: capturedByName } }] } : undefined,
-    },
-  });
+  // Create Notion record. Uses the shared client (lib/notion.js), which
+  // throws on a non-ok response — the handler previously rolled its own
+  // fetch-and-.json() client that never checked res.ok, so a rejected
+  // write (e.g. an unknown property, a bad relation id) still returned
+  // page.id === undefined and this endpoint still answered 201 "success."
+  // The photo/voice bytes are already safely in R2 (chain of custody
+  // preserved) by this point even if the Notion record fails below.
+  const notion = makeClient(env.NOTION_TOKEN);
+  let page;
+  try {
+    page = await notion.post('/pages', {
+      parent: { database_id: mapping.photos_db_id },
+      properties: {
+        'Caption': { title: [{ text: { content: caption } }] },
+        'Site': { relation: [{ id: siteId }] },
+        'Captured At': capturedAt ? { date: { start: capturedAt } } : undefined,
+        'Captured By': capturedBy ? { relation: [{ id: capturedBy }] } : undefined,
+        'Geo Lat': resolvedLat != null ? { number: parseFloat(resolvedLat) } : undefined,
+        'Geo Lng': resolvedLng != null ? { number: parseFloat(resolvedLng) } : undefined,
+        'Device ID': deviceId ? { rich_text: [{ text: { content: String(deviceId) } }] } : undefined,
+        'Tags': { multi_select: tags.map(t => ({ name: t })) },
+        'OHSA References': { rich_text: [{ text: { content: ohsaRefs } }] },
+        'Status': { select: { name: status } },
+        'Severity': { select: { name: severity } },
+        'Inspection': inspectionId ? { relation: [{ id: inspectionId }] } : undefined,
+        'Hash': { rich_text: [{ text: { content: hash } }] },
+        'Notes': notes ? { rich_text: [{ text: { content: String(notes).slice(0, 2000) } }] } : undefined,
+        'Transcription': transcription ? { rich_text: [{ text: { content: String(transcription).slice(0, 2000) } }] } : undefined,
+        'Voice Key': voiceR2Key ? { rich_text: [{ text: { content: voiceR2Key } }] } : undefined,
+        'Photo Key': { rich_text: [{ text: { content: r2Key } }] },
+        'Captured By Name': capturedByName ? { rich_text: [{ text: { content: capturedByName } }] } : undefined,
+      },
+    });
+  } catch (e) {
+    return json({ error: 'Failed to create photo record', detail: String(e.message || e), r2Key }, 502);
+  }
 
   return json({
     photoId: page.id,
@@ -112,19 +123,6 @@ export async function handlePhotoUpload(request, env) {
     severity,
     ohsaRefs,
   }, 201);
-}
-
-function makeNotionClient(token) {
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    'Content-Type': 'application/json',
-    'Notion-Version': '2022-06-28',
-  };
-  return {
-    post: (path, body) => fetch(`https://api.notion.com/v1${path}`, {
-      method: 'POST', headers, body: JSON.stringify(body),
-    }).then(r => r.json()),
-  };
 }
 
 function json(data, status = 200) {
