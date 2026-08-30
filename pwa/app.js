@@ -11,7 +11,7 @@ import { uploadPhoto, getSite, createSite, updatePhoto, deletePhoto, createInspe
 import { requestPermissions } from './modules/permissions.js';
 import { openCamera, openLibrary } from './modules/camera.js';
 import { recordVoice, stopRecording, pauseRecording, resumeRecording, transcribeVoice, VOICE_MAX_SECONDS, VOICE_CL_MAX_SECONDS } from './modules/voice.js';
-import { loadTaxonomy, getSeverityDefault, getAutoStatus } from './modules/tag-picker.js';
+import { loadTaxonomy, getSeverityDefault, getAutoStatus, tagLabel } from './modules/tag-picker.js';
 import { getChecklistForType } from './modules/inspection.js';
 import { SyncManager } from './modules/sync.js';
 import { loadStyleSamples, uploadSample } from './modules/style-samples.js';
@@ -93,8 +93,6 @@ function updateHeader(screenId) {
   const TITLES = {
     capture: state.currentSite?.name || 'OCOS Field',
     inspections: 'Inspections', reports: 'Reports', settings: 'Settings',
-    'tag-picker': 'Tag photo', severity: 'Severity', status: 'Status',
-    voice: 'Voice note', 'before-after': 'Before / After',
     'site-new': 'New site', 'site-list': 'Sites',
     'license-entry': 'License key',
     'inspection-type': 'New inspection', 'inspection-checklist': 'Inspection',
@@ -317,19 +315,6 @@ function populateCopy() {
   setText('photo-card-heading',    C.photoCard.heading);
   setText('photo-card-line1',      C.photoCard.line1);
   setText('photo-card-line2',      C.photoCard.line2);
-  setText('tag-picker-heading',    C.tagPicker.heading);
-  setText('tag-picker-sub',        C.tagPicker.sub);
-  setText('severity-heading',      C.severity.heading);
-  setText('severity-helper',       C.severity.helper);
-  setText('status-heading',        C.status.heading);
-  setText('voice-heading',         C.voiceIdle.heading);
-  setText('voice-sub',             C.voiceIdle.sub);
-  setText('voice-confirm-btn',     C.voiceDone.btnConfirm);
-  setText('ba-heading',            C.beforeAfter.heading);
-  setText('ba-sub',                C.beforeAfter.sub);
-  setText('ba-pair-btn',           C.beforeAfter.btnPair);
-  setText('ba-skip-btn',           C.beforeAfter.btnSkip);
-
   // Inspection
   setText('signoff-workers-heading',  C.signoffWorkers.heading);
   setText('signoff-workers-sub',      C.signoffWorkers.sub);
@@ -380,8 +365,6 @@ function populateCopy() {
   renderFilterBar('filter-row',         C.filterBar,             'All',  f => filterDossier(f));
   renderFilterBar('reports-filter-row', C.reportList.filters,    'All',  f => filterReports(f));
   renderOptionList('insp-type-list',    C.inspectionTypes,              v => onInspectionTypeSelected(v));
-  renderOptionList('status-list',       C.status.options,               v => onStatusSelected(v));
-  renderSeverityRow();
   renderOptionList('style-tag-list',    C.styleLearning.ready.tags,     v => { state.pendingSampleTag = v; });
 
   const roleSelect = document.getElementById('recipient-role');
@@ -422,24 +405,6 @@ function renderOptionList(containerId, options, onSelect) {
       container.querySelectorAll('.option-row').forEach(b => b.classList.remove('option-row--active'));
       btn.classList.add('option-row--active');
       onSelect(opt.value);
-    });
-    container.appendChild(btn);
-  });
-}
-
-function renderSeverityRow() {
-  const container = document.getElementById('severity-row');
-  container.innerHTML = '';
-  C.severity.options.forEach(sev => {
-    const btn = document.createElement('button');
-    btn.className = 'sev-btn';
-    btn.dataset.sev = sev.toLowerCase();
-    btn.textContent = sev;
-    btn.addEventListener('click', () => {
-      container.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('sev-btn--active'));
-      btn.classList.add('sev-btn--active');
-      if (state.captureState) state.captureState.severity = sev;
-      document.getElementById('severity-done-btn').disabled = false;
     });
     container.appendChild(btn);
   });
@@ -652,11 +617,12 @@ function renderDossier(data) {
     thumb.addEventListener('click', () => {
       if (pickingBeforePhoto) {
         pickingBeforePhoto = false;
-        if (state.captureState) state.captureState.pairedWithId = photo.id;
         filterDossier('All');
+        if (!state.captureState) { showScreen('capture', false); return; } // shouldn't happen, just in case
+        state.captureState.pairedWithId = photo.id;
         showToast('Paired with before photo.');
-        showScreen('voice', false);
-        showVoicePhotoContext();
+        showScreen('photo-annotate', false); // back to the in-progress capture, not a fresh reset
+        document.getElementById('ann-ba-paired').hidden = false;
         return;
       }
       showPhotoDetail(photo);
@@ -878,36 +844,25 @@ function renderEditPhotoScreen(photo) {
 
 async function renderEditPhotoTagGrid() {
   const grid = document.getElementById('edit-photo-tag-grid');
-  grid.innerHTML = '';
   const taxonomy = await loadTaxonomy();
-  const selected = new Set(editPhotoState.tags);
-  taxonomy.categories.forEach(cat => {
-    const chip = document.createElement('button');
-    chip.className = 'tag-chip' + (selected.has(cat.id) ? ' tag-chip--selected' : '');
-    chip.textContent = cat.label;
-    chip.dataset.catId = cat.id;
-    chip.style.setProperty('--cat-color', cat.color);
-    chip.addEventListener('click', () => {
-      chip.classList.toggle('tag-chip--selected');
-      editPhotoState.tags = [...grid.querySelectorAll('.tag-chip--selected')].map(c => c.dataset.catId);
-    });
-    grid.appendChild(chip);
+  renderTagPicker(grid, editPhotoState.tags, taxonomy, tags => {
+    editPhotoState.tags = tags;
   });
 }
 
 function renderEditPhotoSeverityRow() {
   const container = document.getElementById('edit-photo-severity-row');
   container.innerHTML = '';
-  C.severity.options.forEach(sev => {
+  C.severity.options.forEach(({ value, label }) => {
     const btn = document.createElement('button');
-    const isActive = sev.toLowerCase() === (editPhotoState.severity || '').toLowerCase();
+    const isActive = value === editPhotoState.severity;
     btn.className = 'sev-btn' + (isActive ? ' sev-btn--active' : '');
-    btn.dataset.sev = sev.toLowerCase();
-    btn.textContent = sev;
+    btn.dataset.sev = value;
+    btn.textContent = label;
     btn.addEventListener('click', () => {
       container.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('sev-btn--active'));
       btn.classList.add('sev-btn--active');
-      editPhotoState.severity = sev;
+      editPhotoState.severity = value;
     });
     container.appendChild(btn);
   });
@@ -1036,27 +991,71 @@ async function showAnnotateScreen() {
   showScreen('photo-annotate');
 }
 
+// Two-level category -> tag picker, shared by the annotate screen and the
+// edit-photo screen. Selection happens on the specific tag chips (e.g.
+// "Slip / trip / fall hazard"), not the category header — only specific
+// tags carry severity/status defaults and OHSA/O.Reg references
+// (taxonomy.json: tag.category groups tags, but getSeverityDefault /
+// getAutoStatus / resolveOhsaRefs all key off the tag's own id). Category
+// headers exist purely to keep 47 tags across 20 categories browsable.
+function renderTagPicker(gridEl, selectedTagIds, taxonomy, onChange) {
+  gridEl.innerHTML = '';
+  gridEl.classList.add('tag-cat-list');
+  const selected = new Set(selectedTagIds);
+
+  taxonomy.categories.forEach(cat => {
+    const catTags = taxonomy.tags.filter(t => t.category === cat.id);
+    if (catTags.length === 0) return;
+
+    const group = document.createElement('div');
+    group.className = 'tag-cat-group';
+
+    const hasSelection = catTags.some(t => selected.has(t.id));
+    const header = document.createElement('button');
+    header.type = 'button';
+    header.className = 'tag-cat-header' + (hasSelection ? ' tag-cat-header--has-selection tag-cat-header--expanded' : '');
+    header.style.setProperty('--cat-color', cat.color);
+    header.innerHTML = `<span>${cat.label}</span><span class="tag-cat-chevron">&rsaquo;</span>`;
+
+    const nested = document.createElement('div');
+    nested.className = 'tag-grid tag-grid--nested';
+    nested.hidden = !hasSelection; // auto-expand only if it already has a selection (e.g. editing)
+
+    catTags.forEach(tag => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'tag-chip' + (selected.has(tag.id) ? ' tag-chip--selected' : '');
+      chip.textContent = tag.label;
+      chip.dataset.tagId = tag.id;
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('tag-chip--selected');
+        if (selected.has(tag.id)) selected.delete(tag.id); else selected.add(tag.id);
+        header.classList.toggle('tag-cat-header--has-selection', catTags.some(t => selected.has(t.id)));
+        onChange([...selected]);
+      });
+      nested.appendChild(chip);
+    });
+
+    header.addEventListener('click', () => {
+      nested.hidden = !nested.hidden;
+      header.classList.toggle('tag-cat-header--expanded', !nested.hidden);
+    });
+
+    group.appendChild(header);
+    group.appendChild(nested);
+    gridEl.appendChild(group);
+  });
+}
+
 async function renderAnnTagGrid() {
   const grid = document.getElementById('ann-tag-grid');
-  grid.innerHTML = '';
   const taxonomy = await loadTaxonomy();
-  const selected = new Set(state.captureState?.tags || []);
-  taxonomy.categories.forEach(cat => {
-    const chip = document.createElement('button');
-    chip.className = 'tag-chip' + (selected.has(cat.id) ? ' tag-chip--selected' : '');
-    chip.textContent = cat.label;
-    chip.dataset.catId = cat.id;
-    chip.style.setProperty('--cat-color', cat.color);
-    chip.addEventListener('click', () => {
-      chip.classList.toggle('tag-chip--selected');
-      const tags = [...grid.querySelectorAll('.tag-chip--selected')].map(c => c.dataset.catId);
-      if (state.captureState) state.captureState.tags = tags;
-      const autoSev = getSeverityDefault(tags);
-      const autoStatus = getAutoStatus(tags);
-      renderAnnSevChips(autoSev, true);
-      if (autoStatus && !state.captureState.status) selectAnnStatus(autoStatus);
-    });
-    grid.appendChild(chip);
+  renderTagPicker(grid, state.captureState?.tags || [], taxonomy, tags => {
+    if (state.captureState) state.captureState.tags = tags;
+    const autoSev = getSeverityDefault(tags);
+    const autoStatus = getAutoStatus(tags);
+    renderAnnSevChips(autoSev, true);
+    if (autoStatus && !state.captureState.status) selectAnnStatus(autoStatus);
   });
 }
 
@@ -1085,26 +1084,30 @@ function selectAnnStatus(value, chipEl) {
 function renderAnnSevChips(activeValue, autoSelect = false) {
   const container = document.getElementById('ann-sev-chips');
   container.innerHTML = '';
-  C.severity.options.forEach(sev => {
+  C.severity.options.forEach(({ value, label }) => {
     const chip = document.createElement('button');
-    chip.className = `ann-chip ann-chip--sev-${sev.toLowerCase()}`;
-    chip.textContent = sev;
-    chip.dataset.sev = sev.toLowerCase();
+    chip.className = `ann-chip ann-chip--sev-${value.toLowerCase()}`;
+    chip.textContent = label;
+    chip.dataset.sev = value;
     chip.addEventListener('click', () => {
       container.querySelectorAll('.ann-chip').forEach(c => c.classList.remove('ann-chip--active'));
       chip.classList.add('ann-chip--active');
-      if (state.captureState) state.captureState.severity = sev;
+      if (state.captureState) state.captureState.severity = value;
     });
     container.appendChild(chip);
   });
   if (activeValue) {
     const match = [...container.querySelectorAll('.ann-chip')]
-      .find(c => c.textContent.toLowerCase() === activeValue.toLowerCase());
+      .find(c => c.dataset.sev === activeValue);
     if (match) {
       match.classList.add('ann-chip--active');
       if (autoSelect && state.captureState) state.captureState.severity = activeValue;
     }
   }
+}
+
+function fmtDuration(s) {
+  return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 }
 
 // Annotate voice recording
@@ -1219,238 +1222,31 @@ document.getElementById('ann-back-btn').addEventListener('click', () => {
 document.getElementById('ann-file-btn').addEventListener('click', filePhoto);
 
 document.getElementById('ann-ba-btn').addEventListener('click', () => {
-  showToast('File this photo first, then capture the Before photo.');
-});
-
-// ── TAG PICKER ─────────────────────────────────────────────────────────────
-
-async function renderTagGrid() {
-  const grid = document.getElementById('tag-grid');
-  grid.innerHTML = '';
-  const taxonomy = await loadTaxonomy();
-  taxonomy.categories.forEach(cat => {
-    const chip = document.createElement('button');
-    chip.className = 'tag-chip';
-    chip.textContent = cat.label;
-    chip.dataset.catId = cat.id;
-    chip.style.setProperty('--cat-color', cat.color);
-    chip.addEventListener('click', () => {
-      chip.classList.toggle('tag-chip--selected');
-      const selected = [...grid.querySelectorAll('.tag-chip--selected')].map(c => c.dataset.catId);
-      if (state.captureState) state.captureState.tags = selected;
-      document.getElementById('tag-picker-done-btn').disabled = selected.length === 0;
-    });
-    grid.appendChild(chip);
-  });
-}
-
-document.getElementById('tag-picker-done-btn').addEventListener('click', () => {
-  const tags = state.captureState?.tags || [];
-  const defaultSev = getSeverityDefault(tags);
-  if (state.captureState) state.captureState.severity = defaultSev;
-
-  // Pre-select default severity
-  document.querySelectorAll('.sev-btn').forEach(b => {
-    b.classList.toggle('sev-btn--active', b.dataset.sev === defaultSev.toLowerCase());
-  });
-  document.getElementById('severity-done-btn').disabled = false;
-  showScreen('severity');
-});
-
-// ── SEVERITY ───────────────────────────────────────────────────────────────
-
-document.getElementById('severity-done-btn').addEventListener('click', () => showScreen('status'));
-
-// ── STATUS ─────────────────────────────────────────────────────────────────
-
-function onStatusSelected(val) {
-  if (state.captureState) state.captureState.status = val;
-  document.getElementById('status-done-btn').disabled = false;
-}
-
-document.getElementById('status-done-btn').addEventListener('click', () => {
-  const status = state.captureState?.status;
-  if (status === 'Hazard - Corrected') showScreen('before-after');
-  else { showScreen('voice'); showVoicePhotoContext(); }
-});
-
-// ── VOICE ──────────────────────────────────────────────────────────────────
-
-let voiceActive = false;
-let voiceTimerInterval = null;
-let voiceTimerSeconds = 0;
-let voicePaused = false;
-let voiceBlob = null;
-let voiceAudioEl = null;
-
-function fmtDuration(s) {
-  return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
-}
-
-function voiceTimerTick() {
-  if (!voicePaused) {
-    voiceTimerSeconds++;
-    const el = document.getElementById('voice-timer');
-    el.textContent = fmtDuration(voiceTimerSeconds);
-    const remaining = VOICE_MAX_SECONDS - voiceTimerSeconds;
-    if (remaining <= 5)       el.className = 'voice-timer voice-timer--critical';
-    else if (remaining <= 15) el.className = 'voice-timer voice-timer--warn';
-    else                      el.className = 'voice-timer';
-  }
-}
-
-function setVoiceRecordingUI(active) {
-  document.getElementById('voice-record-btn').hidden    = active;
-  document.getElementById('voice-recording-bar').hidden = !active;
-  document.getElementById('voice-controls').hidden      = !active;
-}
-
-function setVoiceReviewUI(show) {
-  document.getElementById('voice-review').hidden    = !show;
-  document.getElementById('voice-skip-btn').hidden  = show;
-}
-
-function showVoicePhotoContext() {
-  const cs = state.captureState;
-  const ctx = document.getElementById('voice-context');
-  if (!cs?.photoUrl) { ctx.hidden = true; return; }
-  document.getElementById('voice-thumb').src = cs.photoUrl;
-  const tagsEl = document.getElementById('voice-thumb-tags');
-  tagsEl.innerHTML = '';
-  (cs.tags || []).slice(0, 6).forEach(tag => {
-    const chip = document.createElement('span');
-    chip.className = 'chip chip--sm';
-    chip.textContent = tag.replace(/-/g, '\u2011'); // non-breaking hyphen
-    tagsEl.appendChild(chip);
-  });
-  ctx.hidden = false;
-}
-
-async function startVoiceFlow() {
-  if (voiceActive) return;
-  voiceActive = true;
-  voicePaused = false;
-  voiceTimerSeconds = 0;
-  document.getElementById('voice-timer').textContent = '0:00';
-  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
-
-  setText('voice-heading', C.voiceRecording.heading);
-  setText('voice-sub',     C.voiceRecording.sub);
-  setVoiceRecordingUI(true);
-  setVoiceReviewUI(false);
-  voiceTimerInterval = setInterval(voiceTimerTick, 1000);
-
-  try {
-    const blob = await recordVoice(VOICE_MAX_SECONDS);
-    if (voiceTimerSeconds >= VOICE_MAX_SECONDS) showToast(`Recording stopped — ${fmtDuration(VOICE_MAX_SECONDS)} limit reached.`);
-    clearInterval(voiceTimerInterval);
-    voiceBlob = blob;
-    setVoiceRecordingUI(false);
-
-    // Set up audio playback
-    const blobURL = URL.createObjectURL(blob);
-    voiceAudioEl = new Audio(blobURL);
-    voiceAudioEl.addEventListener('ended', () => {
-      document.getElementById('voice-play-btn').textContent = '▶';
-    });
-    document.getElementById('voice-playback-dur').textContent = fmtDuration(voiceTimerSeconds);
-    document.getElementById('voice-play-btn').textContent = '▶';
-
-    // Show review panel immediately — transcription fills in async
-    setText('voice-heading', C.voiceTranscribing.heading);
-    setText('voice-sub',     C.voiceTranscribing.sub);
-    document.getElementById('voice-transcript-preview').textContent = 'Transcribing…';
-    document.getElementById('voice-notes-area').value = '';
-    setText('voice-confirm-btn', C.voiceDone.btnConfirm);
-    setVoiceReviewUI(true);
-
-    transcribeVoice(blob, state.captureState?.photoId).then(text => {
-      document.getElementById('voice-transcript-preview').textContent = text;
-      document.getElementById('voice-notes-area').value = text;
-      if (state.captureState) state.captureState.voiceNote = text;
-      setText('voice-heading', C.voiceDone.heading);
-      setText('voice-sub',     '');
-    }).catch(() => {
-      document.getElementById('voice-transcript-preview').textContent = 'Transcription unavailable.';
-    });
-
-  } catch (_) {
-    clearInterval(voiceTimerInterval);
-    setVoiceRecordingUI(false);
-    setText('voice-heading', C.voiceIdle.heading);
-    setText('voice-sub',     C.voiceIdle.sub);
-    showToast('Microphone access denied or recording failed.');
-  } finally {
-    voiceActive = false;
-    voicePaused = false;
-  }
-}
-
-document.getElementById('voice-record-btn').addEventListener('click', startVoiceFlow);
-
-document.getElementById('voice-stop-btn').addEventListener('click', () => stopRecording());
-
-document.getElementById('voice-pause-btn').addEventListener('click', () => {
-  const btn = document.getElementById('voice-pause-btn');
-  const dot = document.querySelector('.voice-rec-dot');
-  if (voicePaused) {
-    resumeRecording();
-    voicePaused = false;
-    btn.textContent = 'Pause';
-    if (dot) dot.style.animationPlayState = 'running';
-  } else {
-    pauseRecording();
-    voicePaused = true;
-    btn.textContent = 'Resume';
-    if (dot) dot.style.animationPlayState = 'paused';
-  }
-});
-
-document.getElementById('voice-play-btn').addEventListener('click', () => {
-  if (!voiceAudioEl) return;
-  const btn = document.getElementById('voice-play-btn');
-  if (voiceAudioEl.paused) {
-    voiceAudioEl.play();
-    btn.textContent = '⏸';
-  } else {
-    voiceAudioEl.pause();
-    btn.textContent = '▶';
-  }
-});
-
-document.getElementById('voice-rerecord-btn').addEventListener('click', () => {
-  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
-  voiceBlob = null;
-  setVoiceReviewUI(false);
-  setText('voice-heading', C.voiceIdle.heading);
-  setText('voice-sub',     C.voiceIdle.sub);
-});
-
-document.getElementById('voice-confirm-btn').addEventListener('click', () => {
-  const notes = document.getElementById('voice-notes-area').value.trim();
-  if (state.captureState) state.captureState.voiceNote = notes;
-  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
-  setVoiceReviewUI(false);
-  setText('voice-heading', C.voiceIdle.heading);
-  setText('voice-sub',     C.voiceIdle.sub);
-  filePhoto();
-});
-
-document.getElementById('voice-skip-btn').addEventListener('click', filePhoto);
-
-// ── BEFORE / AFTER ─────────────────────────────────────────────────────────
-
-document.getElementById('ba-pair-btn').addEventListener('click', () => {
+  // Was a placeholder toast — this button never actually did anything.
+  // The real pairing flow (pick an existing open-hazard photo from the
+  // grid) lived on a screen ('before-after') that nothing ever navigated
+  // to; this is the live entry point. See the pickingBeforePhoto tile
+  // handler below for where the selection completes.
   pickingBeforePhoto = true;
-  showToast('Select the original "before" photo from the grid.', 4000);
+  showToast('Select the original hazard photo to pair with.', 4000);
   showScreen('capture', false);
   screenStack = ['capture'];
   filterDossier('Open hazards');
 });
 
-document.getElementById('ba-skip-btn').addEventListener('click', () => { showScreen('voice'); showVoicePhotoContext(); });
-
 // ── FILE PHOTO ─────────────────────────────────────────────────────────────
+//
+// Note: an earlier multi-step capture flow (tag-picker -> severity ->
+// status -> voice -> before-after, as separate screens) used to live here.
+// It was dead code -- nothing ever navigated to any of those screens; the
+// real, live flow is the single consolidated "annotate" screen above
+// (showAnnotateScreen / renderAnnTagGrid / renderAnnSevChips /
+// renderAnnStatusChips / ann-ba-btn). Removed 2026-08-30 rather than fixed
+// in place, since maintaining two parallel, silently-diverging
+// implementations of the same screen is exactly what let the OHSA
+// tag-matching bug and the dead before/after pairing button go unnoticed
+// this long. The matching HTML sections (data-screen="tag-picker",
+// "severity", "status", "voice", "before-after") were removed too.
 
 async function filePhoto() {
   const cs = state.captureState;
@@ -1481,8 +1277,8 @@ async function filePhoto() {
     capturedByName: '',
   }));
 
-  // Send voice blob if available (annotate screen or voice screen)
-  const activeVoiceBlob = annVoiceBlob || voiceBlob;
+  // Send voice blob if available
+  const activeVoiceBlob = annVoiceBlob;
   if (activeVoiceBlob) {
     formData.append('voice', activeVoiceBlob, `${cs.photoId || 'voice'}.mp4`);
   }
@@ -1514,23 +1310,10 @@ async function filePhoto() {
 }
 
 function resetCaptureState() {
+  // showAnnotateScreen() fully re-initializes the annotate screen's own
+  // fields on the next capture, so all that's needed here is dropping the
+  // in-progress capture itself.
   state.captureState = null;
-  document.getElementById('voice-record-btn').hidden    = false;
-  document.getElementById('voice-recording-bar').hidden = true;
-  document.getElementById('voice-controls').hidden      = true;
-  document.getElementById('voice-review').hidden        = true;
-  document.getElementById('voice-skip-btn').hidden      = false;
-  document.getElementById('voice-pause-btn').textContent = 'Pause';
-  document.getElementById('voice-timer').textContent = '0:00';
-  document.getElementById('voice-context').hidden = true;
-  if (voiceAudioEl) { voiceAudioEl.pause(); voiceAudioEl = null; }
-  voiceBlob = null;
-  setText('voice-heading', C.voiceIdle.heading);
-  setText('voice-sub',     C.voiceIdle.sub);
-  // Reset status options
-  document.querySelectorAll('#status-list .option-row').forEach(b => b.classList.remove('option-row--active'));
-  document.getElementById('status-done-btn').disabled = true;
-  document.getElementById('tag-picker-done-btn').disabled = true;
 }
 
 // ── INSPECTIONS ────────────────────────────────────────────────────────────
