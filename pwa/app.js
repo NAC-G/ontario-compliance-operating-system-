@@ -5,7 +5,7 @@
 
 import { C } from './modules/copy.js';
 import { getSetting, setSetting, getPendingCount } from './modules/db.js';
-import { uploadPhoto, getSite, createInspection, signoffInspection,
+import { uploadPhoto, getSite, createSite, createInspection, signoffInspection,
          generateReport as apiGenerateReport, lockReport, sendReport as apiSendReport,
          regenerateReport, getReportVersions, listReports, seedDemoData, getPhotoAudioUrl } from './modules/api.js';
 import { requestPermissions } from './modules/permissions.js';
@@ -461,9 +461,26 @@ document.getElementById('create-site-btn').addEventListener('click', async () =>
   const name = document.getElementById('new-site-name').value.trim();
   if (!name) { showToast('Enter a site name.'); return; }
   const address = document.getElementById('new-site-address').value.trim();
-  state.currentSite = { id: 'local-' + Date.now(), name, address };
-  await setSetting('activeSiteId', state.currentSite.id);
-  showScreen('ready');
+
+  // Real backend site — previously this just invented a client-only
+  // 'local-<timestamp>' id that was never provisioned server-side, so
+  // anything filed under it (photos, voice notes, inspections) permanently
+  // failed to save with no way to recover.
+  const btn = document.getElementById('create-site-btn');
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Creating…';
+  try {
+    const result = await createSite(name, address);
+    state.currentSite = { id: result.id, name: result.name || name, address: result.address || address };
+    await setSetting('activeSiteId', state.currentSite.id);
+    showScreen('ready');
+  } catch (e) {
+    showToast('Could not create site — check your connection and try again.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
 });
 
 document.getElementById('ready-btn').addEventListener('click', async () => {
