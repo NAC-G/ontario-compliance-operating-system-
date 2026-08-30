@@ -896,6 +896,7 @@ function renderEditPhotoScreen(photo) {
 
   document.getElementById('edit-photo-caption').value = photo.caption || '';
   document.getElementById('edit-photo-notes').value = photo.notes || '';
+  document.getElementById('edit-photo-captured-at').value = isoToDatetimeLocal(photo.capturedAt);
 
   renderEditPhotoTagGrid();
   renderEditPhotoSeverityRow();
@@ -951,6 +952,11 @@ document.getElementById('edit-photo-save-btn').addEventListener('click', async (
     severity: editPhotoState.severity,
     status:   editPhotoState.status,
   };
+  // Only send capturedAt if the field holds a valid date — an emptied/
+  // invalid field just leaves the existing value untouched server-side
+  // rather than wiping it out.
+  const capturedAtIso = datetimeLocalToIso(document.getElementById('edit-photo-captured-at').value);
+  if (capturedAtIso) patch.capturedAt = capturedAtIso;
 
   try {
     await updatePhoto(photo.id, patch);
@@ -1054,6 +1060,10 @@ async function showAnnotateScreen() {
   document.getElementById('ann-ba-paired').hidden = true;
   if (annVoiceAudioEl) { annVoiceAudioEl.pause(); annVoiceAudioEl = null; }
   annVoiceBlob = null;
+  // Defaults to the photo's EXIF date (library pick) or now (live capture);
+  // editable so a backdated/no-EXIF photo can still be filed under the date
+  // it actually happened — see camera.js openLibrary().
+  document.getElementById('ann-captured-at').value = isoToDatetimeLocal(cs.exif?.capturedAt);
 
   await renderAnnTagGrid();
   renderAnnStatusChips();
@@ -1343,7 +1353,11 @@ async function filePhoto() {
     status:        cs.status,
     voiceNote:     cs.voiceNote,
     pairedWithId:  cs.pairedWithId,
-    capturedAt:    cs.exif?.capturedAt || new Date().toISOString(),
+    // The "Captured date" field on the annotate screen is pre-filled from
+    // EXIF/now (see showAnnotateScreen) but always editable, so this is the
+    // source of truth at file time, not the original EXIF value directly —
+    // covers backdating a photo whose file lost its EXIF data.
+    capturedAt:    datetimeLocalToIso(document.getElementById('ann-captured-at').value) || cs.exif?.capturedAt || new Date().toISOString(),
     gps:           cs.exif?.gps || null,
     captureSource: cs.captureSource || 'Live',
     deviceInfo:    navigator.userAgent,
@@ -2100,6 +2114,25 @@ function timeAgo(dateStr) {
 
 function formatDate(d) {
   return new Date(d).toLocaleDateString('en-CA', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
+// <input type="datetime-local"> <-> ISO 8601 conversion for the manual
+// "Captured date" override (annotate + edit-photo screens). The input's
+// value is always local wall-clock time with no timezone (YYYY-MM-DDTHH:mm),
+// which is exactly how `new Date(...)` parses a string in that shape, so
+// round-tripping through the Date constructor (rather than string-slicing)
+// is what keeps this correct across the user's own timezone.
+function isoToDatetimeLocal(iso) {
+  const d = iso ? new Date(iso) : new Date();
+  if (isNaN(d.getTime())) return '';
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function datetimeLocalToIso(value) {
+  if (!value) return null;
+  const d = new Date(value);
+  return isNaN(d.getTime()) ? null : d.toISOString();
 }
 
 // ── BOOT ───────────────────────────────────────────────────────────────────

@@ -191,6 +191,14 @@
         <div class="ann-chips" id="ann-sev-chips"></div>
       </div>
 
+      <!-- Captured date — defaults to the photo's EXIF date (or now for a
+           live capture); editable so a backdated/no-EXIF photo can still be
+           filed under the date it actually happened. -->
+      <div class="ann-section">
+        <div class="ann-label">Captured date</div>
+        <input type="datetime-local" class="form-input" id="ann-captured-at">
+      </div>
+
       <!-- Before / After — only when Hazard - Corrected -->
       <div class="ann-section" id="ann-ba-section" hidden>
         <div class="ann-label">Before / After</div>
@@ -734,6 +742,11 @@
       <div class="form-group">
         <label class="form-label" for="edit-photo-caption">Caption</label>
         <input type="text" id="edit-photo-caption" class="form-input" placeholder="Photo at ...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="edit-photo-captured-at">Captured date</label>
+        <input type="datetime-local" id="edit-photo-captured-at" class="form-input">
       </div>
 
       <h2 class="section-head">Tags</h2>

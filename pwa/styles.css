@@ -889,6 +889,11 @@ textarea { min-height: 100px; resize: vertical; }
   transition: border-color 0.15s;
 }
 .form-input:focus { border-color: var(--green); }
+/* Native datetime-local picker icon/panel default to a light-mode
+   rendering (dark icon) that's invisible against this app's dark
+   .form-input background — color-scheme flips it to the light-on-dark
+   variant browsers ship for exactly this case. */
+input[type="datetime-local"].form-input { color-scheme: dark; }
 .form-select {
   background: var(--grey-1); border: 1.5px solid var(--grey-2);
   border-radius: var(--radius-sm); color: var(--white);
