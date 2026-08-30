@@ -773,6 +773,11 @@
 
         <div class="photo-detail-chips" id="photo-detail-chips"></div>
 
+        <div class="photo-detail-actions">
+          <button class="btn btn-secondary btn-sm" id="photo-detail-edit-btn">Edit</button>
+          <button class="btn btn-danger btn-sm" id="photo-detail-delete-btn">Delete</button>
+        </div>
+
         <!-- Audio player -->
         <div class="photo-detail-audio-wrap" id="photo-detail-audio-wrap" hidden>
           <div class="photo-meta-label">Voice note</div>
@@ -815,6 +820,35 @@
             <span class="photo-meta-value" id="photo-detail-pair-label"></span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Edit Photo ────────────────────────────────────────────────────────── -->
+  <section data-screen="edit-photo" class="screen">
+    <div class="screen-content">
+      <div class="form-group">
+        <label class="form-label" for="edit-photo-caption">Caption</label>
+        <input type="text" id="edit-photo-caption" class="form-input" placeholder="Photo at ...">
+      </div>
+
+      <h2 class="section-head">Tags</h2>
+      <div class="tag-grid" id="edit-photo-tag-grid"></div>
+
+      <h2 class="section-head">Severity</h2>
+      <div class="severity-row" id="edit-photo-severity-row"></div>
+
+      <h2 class="section-head">Status</h2>
+      <div class="option-list" id="edit-photo-status-list"></div>
+
+      <div class="form-group">
+        <label class="form-label" for="edit-photo-notes">Notes</label>
+        <textarea class="form-input" id="edit-photo-notes" rows="3" placeholder="Add notes&#8230;"></textarea>
+      </div>
+
+      <div class="px-20 mt-8 edit-photo-footer">
+        <button class="btn btn-ghost" id="edit-photo-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="edit-photo-save-btn">Save changes</button>
       </div>
     </div>
   </section>

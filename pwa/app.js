@@ -5,7 +5,7 @@
 
 import { C } from './modules/copy.js';
 import { getSetting, setSetting, getPendingCount } from './modules/db.js';
-import { uploadPhoto, getSite, createSite, createInspection, signoffInspection,
+import { uploadPhoto, getSite, createSite, updatePhoto, deletePhoto, createInspection, signoffInspection,
          generateReport as apiGenerateReport, lockReport, sendReport as apiSendReport,
          regenerateReport, getReportVersions, listReports, seedDemoData, getPhotoAudioUrl } from './modules/api.js';
 import { requestPermissions } from './modules/permissions.js';
@@ -31,6 +31,7 @@ const state = {
   pendingSampleTag:  null,
   signingWorkerIdx:  null,
   pinBuffer:         '',
+  currentPhoto:      null,   // photo shown on photo-detail; source for Edit/Delete
 };
 
 // ── Screen stack ───────────────────────────────────────────────────────────
@@ -102,6 +103,7 @@ function updateHeader(screenId) {
     'report-ready': 'Report', 'report-send': 'Send report',
     'report-locked': 'Locked', 'version-history': 'Versions',
     'style-learning': 'Style Learning', 'branding-setup': 'Custom Branding', 'brand-preview': 'Preview',
+    'edit-photo': 'Edit photo',
   };
   title.textContent = TITLES[screenId] || 'OCOS Field';
 }
@@ -140,6 +142,36 @@ function showError(errKey) {
     });
     actions.appendChild(b);
   });
+  modal.hidden = false;
+}
+
+// Reuses the same modal markup as showError but for a Cancel/Confirm choice
+// with a caller-supplied callback, instead of the fixed C.errors-keyed
+// copy. Deliberately not using window.confirm() here — iOS Safari's
+// standalone (Home Screen installed) mode is known to handle native
+// confirm()/alert() unreliably, and this app specifically nudges users
+// toward installing to the Home Screen (see the iOS hint on the ready
+// screen), so a real in-app modal is the safer choice for anything
+// destructive like a delete confirmation.
+function showConfirm(headline, body, confirmLabel, onConfirm) {
+  const modal = document.getElementById('error-modal');
+  document.getElementById('error-headline').textContent = headline;
+  document.getElementById('error-body').textContent = body;
+  const actions = document.getElementById('error-actions');
+  actions.innerHTML = '';
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.className = 'btn btn-danger';
+  confirmBtn.textContent = confirmLabel;
+  confirmBtn.addEventListener('click', () => { modal.hidden = true; onConfirm(); });
+  actions.appendChild(confirmBtn);
+
+  const cancelBtn = document.createElement('button');
+  cancelBtn.className = 'btn btn-ghost';
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.addEventListener('click', () => { modal.hidden = true; });
+  actions.appendChild(cancelBtn);
+
   modal.hidden = false;
 }
 
@@ -661,7 +693,9 @@ function filterDossier(filter) {
   }
 }
 
-function showPhotoDetail(photo) {
+function showPhotoDetail(photo, push = true) {
+  state.currentPhoto = photo; // read by the Edit/Delete buttons below
+
   // Image
   const img = document.getElementById('photo-detail-img');
   const placeholder = document.getElementById('photo-detail-placeholder');
@@ -782,8 +816,136 @@ function showPhotoDetail(photo) {
     } else { pairWrap.hidden = true; }
   }
 
-  showScreen('photo-detail');
+  showScreen('photo-detail', push);
 }
+
+// ── PHOTO EDIT / DELETE ──────────────────────────────────────────────────────
+
+document.getElementById('photo-detail-edit-btn').addEventListener('click', () => {
+  const photo = state.currentPhoto;
+  if (!photo) return;
+  renderEditPhotoScreen(photo);
+  showScreen('edit-photo');
+});
+
+document.getElementById('photo-detail-delete-btn').addEventListener('click', () => {
+  const photo = state.currentPhoto;
+  if (!photo) return;
+  showConfirm(
+    'Delete this photo?',
+    'It disappears from the app right away. The record is archived, not destroyed — an admin can still recover it in Notion if you ever need it back.',
+    'Delete',
+    async () => {
+      const btn = document.getElementById('photo-detail-delete-btn');
+      btn.disabled = true;
+      btn.textContent = 'Deleting…';
+      try {
+        await deletePhoto(photo.id);
+        showToast('Photo deleted.');
+        goBack(); // back to the grid
+        loadDossier(state.currentSite?.id);
+      } catch (e) {
+        showToast('Could not delete photo — check your connection and try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Delete';
+      }
+    }
+  );
+});
+
+let editPhotoState = null; // { tags, severity, status } — caption/notes read straight from their inputs on save
+
+function renderEditPhotoScreen(photo) {
+  editPhotoState = {
+    tags: [...(photo.tags || [])],
+    severity: photo.severity || 'Info',
+    status: photo.status || 'Routine',
+  };
+
+  document.getElementById('edit-photo-caption').value = photo.caption || '';
+  document.getElementById('edit-photo-notes').value = photo.notes || '';
+
+  renderEditPhotoTagGrid();
+  renderEditPhotoSeverityRow();
+
+  renderOptionList('edit-photo-status-list', C.status.options, v => { editPhotoState.status = v; });
+  const activeStatusBtn = document.querySelector(
+    `#edit-photo-status-list .option-row[data-value="${editPhotoState.status}"]`
+  );
+  if (activeStatusBtn) activeStatusBtn.classList.add('option-row--active');
+}
+
+async function renderEditPhotoTagGrid() {
+  const grid = document.getElementById('edit-photo-tag-grid');
+  grid.innerHTML = '';
+  const taxonomy = await loadTaxonomy();
+  const selected = new Set(editPhotoState.tags);
+  taxonomy.categories.forEach(cat => {
+    const chip = document.createElement('button');
+    chip.className = 'tag-chip' + (selected.has(cat.id) ? ' tag-chip--selected' : '');
+    chip.textContent = cat.label;
+    chip.dataset.catId = cat.id;
+    chip.style.setProperty('--cat-color', cat.color);
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('tag-chip--selected');
+      editPhotoState.tags = [...grid.querySelectorAll('.tag-chip--selected')].map(c => c.dataset.catId);
+    });
+    grid.appendChild(chip);
+  });
+}
+
+function renderEditPhotoSeverityRow() {
+  const container = document.getElementById('edit-photo-severity-row');
+  container.innerHTML = '';
+  C.severity.options.forEach(sev => {
+    const btn = document.createElement('button');
+    const isActive = sev.toLowerCase() === (editPhotoState.severity || '').toLowerCase();
+    btn.className = 'sev-btn' + (isActive ? ' sev-btn--active' : '');
+    btn.dataset.sev = sev.toLowerCase();
+    btn.textContent = sev;
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.sev-btn').forEach(b => b.classList.remove('sev-btn--active'));
+      btn.classList.add('sev-btn--active');
+      editPhotoState.severity = sev;
+    });
+    container.appendChild(btn);
+  });
+}
+
+document.getElementById('edit-photo-cancel-btn').addEventListener('click', () => goBack());
+
+document.getElementById('edit-photo-save-btn').addEventListener('click', async () => {
+  const photo = state.currentPhoto;
+  if (!photo || !editPhotoState) return;
+
+  const btn = document.getElementById('edit-photo-save-btn');
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  const patch = {
+    caption:  document.getElementById('edit-photo-caption').value.trim(),
+    notes:    document.getElementById('edit-photo-notes').value.trim(),
+    tags:     editPhotoState.tags,
+    severity: editPhotoState.severity,
+    status:   editPhotoState.status,
+  };
+
+  try {
+    await updatePhoto(photo.id, patch);
+    showToast('Changes saved.');
+    await loadDossier(state.currentSite?.id);
+    const refreshed = (state.currentSite?.photos || []).find(p => p.id === photo.id);
+    goBack(); // back to photo-detail — don't push a new entry, just re-render it
+    if (refreshed) showPhotoDetail(refreshed, false);
+  } catch (e) {
+    showToast('Could not save changes — check your connection and try again.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+});
 
 document.getElementById('site-switch-btn').addEventListener('click', () => { showScreen('site-list'); loadSiteList(); });
 

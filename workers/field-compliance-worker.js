@@ -5,7 +5,7 @@
  */
 
 import { validateLicense, requireTier } from './lib/auth.js';
-import { handlePhotoUpload } from './lib/handlers/photo.js';
+import { handlePhotoUpload, handlePhotoUpdate, handlePhotoDelete } from './lib/handlers/photo.js';
 import { handleSiteGet, handleSiteCreate } from './lib/handlers/site.js';
 import {
   handleInspectionCreate,
@@ -56,7 +56,7 @@ function corsHeaders(request, env) {
     : (env.FRONTEND_URL || 'https://field.naturalalternatives.ca');
   return {
     'Access-Control-Allow-Origin': allowed,
-    'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, X-OCOS-License, X-FC-Internal',
     'Access-Control-Max-Age': '86400',
   };
@@ -141,6 +141,16 @@ export default {
       } else if (method === 'POST' && path === '/fc/photo') {
         request._license = await validateLicense(request, env);
         response = await handlePhotoUpload(request, env);
+
+      } else if (method === 'PATCH' && path.match(/^\/fc\/photo\/[^/]+$/)) {
+        const photoId = path.slice('/fc/photo/'.length);
+        request._license = await validateLicense(request, env);
+        response = await handlePhotoUpdate(request, env, photoId);
+
+      } else if (method === 'DELETE' && path.match(/^\/fc\/photo\/[^/]+$/)) {
+        const photoId = path.slice('/fc/photo/'.length);
+        request._license = await validateLicense(request, env);
+        response = await handlePhotoDelete(request, env, photoId);
 
       // ── Site ─────────────────────────────────────────────────────────────
       } else if (method === 'POST' && path === '/fc/site') {

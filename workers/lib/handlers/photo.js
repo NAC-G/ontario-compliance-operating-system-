@@ -159,6 +159,70 @@ export async function handlePhotoUpload(request, env) {
   }, 201);
 }
 
+/**
+ * PATCH /fc/photo/:id
+ * Body (JSON, all optional): { caption, tags, severity, status, notes }.
+ * Only the properties actually sent are touched.
+ */
+export async function handlePhotoUpdate(request, env, photoId) {
+  const license = request._license;
+  const mapping = await getLicenseMapping(env.DB, license.key);
+  if (!mapping) return json({ error: 'FC workspace not provisioned for this license' }, 409);
+
+  const body = await request.json().catch(() => ({}));
+  const { caption, tags, severity, status, notes } = body;
+
+  const properties = {};
+  if (caption !== undefined) {
+    properties['Caption'] = { title: [{ text: { content: String(caption).slice(0, 200) } }] };
+  }
+  if (Array.isArray(tags)) {
+    properties['Tags'] = { multi_select: tags.map(t => ({ name: t })) };
+    properties['OHSA References'] = { rich_text: [{ text: { content: resolveOhsaRefs(tags).join(', ') } }] };
+  }
+  if (severity !== undefined) properties['Severity'] = { select: { name: severity } };
+  if (status !== undefined) properties['Status'] = { select: { name: status } };
+  if (notes !== undefined) {
+    properties['Notes'] = { rich_text: [{ text: { content: String(notes).slice(0, 2000) } }] };
+  }
+
+  if (Object.keys(properties).length === 0) return json({ error: 'Nothing to update' }, 400);
+
+  const notion = makeClient(env.NOTION_TOKEN);
+  try {
+    await notion.patch(`/pages/${photoId}`, { properties });
+  } catch (e) {
+    console.error('Photo update failed:', e.message || e);
+    return json({ error: 'Failed to update photo', detail: String(e.message || e) }, 502);
+  }
+
+  return json({ ok: true, photoId });
+}
+
+/**
+ * DELETE /fc/photo/:id
+ * Archives the Notion record (Notion's own trash — recoverable there, and
+ * automatically excluded from GET /fc/site/:id's query going forward) —
+ * deliberately not a hard delete. This is a compliance/evidence tool, so
+ * "delete" here means "remove from view," not "destroy the record." The
+ * R2 photo/voice bytes are left untouched for the same reason.
+ */
+export async function handlePhotoDelete(request, env, photoId) {
+  const license = request._license;
+  const mapping = await getLicenseMapping(env.DB, license.key);
+  if (!mapping) return json({ error: 'FC workspace not provisioned for this license' }, 409);
+
+  const notion = makeClient(env.NOTION_TOKEN);
+  try {
+    await notion.patch(`/pages/${photoId}`, { archived: true });
+  } catch (e) {
+    console.error('Photo delete failed:', e.message || e);
+    return json({ error: 'Failed to delete photo', detail: String(e.message || e) }, 502);
+  }
+
+  return json({ ok: true, photoId });
+}
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status, headers: { 'Content-Type': 'application/json' },
