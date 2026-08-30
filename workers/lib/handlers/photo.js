@@ -182,7 +182,7 @@ export async function handlePhotoUpdate(request, env, photoId) {
   if (!mapping) return json({ error: 'FC workspace not provisioned for this license' }, 409);
 
   const body = await request.json().catch(() => ({}));
-  const { caption, tags, severity, status, notes } = body;
+  const { caption, tags, severity, status, notes, capturedAt } = body;
 
   const properties = {};
   if (caption !== undefined) {
@@ -196,6 +196,13 @@ export async function handlePhotoUpdate(request, env, photoId) {
   if (status !== undefined) properties['Status'] = { select: { name: status } };
   if (notes !== undefined) {
     properties['Notes'] = { rich_text: [{ text: { content: String(notes).slice(0, 2000) } }] };
+  }
+  // Manual override for a backdated capture or one whose file lost its
+  // EXIF date — see pwa/app.js's "Captured date" field on the annotate and
+  // edit-photo screens. Validated: an invalid/unparseable date is silently
+  // ignored rather than writing garbage into the Notion date property.
+  if (capturedAt !== undefined && !isNaN(new Date(capturedAt).getTime())) {
+    properties['Captured At'] = { date: { start: capturedAt } };
   }
 
   if (Object.keys(properties).length === 0) return json({ error: 'Nothing to update' }, 400);
