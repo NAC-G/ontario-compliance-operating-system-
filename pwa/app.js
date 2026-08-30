@@ -424,6 +424,7 @@ document.addEventListener('click', e => {
   const btn = e.target.closest('[data-nav]');
   if (!btn) return;
   const nav = btn.dataset.nav;
+  pickingBeforePhoto = false;
   updateNavBtns(nav);
   showScreen(nav, false);
   screenStack = [nav];
@@ -519,6 +520,12 @@ document.getElementById('save-license-btn').addEventListener('click', async () =
 
 let currentDossierFilter = 'All';
 
+// When true, the next photo tile tapped in the grid is captured as the
+// "before" photo for the pairing flow (see ba-pair-btn below) instead of
+// opening its detail view. Set by ba-pair-btn, cleared on selection or on
+// any bottom-nav navigation away (see the nav click handler above).
+let pickingBeforePhoto = false;
+
 // Flatten the /fc/site/:id response so state.currentSite.id, .name, .tier work everywhere
 function normalizeSite(apiResponse, siteIdFallback) {
   return {
@@ -597,7 +604,18 @@ function renderDossier(data) {
     else badge.classList.add('incident');
     thumb.appendChild(badge);
 
-    thumb.addEventListener('click', () => showPhotoDetail(photo));
+    thumb.addEventListener('click', () => {
+      if (pickingBeforePhoto) {
+        pickingBeforePhoto = false;
+        if (state.captureState) state.captureState.pairedWithId = photo.id;
+        filterDossier('All');
+        showToast('Paired with before photo.');
+        showScreen('voice', false);
+        showVoicePhotoContext();
+        return;
+      }
+      showPhotoDetail(photo);
+    });
     grid.appendChild(thumb);
   });
 }
@@ -739,7 +757,15 @@ function showPhotoDetail(photo) {
     if (photo.pairBeforeId || photo.pairAfterId) {
       pairWrap.hidden = false;
       const pairLabel = document.getElementById('photo-detail-pair-label');
-      if (pairLabel) pairLabel.textContent = photo.pairBeforeId ? 'Paired with Before photo' : 'Paired with After photo';
+      // Pair: Before/Pair: After are each an independent, self-syncing
+      // Notion relation (not cross-linked before<->after), so both photos
+      // in a pair end up with the same field populated — can't tell which
+      // photo is the "before" vs "after" from which field is set. Use the
+      // photo's own status instead, which is unambiguous.
+      if (pairLabel) {
+        pairLabel.textContent = photo.status === 'Hazard - Corrected'
+          ? 'Paired with Before photo' : 'Paired with After photo';
+      }
     } else { pairWrap.hidden = true; }
   }
 
@@ -1240,6 +1266,7 @@ document.getElementById('voice-skip-btn').addEventListener('click', filePhoto);
 // ── BEFORE / AFTER ─────────────────────────────────────────────────────────
 
 document.getElementById('ba-pair-btn').addEventListener('click', () => {
+  pickingBeforePhoto = true;
   showToast('Select the original "before" photo from the grid.', 4000);
   showScreen('capture', false);
   screenStack = ['capture'];
