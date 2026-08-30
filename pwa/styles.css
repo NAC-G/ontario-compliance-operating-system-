@@ -569,6 +569,15 @@ textarea { min-height: 100px; resize: vertical; }
   letter-spacing: 0.5px;
 }
 .onboarding-sub { font-size: 15px; color: var(--grey-4); line-height: 1.6; }
+.onboarding-hint {
+  border-left: 3px solid var(--green);
+  background: rgba(94,232,48,0.06);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--grey-4);
+  line-height: 1.5;
+}
 .perm-list { list-style: none; display: flex; flex-direction: column; }
 .logo-mark {
   font-family: var(--font-display);

@@ -29,6 +29,7 @@ export const C = {
   ready: {
     headline: 'You\'re set.',
     sub: 'Tap the camera button anytime. We\'ll handle the paperwork.',
+    iosHint: 'One more thing: tap the Share icon below, then "Add to Home Screen." That keeps your photos and reports from getting cleared by Safari when you don\'t open the app for a while.',
     btn: 'Open camera',
   },
 
@@ -223,8 +224,8 @@ export const C = {
   errors: {
     cameraDenied: {
       headline: 'We need camera access.',
-      body: 'Photos are the whole point. Open settings to allow OCOS Field to use your camera.',
-      btn: 'Open settings',
+      body: 'Photos are the whole point. Open settings to allow OCOS Field to use your camera — you can also grant it later, right when you tap the camera button.',
+      btns: ['Open settings', 'Continue without'],
     },
     micDenied: {
       headline: 'Mic access is off.',

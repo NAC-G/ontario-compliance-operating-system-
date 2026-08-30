@@ -257,6 +257,17 @@ function populateCopy() {
   setText('site-setup-new-btn',     C.siteSetup.btnNew);
   setText('ready-headline',         C.ready.headline);
   setText('ready-sub',              C.ready.sub);
+  // iOS Safari evicts IndexedDB data after ~7 days of not opening the site,
+  // unless it's been added to the Home Screen (which exempts it as an
+  // installed PWA). Android/Chrome install prompts don't need this nudge.
+  const isIOSSafari = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isStandalone = window.navigator.standalone === true ||
+    window.matchMedia('(display-mode: standalone)').matches;
+  if (isIOSSafari && !isStandalone) {
+    const hint = document.getElementById('ready-ios-hint');
+    hint.textContent = C.ready.iosHint;
+    hint.hidden = false;
+  }
   setText('ready-btn',              C.ready.btn);
 
   // Permissions list
@@ -427,8 +438,12 @@ document.getElementById('welcome-btn').addEventListener('click', () => showScree
 
 document.getElementById('permissions-btn').addEventListener('click', async () => {
   const perms = await requestPermissions();
-  if (perms.camera === 'denied') { showError('cameraDenied'); return; }
-  if (!perms.camera)             { showError('cameraDenied'); return; }
+  // Camera denial no longer blocks onboarding — actual capture uses a native
+  // file/camera input (see camera.js openCamera/openLibrary) which prompts
+  // for camera access on its own the first time it's used, independent of
+  // this pre-flight getUserMedia probe. Stalling here just strands users who
+  // fat-finger "Don't Allow" with no way forward.
+  if (perms.camera === 'denied' || !perms.camera) showError('cameraDenied');
   if (perms.mic === 'denied')    showError('micDenied');
   if (perms.gps === 'denied')    showError('gpsDenied');
   else if (!perms.gps)           showError('gpsOff');
