@@ -31,8 +31,31 @@ export async function uploadPhoto(formData) {
   return fcFetch('/photo', { method: 'POST', body: formData });
 }
 
-export async function getSite(siteId, cursor) {
-  const qs = cursor ? `?cursor=${encodeURIComponent(cursor)}` : '';
+// Replays a queued offline upload (see modules/db.js queueUpload /
+// getAllPendingUploads). Uses the license key stored on the item at
+// queue time, not whatever's currently active — deliberate, so a queued
+// item still uploads correctly to the right license even if the active
+// one changes before it's retried. Used by sync.js's main-thread flush
+// fallback (browsers without Background Sync — notably iOS Safari).
+export async function uploadQueuedItem(item) {
+  const formData = new FormData();
+  formData.append('photo', item.photoBytes, item.fileName);
+  if (item.thumbnailBytes) formData.append('thumbnail', item.thumbnailBytes, item.thumbnailFileName);
+  if (item.voiceBytes) formData.append('voice', item.voiceBytes, item.voiceFileName);
+  formData.append('metadata', JSON.stringify(item.metadata));
+  const res = await fetch(`${FC_BASE}/fc/photo`, {
+    method: 'POST',
+    headers: { 'X-OCOS-License': item.licenseKey || '' },
+    body: formData,
+  });
+  return res.ok;
+}
+
+export async function getSite(siteId, { cursor, search } = {}) {
+  const params = new URLSearchParams();
+  if (cursor) params.set('cursor', cursor);
+  if (search) params.set('search', search);
+  const qs = params.toString() ? `?${params.toString()}` : '';
   return fcFetch(`/site/${siteId}${qs}`).then(r => r.json());
 }
 

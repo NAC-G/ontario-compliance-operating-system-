@@ -4,7 +4,7 @@
  * Queued photo/voice uploads sync via Background Sync when back online.
  */
 
-const CACHE_NAME = 'ocos-field-v30';
+const CACHE_NAME = 'ocos-field-v31';
 const SHELL = [
   '/',
   '/index.html',
@@ -76,7 +76,9 @@ async function flushQueue() {
   for (const item of queue) {
     try {
       const formData = new FormData();
-      formData.append('photo', new Blob([item.photoBytes], { type: item.mimeType }), item.fileName);
+      formData.append('photo', item.photoBytes, item.fileName);
+      if (item.thumbnailBytes) formData.append('thumbnail', item.thumbnailBytes, item.thumbnailFileName);
+      if (item.voiceBytes) formData.append('voice', item.voiceBytes, item.voiceFileName);
       formData.append('metadata', JSON.stringify(item.metadata));
 
       const res = await fetch('/fc/photo', {
@@ -86,13 +88,21 @@ async function flushQueue() {
       });
 
       if (res.ok) {
-        await markSynced(db, item.id);
+        await deleteQueueItem(db, item.id);
         notifyClients({ type: 'SYNC_COMPLETE', itemId: item.id });
       } else {
+        // A real server rejection (not a connectivity problem, since we
+        // got a response at all) — leave it queued for a person to
+        // notice via the sync chip rather than silently dropping it, but
+        // don't keep hammering it automatically; this same request will
+        // just fail the same way again next sync too.
         console.error('Upload failed for item', item.id, res.status);
       }
     } catch (err) {
+      // Network error mid-flush — stop this pass; the rest of the queue
+      // will get another shot on the next sync event.
       console.error('Sync error for item', item.id, err);
+      break;
     }
   }
 }
@@ -127,16 +137,15 @@ function getAllPending(db) {
   });
 }
 
-function markSynced(db, id) {
+// Deletes rather than flags-as-synced — queued items carry real photo/
+// thumbnail/voice blobs, and there's no UI that ever reads a "synced"
+// record back, so keeping them around forever just wastes IndexedDB
+// storage on a device that's often storage-constrained in the field.
+function deleteQueueItem(db, id) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction('upload_queue', 'readwrite');
-    const store = tx.objectStore('upload_queue');
-    const req = store.get(id);
-    req.onsuccess = e => {
-      const item = e.target.result;
-      item.synced = 1;
-      store.put(item).onsuccess = () => resolve();
-    };
-    req.onerror = e => reject(e.target.error);
+    tx.objectStore('upload_queue').delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = e => reject(e.target.error);
   });
 }
