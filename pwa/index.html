@@ -227,115 +227,13 @@
 
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════════
-       TAG PICKER
-       ════════════════════════════════════════════════════════════════════ -->
-
-  <section data-screen="tag-picker" class="screen">
-    <div class="screen-content">
-      <h2 class="section-head" id="tag-picker-heading"></h2>
-      <p  class="section-sub"  id="tag-picker-sub"></p>
-      <div class="tag-grid" id="tag-grid"></div>
-      <div class="px-20 mt-8">
-        <button class="btn btn-primary btn-full" id="tag-picker-done-btn" disabled>Done</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════════
-       SEVERITY
-       ════════════════════════════════════════════════════════════════════ -->
-
-  <section data-screen="severity" class="screen">
-    <div class="screen-content">
-      <h2 class="section-head" id="severity-heading"></h2>
-      <p  class="section-sub"  id="severity-helper"></p>
-      <div class="severity-row" id="severity-row"></div>
-      <div class="px-20 mt-8">
-        <button class="btn btn-primary btn-full" id="severity-done-btn" disabled>Next</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════════
-       STATUS
-       ════════════════════════════════════════════════════════════════════ -->
-
-  <section data-screen="status" class="screen">
-    <div class="screen-content">
-      <h2 class="section-head" id="status-heading"></h2>
-      <div class="option-list" id="status-list"></div>
-      <div class="px-20 mt-8">
-        <button class="btn btn-primary btn-full" id="status-done-btn" disabled>File photo</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════════
-       VOICE NOTE
-       ════════════════════════════════════════════════════════════════════ -->
-
-  <section data-screen="voice" class="screen">
-    <div class="screen-content voice-screen-content">
-
-      <!-- Photo + tag context strip -->
-      <div class="voice-context" id="voice-context" hidden>
-        <img class="voice-thumb" id="voice-thumb" alt="Captured photo">
-        <div class="voice-thumb-tags" id="voice-thumb-tags"></div>
-      </div>
-
-      <h2 class="section-head" id="voice-heading" style="padding:0;text-align:center"></h2>
-      <p  class="section-sub"  id="voice-sub"    style="padding:0;text-align:center"></p>
-
-      <!-- Idle: mic button -->
-      <button class="voice-btn voice-btn--large" id="voice-record-btn" aria-label="Record voice note">&#127908;</button>
-
-      <!-- Active: recording indicator -->
-      <div class="voice-recording-bar" id="voice-recording-bar" hidden>
-        <span class="voice-rec-dot"></span>
-        <span class="voice-timer" id="voice-timer">0:00</span>
-      </div>
-
-      <!-- Active: recording controls -->
-      <div class="voice-controls" id="voice-controls" hidden>
-        <button class="btn btn-secondary" id="voice-pause-btn">Pause</button>
-        <button class="btn btn-danger"    id="voice-stop-btn">Stop</button>
-      </div>
-
-      <!-- Review: playback + transcript + notes -->
-      <div class="voice-review" id="voice-review" hidden>
-        <div class="voice-playback-row">
-          <button class="voice-play-btn" id="voice-play-btn" aria-label="Play recording">&#9654;</button>
-          <div class="voice-playback-info">
-            <span class="voice-playback-label">Review recording</span>
-            <span class="voice-playback-dur" id="voice-playback-dur">0:00</span>
-          </div>
-          <button class="btn btn-ghost btn-sm" id="voice-rerecord-btn">Re-record</button>
-        </div>
-        <p class="voice-transcript-preview" id="voice-transcript-preview">Transcribing…</p>
-        <label class="voice-notes-label">Notes</label>
-        <textarea class="form-input" id="voice-notes-area" rows="3" placeholder="Add or edit notes…"></textarea>
-        <button class="btn btn-primary btn-full" id="voice-confirm-btn"></button>
-      </div>
-
-      <button class="btn btn-ghost btn-full" id="voice-skip-btn">Skip voice note</button>
-    </div>
-  </section>
-
-  <!-- ════════════════════════════════════════════════════════════════════
-       BEFORE / AFTER
-       ════════════════════════════════════════════════════════════════════ -->
-
-  <section data-screen="before-after" class="screen">
-    <div class="screen-content" style="padding-top:40px">
-      <h2 class="section-head" id="ba-heading"></h2>
-      <p  class="section-sub"  id="ba-sub"></p>
-      <div class="px-20 stack">
-        <button class="btn btn-primary  btn-full" id="ba-pair-btn"></button>
-        <button class="btn btn-secondary btn-full" id="ba-skip-btn"></button>
-      </div>
-    </div>
-  </section>
+  <!--
+    An earlier multi-step capture flow (tag-picker -> severity -> status ->
+    voice -> before-after, as separate screens) used to live here. It was
+    dead code -- nothing in app.js ever navigated to any of these screens;
+    the real, live flow is the single consolidated "annotate" screen above.
+    Removed 2026-08-30 along with the matching dead JS.
+  -->
 
   <!-- Filing overlay -->
   <div class="full-overlay" id="filing-overlay" hidden>

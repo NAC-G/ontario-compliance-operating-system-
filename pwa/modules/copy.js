@@ -43,13 +43,22 @@ export const C = {
     line1: 'Tap a category to file this photo.',
     line2: 'Or hold the mic to dictate a note first.',
   },
-  tagPicker: {
-    heading: 'What\'s in this photo?',
-    sub: 'Pick what fits. You can add more later.',
-  },
   severity: {
     heading: 'How bad is it?',
-    options: ['Info', 'Low', 'Medium', 'High', 'Critical'],
+    // value is what's actually stored/sent (matches the Notion select
+    // options and taxonomy.json's severity_default values exactly:
+    // Info/Low/Med/High/Critical) — label is what's shown on the button.
+    // These used to be the same literal string ('Medium' stored as-is),
+    // which doesn't match the real 'Med' option, so every manually-picked
+    // "Medium" severity was quietly creating a duplicate, never-matching
+    // select option in Notion instead of using the real one.
+    options: [
+      { value: 'Info',     label: 'Info' },
+      { value: 'Low',      label: 'Low' },
+      { value: 'Med',      label: 'Medium' },
+      { value: 'High',     label: 'High' },
+      { value: 'Critical', label: 'Critical' },
+    ],
     helper: 'OCOS sets a default based on the tag. Change it if you disagree.',
   },
   status: {
@@ -62,30 +71,6 @@ export const C = {
       { value: 'Incident',          label: 'Incident — someone got hurt or nearly did' },
     ],
   },
-  voiceIdle: {
-    heading: 'Tap to record.',
-    sub: 'Up to 5 minutes. We\'ll transcribe it.',
-  },
-  voiceRecording: {
-    heading: 'Recording…',
-    sub: 'Tap Stop when you\'re done.',
-  },
-  voiceTranscribing: {
-    heading: 'Got it. Writing it up…',
-    sub: 'Usually under 5 seconds.',
-  },
-  voiceDone: {
-    heading: 'Here\'s what you said.',
-    btnConfirm: 'Looks good',
-    btnEdit: 'Edit text',
-  },
-  beforeAfter: {
-    heading: 'Pair this with a "before"?',
-    sub: 'Find the original photo of this hazard so we can show it fixed.',
-    btnPair: 'Find the before photo',
-    btnSkip: 'Skip — this is standalone',
-  },
-
   // ── Site dossier ──────────────────────────────────────────────────────────
   filterBar: ['All', 'Open hazards', 'Fixed hazards', 'Inspections', 'Incidents', 'This week'],
   emptyFilter: {

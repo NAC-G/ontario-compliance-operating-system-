@@ -186,6 +186,25 @@ html, body {
   gap: 8px;
   padding: 16px 20px;
 }
+
+/* Two-level category -> tag picker. Category headers group the specific,
+   OHSA-mapped tags underneath — selecting happens on the tag chips, not
+   the category header, since only specific tags carry OHSA/severity/
+   status defaults (see getSeverityDefault/resolveOhsaRefs in taxonomy.js). */
+.tag-cat-list { padding: 8px 20px 16px; }
+.tag-cat-group { margin-bottom: 6px; }
+.tag-cat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 12px 14px; border-radius: 10px;
+  border: 1.5px solid var(--cat-color, var(--grey-2));
+  background: var(--grey-1); color: var(--grey-4);
+  font-size: 14px; font-weight: 600; font-family: var(--font-mono);
+  cursor: pointer; user-select: none;
+}
+.tag-cat-header--has-selection { color: var(--cat-color, var(--green)); }
+.tag-cat-chevron { transition: transform 0.15s; color: var(--grey-3); }
+.tag-cat-header--expanded .tag-cat-chevron { transform: rotate(90deg); }
+.tag-grid--nested { padding: 8px 0 4px 10px; }
 .tag-chip {
   padding: 6px 14px;
   border-radius: 20px;

@@ -4,7 +4,7 @@
  * Queued photo/voice uploads sync via Background Sync when back online.
  */
 
-const CACHE_NAME = 'ocos-field-v26';
+const CACHE_NAME = 'ocos-field-v27';
 const SHELL = [
   '/',
   '/index.html',
