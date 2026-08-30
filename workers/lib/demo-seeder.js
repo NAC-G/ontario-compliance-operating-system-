@@ -12,6 +12,7 @@ import { generateReport } from './pdf-generator.js';
 import { sha256Hex } from './hash.js';
 import { photoKey, reportKey, putObject } from './r2.js';
 import { checkIdempotency, setIdempotency, recordAuditIndex } from './db.js';
+import { DEMO_PHOTO_JPEG_B64 } from './demo-placeholder-images.js';
 
 // Pre-written realistic inspection summary (skip Claude API call in seeder — fast, predictable, offline-safe)
 const DEMO_AI_BODY =
@@ -165,7 +166,7 @@ export async function seedDemoData(env, license, mapping) {
   const photoHashes = [];
 
   for (const [i, spec] of DEMO_PHOTOS.entries()) {
-    const photoBytes = buildPlaceholderBytes(i, spec.slug);
+    const photoBytes = buildPlaceholderBytes(spec.slug);
     const hash = await sha256Hex(photoBytes);
     photoHashes.push(hash);
 
@@ -384,7 +385,14 @@ export async function seedDemoData(env, license, mapping) {
   return result;
 }
 
-// Unique placeholder bytes per photo — gives each a distinct SHA-256
-function buildPlaceholderBytes(index, slug) {
-  return new TextEncoder().encode(`OCOS-DEMO-PHOTO:${index}:${slug}:Cornwall-ON:2026`).buffer;
+// Real, decodable JPEG bytes per photo (see demo-placeholder-images.js) —
+// previously this returned raw placeholder text with an image/jpeg
+// content-type, which browsers can't render, so demo thumbnails showed blank.
+function buildPlaceholderBytes(slug) {
+  const b64 = DEMO_PHOTO_JPEG_B64[slug];
+  if (!b64) throw new Error(`No placeholder image for demo photo slug "${slug}"`);
+  const bin = atob(b64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes.buffer;
 }
