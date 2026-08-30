@@ -35,6 +35,23 @@ export async function getSite(siteId) {
   return fcFetch(`/site/${siteId}`).then(r => r.json());
 }
 
+export async function updatePhoto(photoId, patch) {
+  const res = await fcFetch(`/photo/${photoId}`, {
+    method: 'PATCH',
+    body: JSON.stringify(patch),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error || 'Failed to update photo');
+  return body;
+}
+
+export async function deletePhoto(photoId) {
+  const res = await fcFetch(`/photo/${photoId}`, { method: 'DELETE' });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(body.error || 'Failed to delete photo');
+  return body;
+}
+
 export async function createSite(name, address) {
   const res = await fcFetch('/site', {
     method: 'POST',

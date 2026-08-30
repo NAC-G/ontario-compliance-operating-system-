@@ -899,6 +899,12 @@ textarea { min-height: 100px; resize: vertical; }
 .btn-danger:active { opacity: 0.8; }
 .btn-sm { padding: 6px 12px; font-size: 13px; }
 
+.photo-detail-actions { display: flex; gap: 10px; margin: 4px 0 12px; }
+.photo-detail-actions .btn { flex: 1; }
+
+.edit-photo-footer { display: flex; gap: 10px; padding-bottom: 24px; }
+.edit-photo-footer .btn { flex: 1; }
+
 /* Photo context strip on voice screen */
 .voice-context {
   display: flex; align-items: center; gap: 10px;
