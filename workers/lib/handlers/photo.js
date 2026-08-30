@@ -73,7 +73,12 @@ export async function handlePhotoUpload(request, env) {
   let voiceR2Key = null;
   const voiceFile = formData.get('voice');
   if (voiceFile) {
-    const vId = voiceNoteId || `FC-V-${Date.now()}`;
+    // voiceNoteId isn't something the client ever sends (filePhoto() sends
+    // a `voiceNote` field for something else entirely, not a pre-assigned
+    // R2 key id) — this used to reference an undefined variable removed
+    // during an earlier field-name cleanup, crashing with a ReferenceError
+    // (500) on every photo upload that included a voice recording.
+    const vId = `FC-V-${Date.now()}`;
     voiceR2Key = voiceKey(license.key, siteId, vId);
     await putObject(env.FC_VOICE, voiceR2Key, await voiceFile.arrayBuffer(), 'audio/mp4');
   }
