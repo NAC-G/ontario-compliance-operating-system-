@@ -114,6 +114,27 @@ export async function seedDemoData(env, license, mapping) {
 
   const notion = makeClient(env.NOTION_TOKEN);
 
+  // Second, independent guard: the D1 idempotency key above is only ever
+  // written at the very end of this function (see setIdempotency below),
+  // so any Notion write failing partway through this ~9-step sequence
+  // (site, 2 workers, 6 photos, inspection, report, lock) — e.g. the
+  // Photos DB schema-drift issues this session hit repeatedly — silently
+  // skipped the D1 record and left a half-seeded orphan site behind, with
+  // nothing to stop the next /fc/demo/seed call from creating a whole new
+  // duplicate. Found 5 such duplicates for this license 2026-08-30.
+  // Checking Notion itself for an existing Demo Site (ground truth, not a
+  // separate record that can silently fall out of sync) closes that gap
+  // regardless of why the D1 key was never set.
+  const already = await notion.post(`/databases/${mapping.sites_db_id}/query`, {
+    filter: { property: 'Site Name', title: { contains: 'Demo Site —' } },
+    page_size: 1,
+  }).catch(() => ({ results: [] }));
+  if (already.results?.length) {
+    const result = { ok: true, seeded: false, alreadyExists: true, siteId: already.results[0].id };
+    await setIdempotency(env.DB, idempKey, result); // repair the D1 record so this check is cheap next time
+    return result;
+  }
+
   // ── 1. Site ────────────────────────────────────────────────────────────────
   const sitePage = await notion.post('/pages', {
     parent: { database_id: mapping.sites_db_id },
