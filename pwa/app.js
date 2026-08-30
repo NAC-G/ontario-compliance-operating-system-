@@ -595,9 +595,17 @@ async function loadDossier(siteId) {
 function renderDossier(data) {
   const photos    = data.photos || [];
   const openCount = data.openHazards || 0;
+  const openDeficiencyCount = data.openDeficiencies || 0;
 
-  document.getElementById('dossier-counts').textContent =
-    `${photos.length} photo${photos.length !== 1 ? 's' : ''} · ${openCount} open hazard${openCount !== 1 ? 's' : ''}`;
+  // Quality deficiencies are tracked separately from safety hazards (see
+  // 'Deficiency - Open'/'Deficiency - Corrected' status) — only append the
+  // clause when there are any, so the common no-deficiency case doesn't
+  // clutter the header.
+  let counts = `${photos.length} photo${photos.length !== 1 ? 's' : ''} · ${openCount} open hazard${openCount !== 1 ? 's' : ''}`;
+  if (openDeficiencyCount > 0) {
+    counts += ` · ${openDeficiencyCount} quality issue${openDeficiencyCount !== 1 ? 's' : ''}`;
+  }
+  document.getElementById('dossier-counts').textContent = counts;
 
   const filtered = filterPhotos(photos, currentDossierFilter);
   const grid     = document.getElementById('photo-grid');
@@ -624,6 +632,7 @@ function renderDossier(data) {
     const thumb = document.createElement('div');
     thumb.className = 'photo-thumb';
     if (photo.status === 'Hazard - Open') thumb.classList.add('photo-thumb--hazard');
+    if (photo.status === 'Deficiency - Open') thumb.classList.add('photo-thumb--deficiency');
 
     const img = document.createElement('img');
     // Prefer the small resized thumbnail; not every photo has one (older
@@ -698,6 +707,7 @@ function filterPhotos(photos, filter) {
   switch (filter) {
     case 'Open hazards':  return photos.filter(p => p.status === 'Hazard - Open');
     case 'Fixed hazards': return photos.filter(p => p.status === 'Hazard - Corrected');
+    case 'Quality issues':return photos.filter(p => p.status === 'Deficiency - Open' || p.status === 'Deficiency - Corrected');
     case 'Inspections':   return photos.filter(p => p.status === 'Inspection');
     case 'Incidents':     return photos.filter(p => p.status === 'Incident');
     case 'This week': {
@@ -841,8 +851,8 @@ function showPhotoDetail(photo, push = true) {
       // photo is the "before" vs "after" from which field is set. Use the
       // photo's own status instead, which is unambiguous.
       if (pairLabel) {
-        pairLabel.textContent = photo.status === 'Hazard - Corrected'
-          ? 'Paired with Before photo' : 'Paired with After photo';
+        const isAfterPhoto = photo.status === 'Hazard - Corrected' || photo.status === 'Deficiency - Corrected';
+        pairLabel.textContent = isAfterPhoto ? 'Paired with Before photo' : 'Paired with After photo';
       }
     } else { pairWrap.hidden = true; }
   }
@@ -1158,7 +1168,7 @@ function selectAnnStatus(value, chipEl) {
   const target = chipEl || [...container.querySelectorAll('.ann-chip')].find(c => c.dataset.value === value);
   if (target) target.classList.add('ann-chip--active');
   if (state.captureState) state.captureState.status = value;
-  document.getElementById('ann-ba-section').hidden = value !== 'Hazard - Corrected';
+  document.getElementById('ann-ba-section').hidden = value !== 'Hazard - Corrected' && value !== 'Deficiency - Corrected';
 }
 
 function renderAnnSevChips(activeValue, autoSelect = false) {

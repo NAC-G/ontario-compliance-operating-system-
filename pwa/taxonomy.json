@@ -39,7 +39,8 @@
     { "id": "incident",         "label": "Incident / Near Miss",        "color": "#E84830" },
     { "id": "mol_order",        "label": "MOL Order Compliance",        "color": "#E84830" },
     { "id": "violence_harassment","label": "Workplace Violence & Harassment","color": "#FFB000" },
-    { "id": "psh_naloxone",     "label": "Naloxone & Worker Wellness",  "color": "#FFB000" }
+    { "id": "psh_naloxone",     "label": "Naloxone & Worker Wellness",  "color": "#FFB000" },
+    { "id": "quality",          "label": "Quality of Work",             "color": "#E8A830" }
   ],
   "tags": [
     { "id": "WAH-3M",           "category": "wah",            "label": "Fall hazard ≥3 m",                    "ohsa": ["OHSA s.25"],          "oreg": ["OReg_213_91 s.26","OReg_297_13"],   "severity_default": "High",     "requires_photo": true,  "auto_status": "Hazard - Open" },
@@ -88,6 +89,13 @@
     { "id": "VH-RISK-ASSESS",   "category": "violence_harassment","label": "Violence risk assessment review", "ohsa": ["OHSA s.32.0.3"],                                                  "severity_default": "Info" },
     { "id": "PSH-NALOXONE",     "category": "psh_naloxone",   "label": "Naloxone kit present",                "ohsa": ["OHSA s.25.2"],                                                    "severity_default": "Info" },
     { "id": "PSH-WASHROOM",     "category": "psh_naloxone",   "label": "Washroom access compliance",          "ohsa": ["WfWA_5"],                                                         "severity_default": "Low" },
-    { "id": "PSH-HEAT",         "category": "psh_naloxone",   "label": "Heat / cold stress controls",                                                                                     "severity_default": "Med" }
+    { "id": "PSH-HEAT",         "category": "psh_naloxone",   "label": "Heat / cold stress controls",                                                                                     "severity_default": "Med" },
+    { "id": "QC-FINISH",       "category": "quality",        "label": "Poor finish / cosmetic defect",                                                                                   "severity_default": "Low",      "auto_status": "Deficiency - Open" },
+    { "id": "QC-INSTALL",      "category": "quality",        "label": "Incorrect or non-standard installation",                                                                          "severity_default": "Med",      "auto_status": "Deficiency - Open" },
+    { "id": "QC-MATERIAL",     "category": "quality",        "label": "Wrong or defective material used",                                                                                "severity_default": "Med",      "auto_status": "Deficiency - Open" },
+    { "id": "QC-ALIGNMENT",    "category": "quality",        "label": "Out of level, plumb, or square",                                                                                  "severity_default": "Low",      "auto_status": "Deficiency - Open" },
+    { "id": "QC-SPEC",         "category": "quality",        "label": "Does not meet spec or drawings",                                                                                  "severity_default": "Med",      "auto_status": "Deficiency - Open" },
+    { "id": "QC-REWORK-DONE",  "category": "quality",        "label": "Rework completed — meets spec",                                                                                   "severity_default": "Info",     "auto_status": "Deficiency - Corrected" },
+    { "id": "QC-OK",           "category": "quality",        "label": "Workmanship satisfactory",                                                                                        "severity_default": "Info",     "auto_status": "Routine" }
   ]
 }

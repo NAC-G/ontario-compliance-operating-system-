@@ -64,15 +64,17 @@ export const C = {
   status: {
     heading: 'What\'s the status?',
     options: [
-      { value: 'Routine',           label: 'Routine — just for the record' },
-      { value: 'Hazard - Open',     label: 'Hazard found — needs fixing' },
-      { value: 'Hazard - Corrected',label: 'Hazard fixed — pair with the before photo' },
-      { value: 'Inspection',        label: 'Inspection — part of a formal walk' },
-      { value: 'Incident',          label: 'Incident — someone got hurt or nearly did' },
+      { value: 'Routine',              label: 'Routine — just for the record' },
+      { value: 'Hazard - Open',        label: 'Hazard found — needs fixing' },
+      { value: 'Hazard - Corrected',   label: 'Hazard fixed — pair with the before photo' },
+      { value: 'Deficiency - Open',    label: 'Quality issue — workmanship needs attention' },
+      { value: 'Deficiency - Corrected', label: 'Quality issue fixed — pair with the before photo' },
+      { value: 'Inspection',           label: 'Inspection — part of a formal walk' },
+      { value: 'Incident',             label: 'Incident — someone got hurt or nearly did' },
     ],
   },
   // ── Site dossier ──────────────────────────────────────────────────────────
-  filterBar: ['All', 'Open hazards', 'Fixed hazards', 'Inspections', 'Incidents', 'This week'],
+  filterBar: ['All', 'Open hazards', 'Fixed hazards', 'Quality issues', 'Inspections', 'Incidents', 'This week'],
   emptyFilter: {
     heading: 'Nothing here yet.',
     sub: 'Try a different filter or capture a new photo.',
