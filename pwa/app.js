@@ -463,6 +463,19 @@ document.getElementById('create-site-btn').addEventListener('click', async () =>
   if (!name) { showToast('Enter a site name.'); return; }
   const address = document.getElementById('new-site-address').value.trim();
 
+  // Site creation is a real, license-gated API call now (see below), but
+  // "Start a new site" is reachable during first-time onboarding, before
+  // the user has ever entered a license key (that normally only happens
+  // later — see the license-entry guards elsewhere, e.g. loadSiteList).
+  // Send them there first; saving a license there calls goBack(), which
+  // returns them right back to this screen with their name/address still
+  // filled in, so they just tap Create site again.
+  if (!state.licenseKey) {
+    showToast('Enter your license key first.');
+    showScreen('license-entry');
+    return;
+  }
+
   // Real backend site — previously this just invented a client-only
   // 'local-<timestamp>' id that was never provisioned server-side, so
   // anything filed under it (photos, voice notes, inspections) permanently
