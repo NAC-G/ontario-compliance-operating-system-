@@ -63,9 +63,22 @@ export function getRecordingState() {
   return mediaRecorder?.state || 'inactive';
 }
 
+// Uint8Array -> base64 in chunks. String.fromCharCode(...bytes) blows the
+// JS engine's argument-count limit for anything beyond a tiny array — any
+// real voice recording (even a few seconds) throws before the transcription
+// request is ever sent, which is why no request ever reached the server.
+function bytesToBase64(bytes) {
+  const CHUNK = 0x8000; // 32KB — comfortably under every engine's limit
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += CHUNK) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  }
+  return btoa(binary);
+}
+
 export async function transcribeVoice(audioBlob, photoId) {
   const buf = await audioBlob.arrayBuffer();
-  const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+  const b64 = bytesToBase64(new Uint8Array(buf));
 
   const result = await aiSummarize({
     type: 'voice_transcription',
