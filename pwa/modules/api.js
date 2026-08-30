@@ -31,8 +31,9 @@ export async function uploadPhoto(formData) {
   return fcFetch('/photo', { method: 'POST', body: formData });
 }
 
-export async function getSite(siteId) {
-  return fcFetch(`/site/${siteId}`).then(r => r.json());
+export async function getSite(siteId, cursor) {
+  const qs = cursor ? `?cursor=${encodeURIComponent(cursor)}` : '';
+  return fcFetch(`/site/${siteId}${qs}`).then(r => r.json());
 }
 
 export async function updatePhoto(photoId, patch) {

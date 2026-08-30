@@ -5,7 +5,7 @@
  */
 
 import { sha256Hex } from '../hash.js';
-import { photoKey, voiceKey, putObject } from '../r2.js';
+import { photoKey, voiceKey, putObject, deriveThumbKey } from '../r2.js';
 import { resolveOhsaRefs, getSeverityDefault, getAutoStatus } from '../taxonomy.js';
 import { getLicenseMapping } from '../db.js';
 import { makeClient } from '../notion.js';
@@ -63,6 +63,18 @@ export async function handlePhotoUpload(request, env) {
   const r2Key = photoKey(license.key, siteId, photoId, ext);
 
   await putObject(env.FC_PHOTOS, r2Key, photoBuf, photoFile.type || 'image/jpeg');
+
+  // Optional pre-resized thumbnail (see modules/image.js client-side) —
+  // best effort, doesn't block/fail the main upload if missing or if the
+  // R2 write itself fails.
+  const thumbnailFile = formData.get('thumbnail');
+  if (thumbnailFile) {
+    try {
+      await putObject(env.FC_PHOTOS, deriveThumbKey(r2Key), await thumbnailFile.arrayBuffer(), 'image/jpeg');
+    } catch (e) {
+      console.error('Thumbnail upload failed (photo still saved with full-res only):', e.message || e);
+    }
+  }
 
   // Resolve OHSA references and auto-defaults from tags
   const ohsaRefs = resolveOhsaRefs(tags).join(', ');

@@ -10,6 +10,7 @@ import { uploadPhoto, getSite, createSite, updatePhoto, deletePhoto, createInspe
          regenerateReport, getReportVersions, listReports, seedDemoData, getPhotoAudioUrl } from './modules/api.js';
 import { requestPermissions } from './modules/permissions.js';
 import { openCamera, openLibrary } from './modules/camera.js';
+import { createThumbnail } from './modules/image.js';
 import { recordVoice, stopRecording, pauseRecording, resumeRecording, transcribeVoice, VOICE_MAX_SECONDS, VOICE_CL_MAX_SECONDS } from './modules/voice.js';
 import { loadTaxonomy, getSeverityDefault, getAutoStatus, tagLabel } from './modules/tag-picker.js';
 import { getChecklistForType } from './modules/inspection.js';
@@ -579,6 +580,7 @@ function renderDossier(data) {
   const filtered = filterPhotos(photos, currentDossierFilter);
   const grid     = document.getElementById('photo-grid');
   const empty    = document.getElementById('capture-empty');
+  grid.querySelector('.load-more-btn')?.remove(); // always re-added below if still needed — stale otherwise
   if (filtered.length === 0) {
     const isFiltered = currentDossierFilter !== 'All';
     document.getElementById('capture-empty-heading').textContent =
@@ -601,7 +603,14 @@ function renderDossier(data) {
     if (photo.status === 'Hazard - Open') thumb.classList.add('photo-thumb--hazard');
 
     const img = document.createElement('img');
-    img.src = photo.thumbnailUrl || '';
+    // Prefer the small resized thumbnail; not every photo has one (older
+    // uploads, or client-side generation failed at capture time) — fall
+    // back to the full-resolution original on a 404 rather than checking
+    // existence server-side for every photo on every site load.
+    img.src = photo.thumbnailUrl || photo.imageUrl || '';
+    if (photo.thumbnailUrl && photo.imageUrl) {
+      img.addEventListener('error', () => { img.src = photo.imageUrl; }, { once: true });
+    }
     img.alt = (photo.tags || []).join(', ');
     img.loading = 'lazy';
     thumb.appendChild(img);
@@ -629,6 +638,37 @@ function renderDossier(data) {
     });
     grid.appendChild(thumb);
   });
+
+  // "Load more" — the server caps each fetch at a page (20 photos) rather
+  // than silently truncating a long-running project's history. Offered
+  // regardless of the active filter, since older photos not yet loaded
+  // could still match it once fetched.
+  if (data.hasMore) {
+    const loadMoreBtn = document.createElement('button');
+    loadMoreBtn.className = 'btn btn-secondary btn-full load-more-btn';
+    loadMoreBtn.textContent = 'Load more photos';
+    loadMoreBtn.addEventListener('click', () => loadMorePhotos(loadMoreBtn));
+    grid.appendChild(loadMoreBtn);
+  }
+}
+
+async function loadMorePhotos(btn) {
+  const site = state.currentSite;
+  if (!site?.nextCursor) return;
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+  try {
+    const result = await getSite(site.id, site.nextCursor);
+    site.photos = [...(site.photos || []), ...(result.photos || [])];
+    site.hasMore = !!result.hasMore;
+    site.nextCursor = result.nextCursor || null;
+    renderDossier(site);
+  } catch (_) {
+    showToast('Could not load more photos — check your connection and try again.');
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
 }
 
 function filterPhotos(photos, filter) {
@@ -665,8 +705,10 @@ function showPhotoDetail(photo, push = true) {
   // Image
   const img = document.getElementById('photo-detail-img');
   const placeholder = document.getElementById('photo-detail-placeholder');
-  if (photo.thumbnailUrl || photo.imageUrl) {
-    img.src = photo.thumbnailUrl || photo.imageUrl;
+  if (photo.imageUrl || photo.thumbnailUrl) {
+    // Detail view: prefer full resolution — this is a single deliberate
+    // view where quality matters, unlike the grid.
+    img.src = photo.imageUrl || photo.thumbnailUrl;
     img.hidden = false;
     placeholder.hidden = true;
   } else {
@@ -1259,8 +1301,15 @@ async function filePhoto() {
   const transcription = (rawTranscript && rawTranscript !== 'Transcribing…' && rawTranscript !== 'Transcription unavailable.')
     ? rawTranscript : '';
 
+  // Small (480px) JPEG for the grid — see modules/image.js for why. Best
+  // effort: if it fails for any reason (unsupported format, etc.) the
+  // upload still proceeds with just the full-resolution original; the
+  // server/grid fall back to that when no thumbnail exists.
+  const thumbnailBlob = await createThumbnail(cs.photoBlob).catch(() => null);
+
   const formData = new FormData();
   formData.append('photo', cs.photoBlob, `${cs.photoId}.jpg`);
+  if (thumbnailBlob) formData.append('thumbnail', thumbnailBlob, `${cs.photoId}-thumb.jpg`);
   formData.append('metadata', JSON.stringify({
     photoId:       cs.photoId,
     siteId:        state.currentSite?.id,
