@@ -41,6 +41,7 @@ export async function handlePhotoUpload(request, env) {
     notes,
     transcription,
     capturedByName,
+    pairedWithId,
   } = meta;
 
   // Accept gps: { lat, lng } from PWA as well as flat geoLat/geoLng
@@ -120,6 +121,27 @@ export async function handlePhotoUpload(request, env) {
     // needing a manual curl reproduction every time this happens.
     console.error('Photo Notion write failed:', e.message || e);
     return json({ error: 'Failed to create photo record', detail: String(e.message || e), r2Key }, 502);
+  }
+
+  // Before/after pairing — best-effort, after the main record is safely
+  // saved. Confirmed empirically (Pair: Before and Pair: After are each
+  // an independent, self-syncing two-way Notion relation — NOT cross-linked
+  // to each other): patching 'Pair: Before' on just the new "after" photo
+  // is enough; Notion automatically mirrors it onto the "before" photo's
+  // own 'Pair: Before' too. Patching 'Pair: After' as well (tried first)
+  // does NOT create the intended before->after / after->before cross-link —
+  // it independently self-syncs the same way, leaving both photos with
+  // both properties pointing at each other, which is redundant and
+  // confuses the client's before-vs-after label logic. A failure here
+  // doesn't fail the upload; the photo itself is already saved by now.
+  if (pairedWithId) {
+    try {
+      await notion.patch(`/pages/${page.id}`, {
+        properties: { 'Pair: Before': { relation: [{ id: pairedWithId }] } },
+      });
+    } catch (e) {
+      console.error('Before/after pairing failed (photo still saved):', e.message || e);
+    }
   }
 
   return json({
