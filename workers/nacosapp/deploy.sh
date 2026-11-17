@@ -14,7 +14,7 @@ cp "$SITE_ROOT"/*.html "$SITE_ROOT"/*.css "$SITE_ROOT"/*.png "$SITE_ROOT"/*.pdf 
 cp "$SITE_ROOT"/_headers public/ 2>/dev/null || true
 
 # Static sub-apps
-for dir in pwa upgrade course-portal; do
+for dir in pwa upgrade course-portal fonts; do
   [ -d "$SITE_ROOT/$dir" ] && cp -r "$SITE_ROOT/$dir" public/
 done
 
